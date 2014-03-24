@@ -1,6 +1,6 @@
-
-豆腐Craft - 作者 つてと(Tsuteto)
+豆腐Craft
 -----------------------------------------------------------
+作者 つてと(Tsuteto)
 
 ◆このMODのフォーラム
 http://forum.minecraftuser.jp/viewtopic.php?f=13&t=1014
