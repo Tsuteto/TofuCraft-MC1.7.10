@@ -4,12 +4,10 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemMultiTexture;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.tileentity.TileEntityMorijio;
 import tsuteto.tofu.block.tileentity.TileEntitySaltFurnace;
@@ -17,8 +15,8 @@ import tsuteto.tofu.block.tileentity.TileEntityTfStorage;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.material.TcMaterial;
+import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.ModLog;
-import tsuteto.tofu.util.Utils;
 
 public class TcBlocks
 {
@@ -103,18 +101,18 @@ public class TcBlocks
     {
         soybean = $("soybeans", new BlockSoybean())
                 .withResource("blockSoybeans")
-                .register();
+                .registerBlock();
 
         soybeanHell = $("soybeansHell", new BlockSoybeanHell())
                 .withResource("blockSoybeansHell")
-                .register();
+                .registerBlock();
 
         /*
          * Tofu
          */
         tofuTerrain = $("blockTofuTerrain", new BlockTofuTerrain())
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.4F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -122,7 +120,7 @@ public class TcBlocks
         tofuKinu = (BlockTofuBase) $("blockTofuKinu", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setFragile()
                 .setFreeze(5)
                 .setHardness(0.1F)
@@ -132,7 +130,7 @@ public class TcBlocks
         tofuMomen = (BlockTofuBase) $("blockTofuMomen", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setDrain(3)
                 .setHardness(0.4F)
                 .setStepSound(Block.soundTypeSnow)
@@ -141,7 +139,7 @@ public class TcBlocks
         tofuIshi = (BlockTofuBase) $("blockTofuIshi", new BlockTofuIshi(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setDrain(8)
                 .setScoopable(false)
                 .setHardness(2.0F)
@@ -152,7 +150,7 @@ public class TcBlocks
         tofuMetal = (BlockTofuBase) $("blockTofuMetal", new BlockTofu(Material.iron))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
-                .register()
+                .registerBlock()
                 .setScoopable(false)
                 .setHardness(6.0F)
                 .setResistance(15.0F)
@@ -162,7 +160,7 @@ public class TcBlocks
         tofuGrilled = (BlockTofuBase) $("blockTofuGrilled", new BlockTofuGrilled())
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setResistance(50.0F)
                 .setStepSound(Block.soundTypeSnow)
@@ -171,7 +169,7 @@ public class TcBlocks
         tofuDried = (BlockTofuBase) $("blockTofuDried", new BlockTofu(Material.sponge))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setScoopable(false)
                 .setHardness(1.0F)
                 .setResistance(2.0F)
@@ -182,7 +180,7 @@ public class TcBlocks
                 .withResource("blockTofuPouchFried")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setResistance(8.0F)
                 .setStepSound(Block.soundTypeSand)
@@ -191,7 +189,7 @@ public class TcBlocks
         tofuFried = (BlockTofuBase) $("blockTofuFried", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(2.0F)
                 .setResistance(10.0F)
                 .setStepSound(Block.soundTypeGravel)
@@ -200,7 +198,7 @@ public class TcBlocks
         tofuEgg = (BlockTofuBase) $("blockTofuEgg", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.2F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -208,7 +206,7 @@ public class TcBlocks
         tofuAnnin = (BlockTofuBase) $("blockTofuAnnin", new BlockTofuAnnin(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.2F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -216,7 +214,7 @@ public class TcBlocks
         tofuSesame = (BlockTofuBase) $("blockTofuSesame", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.2F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -224,7 +222,7 @@ public class TcBlocks
         tofuZunda = (BlockTofuBase) $("blockTofuZunda", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.3F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -232,7 +230,7 @@ public class TcBlocks
         tofuStrawberry = (BlockTofuBase) $("blockTofuStrawberry", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -241,7 +239,7 @@ public class TcBlocks
                 .withResource("blockTofuYamauni")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -249,7 +247,7 @@ public class TcBlocks
         tofuHell = (BlockTofuBase) $("blockTofuHell", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -257,7 +255,7 @@ public class TcBlocks
         tofuGlow = (BlockTofuBase) $("blockTofuGlow", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setLightLevel(0.9375F)
                 .setStepSound(Block.soundTypeSnow)
@@ -266,7 +264,7 @@ public class TcBlocks
         tofuDiamond = (BlockTofuBase) $("blockTofuDiamond", new BlockTofu(TcMaterial.tofu))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
-                .register()
+                .registerBlock()
                 .setScoopable(false)
                 .setHardness(8.0F)
                 .setResistance(15.0F)
@@ -278,7 +276,7 @@ public class TcBlocks
          */
         leek = $("blockLeek", new BlockLeek())
                 .wrappedBy(ItemLeekDense.class)
-                .register()
+                .registerBlock()
                 .setHardness(0.0F)
                 .setStepSound(Block.soundTypeGrass)
                 .setCreativeTab(CreativeTabs.tabDecorations);
@@ -287,7 +285,7 @@ public class TcBlocks
                 .withResource("saltFurnace")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(3.5F)
                 .setStepSound(Block.soundTypeStone)
                 .setCreativeTab(CreativeTabs.tabDecorations)
@@ -296,7 +294,7 @@ public class TcBlocks
         saltFurnaceActive = $("saltFurnaceActive", new BlockSaltFurnace(true))
                 .withResource("saltFurnace")
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(3.5F)
                 .setStepSound(Block.soundTypeStone)
                 .setLightLevel(0.875F)
@@ -305,7 +303,7 @@ public class TcBlocks
 
         tofuCake = $("blockTofuCake", new BlockTofuCake())
                 .withResource("tofuCake")
-                .register()
+                .registerBlock()
                 .disableStats()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeCloth)
@@ -313,14 +311,14 @@ public class TcBlocks
 
         tofuPortal = (BlockTofuPortal) $("blockTofuPortal", new BlockTofuPortal())
                 .withResource("tofuPortal")
-                .register()
+                .registerBlock()
                 .setHardness(-1.0F)
                 .setStepSound(Block.soundTypeGlass)
                 .setLightLevel(0.75F);
 
         morijio = $("blockMorijio", new BlockMorijio())
                 .withResource("morijio")
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeCloth)
                 ;
@@ -329,42 +327,42 @@ public class TcBlocks
         barrelMiso = $("blockBarrelMiso", new BlockMisoBarrel(Material.wood))
                 .withResource("barrelMiso")
                 .setHarvestLevel("axe", 0)
-                .register()
+                .registerBlock()
                 .setFermRate(3)
                 .setHardness(2.0F)
                 .setStepSound(Block.soundTypeWood)
                 ;
 
-        nattoBed = $("nattoBed", new BlockNattoBed(0x8c, Material.grass))
+        nattoBed = $("nattoBed", new BlockNattoBed(Material.grass))
                 .wrappedByItemTcBlock()
-                .register()
+                .registerBlock()
                 .setFermRate(3)
                 .setHardness(0.8F)
                 .setStepSound(Block.soundTypeGrass)
                 .setCreativeTab(CreativeTabs.tabDecorations);
 
         sesame = $("blockSesame", new BlockSesame())
-                .register();
+                .registerBlock();
 
         natto = $("blockNatto", new BlockNatto())
                 .wrappedByItemTcBlock()
-                .register()
+                .registerBlock()
                 .setHardness(0.3F)
                 .setStepSound(Block.soundTypeSnow)
                 .setCreativeTab(CreativeTabs.tabBlock);
 
         sprouts = $("blockSprouts", new BlockSprouts())
-                .register();
+                .registerBlock();
 
         salt = $("blockSalt", new BlockFalling())
                 .wrappedByItemTcBlock()
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeSand)
                 .setCreativeTab(CreativeTabs.tabBlock);
 
         yuba = $("blockYuba", new BlockYuba())
-                .register()
+                .registerBlock()
                 .setHardness(0.0F)
                 .setStepSound(Block.soundTypeSnow)
                 ;
@@ -372,7 +370,7 @@ public class TcBlocks
         barrelMisoTofu = $("blockBarrelMisoTofu", new BlockMisoTofuBarrel(Material.wood))
                 .withResource("barrelMisoTofu")
                 .setHarvestLevel("axe", 0)
-                .register()
+                .registerBlock()
                 .setFermRate(2)
                 .setHardness(2.0F)
                 .setStepSound(Block.soundTypeWood)
@@ -381,7 +379,7 @@ public class TcBlocks
         barrelGlowtofu = $("blockBarrelGlowtofu", new BlockGlowtofuBarrel(Material.wood))
                 .withResource("barrelGlowtofu")
                 .setHarvestLevel("axe", 0)
-                .register()
+                .registerBlock()
                 .setFermRate(4)
                 .setHardness(2.0F)
                 .setStepSound(Block.soundTypeWood)
@@ -393,7 +391,7 @@ public class TcBlocks
         tfMachineCase = $("tfMachineCase", new BlockTfMachineCase())
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setCreativeTab(CreativeTabs.tabBlock)
@@ -403,7 +401,7 @@ public class TcBlocks
                 .withResource("tfStorage")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setCreativeTab(CreativeTabs.tabDecorations)
@@ -412,7 +410,7 @@ public class TcBlocks
         tfStorageActive = $("tfStorageActive", new BlockTfStorage(true))
                 .withResource("tfStorage")
                 .setHarvestLevel("pickaxe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
@@ -426,7 +424,7 @@ public class TcBlocks
         oreTofu = (BlockTcOre)$("blockOreTofu", new BlockTcOre(1, 5))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
-                .register()
+                .registerBlock()
                 .setHardness(3.0F)
                 .setResistance(5.0F)
                 .setStepSound(Block.soundTypeStone)
@@ -435,7 +433,7 @@ public class TcBlocks
         oreTofuDiamond = (BlockTcOre)$("blockOreTofuDiamond", new BlockTcOreDiamond(3, 7))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setResistance(5.0F)
                 .setStepSound(Block.soundTypeSnow)
@@ -448,7 +446,7 @@ public class TcBlocks
                 new BlockSoymilkStill(Material.water,
                         new String[]{"tofucraft:soymilk", "tofucraft:soymilk_flow"}))
                 .withResource("soymilk")
-                .register()
+                .registerBlock()
                 .setHardness(100.0F)
                 .setLightOpacity(8)
                 ;
@@ -457,7 +455,7 @@ public class TcBlocks
                 new BlockTcStationary(TcFluids.SOYMILK_HELL, Material.water,
                         new String[]{"tofucraft:soymilkHell", "tofucraft:soymilkHell_flow"}))
                 .withResource("soymilkHell")
-                .register()
+                .registerBlock()
                 .setHardness(100.0F)
                 .setLightOpacity(8)
                 ;
@@ -466,7 +464,7 @@ public class TcBlocks
                 new BlockTcStationary(TcFluids.SOY_SAUCE, Material.water,
                         new String[]{"tofucraft:soySauce", "tofucraft:soySauce_flow"}))
                 .withResource("soySauce")
-                .register()
+                .registerBlock()
                 .setHardness(100.0F)
                 .setLightOpacity(8)
                 ;
@@ -477,7 +475,7 @@ public class TcBlocks
         tcLeaves = (BlockTcLeaves)$("tcLeaves", new BlockTcLeaves())
                 .withResource("leaves")
                 .wrappedBy(ItemTcLeaves.class)
-                .register()
+                .registerBlock()
                 .setHardness(0.2F)
                 .setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass)
@@ -488,7 +486,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcMultiTextureTile.class)
                 .havingArgs(new Object[]{BlockTcLog.woodType})
                 .setHarvestLevel("axe", 0)
-                .register()
+                .registerBlock()
                 .setHardness(2.0F)
                 .setStepSound(Block.soundTypeWood)
                 ;
@@ -497,7 +495,7 @@ public class TcBlocks
                 .withResource("sapling")
                 .wrappedBy(ItemTcMultiTextureTile.class)
                 .havingArgs(new Object[]{BlockTcSapling.WOOD_TYPES})
-                .register()
+                .registerBlock()
                 .setHardness(0.0F)
                 .setStepSound(Block.soundTypeGrass)
                 ;
@@ -509,7 +507,7 @@ public class TcBlocks
                 .withResource("stairsTofuKinu")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setFragile()
                 ;
 
@@ -517,87 +515,87 @@ public class TcBlocks
                 .withResource("stairsTofuMomen")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsIshi = $("tofuStairsIshi", new BlockTofuStairs(tofuIshi, 0))
                 .withResource("stairsTofuIshi")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsMetal = $("tofuStairsMetal", new BlockTofuStairs(tofuMetal, 0))
                 .withResource("stairsTofuMetal")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
-                .register();
+                .registerBlock();
 
         tofuStairsGrilled = $("tofuStairsGrilled", new BlockTofuStairs(tofuGrilled, 0))
                 .withResource("stairsTofuGrilled")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsDried = $("tofuStairsDried", new BlockTofuStairs(tofuDried, 0))
                 .withResource("stairsTofuDried")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsFriedPouch = $("tofuStairsFriedPouch", new BlockTofuStairs(tofuFriedPouch, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsFried = $("tofuStairsFried", new BlockTofuStairs(tofuFried, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsEgg = $("tofuStairsEgg", new BlockTofuStairs(tofuEgg, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsAnnin = $("tofuStairsAnnin", new BlockTofuStairs(tofuAnnin, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsSesame = $("tofuStairsSesame", new BlockTofuStairs(tofuSesame, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsZunda = $("tofuStairsZunda", new BlockTofuStairs(tofuZunda, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsStrawberry = $("tofuStairsStrawberry", new BlockTofuStairs(tofuStrawberry, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsHell = $("tofuStairsHell", new BlockTofuStairs(tofuHell, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         tofuStairsGlow = $("tofuStairsGlow", new BlockTofuStairs(tofuGlow, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setLightLevel(1.0F);
 
         tofuStairsDiamond = $("tofuStairsDiamond", new BlockTofuStairs(tofuDiamond, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
-                .register();
+                .registerBlock();
 
         tofuStairsMiso = $("tofuStairsMiso", new BlockTofuStairs(tofuMiso, 0))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
-                .register();
+                .registerBlock();
 
         /*
          * Slabs
@@ -609,7 +607,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab1, tofuDoubleSlab1, false)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -618,7 +616,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab1, tofuDoubleSlab1, true)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -629,7 +627,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab2, tofuDoubleSlab2, false)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -638,7 +636,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab2, tofuDoubleSlab2, true)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -649,7 +647,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab3, tofuDoubleSlab3, false)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -658,7 +656,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlab3, tofuDoubleSlab3, true)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setStepSound(Block.soundTypeSnow);
 
@@ -669,7 +667,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlabFaces, tofuDoubleSlabFaces, false)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setResistance(50.0F)
                 .setStepSound(Block.soundTypeSnow);
@@ -679,7 +677,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlabFaces, tofuDoubleSlabFaces, true)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(1.0F)
                 .setResistance(50.0F)
                 .setStepSound(Block.soundTypeSnow);
@@ -690,7 +688,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlabGlow, tofuDoubleSlabGlow, false)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setLightLevel(0.9375F)
                 .setStepSound(Block.soundTypeSnow)
@@ -701,7 +699,7 @@ public class TcBlocks
                 .wrappedBy(ItemTcSlab.class)
                 .havingArgs(tofuSingleSlabGlow, tofuDoubleSlabGlow, true)
                 .setHarvestLevel("shovel", 0)
-                .register()
+                .registerBlock()
                 .setHardness(0.5F)
                 .setLightLevel(0.9375F)
                 .setStepSound(Block.soundTypeSnow)
@@ -717,7 +715,7 @@ public class TcBlocks
     {
         if (Loader.isModLoaded("BambooMod"))
         {
-            sakuraLeaves = Utils.getExternalModBlockWithRegex("(?i)sakuraleaves");
+            sakuraLeaves = ItemUtils.getExternalModBlockWithRegex("(?i)sakuraleaves");
             ModLog.debug("sakuraLeaves: " + sakuraLeaves);
         }
     }
@@ -772,7 +770,7 @@ public class TcBlocks
             return this;
         }
 
-        public T register()
+        public T registerBlock()
         {
             block.setBlockName(TofuCraftCore.resourceDomain + resourceName);
             block.setBlockTextureName(TofuCraftCore.resourceDomain + resourceName);

@@ -2,7 +2,7 @@ package tsuteto.tofu.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemSword;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTofuSword extends ItemSword
 {
@@ -13,6 +13,6 @@ public class ItemTofuSword extends ItemSword
 
     @Override
     public CreativeTabs[] getCreativeTabs() {
-        return Utils.getCreativeTabs(this);
+        return ItemUtils.getCreativeTabs(this);
     }
 }

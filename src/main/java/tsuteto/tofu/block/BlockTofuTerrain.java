@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import tsuteto.tofu.item.TcItem;
@@ -58,5 +59,11 @@ public class BlockTofuTerrain extends BlockTofuBase
     public ItemStack createScoopedBlockStack()
     {
         return new ItemStack(TcBlocks.tofuMomen);
+    }
+
+    @Override
+    public Item getItem(World par1World, int par2, int par3, int par4)
+    {
+        return TcItem.getItemFromBlock(TcBlocks.tofuMomen);
     }
 }

@@ -5,11 +5,14 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.item.TcItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,7 +22,7 @@ public class BlockNattoBed extends BlockFermentable
 {
 	private IIcon iconTop;
 	
-    public BlockNattoBed(int par2, Material par3Material)
+    public BlockNattoBed(Material par3Material)
     {
         super(par3Material);
         this.setTickRandomly(true);
@@ -80,5 +83,13 @@ public class BlockNattoBed extends BlockFermentable
     public boolean isOpaqueCube()
     {
         return false;
+    }
+
+    public void onBlockPlacedBy(World p_149689_1_, int p_149689_2_, int p_149689_3_, int p_149689_4_, EntityLivingBase p_149689_5_, ItemStack p_149689_6_)
+    {
+        if (p_149689_5_ instanceof EntityPlayer)
+        {
+            TcAchievementMgr.achieve((EntityPlayer)p_149689_5_, TcAchievementMgr.Key.nattoFarm);
+        }
     }
 }

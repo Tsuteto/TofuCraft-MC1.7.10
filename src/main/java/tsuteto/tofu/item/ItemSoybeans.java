@@ -13,7 +13,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemSoybeans extends TcItem implements IPlantable
 {
@@ -94,6 +94,6 @@ public class ItemSoybeans extends TcItem implements IPlantable
     @Override
     public CreativeTabs[] getCreativeTabs()
     {
-        return Utils.getCreativeTabs(this);
+        return ItemUtils.getCreativeTabs(this);
     }
 }

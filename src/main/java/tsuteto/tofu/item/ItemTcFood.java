@@ -3,7 +3,7 @@ package tsuteto.tofu.item;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTcFood extends ItemFood
 {
@@ -36,7 +36,7 @@ public class ItemTcFood extends ItemFood
     @Override
     public CreativeTabs[] getCreativeTabs()
     {
-        return Utils.getCreativeTabs(this);
+        return ItemUtils.getCreativeTabs(this);
     }
 
     @Override

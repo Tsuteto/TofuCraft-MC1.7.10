@@ -29,19 +29,19 @@ public class TcAchievementList
          * -4 - - - - - - - - - - - - * - A - - * * A - - * * A * A - - - -
          * -3 - - - - - A * A * - - - * - * - - - - - - - * - * * A - - - -
          * -2 - - - - - - A * A * A * A * A * A - A - * * A - - - - - - - -
-         * -1 - - - - - - - A * - - - * - - * - - * - * - - - - - - - - - -
+         * -1 - - - - - - - A * - - - * - - * - - * - * A - - - - - - - - -
          *  0 - - - - - - - - - - - - * * * A * * A * A * A - - - - - - - -
          *  1 - - - - - - A * A * A * * B * * - - * A * * * * * A A A A - -
          *  2 - - - - - - - - - - - - * - B * - A * * A * A - - - - - - - -
          *  3 - - - - - - A * A * A * * B * * - * - - - - - - - - - - - - -
          *  4 - - - - - - - - - - - - * - * A - A - C - - D * D - - - - - -
-         *  5 - - - - - - - - A * * - * - * * - - - - - - - - * - - - - - -
-         *  6 - - - - - - A * A * A * * - * A - E - F - - - - D * * * - - -
-         *  7 - - - - - - - - A * * - - B * - - * - - - - - - - - - * - - -
-         *  8 - - - - - - - - - - - - - - * - - * - - - - - - - - - D - - -
-         *  9 - - - - - - - - - - - B * * * - - * - - - - - - - - - * - - -
-         *  A - - - - - - - - - - - - - - - - - * - - - - - - - D * * - - -
-         *  B - - - - - - - - - - - - - - - - - E - - - - - - - - - * - - -
+         *  5 - - - - - - - - A * * - * - * * - - - - - - * - * - - - - - -
+         *  6 - - - - - - A * A * A * * - * A - E - F - - * - D * * * - - -
+         *  7 - - - - - - - - A * * - - B * - - * - - - - D - - - - * - - -
+         *  8 - - - - - - - - - - - - - - * - - * - - - - * - - - - D - - -
+         *  9 - - - - - - - - - - - B * * * - - * - - - D * - - - - * - - -
+         *  A - - - - - - - - - - - - - - - - - * - - - * - - - D * * - - -
+         *  B - - - - - - - - - - - - - - - - - E - - - * * D - - - * - - -
          *  C - - - - - - - - - - - - - - - - - - - - - - - - - - - D - - -
          *  Y
          */
@@ -59,12 +59,10 @@ public class TcAchievementList
                 .setTriggerItemPickup(new ItemStack(TcItems.tofuKinu))
                 .registerStat();
 
-        //[fixed]
         TcAchievement.create(Key.momenTofu, 5, 0, TcItems.tofuMomen, Key.tofu)
                 .setTriggerItemCrafting(new ItemStack(TcBlocks.tofuMomen))
                 .registerStat();
 
-        // [fixed]
         TcAchievement.create(Key.ishiTofu, 7, -2, TcItems.tofuMomen, Key.momenTofu)
                 .setTriggerItemPickup(new ItemStack(TcItems.tofuIshi))
                 .registerStat();
@@ -74,16 +72,15 @@ public class TcAchievementList
                 .registerStat();
 
         // === Kinu Tofu ===
-        // [fixed]
         TcAchievement.create(Key.tofuCake, 3, -2, TcItems.tofuCake, Key.tofu)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuCake))
                 .registerStat();
 
-        // When: Rock block or entityLiving put on tofu [fixed]
+        // When: Rock block or entityLiving put on tofu
         TcAchievement.create(Key.tofuMental, 4, 1, TcBlocks.tofuKinu, Key.tofu)
                 .registerStat();
 
-        // When: Scattering bone meal and leek comes up [fixed]
+        // When: Scattering bone meal and leek comes up
         TcAchievement.create(Key.leek, 2, 2, TcBlocks.leek, Key.tofu)
                 .registerStat();
 
@@ -92,13 +89,11 @@ public class TcAchievementList
                 .registerStat();
 
         // === Momen Tofu ===
-        // [fixed]
         TcAchievement.create(Key.tofuGrilled, 7, 0, TcItems.tofuGrilled, Key.momenTofu)
                 .setTriggerSmelting(new ItemStack(TcItems.tofuGrilled))
                 .registerStat();
 
-        // [fixed]
-        TcAchievement.create(Key.dengaku, 7, 0, new ItemStack(TcItems.misoDengaku), Key.momenTofu)
+        TcAchievement.create(Key.dengaku, 6, -1, new ItemStack(TcItems.misoDengaku), Key.momenTofu)
                 .setTriggerItemCrafting(new ItemStack(TcItems.misoDengaku))
                 .registerStat();
 
@@ -179,26 +174,27 @@ public class TcAchievementList
                 .registerStat();
 
         // === Natto ===
-        // [fixed]
-        TcAchievement.create(Key.nattoMaking, -5, 3, TcBlocks.nattoBed, Key.soybeans)
+        TcAchievement.create(Key.nattoMaking, -5, 3, Items.wheat, Key.soybeans)
                 .setTriggerItemCrafting(new ItemStack(TcBlocks.nattoBed))
                 .registerStat();
 
-        TcAchievement.create(Key.natto, -7, 3, TcItems.natto, Key.nattoMaking)
+        // When: Natto bed is placed on the ground
+        TcAchievement.create(Key.nattoFarm, -7, 3, TcBlocks.nattoBed, Key.nattoMaking)
+                .registerStat();
+
+        TcAchievement.create(Key.natto, -9, 3, TcItems.natto, Key.nattoFarm)
                 .setTriggerItemPickup(new ItemStack(TcItems.natto))
                 .registerStat();
 
-        TcAchievement.create(Key.nattoRice, -9, 3, TcItems.riceNatto, Key.natto)
+        TcAchievement.create(Key.nattoRice, -11, 3, TcItems.riceNatto, Key.natto)
                 .setTriggerItemCrafting(new ItemStack(TcItems.riceNatto))
                 .registerStat();
 
 
         // === Okara ===
-        // [fixed]
         TcAchievement.create(Key.okara, 0, 4, TcItems.okara, Key.soymilk)
                 .registerStat();
 
-        // [1.5.4 fixed]
         TcAchievement.create(Key.okaraStick, 0, 6, TcItems.okaraStick, Key.okara)
                 .setTriggerItemCrafting(new ItemStack(TcItems.okaraStick))
                 .registerStat();
@@ -234,7 +230,7 @@ public class TcAchievementList
                 .registerStat();
 
         // === Soy Sauce ===
-        // When: Soysauce comes out of miso barrel [fixed]
+        // When: Soysauce comes out of miso barrel
         TcAchievement.create(Key.soySauce, 2, -5, TcItems.bucketSoySauce, Key.misoBarrel)
                 .registerStat();
 
@@ -260,7 +256,6 @@ public class TcAchievementList
                 .registerStat();
 
         // === Irimame -> Kinako ===
-        // [1.5.4 absolutely fixed!!!]
         TcAchievement.create(Key.irimame, -5, -6, TcItems.soybeansParched, Key.soybeans)
                 .setTriggerSmelting(new ItemStack(TcItems.soybeansParched))
                 .registerStat();
@@ -304,7 +299,6 @@ public class TcAchievementList
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuFriedPouch))
                 .registerStat();
 
-        // [fixed]
         TcAchievement.create(Key.ttt, -9, 6, TcItems.tttBurger, Key.friedTofuPouch)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tttBurger))
                 .registerStat();
@@ -340,7 +334,6 @@ public class TcAchievementList
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuRadar))
                 .registerStat();
 
-        // [fixed]
         TcAchievement.create(Key.tofuSlimeHunter, 9, 6, TcItems.swordKinu, Key.tofuSlimeRadar)
                 .registerStat();
 
@@ -360,10 +353,27 @@ public class TcAchievementList
                 .setSpecial()
                 .registerStat();
 
+        // === Tofu Force ===
+        TcAchievement.create(Key.tfCapacitor, 7, 7, new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id), Key.tofuGem)
+                .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id))
+                .registerStat();
+
+        TcAchievement.create(Key.tfStorage, 6, 9, TcBlocks.tfStorageIdle, Key.tfCapacitor)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfStorageIdle))
+                .registerStat();
+
+        // When: Put an element item of TF on the input slot of TF Storage
+        TcAchievement.create(Key.tofuForce, 8, 11, TcBlocks.tfStorageActive, Key.tfStorage)
+                .registerStat();
+
         // Add a new achievement page for the mod
         Achievement[] array = TcAchievementMgr.getAllAsArray();
         AchievementPage.registerAchievementPage(new AchievementPage("TofuCraft", array));
 
-        ModLog.log(Level.INFO, "%d achievements for TofuCraft has been registered.", array.length);
+        ModLog.info("%d achievements for TofuCraft has been registered.", array.length);
+        if (!TcAchievementMgr.unregisteredKeys.isEmpty())
+        {
+            ModLog.log(Level.WARN, "Unregistered Achievements Found: %s", TcAchievementMgr.unregisteredKeys);
+        }
     }
 }

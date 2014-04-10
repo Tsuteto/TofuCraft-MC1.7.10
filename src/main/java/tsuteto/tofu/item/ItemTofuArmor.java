@@ -4,7 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTofuArmor extends ItemArmor
 {
@@ -31,6 +31,6 @@ public class ItemTofuArmor extends ItemArmor
 	@Override
 	public CreativeTabs[] getCreativeTabs()
     {
-		return Utils.getCreativeTabs(this);
+		return ItemUtils.getCreativeTabs(this);
 	}
 }

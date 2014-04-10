@@ -38,6 +38,8 @@ import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.network.PacketPipeline;
 import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
+import tsuteto.tofu.recipe.Recipes;
+import tsuteto.tofu.recipe.TcOreDic;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.village.*;
 import tsuteto.tofu.world.biome.BiomeGenTofuBase;
@@ -55,7 +57,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.5.12-MC1.7.2")
+@Mod(modid = TofuCraftCore.modid, version = "1.5.13-MC1.7.2")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -94,7 +96,6 @@ public class TofuCraftCore
         TcBlocks.register();
         TcItems.register();
         TcEntity.register(this);
-        Recipes.register();
 
         // Register liquid blocks
         TcFluids.register(event.getSide());
@@ -203,14 +204,16 @@ public class TofuCraftCore
 
         // Ore Dictionary additions for common use
         OreDictionary.registerOre("logWood", new ItemStack(TcBlocks.tcLog, 1, OreDictionary.WILDCARD_VALUE));
-        
+
+        // Register recipes
+        Recipes.unifyOreDicItems();
+        Recipes.register();
+
         // Register renderer of yuba
         RenderingRegistry.registerBlockHandler(new RenderYubaBlock());
 
         // Register sided components
         sidedProxy.registerComponents();
-
-        Message.load();
     }
 
     @Mod.EventHandler

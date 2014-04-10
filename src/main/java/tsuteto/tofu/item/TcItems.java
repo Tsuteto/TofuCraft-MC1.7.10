@@ -4,7 +4,6 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,7 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.eventhandler.TcCraftingHandler;
-import tsuteto.tofu.potion.TcPotion;
+import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.Utils;
 
 public class TcItems
@@ -210,10 +209,6 @@ public class TcItems
         tofuMiso = $("tofuMiso", new ItemTcFood(5, 0.8F, false))
                 .register()
                 .setAlwaysEdible();
-        if (TcPotion.filling != null)
-        {
-            ((ItemTcFood)tofuMiso).setPotionEffect(TcPotion.filling.id, 300, 0, 1.0F);
-        }
         TcBlocks.tofuMiso.setDropItem(tofuMiso);
 
         tofuHell = $("tofuHell", new ItemTcFood(2, 0.2F, false))
@@ -225,10 +220,6 @@ public class TcItems
         tofuGlow = $("tofuGlow", new ItemTcFood(2, 0.2F, false))
                 .register()
                 .setAlwaysEdible();
-        if (TcPotion.glowing != null)
-        {
-            ((ItemTcFood)tofuGlow).setPotionEffect(TcPotion.glowing.id, 240, 0, 1.0F);
-        }
         TcBlocks.tofuGlow.setDropItem(tofuGlow);
 
         tofuDiamond = $("tofuDiamond", new TcItem())
@@ -626,13 +617,13 @@ public class TcItems
     {
         if (Loader.isModLoaded("IC2"))
         {
-            plantBall = Utils.getIc2Item("plantBall");
+            plantBall = ItemUtils.getIc2Item("plantBall");
         }
 
         if (Loader.isModLoaded("BambooMod"))
         {
-            bambooBasket = Utils.getExternalModItemWithRegex("(?i)bamboobasket");
-            bambooFood = Utils.getExternalModItemWithRegex("(?i)bamboofoods?");
+            bambooBasket = ItemUtils.getExternalModItemWithRegex("(?i)bamboobasket");
+            bambooFood = ItemUtils.getExternalModItemWithRegex("(?i)bamboofoods?");
 
             if (bambooBasket != null)
             {

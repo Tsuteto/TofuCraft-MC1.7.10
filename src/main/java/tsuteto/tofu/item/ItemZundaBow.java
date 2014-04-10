@@ -13,14 +13,12 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.EntityZundaArrow;
 import tsuteto.tofu.network.packet.PacketZundaArrowType;
 import tsuteto.tofu.params.DataType;
 import tsuteto.tofu.params.EntityInfo;
+import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.SimplePacketDispatcher;
-import tsuteto.tofu.util.Utils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -249,6 +247,6 @@ public class ItemZundaBow extends ItemBow
 
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
-		return Utils.getCreativeTabs(this);
+		return ItemUtils.getCreativeTabs(this);
 	}
 }

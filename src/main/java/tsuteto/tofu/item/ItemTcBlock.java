@@ -3,7 +3,7 @@ package tsuteto.tofu.item;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTcBlock extends ItemBlock {
 
@@ -13,6 +13,6 @@ public class ItemTcBlock extends ItemBlock {
 
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
-		return Utils.getCreativeTabs(this);
+		return ItemUtils.getCreativeTabs(this);
 	}
 }

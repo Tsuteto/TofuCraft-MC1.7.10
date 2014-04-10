@@ -31,7 +31,7 @@ public class ContainerTfStorage extends ContainerTfMachine
     public ContainerTfStorage(InventoryPlayer invPlayer, TileEntityTfStorage machine)
     {
         this.machine = machine;
-        this.addSlotToContainer(new Slot(machine, TileEntityTfStorage.SLOT_INPUT_ITEM, 45, 22));
+        this.addSlotToContainer(new SlotTfStorage(invPlayer.player, machine, TileEntityTfStorage.SLOT_INPUT_ITEM, 45, 22));
         this.addSlotToContainer(new Slot(machine, TileEntityTfStorage.SLOT_INPUT_CONTAINER_ITEM, 18, 22));
         this.addSlotToContainer(new Slot(machine, TileEntityTfStorage.SLOT_OUTPUT_CONTAINER_ITEM, 45, 51));
         this.addSlotToContainer(new Slot(machine, TileEntityTfStorage.SLOT_OUTPUT_ITEM, 18, 51));

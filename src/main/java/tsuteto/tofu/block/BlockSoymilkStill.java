@@ -22,15 +22,13 @@ public class BlockSoymilkStill extends BlockTcStationary
     @Override
     public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        super.updateTick(par1World, par2, par3, par4, par5Random);
-
         if (par1World.getBlockMetadata(par2, par3, par4) == 0)
         {
             int heat = this.getHeatStrength(par1World, par2, par3, par4);
             
             if (heat == 2)
             {
-                if (par1World.isAirBlock(par2, par3 + 1, par4))
+                if (par1World.isAirBlock(par2, par3 + 1, par4) && par5Random.nextInt(2) == 0)
                 {
                     par1World.setBlock(par2, par3 + 1, par4, TcBlocks.yuba);
                     
@@ -42,6 +40,8 @@ public class BlockSoymilkStill extends BlockTcStationary
                 
             }
         }
+
+        super.updateTick(par1World, par2, par3, par4, par5Random);
     }
 
     @Override

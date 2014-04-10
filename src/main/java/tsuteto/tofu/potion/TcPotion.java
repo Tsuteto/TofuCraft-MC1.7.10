@@ -4,6 +4,8 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import org.apache.logging.log4j.Level;
+import tsuteto.tofu.item.ItemTcFood;
+import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class TcPotion
@@ -23,7 +25,7 @@ public class TcPotion
         {
             id = assignId("glowing", conf);
             glowing = new PotionGlowing(id, false, 0xcccc00).setPotionName("potion.glowing");
-            
+
             id = assignId("filling", conf);
             filling = new PotionFilling(id, false, 0xffa734).setPotionName("potion.filling");
         }
@@ -31,6 +33,17 @@ public class TcPotion
         {
             ModLog.log(Level.WARN, e, e.getLocalizedMessage());
         }
+
+        if (TcPotion.glowing != null)
+        {
+            ((ItemTcFood) TcItems.tofuGlow).setPotionEffect(TcPotion.glowing.id, 240, 0, 1.0F);
+        }
+
+        if (TcPotion.filling != null)
+        {
+            ((ItemTcFood) TcItems.tofuMiso).setPotionEffect(TcPotion.filling.id, 300, 0, 1.0F);
+        }
+
     }
     
     public static int assignId(String confKey, Configuration conf) throws Exception

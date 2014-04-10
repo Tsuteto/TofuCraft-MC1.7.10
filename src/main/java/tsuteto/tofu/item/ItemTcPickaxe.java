@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 import java.util.Set;
 
@@ -14,7 +14,7 @@ public class ItemTcPickaxe extends ItemPickaxe
     public ItemTcPickaxe(ToolMaterial par2EnumToolMaterial)
     {
         super(par2EnumToolMaterial);
-        Utils.tweakToolAttackDamage(this);
+        ItemUtils.tweakToolAttackDamage(this);
     }
 
     @Override
@@ -25,6 +25,6 @@ public class ItemTcPickaxe extends ItemPickaxe
 
     @Override
     public CreativeTabs[] getCreativeTabs() {
-        return Utils.getCreativeTabs(this);
+        return ItemUtils.getCreativeTabs(this);
     }
 }

@@ -35,7 +35,7 @@ public class TcCraftingHandler
     public void onCrafting(PlayerEvent.ItemCraftedEvent event)
     {
         EntityPlayer player = event.player;
-        ItemStack item = event.crafting;
+        ItemStack itemStack = event.crafting;
         IInventory craftMatrix = event.craftMatrix;
 
         boolean isFiltering = false;
@@ -53,7 +53,7 @@ public class TcCraftingHandler
             }
         }
         
-        if (itemsMadeOfBottleContent.contains(item))
+        if (itemsMadeOfBottleContent.contains(itemStack.getItem()))
         {
             for (int var2 = 0; var2 < craftMatrix.getSizeInventory(); ++var2)
             {
@@ -77,7 +77,7 @@ public class TcCraftingHandler
             ItemStack var3 = craftMatrix.getStackInSlot(var2);
             if (var3 != null)
             {                
-                if (durabilityItemRegistry.contains(var3))
+                if (durabilityItemRegistry.contains(var3.getItem()))
                 {
                     ItemStack var4 = new ItemStack(var3.getItem(), var3.stackSize + 1, var3.getItemDamage() + 1);
                     if(var3.getItem().isDamageable() && var3.getItemDamage() >= var3.getMaxDamage())
@@ -119,7 +119,7 @@ public class TcCraftingHandler
             }
         }
 
-        TcAchievementMgr.achieveCraftingItem(item, player);
+        TcAchievementMgr.achieveCraftingItem(itemStack, player);
     }
 
     @SubscribeEvent

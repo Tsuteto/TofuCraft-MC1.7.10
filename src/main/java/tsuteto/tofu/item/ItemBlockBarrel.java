@@ -2,11 +2,8 @@ package tsuteto.tofu.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemReed;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemBlockBarrel extends ItemReed
 {
@@ -17,6 +14,6 @@ public class ItemBlockBarrel extends ItemReed
 
     @Override
     public CreativeTabs[] getCreativeTabs() {
-        return Utils.getCreativeTabs(this);
+        return ItemUtils.getCreativeTabs(this);
     }
 }

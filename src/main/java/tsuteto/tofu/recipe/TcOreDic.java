@@ -1,15 +1,18 @@
-package tsuteto.tofu.item;
+package tsuteto.tofu.recipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.item.ItemFoodSet;
+import tsuteto.tofu.item.ItemGelatin;
+import tsuteto.tofu.item.ItemTcMaterials;
+import tsuteto.tofu.item.TcItems;
 
 public enum TcOreDic
 {
     // === Blocks ===
-    blockTofu(TcBlocks.tofuMomen),
     blockSalt(TcBlocks.salt),
     blockNatto(TcBlocks.natto),
 
@@ -44,7 +47,6 @@ public enum TcOreDic
     blockTfMachineCase(TcBlocks.tfMachineCase),
 
     // === Items ===
-    tofu(TcItems.tofuMomen),
     salt(TcItems.salt),
     nigari(TcItems.nigari),
     leek(TcItems.leek),

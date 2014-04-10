@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 /**
  * Item Registry Class
@@ -24,7 +24,7 @@ public class TcItem extends Item
 
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
-		return Utils.getCreativeTabs(this);
+		return ItemUtils.getCreativeTabs(this);
 	}
 
     public void breakItem(ItemStack itemstack, EntityLivingBase entityLiving)

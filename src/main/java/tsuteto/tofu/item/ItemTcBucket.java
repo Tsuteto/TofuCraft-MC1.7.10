@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.world.World;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTcBucket extends ItemBucket {
     public final Block isFull;
@@ -19,7 +19,7 @@ public class ItemTcBucket extends ItemBucket {
 
 	@Override
 	public CreativeTabs[] getCreativeTabs() {
-		return Utils.getCreativeTabs(this);
+		return ItemUtils.getCreativeTabs(this);
 	}
 
     @Override

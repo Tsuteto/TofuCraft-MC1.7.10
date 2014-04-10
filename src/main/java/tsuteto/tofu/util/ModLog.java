@@ -24,7 +24,7 @@ public class ModLog
         FMLLog.log(modId, level, format, data);
     }
 
-    public static void info(Level level, String format, Object... data)
+    public static void info(String format, Object... data)
     {
         FMLLog.log(modId, Level.INFO, format, data);
     }
