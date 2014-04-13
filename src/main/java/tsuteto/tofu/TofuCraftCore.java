@@ -3,6 +3,7 @@ package tsuteto.tofu;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -39,8 +40,8 @@ import tsuteto.tofu.network.PacketPipeline;
 import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
-import tsuteto.tofu.recipe.TcOreDic;
 import tsuteto.tofu.util.ModLog;
+import tsuteto.tofu.util.UpdateNotification;
 import tsuteto.tofu.village.*;
 import tsuteto.tofu.world.biome.BiomeGenTofuBase;
 import tsuteto.tofu.world.TcChunkProviderEvent;
@@ -57,7 +58,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.5.13-MC1.7.2")
+@Mod(modid = TofuCraftCore.modid, version = "1.5.14-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -65,6 +66,9 @@ public class TofuCraftCore
 
     @Mod.Instance(modid)
     public static TofuCraftCore instance;
+
+    @Mod.Metadata(modid)
+    public static ModMetadata metadata;
 
     @SidedProxy(clientSide = "tsuteto.tofu.TofuCraftCore$ClientProxy", serverSide = "tsuteto.tofu.TofuCraftCore$ServerProxy")
     public static ISidedProxy sidedProxy;
@@ -74,6 +78,7 @@ public class TofuCraftCore
     public static final BiomeDictionary.Type BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[0], new Object[0]);
     public static final CreativeTabs tabTofuCraft = new CreativeTabTofuCraft(modid);
 
+    public static UpdateNotification update = null;
     private Configuration conf;
 
     static
@@ -108,6 +113,13 @@ public class TofuCraftCore
         {
             TcAchievementList.load();
         }
+
+        // Update check!
+        if (Settings.updateCheck)
+        {
+            update = new UpdateNotification();
+            update.checkUpdate();
+        }
     }
 
     @Mod.EventHandler
@@ -127,6 +139,9 @@ public class TofuCraftCore
 
         // Register event on tofu fishing
         MinecraftForge.EVENT_BUS.register(new TofuFishing());
+
+        // Register event on player
+        FMLCommonHandler.instance().bus().register(new EventPlayer());
 
         // Register gui handler
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new TcGuiHandler());
@@ -153,13 +168,6 @@ public class TofuCraftCore
         // Register the Tofu World
         DimensionManager.registerProviderType(Settings.tofuDimNo, WorldProviderTofu.class, false);
         DimensionManager.registerDimension(Settings.tofuDimNo, Settings.tofuDimNo);
-        
-        // Register Tofu World biomes to the Forge Biome Dictionary
-        for (BiomeGenTofuBase biome : TcBiomes.tofuBiomeList)
-        {
-            if (biome != null) BiomeDictionary.registerBiomeType(biome, BIOME_TYPE_TOFU);
-        }
-        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(BIOME_TYPE_TOFU)));
         
         // Tofu Village handler
         BiomeManager.addVillageBiome(TcBiomes.tofuPlains, true);
@@ -227,8 +235,16 @@ public class TofuCraftCore
 
         // Register potion effects
         TcPotion.register(conf);
+
         // Register biomes
         TcBiomes.register(conf);
+        // Register in the Forge Biome Dictionary
+        for (BiomeGenTofuBase biome : TcBiomes.tofuBiomeList)
+        {
+            if (biome != null) BiomeDictionary.registerBiomeType(biome, BIOME_TYPE_TOFU);
+        }
+        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(BIOME_TYPE_TOFU)));
+
 
         packetPipeline.postInitialise();
 
@@ -245,6 +261,12 @@ public class TofuCraftCore
         // To handle spawn of Tofu Creeper ;)
         TofuCreeperSeed.initialize(12L);
         TofuCreeperSeed.instance().initSeed(event.getServer().worldServerForDimension(0).getSeed());
+
+        // Notify if update is available
+        if (update != null && event.getSide() == Side.SERVER)
+        {
+            update.notifyUpdate(event.getServer(), event.getSide());
+        }
     }
 
     public void registerChestLoot(ItemStack loot, int min, int max, int rarity)

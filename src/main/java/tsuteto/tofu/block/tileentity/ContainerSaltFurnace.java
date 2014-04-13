@@ -145,7 +145,7 @@ public class ContainerSaltFurnace extends Container
                         return null;
                     }
                 }
-                else if (par2 >= 3 && par2 < 30)
+                else if (par2 >= 2 && par2 < 29)
                 {
                     if (!this.mergeItemStack(var5, 29, 38, false))
                     {

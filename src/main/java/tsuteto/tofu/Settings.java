@@ -24,6 +24,7 @@ public class Settings
     public static boolean achievement = true;
     public static int clientGlowTofuLightInterval = 2;
     public static int serverGlowTofuLightInterval = 5;
+    public static boolean updateCheck = true;
 
     public static void load(Configuration conf)
     {
@@ -43,12 +44,10 @@ public class Settings
         creativeTab = EnumCreativeTabOptions.values()[conf.get("general", "creativeTab", creativeTab.ordinal(),
                 "Creative tab register shows TofuCraft items and blocks. 0=original tab, 1=sorted into vanilla tabs, 2=both").getInt()];
         achievement = conf.get("general", "achievement", achievement).getBoolean(true);
-        
-        debug = conf.get("general", "debug", debug).getBoolean(false);
-        int i = 10;
-        i++;
-        System.out.println(i);
 
+        updateCheck = conf.get("general", "updateCheck", updateCheck).getBoolean(true);
+
+        debug = conf.get("general", "debug", debug).getBoolean(false);
     }
 
     public enum EnumCreativeTabOptions {

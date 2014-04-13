@@ -405,3 +405,7 @@ entity.Tofunian.name=トーフニアン
 
 commands.tofuslimecheck.found=このチャンクには豆腐スライムが生息しています
 commands.tofuslimecheck.notFound=このチャンクには豆腐スライムはいないようだ
+
+tofucraft.update.server=豆腐Craft %1$sに更新しました! ダウンロード: %2$s
+tofucraft.update.client=§e豆腐Craft§r §a%1$s§rに更新しました! %2$s
+tofucraft.update.link=§nこちらからダウンロード§r

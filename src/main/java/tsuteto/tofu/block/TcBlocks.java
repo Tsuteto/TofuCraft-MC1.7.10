@@ -421,7 +421,7 @@ public class TcBlocks
          * Ore
          */
         // Contained ore is set in TcItem.
-        oreTofu = (BlockTcOre)$("blockOreTofu", new BlockTcOre(1, 5))
+        oreTofu = (BlockTcOre)$("blockOreTofu", new BlockTcOre(2, 5))
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
                 .registerBlock()

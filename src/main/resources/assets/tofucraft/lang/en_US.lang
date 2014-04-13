@@ -406,3 +406,7 @@ entity.Tofunian.name=Tofunian
 commands.tofuslimecheck.usage=/tofuslimecheck
 commands.tofuslimecheck.found=Tofu Slimes habit in this chunk
 commands.tofuslimecheck.notFound=Tofu Slimes cannot be seen in this chunk
+
+tofucraft.update.server=TofuCraft updated to %1$s, available at %2$s
+tofucraft.update.client=§eTofuCraft§r updated to §a%1$s§r! %2$s
+tofucraft.update.link=§nDownload here§r
