@@ -1,6 +1,7 @@
 package tsuteto.tofu.world.biome;
 
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 import tsuteto.tofu.util.ModLog;

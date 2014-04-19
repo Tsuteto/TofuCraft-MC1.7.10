@@ -58,7 +58,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.5.14-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.5.14.1-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -164,7 +164,16 @@ public class TofuCraftCore
             // Ore generation
             MinecraftForge.ORE_GEN_BUS.register(eventhandler);
         }
-        
+
+        // Register biomes
+        TcBiomes.register(conf);
+        // Register in the Forge Biome Dictionary
+        for (BiomeGenTofuBase biome : TcBiomes.tofuBiomeList)
+        {
+            if (biome != null) BiomeDictionary.registerBiomeType(biome, BIOME_TYPE_TOFU);
+        }
+        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(BIOME_TYPE_TOFU)));
+
         // Register the Tofu World
         DimensionManager.registerProviderType(Settings.tofuDimNo, WorldProviderTofu.class, false);
         DimensionManager.registerDimension(Settings.tofuDimNo, Settings.tofuDimNo);
@@ -235,16 +244,6 @@ public class TofuCraftCore
 
         // Register potion effects
         TcPotion.register(conf);
-
-        // Register biomes
-        TcBiomes.register(conf);
-        // Register in the Forge Biome Dictionary
-        for (BiomeGenTofuBase biome : TcBiomes.tofuBiomeList)
-        {
-            if (biome != null) BiomeDictionary.registerBiomeType(biome, BIOME_TYPE_TOFU);
-        }
-        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(BIOME_TYPE_TOFU)));
-
 
         packetPipeline.postInitialise();
 
