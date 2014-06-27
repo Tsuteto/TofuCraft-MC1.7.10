@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.block.tileentity.TileEntitySaltFurnace;
+import tsuteto.tofu.tileentity.TileEntitySaltFurnace;
 
 /**
  * Tofu Force Storage block

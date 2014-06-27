@@ -10,7 +10,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.item.ItemTcMaterials;
 import tsuteto.tofu.item.TcItems;
 
 public class TcFluids
@@ -19,11 +21,21 @@ public class TcFluids
     public static final Fluid SOYMILK_HELL = new Fluid("Hell Soy Milk");
     public static final Fluid SOY_SAUCE = new Fluid("Soy Sauce");
 
+    public static final Fluid NIGARI = new Fluid("Nigari");
+    public static final Fluid MINERAL_SOYMILK = new Fluid("MineralSoymilk");
+    public static final Fluid STRAWBERRY_JAM = new Fluid("StrawberryJam");
+//    public static final Fluid MAGMA_CREAM = new Fluid("Magma Cream");
+
     static
     {
         FluidRegistry.registerFluid(SOYMILK);
         FluidRegistry.registerFluid(SOYMILK_HELL);
         FluidRegistry.registerFluid(SOY_SAUCE);
+
+        FluidRegistry.registerFluid(NIGARI);
+        FluidRegistry.registerFluid(MINERAL_SOYMILK);
+        FluidRegistry.registerFluid(STRAWBERRY_JAM);
+//        FluidRegistry.registerFluid(MAGMA_CREAM);
     }
 
     public static void register(Side side)
@@ -50,6 +62,27 @@ public class TcFluids
                 .setUnlocalizedName(TcBlocks.soySauceStill.getUnlocalizedName());
         FluidContainerRegistry.registerFluidContainer(SOY_SAUCE,
                 new ItemStack(TcItems.bucketSoySauce), FluidContainerRegistry.EMPTY_BUCKET);
+
+        // Nigari
+        NIGARI.setUnlocalizedName("tofucraft:nigari");
+        FluidContainerRegistry.registerFluidContainer(new FluidStack(NIGARI, 10),
+                new ItemStack(TcItems.nigari), FluidContainerRegistry.EMPTY_BOTTLE);
+
+        // Mineral Soymilk
+        MINERAL_SOYMILK.setUnlocalizedName("tofucraft:mineralSoymilk");
+        FluidContainerRegistry.registerFluidContainer(new FluidStack(MINERAL_SOYMILK, 100),
+                new ItemStack(TcItems.materials, 1, ItemTcMaterials.mineralSoymilk.id), FluidContainerRegistry.EMPTY_BOTTLE);
+
+        // Strawberry Jam
+        STRAWBERRY_JAM.setUnlocalizedName("tofucraft:strawberryJam");
+        FluidContainerRegistry.registerFluidContainer(new FluidStack(STRAWBERRY_JAM, 500),
+                new ItemStack(TcItems.strawberryJam), FluidContainerRegistry.EMPTY_BOTTLE);
+
+        // Magma cream
+//        MAGMA_CREAM.setUnlocalizedName(Items.magma_cream.getUnlocalizedName());
+//
+//        FluidContainerRegistry.registerFluidContainer(MAGMA_CREAM,
+//                new ItemStack(Items.magma_cream), FluidContainerRegistry.EMPTY_BUCKET);
     }
 
     @SubscribeEvent

@@ -2,9 +2,12 @@ package tsuteto.tofu.item;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ItemCraftingDurability extends TcItem implements ICraftingDurability
 {
+    public ItemStack emptyItem = new ItemStack(Items.glass_bottle);
+
     public ItemCraftingDurability()
     {
         super();
@@ -12,10 +15,17 @@ public class ItemCraftingDurability extends TcItem implements ICraftingDurabilit
         this.setMaxStackSize(1);
     }
 
-    @Override
-    public Item getEmptyItem()
+    public ItemCraftingDurability setEmptyItem(ItemStack itemStack)
     {
-        return Items.glass_bottle;
+        this.emptyItem = itemStack;
+        return this;
+    }
+
+    @Override
+    public ItemStack getEmptyItem()
+    {
+        // Don't set container item here!
+        return emptyItem.copy();
     }
 
 }

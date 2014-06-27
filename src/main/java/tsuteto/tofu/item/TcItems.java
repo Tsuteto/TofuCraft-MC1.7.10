@@ -124,6 +124,10 @@ public class TcItems
     public static Item tofuMiso;
     public static Item barrelMisoTofu;
     public static Item barrelGlowtofu;
+    public static Item barrelAdvTofuGem;
+    public static Item mineralSoymilk;
+    public static Item somenTsuyuBowl;
+
     // === External Mod Items ===
     public static Item plantBall; // from IC2
     public static Item bambooFood; // from Bamboo Mod
@@ -280,6 +284,7 @@ public class TcItems
         // Nigari
         nigari = $("nigari", new ItemNigari())
                 .register()
+                .setContainerItem(Items.glass_bottle)
                 .setCreativeTab(CreativeTabs.tabMaterials);
 
         // Tofu Cake
@@ -498,6 +503,15 @@ public class TcItems
         barrelGlowtofu = $("barrelGlowtofu", new ItemBlockBarrel(TcBlocks.barrelGlowtofu))
                 .register()
                 .setCreativeTab(CreativeTabs.tabDecorations);
+
+        barrelAdvTofuGem = $("barrelAdvTofuGem", new ItemBlockBarrel(TcBlocks.barrelAdvTofuGem))
+                .register()
+                .setCreativeTab(CreativeTabs.tabDecorations);
+
+        somenTsuyuBowl = $("somenTsuyuBowlGl", new ItemSomenTsuyuBowl(2, 0.1F, false))
+                .withResource("tsuyuBowl_glass")
+                .register()
+                .setCreativeTab(CreativeTabs.tabMaterials);
 
         /*
          * === Material Items - Added as of 1.4 ===

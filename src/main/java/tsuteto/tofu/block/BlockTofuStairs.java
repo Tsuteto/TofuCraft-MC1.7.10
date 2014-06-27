@@ -9,8 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 
 public class BlockTofuStairs extends BlockStairs
 {

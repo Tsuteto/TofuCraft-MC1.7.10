@@ -2,6 +2,7 @@ package tsuteto.tofu.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 
 public class TcBlock extends Block
 {
@@ -41,6 +42,12 @@ public class TcBlock extends Block
     public TcBlock setLightLevel(float f)
     {
         super.setLightLevel(f);
+        return this;
+    }
+
+    public TcBlock setCreativeTab(CreativeTabs tab)
+    {
+        super.setCreativeTab(tab);
         return this;
     }
 

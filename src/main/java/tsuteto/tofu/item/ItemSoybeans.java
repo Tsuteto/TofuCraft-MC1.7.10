@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.util.ItemUtils;
 

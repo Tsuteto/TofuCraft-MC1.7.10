@@ -28,11 +28,13 @@ public abstract class BlockFermentable extends TcBlock
 
         if (this.checkEnvironment(par1World, par2, par3, par4))
         {
-            int fermStep = getFermStep(par1World.getBlockMetadata(par2, par3, par4));
+            int meta = par1World.getBlockMetadata(par2, par3, par4);
+            int fermStep = getFermStep(meta);
+            int extra = meta & 8;
 
             if (fermStep < 7 && par5Random.nextInt(fermRate) == 0)
             {
-                par1World.setBlockMetadataWithNotify(par2, par3, par4, ++fermStep, 3);
+                par1World.setBlockMetadataWithNotify(par2, par3, par4, ++fermStep | extra, 3);
             }
         }
     }
@@ -72,8 +74,8 @@ public abstract class BlockFermentable extends TcBlock
     @Override
     public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
-        int metadata = this.getFermStep(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
-        return metadata == 7 ? 0xcb944b : 0xffffff;
+        int step = this.getFermStep(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+        return step == 7 ? 0xcb944b : 0xffffff;
     }
 
 }

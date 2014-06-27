@@ -21,11 +21,11 @@ import java.util.List;
 public class ItemUtils
 {
     /**
-     * Unites items registered with each name in OreDictionary into a name
+     * Integrates items registered with each name on OreDictionary into the specified one
      * @param name
      * @param targets
      */
-    public static void uniteOreItems(String name, String... targets)
+    public static void integrateOreItems(String name, String... targets)
     {
         List<ItemStack> itemsRegistered = Lists.newArrayList();
 

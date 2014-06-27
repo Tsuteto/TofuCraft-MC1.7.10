@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import tsuteto.tofu.api.recipe.TcOreDic;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.TcEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -18,14 +19,15 @@ import tsuteto.tofu.util.ItemUtils;
 public class Recipes
 {
     private static final int DMG_WILDCARD = OreDictionary.WILDCARD_VALUE;
-    private static final String oredic_wheatRice = "wheatRice";
-    private static final String oredic_rice = "rice";
+    private static final String oredic_cookingRice = "cookingRice";
 
     public static void unifyOreDicItems()
     {
-        ItemUtils.uniteOreItems("salt", "itemSalt", "oreSalt", "Salt");
-        ItemUtils.uniteOreItems("tofuMomen", "tofu", "Tofu", "itemTofu");
-        ItemUtils.uniteOreItems("blockTofuMomen", "blockTofu");
+        ItemUtils.integrateOreItems("salt", "itemSalt", "oreSalt", "Salt");
+        ItemUtils.integrateOreItems("tofuMomen", "tofu", "Tofu", "itemTofu");
+        ItemUtils.integrateOreItems("blockTofuMomen", "blockTofu");
+        ItemUtils.integrateOreItems("rollingPin", "itemRollingPin");
+        ItemUtils.integrateOreItems("cookingRice", "cookedRice", "riceCooked", "itemRiceCooked", "wheatRice");
     }
 
     public static void register()
@@ -544,10 +546,18 @@ public class Recipes
         // Natto Hiyayakko
         addShapelessSharedRecipe(new ItemStack(TcItems.nattoHiyayakko),
                 TcOreDic.tofuKinu,
-                TcItems.natto,
-                TcItems.leek,
-                new ItemStack(TcItems.bottleSoySauce, 1, 0x7fff),
+                TcOreDic.natto,
+                TcOreDic.leek,
+                TcOreDic.bottleSoySauce,
                 Items.bowl
+        );
+
+        addShapelessSharedRecipe(new ItemStack(TcItems.nattoHiyayakko),
+                TcOreDic.tofuKinu,
+                TcOreDic.natto,
+                TcOreDic.leek,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.glassBowl
         );
 
         // Minced Potato
@@ -794,12 +804,6 @@ public class Recipes
                 Items.bowl
         );
 
-        // Strawberry Tofu
-        addShapelessSharedRecipe(new ItemStack(TcItems.tofuStrawberry),
-                TcOreDic.tofuMomen,
-                TcOreDic.strawberryJam
-        );
-
         // Tofu Creeper Egg
         addSharedRecipe(new ItemStack(Items.spawn_egg, 1, TcEntity.entityIdTofuCreeper),
                 " G ",
@@ -838,21 +842,23 @@ public class Recipes
         // Negi Hiyayakko
         addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakko.id),
                 TcOreDic.tofuKinu,
-                TcItems.leek,
-                new ItemStack(TcItems.bottleSoySauce, 1, DMG_WILDCARD),
+                TcOreDic.leek,
+                TcOreDic.bottleSoySauce,
                 Items.bowl
+        );
+
+        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakko.id),
+                TcOreDic.tofuKinu,
+                TcOreDic.leek,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.glassBowl
         );
 
         // Natto rice
         addShapelessSharedRecipe(new ItemStack(TcItems.riceNatto),
                 TcOreDic.bottleSoySauce,
                 TcOreDic.natto,
-                oredic_wheatRice
-        );
-        addShapelessSharedRecipe(new ItemStack(TcItems.riceNatto),
-                TcOreDic.bottleSoySauce,
-                TcOreDic.natto,
-                oredic_rice
+                oredic_cookingRice
         );
 
         // Natto rice with leek
@@ -860,32 +866,16 @@ public class Recipes
                 TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
                 TcOreDic.natto,
-                oredic_wheatRice
-        );
-        addShapelessSharedRecipe(new ItemStack(TcItems.riceNattoLeek),
-                TcOreDic.leek,
-                TcOreDic.bottleSoySauce,
-                TcOreDic.natto,
-                oredic_rice
+                oredic_cookingRice
         );
 
         // Tofu Rice
         addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.riceTofu.id),
                 TcOreDic.tofuKinu,
-                TcItems.leek,
+                TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
-                oredic_wheatRice
+                oredic_cookingRice
         );
-        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.riceTofu.id),
-                TcOreDic.tofuKinu,
-                TcItems.leek,
-                TcOreDic.bottleSoySauce,
-                oredic_rice
-        );
-
-        // Natto rice
-
-        // Natto rice with leek
 
         // Tofu Hamburg (Raw)
         addSharedRecipe(new ItemStack(TcItems.materials, 3, ItemTcMaterials.tofuHamburgRaw.id),
@@ -933,7 +923,42 @@ public class Recipes
                 'T', TcOreDic.tofuMomen,
                 'B', TcOreDic.barrel
         );
-        
+
+        // Glass bowl
+        addSharedRecipe(new ItemStack(TcItems.materials, 2, ItemTcMaterials.glassBowl.id),
+                "P P",
+                " P ",
+                'P', Blocks.glass_pane
+        );
+
+        // Tofu somen
+        addShapelessSharedRecipe(new ItemStack(TcItems.materials, 4, ItemTcMaterials.tofuSomen.id),
+                TcOreDic.rollingPin,
+                TcOreDic.tofuKinu,
+                TcOreDic.starch,
+                TcOreDic.salt
+        );
+
+        // Tofu somen bowl
+        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.tofuSomen.id),
+                TcOreDic.tofuSomen,
+                TcOreDic.dashi,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.glassBowl
+        );
+
+        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.tofuSomen.id),
+                TcOreDic.tofuSomen,
+                TcOreDic.somenTsuyuBowl
+        );
+
+        // Somen tsuyu bowl
+        addShapelessSharedRecipe(TcItems.somenTsuyuBowl,
+                TcOreDic.dashi,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.glassBowl
+        );
+
         // TF Machine Case
         addSharedRecipe(TcBlocks.tfMachineCase,
                 "TTT",
@@ -952,8 +977,8 @@ public class Recipes
                 " T ",
                 "RGR",
                 " T ",
-                'T', TcItems.tofuMetal,
-                'G', new ItemStack(TcItems.materials, 1, ItemTcMaterials.tofuGem.id),
+                'T', TcOreDic.tofuMetal,
+                'G', TcOreDic.tofuGem,
                 'R', Items.redstone
         );
         
@@ -961,11 +986,136 @@ public class Recipes
         addSharedRecipe(TcBlocks.tfStorageIdle,
                 "CCC",
                 "GMG",
-                'C', new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id),
-                'M', TcBlocks.tfMachineCase,
+                'C', TcOreDic.tfCapacitor,
+                'M', TcOreDic.blockTfMachineCase,
                 'G', Blocks.glass
         );
-        
+
+        // Mineral soymilk
+        addShapelessSharedRecipe(new ItemStack(TcItems.materials, 1, ItemTcMaterials.mineralSoymilk.id),
+                TcOreDic.tofuGem,
+                TcOreDic.tofuGem,
+                TcOreDic.tofuGem,
+                Items.redstone,
+                Items.redstone,
+                Items.redstone,
+                Items.glass_bottle
+        );
+
+        // Rolling Pin
+        addSharedRecipe(new ItemStack(TcItems.materials, 1, ItemTcMaterials.rollingPin.id),
+                "  /",
+                " P ",
+                "/  ",
+                '/', Items.stick,
+                'P', Blocks.planks
+        );
+
+        // TF Circuit Board
+        addSharedRecipe(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCircuit.id),
+                "RTR",
+                "___",
+                'R', Items.redstone,
+                'T', TcOreDic.tofuKinu,
+                '_', TcOreDic.blockTofuIshi
+        );
+
+        // TF Coil
+        addSharedRecipe(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCoil.id),
+                "SSS",
+                "TTT",
+                "SSS",
+                'S', TcOreDic.tofuSomen,
+                'T', TcOreDic.tofuIshi
+        );
+
+        // TF Oscillator
+        addSharedRecipe(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfOscillator.id),
+                "TQT",
+                "M M",
+                'T', TcItems.tofuKinu,
+                'Q', Items.quartz,
+                'M', TcItems.tofuMetal
+        );
+
+        // Adv Tofu Gem Block
+        addSharedRecipe(TcBlocks.advTofuGem,
+                "GGG",
+                "GGG",
+                "GGG",
+                'G', TcOreDic.advTofuGem
+        );
+
+        // TF Antenna
+        addSharedRecipe(TcBlocks.tfAntenna,
+                " Y ",
+                "CXA",
+                "_B_",
+                'Y', TcOreDic.leek,
+                'C', TcOreDic.tfCoil,
+                'X', TcOreDic.tfOscillator,
+                'A', TcOreDic.tfCapacitor,
+                'B', TcOreDic.tfCircuitBoard,
+                '_', TcOreDic.tofuMetal
+        );
+
+        // TF Reformer
+        addSharedRecipe(TcBlocks.tfReformerIdle,
+                "CXC",
+                "TBT",
+                " M ",
+                'C', TcOreDic.tfCoil,
+                'X', TcOreDic.tfOscillator,
+                'B', TcOreDic.tfCircuitBoard,
+                'T', TcOreDic.blockTofuDried
+                );
+
+        // TF Condenser
+        addSharedRecipe(TcBlocks.tfCondenserIdle,
+                "PHP",
+                "SDR",
+                'H', Blocks.hopper,
+                'P', Blocks.piston,
+                'S', TcBlocks.tfStorageIdle,
+                'D', TcOreDic.blockAdvTofuGem,
+                'R', TcBlocks.tfReformerIdle
+        );
+
+        // TF Oven
+        addSharedRecipe(TcBlocks.tfOvenIdle,
+                "XHA",
+                "CGC",
+                " M ",
+                'H', TcOreDic.activatedHellTofu,
+                'X', TcOreDic.tfOscillator,
+                'A', TcOreDic.tfCapacitor,
+                'C', Blocks.hardened_clay,
+                'G', Blocks.glass,
+                'M', TcOreDic.blockTfMachineCase
+        );
+
+        // TF Collector
+        addSharedRecipe(TcBlocks.tfCollector,
+                "H H",
+                "GBG",
+                " M ",
+                'H', Blocks.hopper,
+                'G', TcOreDic.activatedTofuGem,
+                'B', TcOreDic.tfCircuitBoard,
+                'M', TcOreDic.blockTfMachineCase
+        );
+
+        // TF Saturator
+        addSharedRecipe(TcBlocks.tfSaturatorIdle,
+                "TTT",
+                "TGT",
+                "TMT",
+                'T', TcOreDic.blockTofuDried,
+                'G', TcOreDic.advTofuGem,
+                'M', TcOreDic.blockTofuMetal
+        );
+
+
         /*
          * Stairs Blocks
          */

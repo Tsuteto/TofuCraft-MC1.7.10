@@ -13,10 +13,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.entity.EntityTofuSlime;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketTofuRadar;
 import tsuteto.tofu.params.DataType;
 import tsuteto.tofu.params.EntityInfo;
-import tsuteto.tofu.util.SimplePacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -80,7 +80,7 @@ public class ItemTofuSlimeRadar extends TcItem
                 BiomeGenBase biome = par3EntityPlayer.worldObj.getBiomeGenForCoords(MathHelper.floor_double(par3EntityPlayer.posX), MathHelper.floor_double(par3EntityPlayer.posZ));
                 boolean isSpawnChunk = BiomeDictionary.isBiomeOfType(biome, TofuCraftCore.BIOME_TYPE_TOFU) || EntityTofuSlime.isSpawnChunk(par3EntityPlayer.worldObj, par3EntityPlayer.posX, par3EntityPlayer.posZ);
 
-                SimplePacketDispatcher.packet(new PacketTofuRadar(isSpawnChunk))
+                PacketDispatcher.packet(new PacketTofuRadar(isSpawnChunk))
                         .sendToPlayer((EntityPlayerMP)par3EntityPlayer);
             }
 

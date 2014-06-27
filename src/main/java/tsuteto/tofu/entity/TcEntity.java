@@ -1,23 +1,19 @@
 package tsuteto.tofu.entity;
 
-import com.google.common.collect.Lists;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.block.tileentity.TileEntityMorijio;
-import tsuteto.tofu.block.tileentity.TileEntityMorijioRenderer;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
+import tsuteto.tofu.tileentity.TileEntityMorijioRenderer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import tsuteto.tofu.tileentity.TileEntityTfAntenna;
+import tsuteto.tofu.tileentity.TileEntityTfAntennaRenderer;
 
 public class TcEntity
 {
@@ -49,9 +45,6 @@ public class TcEntity
         // Fukumame
         EntityRegistry.registerModEntity(EntityFukumame.class, "Fukumame", 3, core, 64, 2, true);
 
-        // Tofu Splash
-        //EntityRegistry.registerModEntity(EntityTofuSplash.class, "TofuSplash", x, core, 32, 1, true);
-
         allBiomesList = (BiomeGenBase[]) BiomeGenBase.explorationBiomesList.toArray(new BiomeGenBase[0]);
     }
 
@@ -65,12 +58,12 @@ public class TcEntity
     public static void registerEntityRenderer()
     {
         ClientRegistry.registerTileEntity(TileEntityMorijio.class, "TmMorijio", new TileEntityMorijioRenderer());
+        ClientRegistry.registerTileEntity(TileEntityTfAntenna.class, "TcTfAntenna", new TileEntityTfAntennaRenderer());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityZundaArrow.class, new RenderZundaArrow());
         RenderingRegistry.registerEntityRenderingHandler(EntityFukumame.class, new RenderFukumame());
         RenderingRegistry.registerEntityRenderingHandler(EntityTofuSlime.class, new RenderTofuSlime(new ModelSlime(16), new ModelSlime(0), 0.25F));
         RenderingRegistry.registerEntityRenderingHandler(EntityTofuCreeper.class, new RenderTofuCreeper());
         RenderingRegistry.registerEntityRenderingHandler(EntityTofunian.class, new RenderTofunian());
-        //RenderingRegistry.registerEntityRenderingHandler(EntityTofuSplash.class, new RenderTofuSplash());
     }
 }

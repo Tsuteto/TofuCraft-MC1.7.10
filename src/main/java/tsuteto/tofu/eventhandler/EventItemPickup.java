@@ -2,7 +2,7 @@ package tsuteto.tofu.eventhandler;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
-import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
 
 public class EventItemPickup
 {

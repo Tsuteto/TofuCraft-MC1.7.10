@@ -14,11 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import tsuteto.tofu.entity.EntityZundaArrow;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketZundaArrowType;
 import tsuteto.tofu.params.DataType;
 import tsuteto.tofu.params.EntityInfo;
 import tsuteto.tofu.util.ItemUtils;
-import tsuteto.tofu.util.SimplePacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -132,7 +132,7 @@ public class ItemZundaBow extends ItemBow
         {
             par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
 
-            SimplePacketDispatcher.packet(
+            PacketDispatcher.packet(
                     new PacketZundaArrowType(par3EntityPlayer.getEntityId(), arrowType))
                     .sendPacketToAllPlayers();
             EntityInfo.instance().set(par3EntityPlayer.getEntityId(), DataType.ZundaArrowType, arrowType);

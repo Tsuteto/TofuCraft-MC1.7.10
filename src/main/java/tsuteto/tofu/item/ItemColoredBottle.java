@@ -1,6 +1,7 @@
 package tsuteto.tofu.item;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
@@ -9,7 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemColoredBottle extends TcItem
 {
     private int liquidColor;
-    private IIcon iconContents;
+    private IIcon iconContent;
 
     public ItemColoredBottle(int color)
     {
@@ -21,8 +22,8 @@ public class ItemColoredBottle extends TcItem
     {
         super();
         this.setNoRepair();
+        // Don't set any container items!
     }
-
 
     /**
      * Gets an icon index based on an item's damage value and the given render pass
@@ -31,7 +32,7 @@ public class ItemColoredBottle extends TcItem
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamageForRenderPass(int par1, int par2)
     {
-        return par2 == 0 ? this.iconContents : super.getIconFromDamageForRenderPass(par1, par2);
+        return par2 == 0 ? this.iconContent : super.getIconFromDamageForRenderPass(par1, par2);
     }
 
     @Override
@@ -59,6 +60,6 @@ public class ItemColoredBottle extends TcItem
     public void registerIcons(IIconRegister par1IconRegister)
     {
         this.itemIcon = par1IconRegister.registerIcon("potion_bottle_drinkable");
-        this.iconContents = par1IconRegister.registerIcon("potion_overlay");
+        this.iconContent = par1IconRegister.registerIcon("potion_overlay");
     }
 }

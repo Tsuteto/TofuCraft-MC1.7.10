@@ -9,8 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.util.ModLog;
 
 public class BlockTofu extends BlockTofuBase
@@ -47,6 +47,16 @@ public class BlockTofu extends BlockTofuBase
         this.drainRate = rate;
         this.setTickRandomly(true);
         return this;
+    }
+
+    public boolean canDrain()
+    {
+        return this.canDrain;
+    }
+
+    public int getDrainRate()
+    {
+        return drainRate;
     }
 
     /**
@@ -119,47 +129,16 @@ public class BlockTofu extends BlockTofuBase
 
         if (isFragile || canDrain)
         {
-            Block weightBlock = par1World.getBlock(par2, par3 + 1, par4);
-
-            if (weightBlock != null)
-            {
-               if (weightBlock.getMaterial() == Material.rock || weightBlock.getMaterial() == Material.iron)
-               {
-
-                   int drainStep = par1World.getBlockMetadata(par2, par3, par4);
-
-                    if (isFragile)
-                    {
-                        dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
-                        par1World.setBlockToAir(par2, par3, par4);
-                    }
-                    else if (canDrain)
-                    {
-                        if (drainStep < 7 && par5Random.nextInt((drainRate)) == 0)
-                        {
-                            ++drainStep;
-                            ModLog.debug(drainStep);
-                            par1World.setBlockMetadataWithNotify(par2, par3, par4, drainStep, 2);
-                        }
-                        else if (drainStep == 7 && par5Random.nextInt((2 * drainRate)) == 0)
-                        {
-                            Block newBlock;
-                            if (this == TcBlocks.tofuMomen)
-                            {
-                                newBlock = TcBlocks.tofuIshi;
-                            }
-                            else if (this == TcBlocks.tofuIshi)
-                            {
-                                newBlock = TcBlocks.tofuMetal;
-                            }
-                            else
-                            {
-                                newBlock = this;
-                            }
-
-                            par1World.setBlock(par2, par3, par4, newBlock, 0, 3);
-                        }
-                    }
+           if (isUnderWeight(par1World, par2, par3, par4))
+           {
+                if (isFragile)
+                {
+                    dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
+                    par1World.setBlockToAir(par2, par3, par4);
+                }
+                else if (canDrain)
+                {
+                    this.drainOneStep(par1World, par2, par3, par4, par5Random);
                 }
             }
         }
@@ -180,6 +159,53 @@ public class BlockTofu extends BlockTofuBase
                 }
             }
         }
+    }
+
+    public boolean isUnderWeight(World world, int x, int y, int z)
+    {
+        Block weightBlock = world.getBlock(x, y + 1, z);
+        Block baseBlock = world.getBlock(x, y - 1, z);
+
+        boolean isWeightValid = weightBlock != null
+                && (weightBlock.getMaterial() == Material.rock || weightBlock.getMaterial() == Material.iron);
+
+        float baseHardness = baseBlock.getBlockHardness(world, x, y - 1, z);
+        boolean isBaseValid = baseBlock != null
+                && baseBlock.isNormalCube()
+                && (baseHardness >= 1.0F || baseHardness < 0.0F);
+
+        return isWeightValid && isBaseValid;
+    }
+
+    public void drainOneStep(World par1World, int par2, int par3, int par4, Random par5Random)
+    {
+        int drainStep = par1World.getBlockMetadata(par2, par3, par4);
+
+        if (drainStep < 7 && par5Random.nextInt((drainRate)) == 0)
+        {
+            ++drainStep;
+            ModLog.debug(drainStep);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, drainStep, 2);
+        }
+        else if (drainStep == 7 && par5Random.nextInt((2 * drainRate)) == 0)
+        {
+            Block newBlock;
+            if (this == TcBlocks.tofuMomen)
+            {
+                newBlock = TcBlocks.tofuIshi;
+            }
+            else if (this == TcBlocks.tofuIshi)
+            {
+                newBlock = TcBlocks.tofuMetal;
+            }
+            else
+            {
+                newBlock = this;
+            }
+
+            par1World.setBlock(par2, par3, par4, newBlock, 0, 3);
+        }
+
     }
 
 //    @SideOnly(Side.CLIENT)

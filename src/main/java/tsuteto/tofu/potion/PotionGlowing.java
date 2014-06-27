@@ -4,10 +4,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.potion.Potion;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.glowtofu.GlowingHandler;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketGlowingFinish;
-import tsuteto.tofu.util.SimplePacketDispatcher;
 
 public class PotionGlowing extends Potion
 {
@@ -37,7 +36,7 @@ public class PotionGlowing extends Potion
         
         GlowingHandler.removeLight(par1EntityLivingBase.worldObj, par1EntityLivingBase);
         
-        SimplePacketDispatcher.packet(new PacketGlowingFinish(par1EntityLivingBase.getEntityId()))
+        PacketDispatcher.packet(new PacketGlowingFinish(par1EntityLivingBase.getEntityId()))
                 .sendToAllInDimension(par1EntityLivingBase.dimension);
     }
     

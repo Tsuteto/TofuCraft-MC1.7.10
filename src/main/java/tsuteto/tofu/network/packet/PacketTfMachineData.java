@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
-import tsuteto.tofu.block.tileentity.ContainerTfMachine;
+import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.network.AbstractPacket;
 
 public class PacketTfMachineData extends AbstractPacket

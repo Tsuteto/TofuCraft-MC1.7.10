@@ -6,7 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TcAchievement;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TriggerItem;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.util.ModLog;
@@ -23,8 +26,8 @@ public class TcAchievementList
          * -A - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
          * -9 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
          * -8 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-         * -7 - - - - - - - - - A * - - - - - * A * A - - - - - - - - - - -
-         * -6 - - - - - - - - - - A * * - * * A * * A - - - - - - - - - - -
+         * -7 - - - - - - - - - A * - - - - - * A * A - # # - - - - - - - -
+         * -6 - - - - - - - - - - A * * - * * A * * A - # # - - - - - - - -
          * -5 - - - - - - - - - A - - * - * - * A * A - - - - - - - - - - -
          * -4 - - - - - - - - - - - - * - A - - * * A - - * * A * A - - - -
          * -3 - - - - - A * A * - - - * - * - - - - - - - * - * * A - - - -
@@ -42,7 +45,10 @@ public class TcAchievementList
          *  9 - - - - - - - - - - - B * * * - - * - - - D * - - - - * - - -
          *  A - - - - - - - - - - - - - - - - - * - - - * - - - D * * - - -
          *  B - - - - - - - - - - - - - - - - - E - - - * * D - - - * - - -
-         *  C - - - - - - - - - - - - - - - - - - - - - - - - - - - D - - -
+         *  C - - - - - - - - - - - - - - - - - - - - - - - * - - - D - - -
+         *  D - - - - - - - - - - - - - - - - - - - - - - - D - - - - - - -
+         *  E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+         *  F - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
          *  Y
          */
 
@@ -116,19 +122,19 @@ public class TcAchievementList
                 .registerStat();
 
         // === Various tofu ===
-        TcAchievement.create(Key.strawberryTofu, 10, 1, TcItems.tofuStrawberry, Key.momenTofu)
-                .setTriggerItemCrafting(new ItemStack(TcItems.tofuStrawberry))
+        TcAchievement.create(Key.strawberryTofu, 11, 11, TcItems.tofuStrawberry, Key.tfCondenser)
+                .setTriggerTfCondenser(new ItemStack(TcItems.tofuStrawberry))
                 .registerStat();
 
-        TcAchievement.create(Key.sesameTofu, 5, 6, TcItems.tofuSesame, null)
+        TcAchievement.create(Key.sesameTofu, 7, -7, TcItems.tofuSesame, null)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuSesame))
                 .registerStat();
 
-        TcAchievement.create(Key.eggTofu, 4, 7, TcItems.tofuEgg, null)
+        TcAchievement.create(Key.eggTofu, 6, -7, TcItems.tofuEgg, null)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuEgg))
                 .registerStat();
 
-        TcAchievement.create(Key.anninTofu, 5, 7, TcItems.tofuAnnin, null)
+        TcAchievement.create(Key.anninTofu, 6, -6, TcItems.tofuAnnin, null)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuAnnin))
                 .registerStat();
 
@@ -326,45 +332,87 @@ public class TcAchievementList
                 .registerStat();
 
         // === Tofu World ===
-        TcAchievement.create(Key.tofuGem, 7, 4, new ItemStack(TcItems.materials, 1, ItemTcMaterials.tofuGem.id), null)
+        TcAchievement.create(Key.tofuGem, 8, 4, new ItemStack(TcItems.materials, 1, ItemTcMaterials.tofuGem.id), null)
                 .setTriggerItemPickup(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tofuGem.id))
                 .registerStat();
 
-        TcAchievement.create(Key.tofuSlimeRadar, 9, 4, TcItems.tofuRadar, Key.tofuGem)
+        TcAchievement.create(Key.tofuSlimeRadar, 12, 4, TcItems.tofuRadar, Key.tofuGem)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuRadar))
                 .registerStat();
 
-        TcAchievement.create(Key.tofuSlimeHunter, 9, 6, TcItems.swordKinu, Key.tofuSlimeRadar)
+        TcAchievement.create(Key.tofuSlimeHunter, 14, 4, TcItems.swordKinu, Key.tofuSlimeRadar)
                 .registerStat();
 
-        TcAchievement.create(Key.tofuStick, 11, 7, TcItems.tofuStick, Key.tofuSlimeHunter)
+        TcAchievement.create(Key.tofuStick, 14, 7, TcItems.tofuStick, Key.tofuSlimeHunter)
                 .setTriggerItemPickup(new ItemStack(TcItems.tofuStick))
                 .registerStat();
 
         // When: The player traveled to the Tofu World
-        TcAchievement.create(Key.tofuWorld, 12, 8, TcBlocks.tofuMomen, Key.tofuStick)
+        TcAchievement.create(Key.tofuWorld, 15, 8, TcBlocks.tofuMomen, Key.tofuStick)
                 .registerStat();
 
-        TcAchievement.create(Key.tofuFishing, 10, 10, Items.fishing_rod, Key.tofuWorld)
+        TcAchievement.create(Key.tofuFishing, 17, 10, Items.fishing_rod, Key.tofuWorld)
                 .setTriggerItemPickup(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.tofufishRow.id))
                 .registerStat();
 
-        TcAchievement.create(Key.tofunian, 12, 12, TcItems.tofuKinu, Key.tofuWorld)
+        TcAchievement.create(Key.tofunian, 15, 12, TcItems.tofuKinu, Key.tofuWorld)
                 .setSpecial()
                 .registerStat();
 
         // === Tofu Force ===
-        TcAchievement.create(Key.tfCapacitor, 7, 7, new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id), Key.tofuGem)
+        TcAchievement.create(Key.tfCapacitor, 6, 7, new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id), Key.tofuGem)
                 .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id))
+                .registerStat();
+
+        TcAchievement.create(Key.tfAntenna, 6, 5, TcBlocks.tfAntenna, Key.tfCapacitor)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfAntenna))
+                .registerStat();
+
+        TcAchievement.create(Key.highPowerGem, 8, 10, new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id), Key.tofuGem)
+                .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id))
                 .registerStat();
 
         TcAchievement.create(Key.tfStorage, 6, 9, TcBlocks.tfStorageIdle, Key.tfCapacitor)
                 .setTriggerItemCrafting(new ItemStack(TcBlocks.tfStorageIdle))
                 .registerStat();
 
-        // When: Put an element item of TF on the input slot of TF Storage
-        TcAchievement.create(Key.tofuForce, 8, 11, TcBlocks.tfStorageActive, Key.tfStorage)
+        TcAchievement.create(Key.tfReformer, 5, 9, TcBlocks.tfReformerActive, Key.koyatofu)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfReformerIdle))
                 .registerStat();
+
+        // When: Put an element item of TF on the input slot of TF Storage
+        TcAchievement.create(Key.tofuForce, 6, 11, TcBlocks.tfStorageActive, Key.tfStorage)
+                .registerStat();
+
+        TcAchievement.create(Key.tfSaturator, 10, 10, TcBlocks.tfSaturatorActive, Key.highPowerGem)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfSaturatorIdle))
+                .registerStat();
+
+        TcAchievement.create(Key.tfCondenser, 9, 11, TcBlocks.tfCondenserActive, Key.tofuForce)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfCondenserIdle))
+                .registerStat();
+
+        TcAchievement.create(Key.tofuActivation, 8, 13, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedTofuGem.id), Key.tfCondenser)
+                .setTriggerTfCondenser(new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedTofuGem.id))
+                .registerStat();
+
+        TcAchievement.create(Key.hellTofuActivation, 10, 13, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id), Key.tfCondenser)
+                .setTriggerTfCondenser(new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id))
+                .registerStat();
+
+        TcAchievement.create(Key.tfOven, 10, 14, TcBlocks.tfOvenActive, Key.hellTofuActivation)
+                .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id))
+                .registerStat();
+
+        TcAchievement.create(Key.tfCollector, 8, 14, TcBlocks.tfCollector, Key.tofuActivation)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfCollector))
+                .registerStat();
+
+        // When: 64 activated hell tofu in TF Oven's slot
+        TcAchievement.create(Key.ultimateOven, 10, 16, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id), Key.tfOven)
+                .setSpecial()
+                .registerStat();
+
 
         // Add a new achievement page for the mod
         Achievement[] array = TcAchievementMgr.getAllAsArray();

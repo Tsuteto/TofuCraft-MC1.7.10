@@ -5,9 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.util.ModLog;
 
 public class ItemKoujiBase extends TcItem

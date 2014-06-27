@@ -1,7 +1,7 @@
 package tsuteto.tofu.item;
 
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.block.tileentity.TileEntityMorijio;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

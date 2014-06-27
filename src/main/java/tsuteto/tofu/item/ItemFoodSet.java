@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemFoodSet extends ItemFoodSetBase
 {
-    public static Food[] foodList = new Food[17];
+    public static Food[] foodList = new Food[20];
 
     public static TcFoodBase tofuChikuwa =
             new Food( 0,  6, 0.4f,  true, "tofuChikuwa");
@@ -42,6 +42,12 @@ public class ItemFoodSet extends ItemFoodSetBase
             new Food(15, 4, 0.4f, false, "tofufishRaw");
     public static TcFoodBase tofufishCooked =
             new Food(16, 6, 0.6f, false, "tofufishCooked");
+    public static TcFoodBase hiyayakkoGl =
+            new Food(17, 6, 0.5f, false, "hiyayakko_glass").setContainer(new ItemStack(TcItems.materials, 1, ItemTcMaterials.glassBowl.id));
+    public static TcFoodBase nattoHiyayakkoGl =
+            new Food(18, 8, 0.8f, false, "nattoHiyayakko_glass").setContainer(new ItemStack(TcItems.materials, 1, ItemTcMaterials.glassBowl.id));
+    public static TcFoodBase tofuSomen =
+            new Food(19, 3, 0.3f, true, "tofuSomenBowl_glass").setContainer(new ItemStack(TcItems.somenTsuyuBowl));
 
     public ItemFoodSet()
     {

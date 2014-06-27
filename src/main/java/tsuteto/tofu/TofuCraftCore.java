@@ -25,21 +25,23 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.achievement.TcAchievementList;
+import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.block.RenderYubaBlock;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.block.tileentity.TileEntityMorijio;
+import tsuteto.tofu.network.PacketDispatcher;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.dispanse.DispenserBehaviorTcEmptyBucket;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
 import tsuteto.tofu.eventhandler.*;
 import tsuteto.tofu.fishing.TofuFishing;
+import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.network.PacketPipeline;
-import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
+import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.UpdateNotification;
 import tsuteto.tofu.village.*;
@@ -58,7 +60,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.5.14.1-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.0-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -73,8 +75,6 @@ public class TofuCraftCore
     @SidedProxy(clientSide = "tsuteto.tofu.TofuCraftCore$ClientProxy", serverSide = "tsuteto.tofu.TofuCraftCore$ServerProxy")
     public static ISidedProxy sidedProxy;
 
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
-    
     public static final BiomeDictionary.Type BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[0], new Object[0]);
     public static final CreativeTabs tabTofuCraft = new CreativeTabTofuCraft(modid);
 
@@ -107,6 +107,8 @@ public class TofuCraftCore
         
         // Prepare Tofu Force Materials
         TfMaterialRegistry.init();
+
+        TfCondenserRecipeRegistry.init();
 
         // Add Achievements
         if (Settings.achievement)
@@ -202,14 +204,7 @@ public class TofuCraftCore
         net.minecraft.world.gen.structure.MapGenStructureIO.func_143031_a(ComponentVillageHouseTofu.class, "ViTfH");
 
         // Register Packets
-        packetPipeline.initalise();
-        packetPipeline.registerPacket(PacketDimTrip.class);
-        packetPipeline.registerPacket(PacketBugle.class);
-        packetPipeline.registerPacket(PacketZundaArrowHit.class);
-        packetPipeline.registerPacket(PacketZundaArrowType.class);
-        packetPipeline.registerPacket(PacketTofuRadar.class);
-        packetPipeline.registerPacket(PacketGlowingFinish.class);
-        packetPipeline.registerPacket(PacketTfMachineData.class);
+        PacketDispatcher.init();
 
         // Add chest loot
         this.registerChestLoot(new ItemStack(TcItems.defattingPotion), 1, 1, 8);
@@ -245,7 +240,9 @@ public class TofuCraftCore
         // Register potion effects
         TcPotion.register(conf);
 
-        packetPipeline.postInitialise();
+        FluidUtils.init();
+
+        PacketDispatcher.postInit();
 
         conf.save();
     }

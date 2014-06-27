@@ -16,8 +16,8 @@ public class ItemSeasoningBottle extends ItemColoredBottle implements ICraftingD
     }
 
     @Override
-    public Item getEmptyItem()
+    public ItemStack getEmptyItem()
     {
-        return Items.glass_bottle;
+        return new ItemStack(Items.glass_bottle);
     }
 }

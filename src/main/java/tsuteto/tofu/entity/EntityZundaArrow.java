@@ -15,12 +15,10 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketZundaArrowHit;
-import tsuteto.tofu.util.SimplePacketDispatcher;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.SidedProxy;
 
@@ -85,7 +83,7 @@ public class EntityZundaArrow extends EntityArrowBase implements IEntityAddition
             this.setDead();
         }
 
-        SimplePacketDispatcher.packet(new PacketZundaArrowHit(var4.entityHit.posX, var4.entityHit.posY, var4.entityHit.posZ))
+        PacketDispatcher.packet(new PacketZundaArrowHit(var4.entityHit.posX, var4.entityHit.posY, var4.entityHit.posZ))
                 .sendToAllInDimension(var4.entityHit.dimension);
     }
 

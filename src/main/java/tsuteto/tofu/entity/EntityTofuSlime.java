@@ -12,9 +12,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.block.TcBlocks;import tsuteto.tofu.item.ItemTofuSword;
-import tsuteto.tofu.item.TcItem;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.item.ItemTofuSword;
 import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 

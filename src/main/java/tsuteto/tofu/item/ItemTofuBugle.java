@@ -4,9 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import tsuteto.tofu.TofuCraftCore;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketBugle;
-import tsuteto.tofu.util.SimplePacketDispatcher;
 
 public class ItemTofuBugle extends TcItem
 {
@@ -21,8 +20,8 @@ public class ItemTofuBugle extends TcItem
     {
         if (!world.isRemote)
         {
-            SimplePacketDispatcher.packet(
-                    new PacketBugle((float)player.posX, (float)player.posY, (float)player.posZ, player.getEntityId()))
+            PacketDispatcher.packet(
+                    new PacketBugle((float) player.posX, (float) player.posY, (float) player.posZ, player.getEntityId()))
                     .sendToAllAround(player.posX, player.posY, player.posZ, 64, player.dimension);
         }
         

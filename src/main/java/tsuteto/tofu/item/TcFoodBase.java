@@ -10,8 +10,8 @@ public class TcFoodBase<E extends TcFoodBase>
     public int healAmount;
     public float saturationModifier;
     public boolean alwaysEdible;
-    public ItemStack container;
-    
+    public ItemStack container = null;
+
     public int potionId = 0;
     public int potionDuration = 0;
     public int potionAmplifier = 0;
@@ -58,5 +58,10 @@ public class TcFoodBase<E extends TcFoodBase>
     public ItemStack getNewContainer()
     {
         return container.copy();
+    }
+
+    public boolean hasContainerItem()
+    {
+        return container != null;
     }
 }

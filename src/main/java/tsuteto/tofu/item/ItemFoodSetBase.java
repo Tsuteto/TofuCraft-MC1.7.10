@@ -44,7 +44,10 @@ public abstract class ItemFoodSetBase extends TcItem
                 return food.getNewContainer();
             }
     
-            par3EntityPlayer.inventory.addItemStackToInventory(food.getNewContainer());
+            if (!par3EntityPlayer.inventory.addItemStackToInventory(food.getNewContainer()))
+            {
+                par3EntityPlayer.dropPlayerItemWithRandomChoice(food.getNewContainer(), false);
+            }
         }
 
         return par1ItemStack;
@@ -58,6 +61,20 @@ public abstract class ItemFoodSetBase extends TcItem
         {
             par3EntityPlayer.addPotionEffect(new PotionEffect(food.potionId, food.potionDuration * 20, food.potionAmplifier));
         }
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack stack)
+    {
+        TcFoodBase food = getFood(stack.getItemDamage());
+        return food.getNewContainer();
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack)
+    {
+        TcFoodBase food = getFood(stack.getItemDamage());
+        return food.hasContainerItem();
     }
 
     @Override

@@ -9,17 +9,11 @@ import net.minecraft.util.EntityDamageSourceIndirect;
 
 public class TcDamageSource
 {
-    /**
-     * returns EntityDamageSourceIndirect of an arrow
-     */
     public static DamageSource causeZundaArrowDamage(EntityZundaArrow par0EntityArrow, Entity par1Entity)
     {
         return (new EntityDamageSourceIndirect("zundaArrow", par0EntityArrow, par1Entity)).setProjectile();
     }
 
-    /**
-     * returns EntityDamageSourceIndirect of an arrow
-     */
     public static DamageSource causeFukumameDamage(EntityFukumame par0EntityArrow, Entity par1Entity)
     {
         return (new EntityDamageSourceIndirect("fukumame", par0EntityArrow, par1Entity)).setProjectile();

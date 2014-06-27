@@ -9,12 +9,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.block.tileentity.TileEntityMorijio;
-import tsuteto.tofu.block.tileentity.TileEntitySaltFurnace;
-import tsuteto.tofu.block.tileentity.TileEntityTfStorage;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.material.TcMaterial;
+import tsuteto.tofu.tileentity.*;
 import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.ModLog;
 
@@ -22,6 +20,7 @@ public class TcBlocks
 {
     public static Block soybean;
     public static Block leek;
+
     public static Block tofuTerrain;
     public static BlockTofuBase tofuKinu;
     public static BlockTofuBase tofuMomen;
@@ -40,14 +39,17 @@ public class TcBlocks
     public static BlockTofuBase tofuHell;
     public static BlockTofuBase tofuGlow;
     public static BlockTofuBase tofuDiamond;
+
     public static Block saltFurnaceIdle;
     public static Block saltFurnaceActive;
     public static Block tofuCake;
     public static BlockTofuPortal tofuPortal;
     public static Block morijio;
+
     public static BlockTcStationary soymilkStill;
-    public static Block barrelMiso;
     public static BlockTcStationary soySauceStill;
+
+    public static Block barrelMiso;
     public static Block nattoBed;
     public static BlockTcLeaves tcLeaves;
     public static Block tcLog;
@@ -55,6 +57,7 @@ public class TcBlocks
     public static Block sesame;
     public static Block natto;
     public static Block sprouts;
+
     public static Block tofuStairsKinu;
     public static Block tofuStairsMomen;
     public static Block tofuStairsIshi;
@@ -71,6 +74,7 @@ public class TcBlocks
     public static Block tofuStairsHell;
     public static Block tofuStairsGlow;
     public static Block tofuStairsDiamond;
+
     public static BlockSlab tofuSingleSlab1;
     public static BlockSlab tofuSingleSlab2;
     public static BlockSlab tofuSingleSlab3;
@@ -81,18 +85,33 @@ public class TcBlocks
     public static BlockSlab tofuDoubleSlab3;
     public static BlockSlab tofuDoubleSlabFaces;
     public static BlockSlab tofuDoubleSlabGlow;
+
     public static BlockTcStationary soymilkHellStill;
     public static Block soybeanHell;
     public static BlockTcOre oreTofuDiamond;
     public static BlockTcOre oreTofu;
     public static Block salt;
     public static Block yuba;
+
     public static Block barrelMisoTofu;
     public static Block tofuStairsMiso;
     public static Block barrelGlowtofu;
+    public static Block barrelAdvTofuGem;
+    public static Block advTofuGem;
+
     public static Block tfStorageIdle;
     public static Block tfStorageActive;
     public static Block tfMachineCase;
+    public static Block tfAntenna;
+    public static Block tfSaturatorIdle;
+    public static Block tfSaturatorActive;
+    public static Block tfCollector;
+    public static Block tfCondenserIdle;
+    public static Block tfCondenserActive;
+    public static Block tfOvenIdle;
+    public static Block tfOvenActive;
+    public static Block tfReformerIdle;
+    public static Block tfReformerActive;
 
     // === External Mod Blocks ===
     public static Block sakuraLeaves; // from Bamboo Mod
@@ -385,6 +404,26 @@ public class TcBlocks
                 .setStepSound(Block.soundTypeWood)
                 ;
 
+        barrelAdvTofuGem = $("blockBarrelAdvTofuGem", new BlockAdvTofuGemBarrel(Material.wood))
+                .withResource("barrelAdvTofuGem")
+                .setHarvestLevel("axe", 0)
+                .registerBlock()
+                .setFermRate(4)
+                .setHardness(2.0F)
+                .setStepSound(Block.soundTypeWood)
+                ;
+
+        advTofuGem = $("blockAdvTofuGem", new TcBlock(Material.iron))
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setLightLevel(0.625F)
+                .setHardness(5.0F)
+                .setResistance(10.0F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+                ;
+
         /*
          * TF machine
          */
@@ -416,6 +455,105 @@ public class TcBlocks
                 .setLightLevel(0.875F)
                 ;
         GameRegistry.registerTileEntity(TileEntityTfStorage.class, "tofucraft:TfStorage");
+
+        tfAntenna = $("tfAntenna", new BlockTfAntenna(10))
+                .wrappedByItemTcBlock()
+                .registerBlock()
+                .setHardness(0.5F)
+                .setStepSound(Block.soundTypeCloth)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+                ;
+        GameRegistry.registerTileEntity(TileEntityTfAntenna.class, "tofucraft:TfAntenna");
+
+        tfSaturatorIdle = $("tfSaturatorIdle", new BlockTfSaturator(false))
+                .withResource("tfSaturator")
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+                ;
+
+        tfSaturatorActive = $("tfSaturatorActive", new BlockTfSaturator(true))
+                .withResource("tfSaturator")
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setLightLevel(0.875F)
+                ;
+        GameRegistry.registerTileEntity(TileEntityTfSaturator.class, "tofucraft:TfSaturator");
+
+        tfCollector = $("tfCollector", new BlockTfCollector())
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+        ;
+        GameRegistry.registerTileEntity(TileEntityTfCollector.class, "tofucraft:TfCollector");
+
+        tfCondenserIdle = $("tfCondenserIdle", new BlockTfCondenser(false))
+                .withResource("tfCondenser")
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+        ;
+
+        tfCondenserActive = $("tfCondenserActive", new BlockTfCondenser(true))
+                .withResource("tfCondenser")
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setLightLevel(0.875F)
+        ;
+        GameRegistry.registerTileEntity(TileEntityTfCondenser.class, "tofucraft:TfCondenser");
+
+        tfOvenIdle = $("tfOvenIdle", new BlockTfOven(false))
+                .withResource("tfOven")
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+        ;
+
+        tfOvenActive = $("tfOvenActive", new BlockTfOven(true))
+                .withResource("tfOven")
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setLightLevel(0.875F)
+        ;
+        GameRegistry.registerTileEntity(TileEntityTfOven.class, "tofucraft:TfOven");
+
+        tfReformerIdle = $("tfReformerIdle", new BlockTfReformer(false))
+                .withResource("tfReformer")
+                .wrappedByItemTcBlock()
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+        ;
+
+        tfReformerActive = $("tfReformerActive", new BlockTfReformer(true))
+                .withResource("tfReformer")
+                .setHarvestLevel("pickaxe", 0)
+                .registerBlock()
+                .setHardness(2.5F)
+                .setStepSound(Block.soundTypeMetal)
+                .setLightLevel(0.875F)
+        ;
+        GameRegistry.registerTileEntity(TileEntityTfReformer.class, "tofucraft:tfReformer");
 
         /*
          * Ore

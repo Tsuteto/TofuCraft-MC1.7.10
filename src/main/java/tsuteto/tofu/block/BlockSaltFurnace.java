@@ -20,7 +20,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.block.tileentity.TileEntitySaltFurnace;
+import tsuteto.tofu.tileentity.TileEntitySaltFurnace;
 import tsuteto.tofu.gui.TcGuiHandler;
 
 import java.util.Random;

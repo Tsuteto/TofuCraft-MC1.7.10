@@ -57,15 +57,17 @@ public class ItemNigari extends ItemColoredBottle
                     if (!par3EntityPlayer.capabilities.isCreativeMode)
                     {
                         --par1ItemStack.stackSize;
+
+                        ItemStack container = new ItemStack(this.getContainerItem());
         
                         if (par1ItemStack.stackSize <= 0)
                         {
-                            return new ItemStack(Items.glass_bottle);
+                            return container;
                         }
         
-                        if (!par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.glass_bottle)))
+                        if (!par3EntityPlayer.inventory.addItemStackToInventory(container))
                         {
-                            par3EntityPlayer.dropPlayerItemWithRandomChoice(new ItemStack(Items.glass_bottle), false);
+                            par3EntityPlayer.dropPlayerItemWithRandomChoice(container, false);
                         }
                     }
                 }

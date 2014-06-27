@@ -3,12 +3,14 @@ package tsuteto.tofu.util;
 import com.google.common.base.Strings;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
+import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
 
@@ -23,6 +25,22 @@ import java.util.List;
  */
 public class Utils
 {
+    public static void onNeighborBlockChange_RedstoneSwitch(Block block, World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
+    {
+        boolean flag = p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_) || p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_ + 1, p_149695_4_);
+        int l = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
+        boolean flag1 = (l & 8) != 0;
+
+        if (flag && !flag1)
+        {
+            p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, block, block.tickRate(p_149695_1_));
+            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, l | 8, 4);
+        }
+        else if (!flag && flag1)
+        {
+            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, l & -9, 4);
+        }
+    }
 
     /**
      * Get Tofu World seed from the world seed

@@ -17,16 +17,18 @@ import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.dimension.DimensionTeleportation;
 import tsuteto.tofu.entity.EntityTofuPortalFX;
 import tsuteto.tofu.entity.TcEntity;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketDimTrip;
 import tsuteto.tofu.params.DataType;
 import tsuteto.tofu.params.EntityInfo;
-import tsuteto.tofu.util.SimplePacketDispatcher;
+import tsuteto.tofu.params.PortalTripInfo;
 
+import javax.sound.sampled.Port;
 import java.util.Random;
 
 public class BlockTofuPortal extends BlockBreakable
@@ -273,11 +275,11 @@ public class BlockTofuPortal extends BlockBreakable
                         this.travelToDimension(var3, playermp);
     
                         // Make a sound on client side
-                        SimplePacketDispatcher.packet(new PacketDimTrip()).sendToPlayer(playermp);
+                        PacketDispatcher.packet(new PacketDimTrip()).sendToPlayer(playermp);
                         
                         TcAchievementMgr.achieve(playermp, Key.tofuWorld);
                     }
-                    pinfo.set(playermp.getEntityId(), DataType.TicksPortalCooldown, 0);
+                    pinfo.set(playermp.getEntityId(), DataType.TicksPortalCooldown, this.getNewTripInfo(playermp.dimension));
                 }
                 else
                 {
@@ -287,16 +289,25 @@ public class BlockTofuPortal extends BlockBreakable
                         Entity traveledEntity = this.travelToDimension(var3, par5Entity);
                         if (traveledEntity != null)
                         {
-                            pinfo.set(traveledEntity.getEntityId(), DataType.TicksPortalCooldown, 0);
+                            pinfo.set(traveledEntity.getEntityId(), DataType.TicksPortalCooldown, this.getNewTripInfo(traveledEntity.dimension));
                         }
                     }
                     else
                     {
-                        pinfo.set(par5Entity.getEntityId(), DataType.TicksPortalCooldown, 0);
+                        PortalTripInfo info = pinfo.get(par5Entity.getEntityId(), DataType.TicksPortalCooldown);
+                        info.ticksCooldown = 0;
                     }
                 }
             }
         }
+    }
+
+    private PortalTripInfo getNewTripInfo(int tripTo)
+    {
+        PortalTripInfo info = new PortalTripInfo();
+        info.ticksCooldown = 0;
+        info.dimensionIdTripTo = tripTo;
+        return info;
     }
 
     @SideOnly(Side.CLIENT)

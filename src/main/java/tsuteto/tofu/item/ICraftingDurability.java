@@ -1,8 +1,8 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public interface ICraftingDurability
 {
-    Item getEmptyItem();
+    ItemStack getEmptyItem();
 }

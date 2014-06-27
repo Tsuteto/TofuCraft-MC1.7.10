@@ -26,6 +26,7 @@ public class ItemDrinkBottle extends ItemColoredBottle
     {
         super();
         this.setCreativeTab(CreativeTabs.tabFood);
+        this.setContainerItem(Items.glass_bottle);
     }
 
     public ItemDrinkBottle(int color, ItemFood food)
@@ -39,6 +40,7 @@ public class ItemDrinkBottle extends ItemColoredBottle
         this.healAmount = healAmount;
         this.saturationModifier = saturationModifier;
         this.setCreativeTab(CreativeTabs.tabFood);
+        this.setContainerItem(Items.glass_bottle);
     }
 
     @Override
@@ -49,13 +51,18 @@ public class ItemDrinkBottle extends ItemColoredBottle
         int dmg = par1ItemStack.getItemDamage();
         par3EntityPlayer.getFoodStats().addStats(this.getHealAmount(dmg), this.getSaturationModifier(dmg));
         this.func_77849_c(par1ItemStack, par2World, par3EntityPlayer);
-        
+
+        ItemStack container = new ItemStack(this.getContainerItem());
+
         if (par1ItemStack.stackSize <= 0)
         {
-            return new ItemStack(Items.glass_bottle);
+            return container;
         }
 
-        par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Items.glass_bottle));
+        if (!par3EntityPlayer.inventory.addItemStackToInventory(container))
+        {
+            par3EntityPlayer.dropPlayerItemWithRandomChoice(container, false);
+        }
 
         return par1ItemStack;
     }

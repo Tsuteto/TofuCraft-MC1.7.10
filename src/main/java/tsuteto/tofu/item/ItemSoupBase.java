@@ -14,11 +14,12 @@ public class ItemSoupBase extends ItemTcFood
     {
         super(recoveryAmount, saturation, isWolfsFavorite);
         this.setMaxStackSize(1);
+        this.setContainerItem(Items.bowl);
     }
 
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
         super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
-        return new ItemStack(Items.bowl);
+        return this.getContainerItem(par1ItemStack);
     }
 }
