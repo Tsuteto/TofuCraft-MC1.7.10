@@ -34,6 +34,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     public FluidTank fluidTank = new FluidTank(0);
 
     private double tfConsumed = 0.0D;
+    private ItemStack lastInputItem = null;
 
     public TileEntityTfReformer()
     {
@@ -135,8 +136,9 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
                     isInventoryChanged = true;
                 }
             }
-            else if (this.tfOutput > 0)
+            else if (lastInputItem != this.itemStacks[SLOT_INPUT_ITEM])
             {
+                // Stop processing
                 this.tfOutput = 0;
                 this.wholeTfOutput = 0;
             }
@@ -163,6 +165,8 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         {
             this.markDirty();
         }
+
+        lastInputItem = itemStacks[SLOT_INPUT_ITEM];
     }
 
     /**

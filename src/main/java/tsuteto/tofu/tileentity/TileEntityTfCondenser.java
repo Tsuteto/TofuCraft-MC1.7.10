@@ -13,6 +13,7 @@ import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.api.recipe.TfCondenserRecipe;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.item.ICraftingDurability;
+import tsuteto.tofu.item.TcItems;
 
 public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase implements ITfConsumer
 {
@@ -23,6 +24,10 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     public static final int SLOT_TOFU_OUTPUT = 4;
 
     public static final int NIGARI_COST_MB = 5;
+
+    public static final int[] slotsTop = new int[]{0, 2};
+    public static final int[] slotsSides = new int[]{0, 1, 2, 3, 4};
+    public static final int[] slotsBottom = new int[]{1, 3, 4};
 
     public double tfPooled = 0;
     public double tfNeeded = 0;
@@ -156,7 +161,8 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         if (additiveTank.getFluid() == null)
         {
             FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(additiveItem);
-            if (fluidStackInput != null)
+            if (fluidStackInput != null
+                    && TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStackInput.getFluid()))
             {
                 additiveTank.fill(fluidStackInput, true);
                 this.drainAndMoveSlotItem(SLOT_SPECIAL_INPUT, SLOT_SPECIAL_OUTPUT);
@@ -312,18 +318,6 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int var1)
-    {
-        return new int[0];
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int var1, ItemStack var2)
-    {
-        return false;
-    }
-
-    @Override
     public double getMaxTfCapacity()
     {
         if (this.isRedstonePowered() && this.tfPooled < this.tfNeeded)
@@ -350,5 +344,34 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         {
             this.isTfCharging = true;
         }
+    }
+
+    @Override
+    public int[] getAccessibleSlotsFromSide(int var1)
+    {
+        return var1 == 0 ? slotsBottom : (var1 == 1 ? slotsTop : slotsSides);
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
+    {
+        if (par1 == SLOT_NIGARI_INPUT)
+        {
+            return par2ItemStack.getItem() == TcItems.nigari;
+        }
+        else if (par1 == SLOT_SPECIAL_INPUT)
+        {
+            FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(par2ItemStack);
+            return fluidStackInput != null
+                    && TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStackInput.getFluid());
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean canExtractItem(int slot, ItemStack item, int side)
+    {
+        return slot == SLOT_NIGARI_OUTPUT || slot == SLOT_SPECIAL_OUTPUT || slot == SLOT_TOFU_OUTPUT;
     }
 }

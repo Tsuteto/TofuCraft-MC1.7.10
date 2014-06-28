@@ -13,6 +13,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.dispanse.DispenserBehaviorNigari;
 import tsuteto.tofu.eventhandler.TcCraftingHandler;
 import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.Utils;
@@ -286,6 +287,7 @@ public class TcItems
                 .register()
                 .setContainerItem(Items.glass_bottle)
                 .setCreativeTab(CreativeTabs.tabMaterials);
+        BlockDispenser.dispenseBehaviorRegistry.putObject(nigari, new DispenserBehaviorNigari());
 
         // Tofu Cake
         tofuCake = $("tofuCake", new ItemTcReed(TcBlocks.tofuCake))

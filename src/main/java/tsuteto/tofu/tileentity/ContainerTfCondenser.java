@@ -3,12 +3,17 @@ package tsuteto.tofu.tileentity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.ObjectUtils;
+import tsuteto.tofu.api.TfMaterialRegistry;
+import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachineCrafting;
@@ -333,5 +338,22 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             this.machine.additiveTank.setFluid(null);
             this.machine.updateAdditiveItem();
          }
+    }
+
+    public TransferResult transferStackInMachineSlot(EntityPlayer player, int slot, ItemStack itemStack)
+    {
+        FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(itemStack);
+        if (fluidStack != null)
+        {
+            if (TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStack.getFluid()))
+            {
+                if (!this.mergeToSingleItemStack(itemStack, TileEntityTfCondenser.SLOT_SPECIAL_INPUT))
+                {
+                    return TransferResult.UNMATCHED;
+                }
+                return TransferResult.MATCHED;
+            }
+        }
+        return TransferResult.SKIPPED;
     }
 }

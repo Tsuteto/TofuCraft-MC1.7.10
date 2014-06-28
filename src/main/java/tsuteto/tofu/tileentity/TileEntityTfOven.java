@@ -74,7 +74,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
 
     public boolean isHeating()
     {
-        return ovenCookTime > 0 && this.tfPooled >= COST_TF_PER_TICK;
+        return ovenCookTime > 0 && this.tfPooled >= this.getTfAmountNeeded();
     }
 
     public void updateEntity()
@@ -83,9 +83,9 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
 
         if (!this.worldObj.isRemote)
         {
+            this.isAccelerated = this.checkAccelerated();
             if (this.canSmelt())
             {
-                this.isAccelerated = this.checkAccelerated();
                 this.wholeCookTime = this.getWholeCookTime();
 
                 // Cooking
@@ -160,20 +160,24 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
         else
         {
             ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(this.itemStacks[SLOT_ITEM_INPUT]);
-            if (itemstack == null) return false;
-            if (this.itemStacks[SLOT_ITEM_RESULT] == null) return true;
-            if (!this.itemStacks[SLOT_ITEM_RESULT].isItemEqual(itemstack)) return false;
-            int result = itemStacks[SLOT_ITEM_RESULT].stackSize + itemstack.stackSize;
-            if (result <= getInventoryStackLimit() && result <= this.itemStacks[SLOT_ITEM_RESULT].getMaxStackSize())
+            if (itemstack != null)
             {
+                if (this.itemStacks[SLOT_ITEM_RESULT] != null)
+                {
+                    if (!this.itemStacks[SLOT_ITEM_RESULT].isItemEqual(itemstack)) return false;
+
+                    int result = itemStacks[SLOT_ITEM_RESULT].stackSize + itemstack.stackSize;
+                    if (result > getInventoryStackLimit() || result > this.itemStacks[SLOT_ITEM_RESULT].getMaxStackSize())
+                    {
+                        return false;
+                    }
+
+                }
                 isTfNeeded = true;
-                return tfPooled >= COST_TF_PER_TICK;
-            }
-            else
-            {
-                return false;
+                return tfPooled >= this.getTfAmountNeeded();
             }
         }
+        return false;
     }
 
     public void smeltItem()

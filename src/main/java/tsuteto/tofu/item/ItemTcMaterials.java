@@ -28,7 +28,7 @@ public class ItemTcMaterials extends TcItem
     public static final TcMaterial advTofuGem = new TcMaterial(7, "advTofuGem");
     public static final TcMaterial activatedTofuGem = new TcMaterial(8, "activatedTofuGem");
     public static final TcMaterial activatedHellTofu = new TcMaterial(9, "activatedHellTofu");
-    public static final TcMaterial mineralSoymilk = new TcMaterial(10, "mineralSoymilk").asGlassBottle(0xfe7a79);
+    public static final TcMaterial mineralSoymilk = new TcMaterial(10, "mineralSoymilk").asGlassBottle(0xeaad72);
     public static final TcMaterial tofuSomen = new TcMaterial(11, "tofuSomen");
     public static final TcMaterial glassBowl = new TcMaterial(12, "glassBowl");
     public static final TcMaterial rollingPin = new TcMaterial(13, "rollingPin").setNonDurabilityTool();

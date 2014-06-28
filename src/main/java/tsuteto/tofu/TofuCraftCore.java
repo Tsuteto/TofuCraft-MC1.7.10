@@ -60,7 +60,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.0-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.1-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -252,6 +252,7 @@ public class TofuCraftCore
         event.registerServerCommand(new CommandTofuSlimeCheck());
 
         // Replace dispenser behavior for empty bucket
+        BlockDispenser.dispenseBehaviorRegistry.putObject(Items.bucket, new DispenserBehaviorTcEmptyBucket());
         BlockDispenser.dispenseBehaviorRegistry.putObject(Items.bucket, new DispenserBehaviorTcEmptyBucket());
 
         // To handle spawn of Tofu Creeper ;)

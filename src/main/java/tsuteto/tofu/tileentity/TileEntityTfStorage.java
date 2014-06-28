@@ -38,7 +38,7 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
 
     public TileEntityTfStorage()
     {
-        this.itemStacks = new ItemStack[4];
+        this.itemStacks = new ItemStack[2];
         this.fluidTank.setFluid(new FluidStack(TcFluids.SOYMILK, 0));
         this.fluidTank.setCapacity(TfMaterialRegistry.calcFluidAmountFrom(this.tfCapacity, TcFluids.SOYMILK));
     }

@@ -959,6 +959,16 @@ public class Recipes
                 TcOreDic.glassBowl
         );
 
+        // Tofu Gem Barrel
+        addSharedRecipe(TcItems.barrelGlowtofu,
+                "RRR",
+                "GGG",
+                " B ",
+                'R', Items.redstone,
+                'G', TcOreDic.tofuGem,
+                'B', TcOreDic.barrel
+        );
+
         // TF Machine Case
         addSharedRecipe(TcBlocks.tfMachineCase,
                 "TTT",
