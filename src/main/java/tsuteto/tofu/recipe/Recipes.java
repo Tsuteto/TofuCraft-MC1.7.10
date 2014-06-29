@@ -960,7 +960,7 @@ public class Recipes
         );
 
         // Tofu Gem Barrel
-        addSharedRecipe(TcItems.barrelGlowtofu,
+        addSharedRecipe(TcItems.barrelAdvTofuGem,
                 "RRR",
                 "GGG",
                 " B ",

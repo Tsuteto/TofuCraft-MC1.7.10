@@ -122,10 +122,6 @@ public class TcAchievementList
                 .registerStat();
 
         // === Various tofu ===
-        TcAchievement.create(Key.strawberryTofu, 11, 11, TcItems.tofuStrawberry, Key.tfCondenser)
-                .setTriggerTfCondenser(new ItemStack(TcItems.tofuStrawberry))
-                .registerStat();
-
         TcAchievement.create(Key.sesameTofu, 7, -7, TcItems.tofuSesame, null)
                 .setTriggerItemCrafting(new ItemStack(TcItems.tofuSesame))
                 .registerStat();
@@ -390,6 +386,10 @@ public class TcAchievementList
 
         TcAchievement.create(Key.tfCondenser, 9, 11, TcBlocks.tfCondenserActive, Key.tofuForce)
                 .setTriggerItemCrafting(new ItemStack(TcBlocks.tfCondenserIdle))
+                .registerStat();
+
+        TcAchievement.create(Key.strawberryTofu, 11, 11, TcItems.tofuStrawberry, Key.tfCondenser)
+                .setTriggerTfCondenser(new ItemStack(TcItems.tofuStrawberry))
                 .registerStat();
 
         TcAchievement.create(Key.tofuActivation, 8, 13, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedTofuGem.id), Key.tfCondenser)

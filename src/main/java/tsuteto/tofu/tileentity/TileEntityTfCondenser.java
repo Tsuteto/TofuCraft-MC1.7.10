@@ -333,7 +333,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     @Override
     public double getCurrentTfConsumed()
     {
-        return isProcessing() ? getMaxTfCapacity() : 0;
+        return getMaxTfCapacity();
     }
 
     @Override

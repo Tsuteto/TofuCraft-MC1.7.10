@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
@@ -93,7 +94,6 @@ public class BlockTfAntenna extends BlockContainer4Directions
     @Override
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
     {
-        super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
         TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
         ((TileEntityTfAntenna)tileEntity).radius = this.radius;
     }
