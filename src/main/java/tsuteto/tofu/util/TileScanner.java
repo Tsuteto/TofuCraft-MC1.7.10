@@ -9,12 +9,12 @@ public class TileScanner
 
     public enum Method
     {
-        partial(new ScanMethodImpl()
+        partial(new IScanMethod()
         {
             @Override
             public void apply(World world, int x, int y, int z, int ax, int ay, int az, int size, Impl impl)
             {
-                int dist = Math.abs(x + y + z);
+                int dist = Math.abs(x) + Math.abs(y) + Math.abs(z);
 
                 if (dist == size)
                 {
@@ -23,7 +23,20 @@ public class TileScanner
             }
         }),
 
-        whole(new ScanMethodImpl()
+        full(new IScanMethod()
+        {
+            @Override
+            public void apply(World world, int x, int y, int z, int ax, int ay, int az, int size, Impl impl)
+            {
+                int dist = Math.abs(x) + Math.abs(y) + Math.abs(z);
+                if (dist <= size)
+                {
+                    impl.apply(world, ax, ay, az);
+                }
+            }
+        }),
+
+        fullSimply(new IScanMethod()
         {
             @Override
             public void apply(World world, int x, int y, int z, int ax, int ay, int az, int size, Impl impl)
@@ -32,9 +45,9 @@ public class TileScanner
             }
         });
 
-        public ScanMethodImpl impl;
+        public IScanMethod impl;
 
-        Method(ScanMethodImpl impl)
+        Method(IScanMethod impl)
         {
            this.impl = impl;
         }
@@ -77,7 +90,7 @@ public class TileScanner
         return impl.getReturn();
     }
 
-    private interface ScanMethodImpl
+    private interface IScanMethod
     {
         void apply(World world, int x, int y, int z, int ax, int ay, int az, int size, Impl impl);
     }

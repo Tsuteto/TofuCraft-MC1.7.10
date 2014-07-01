@@ -360,8 +360,8 @@ public class TcAchievementList
                 .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tfCapacitor.id))
                 .registerStat();
 
-        TcAchievement.create(Key.tfAntenna, 6, 5, TcBlocks.tfAntenna, Key.tfCapacitor)
-                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfAntenna))
+        TcAchievement.create(Key.tfAntenna, 6, 5, TcBlocks.tfAntennaMedium, Key.tfCapacitor)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfAntennaMedium))
                 .registerStat();
 
         TcAchievement.create(Key.highPowerGem, 8, 10, new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id), Key.tofuGem)
@@ -402,6 +402,10 @@ public class TcAchievementList
 
         TcAchievement.create(Key.tfOven, 10, 14, TcBlocks.tfOvenActive, Key.hellTofuActivation)
                 .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id))
+                .registerStat();
+
+        TcAchievement.create(Key.ultrawave, 5, 13, TcBlocks.tfAntennaUltra, Key.tofuActivation)
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfAntennaUltra))
                 .registerStat();
 
         TcAchievement.create(Key.tfCollector, 8, 14, TcBlocks.tfCollector, Key.tofuActivation)

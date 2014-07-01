@@ -154,11 +154,15 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         isTfCharging = false;
 
         // Nigari slot
+        if (nigariTank.getFluid() == null)
+        {
+            nigariTank.setFluid(new FluidStack(TcFluids.NIGARI, 0));
+        }
         this.addFluidToTank(SLOT_NIGARI_INPUT, SLOT_NIGARI_OUTPUT, nigariTank);
 
         // Additive slot
         ItemStack additiveItem = itemStacks[SLOT_SPECIAL_INPUT];
-        if (additiveTank.getFluid() == null)
+        if (additiveItem != null && additiveTank.getFluid() == null)
         {
             FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(additiveItem);
             if (fluidStackInput != null

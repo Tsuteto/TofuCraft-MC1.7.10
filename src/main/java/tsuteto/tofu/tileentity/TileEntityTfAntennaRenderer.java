@@ -1,6 +1,5 @@
 package tsuteto.tofu.tileentity;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -8,18 +7,23 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+import tsuteto.tofu.block.BlockTfAntenna;
 import tsuteto.tofu.model.ModelTfAntenna;
 
 public class TileEntityTfAntennaRenderer extends TileEntitySpecialRenderer
 {
     public static TileEntityTfAntennaRenderer renderer;
     private final ModelTfAntenna model = new ModelTfAntenna(0, 0, 64, 32);
-    private final ResourceLocation texture = new ResourceLocation("tofucraft:textures/entity/tfAntenna.png");
+    private final ResourceLocation[] textures = new ResourceLocation[]{
+            new ResourceLocation("tofucraft:textures/entity/tfAntenna.png"),
+            new ResourceLocation("tofucraft:textures/entity/tfAntennaH.png"),
+            new ResourceLocation("tofucraft:textures/entity/tfAntennaU.png")
+    };
     private final RenderManager renderManager = RenderManager.instance;
 
     public void renderTileEntityMorijioAt(TileEntityTfAntenna tileentity, double par2, double par4, double par6, float par8)
     {
-        this.func_82393_a((float)par2, (float)par4, (float)par6);
+        this.func_82393_a((float)par2, (float)par4, (float)par6, tileentity.getAntennaType());
     }
     
     /**
@@ -32,12 +36,12 @@ public class TileEntityTfAntennaRenderer extends TileEntitySpecialRenderer
         renderer = this;
     }
 
-    public void func_82393_a(float par1, float par2, float par3)
+    public void func_82393_a(float par1, float par2, float par3, BlockTfAntenna.WaveFreq waveFreq)
     {
         float size = 0.3125F;
         float half = size / 2;
 
-        this.bindTexture(texture);
+        this.bindTexture(textures[waveFreq.id]);
 
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_CULL_FACE);

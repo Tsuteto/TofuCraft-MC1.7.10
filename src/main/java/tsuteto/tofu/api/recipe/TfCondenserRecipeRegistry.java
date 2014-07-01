@@ -31,7 +31,7 @@ public class TfCondenserRecipeRegistry
                 new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedTofuGem.id)));
 
         register(new TfCondenserRecipe(
-                1000,
+                2800,
                 new FluidStack(TcFluids.SOYMILK_HELL, 5000),
                 2400,
                 new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id)));
@@ -41,7 +41,6 @@ public class TfCondenserRecipeRegistry
                 new FluidStack(TcFluids.STRAWBERRY_JAM, 5),
                 200,
                 new ItemStack(TcBlocks.tofuStrawberry)));
-
     }
 
     public static void register(TfCondenserRecipe recipe)

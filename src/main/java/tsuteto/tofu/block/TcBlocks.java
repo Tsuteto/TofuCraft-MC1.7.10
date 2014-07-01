@@ -102,7 +102,9 @@ public class TcBlocks
     public static Block tfStorageIdle;
     public static Block tfStorageActive;
     public static Block tfMachineCase;
-    public static Block tfAntenna;
+    public static Block tfAntennaMedium;
+    public static Block tfAntennaUltra;
+    public static Block tfAntennaSuper;
     public static Block tfSaturatorIdle;
     public static Block tfSaturatorActive;
     public static Block tfCollector;
@@ -456,7 +458,7 @@ public class TcBlocks
                 ;
         GameRegistry.registerTileEntity(TileEntityTfStorage.class, "tofucraft:TfStorage");
 
-        tfAntenna = $("tfAntenna", new BlockTfAntenna(10))
+        tfAntennaMedium = $("tfAntenna", new BlockTfAntenna(BlockTfAntenna.MEDIUMWAVE))
                 .wrappedByItemTcBlock()
                 .registerBlock()
                 .setHardness(0.5F)
@@ -464,6 +466,22 @@ public class TcBlocks
                 .setCreativeTab(CreativeTabs.tabDecorations)
                 ;
         GameRegistry.registerTileEntity(TileEntityTfAntenna.class, "tofucraft:TfAntenna");
+
+        tfAntennaUltra = $("tfAntennaU", new BlockTfAntenna(BlockTfAntenna.ULTRAWAVE))
+                .wrappedByItemTcBlock()
+                .registerBlock()
+                .setHardness(0.5F)
+                .setStepSound(Block.soundTypeCloth)
+                .setCreativeTab(CreativeTabs.tabDecorations)
+        ;
+
+        tfAntennaSuper = $("tfAntennaS", new BlockTfAntenna(BlockTfAntenna.SUPERWAVE))
+                //.wrappedByItemTcBlock()
+                .registerBlock()
+                .setHardness(0.5F)
+                .setStepSound(Block.soundTypeCloth)
+                //.setCreativeTab(CreativeTabs.tabDecorations)
+        ;
 
         tfSaturatorIdle = $("tfSaturatorIdle", new BlockTfSaturator(false))
                 .withResource("tfSaturator")

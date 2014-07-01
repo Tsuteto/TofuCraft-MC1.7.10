@@ -1,12 +1,9 @@
 package tsuteto.tofu.block;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
@@ -15,12 +12,23 @@ import tsuteto.tofu.gui.TcGuiHandler;
 
 public class BlockTfAntenna extends BlockContainer4Directions
 {
-    private int radius;
+    public static int MAX_RADIUS = 0;
+    public static final WaveFreq[] WAVE_LIST = new WaveFreq[3];
+    public static final WaveFreq MEDIUMWAVE = new WaveFreq(0, 10);
+    public static final WaveFreq ULTRAWAVE = new WaveFreq(1, 16);
+    public static final WaveFreq SUPERWAVE = new WaveFreq(2, 24);
 
-    public BlockTfAntenna(int radius)
+    private WaveFreq waveFreq;
+
+    public BlockTfAntenna(WaveFreq waveFreq)
     {
         super(Material.circuits);
-        this.radius = radius;
+        this.waveFreq = waveFreq;
+    }
+
+    public WaveFreq getAntennaType()
+    {
+        return waveFreq;
     }
 
     /**
@@ -64,15 +72,10 @@ public class BlockTfAntenna extends BlockContainer4Directions
         this.setBlockBounds(0.5F - half, 0.0F, 0.5F - half, 0.5F + half, 1.0F, 0.5F + half);
     }
 
-    /**
-     * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
-     * cleared to be reused)
-     */
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
-        this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-        return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+        return null;
     }
 
     /**
@@ -91,13 +94,6 @@ public class BlockTfAntenna extends BlockContainer4Directions
         return true;
     }
 
-    @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
-    {
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-        ((TileEntityTfAntenna)tileEntity).radius = this.radius;
-    }
-
     /**
      * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
@@ -105,5 +101,20 @@ public class BlockTfAntenna extends BlockContainer4Directions
     public TileEntity createNewTileEntity(World par1World, int par1)
     {
         return new TileEntityTfAntenna();
+    }
+
+    public static class WaveFreq
+    {
+        public final int id;
+        public final int radius;
+
+        public WaveFreq(int id, int radius)
+        {
+            this.id = id;
+            this.radius = radius;
+            WAVE_LIST[id] = this;
+
+            if (radius > MAX_RADIUS) MAX_RADIUS = radius;
+        }
     }
 }

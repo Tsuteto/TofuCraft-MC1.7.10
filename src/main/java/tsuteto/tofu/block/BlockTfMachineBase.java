@@ -212,7 +212,7 @@ abstract public class BlockTfMachineBase extends BlockContainer4Directions
     public void connectToTfAntenna(final TileEntity tileEntity)
     {
         TileScanner scanner = new TileScanner(tileEntity.getWorldObj(), tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
-        scanner.scan(10, TileScanner.Method.whole, new TileScanner.Impl()
+        scanner.scan(BlockTfAntenna.MAX_RADIUS, TileScanner.Method.full, new TileScanner.Impl()
         {
             @Override
             public void apply(World world, int x, int y, int z)

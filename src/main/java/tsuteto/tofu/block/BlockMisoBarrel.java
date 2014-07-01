@@ -122,7 +122,7 @@ public class BlockMisoBarrel extends BlockFermentable
     public void addIngredients(List list)
     {
         list.add(new ItemStack(TcItems.salt, 3));
-        list.add(new ItemStack(TcItems.koujiBase, 3));
+        list.add(new ItemStack(TcItems.kouji, 3));
     }
 
     @Override

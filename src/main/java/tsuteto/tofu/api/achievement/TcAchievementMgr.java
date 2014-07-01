@@ -17,7 +17,7 @@ public class TcAchievementMgr
         dengaku(50), goheimochi(51), tofuCook(52), hellTofu(53), tofuGem(54), tofuSlimeRadar(55), tofuSlimeHunter(56), tofuStick(57), tofuWorld(58), tofuFishing(59),
         tofuMental(60), kiyome(61), strawberryTofu(62), morijio(63), sesameTofu(64), zundaTofu(65), eggTofu(66), anninTofu(67), misoTofu(68), glowtofu(69),
         tofunian(70), oinarisan(71), tfCapacitor(72), tfStorage(73), tofuForce(74),
-        tfAntenna(75), tfCondenser(76), tofuActivation(77), highPowerGem(78), hellTofuActivation(79), tfOven(80), tfCollector(81), ultimateOven(82), tfReformer(83), tfSaturator(84);
+        tfAntenna(75), tfCondenser(76), tofuActivation(77), highPowerGem(78), hellTofuActivation(79), tfOven(80), tfCollector(81), ultimateOven(82), tfReformer(83), tfSaturator(84), ultrawave(85);
 
         Key(int localId)
         {

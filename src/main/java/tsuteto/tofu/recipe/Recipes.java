@@ -1057,7 +1057,7 @@ public class Recipes
         );
 
         // TF Antenna
-        addSharedRecipe(TcBlocks.tfAntenna,
+        addSharedRecipe(TcBlocks.tfAntennaMedium,
                 " Y ",
                 "CXA",
                 "_B_",
@@ -1067,6 +1067,15 @@ public class Recipes
                 'A', TcOreDic.tfCapacitor,
                 'B', TcOreDic.tfCircuitBoard,
                 '_', TcOreDic.tofuMetal
+        );
+
+        // TF Hyper Antenna
+        addSharedRecipe(TcBlocks.tfAntennaUltra,
+                " D ",
+                "GYG",
+                'Y', TcBlocks.tfAntennaMedium,
+                'G', TcOreDic.advTofuGem,
+                'D', TcOreDic.tofuDiamond
         );
 
         // TF Reformer

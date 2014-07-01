@@ -96,7 +96,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
         TileScanner scanner = new TileScanner(worldObj, xCoord, yCoord, zCoord);
 
         int len = Math.min(step * 2, radius);
-        scanner.scan(len, TileScanner.Method.whole, new TileScanner.Impl()
+        scanner.scan(len, TileScanner.Method.full, new TileScanner.Impl()
         {
             public void apply(World world, int x, int y, int z)
             {
