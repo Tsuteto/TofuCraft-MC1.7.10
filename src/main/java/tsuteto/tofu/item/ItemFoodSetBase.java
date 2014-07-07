@@ -27,7 +27,7 @@ public abstract class ItemFoodSetBase extends TcItem
     
     abstract public TcFoodBase getFood(int dmg);
     abstract public TcFoodBase[] getFoodList();
-    
+
     @Override
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {

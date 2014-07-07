@@ -20,6 +20,8 @@ public class Recipes
 {
     private static final int DMG_WILDCARD = OreDictionary.WILDCARD_VALUE;
     private static final String oredic_cookingRice = "cookingRice";
+    private static final String oredic_cookedMochi = "cookedMochi";
+    private static final String oredic_cropStraw = "cropStraw";
 
     public static void unifyOreDicItems()
     {
@@ -543,6 +545,14 @@ public class Recipes
                 'W', Items.wheat
         );
 
+        addSharedRecipe(new ItemStack(TcBlocks.nattoBed),
+                "BBB",
+                "BBB",
+                "WWW",
+                'B', TcOreDic.soybeans,
+                'W', oredic_cropStraw
+        );
+
         // Natto Hiyayakko
         addShapelessSharedRecipe(new ItemStack(TcItems.nattoHiyayakko),
                 TcOreDic.tofuKinu,
@@ -552,7 +562,7 @@ public class Recipes
                 Items.bowl
         );
 
-        addShapelessSharedRecipe(new ItemStack(TcItems.nattoHiyayakko),
+        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.nattoHiyayakkoGl.id),
                 TcOreDic.tofuKinu,
                 TcOreDic.natto,
                 TcOreDic.leek,
@@ -847,7 +857,7 @@ public class Recipes
                 Items.bowl
         );
 
-        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakko.id),
+        addShapelessSharedRecipe(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakkoGl.id),
                 TcOreDic.tofuKinu,
                 TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
@@ -959,6 +969,20 @@ public class Recipes
                 TcOreDic.glassBowl
         );
 
+        // Zunda mochi
+        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.zundaMochi, 3),
+                TcOreDic.zunda,
+                oredic_cookedMochi);
+
+        // Kinako mochi
+        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.kinakoMochi, 3),
+                TcOreDic.kinako,
+                oredic_cookedMochi);
+
+        /*
+         * Tofu force series
+         */
+
         // Tofu Gem Barrel
         addSharedRecipe(TcItems.barrelAdvTofuGem,
                 "RRR",
@@ -1069,7 +1093,7 @@ public class Recipes
                 '_', TcOreDic.tofuMetal
         );
 
-        // TF Hyper Antenna
+        // TF Ultra Antenna
         addSharedRecipe(TcBlocks.tfAntennaUltra,
                 " D ",
                 "GYG",
@@ -1131,7 +1155,7 @@ public class Recipes
                 "TMT",
                 'T', TcOreDic.blockTofuDried,
                 'G', TcOreDic.advTofuGem,
-                'M', TcOreDic.blockTofuMetal
+                'M', TcOreDic.blockTfMachineCase
         );
 
 
@@ -1310,6 +1334,22 @@ public class Recipes
                     TcOreDic.bucketSoymilk,
                     new ItemStack(TcBlocks.sakuraLeaves, 1, 15)
             );
+        }
+
+        if (TcItems.bambooFood != null)
+        {
+            if (OreDictionary.getOres(oredic_cookedMochi).size() == 0)
+            {
+                // Zunda mochi
+                addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.zundaMochi, 3),
+                        TcOreDic.zunda,
+                        new ItemStack(TcItems.bambooFood, 1, 23));
+
+                // Kinako mochi
+                addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.kinakoMochi, 3),
+                        TcOreDic.kinako,
+                        new ItemStack(TcItems.bambooFood, 1, 23));
+            }
         }
     }
 

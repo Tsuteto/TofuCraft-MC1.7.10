@@ -1,61 +1,58 @@
 package tsuteto.tofu.tileentity;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.api.tileentity.ITfSupplier;
+import tsuteto.tofu.api.tileentity.TileEntityTfMachineBase;
 import tsuteto.tofu.api.util.TfJitterControl;
 
-public class TileEntityTfCollector extends TileEntity implements ITfSupplier
+import java.util.EnumSet;
+
+public class TileEntityTfCollector extends TileEntityTfMachineBase implements ITfSupplier
 {
+    private static final EnumSet<ForgeDirection> ENABLED_SIDES = EnumSet.of(
+            ForgeDirection.UP,
+            ForgeDirection.NORTH,
+            ForgeDirection.WEST,
+            ForgeDirection.SOUTH,
+            ForgeDirection.EAST);
+
     private double output = 0.0D;
     private final TfJitterControl jitterControl = new TfJitterControl(1.0D, 1.2, 0.5D, 24000 / 4, 63L);
 
-    /**
-     * Writes a tile entity to NBT.
-     */
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    protected String getInventoryNameTranslate()
     {
-        super.writeToNBT(par1NBTTagCompound);
-    }
-
-    /**
-     * Reads a tile entity from NBT.
-     */
-    @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
-    {
-        super.readFromNBT(par1NBTTagCompound);
-    }
-
-    /**
-     * Overriden in a sign to provide the text.
-     */
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        this.writeToNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 4, nbttagcompound);
-    }
-
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
+        return null;
     }
 
     public void updateEntity()
     {
         if (worldObj.isRemote) return;
 
-        double weatherRate = worldObj.isRaining() ? 1.5 : 1.0;
+        if (worldObj.getHeightValue(xCoord, zCoord) - 10 < yCoord)
+        {
+            double weatherRate = worldObj.isRaining() ? 1.5D : 1.0D;
 
-        double jitter = jitterControl.getCurrentValue(worldObj, xCoord, yCoord, zCoord);
-        output = (worldObj.getWorldInfo().getVanillaDimension() == Settings.tofuDimNo ? 2000D : 100D) / 24000D * weatherRate * jitter;
+            int workingSides = 0;
+            for (ForgeDirection dir : ENABLED_SIDES)
+            {
+                if (!worldObj.getBlock(xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ).isNormalCube())
+                {
+                    workingSides++;
+                }
+            }
+
+            double jitter = jitterControl.getCurrentValue(worldObj, xCoord, yCoord, zCoord);
+            output = (worldObj.getWorldInfo().getVanillaDimension() == Settings.tofuDimNo ? 2000D : 100D) / 24000D
+                    * weatherRate * jitter * ((double) workingSides / ENABLED_SIDES.size());
+        }
     }
 
     @Override
@@ -68,5 +65,11 @@ public class TileEntityTfCollector extends TileEntity implements ITfSupplier
     public void drawTf(double amount)
     {
         output -= amount;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int var1, ItemStack var2)
+    {
+        return false;
     }
 }

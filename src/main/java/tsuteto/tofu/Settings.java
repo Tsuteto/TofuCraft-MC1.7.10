@@ -34,9 +34,9 @@ public class Settings
         professionIdTofucook = conf.get("villager", "tofucookId", professionIdTofucook).getInt();
         professionIdTofunian = conf.get("villager", "tofunianId", professionIdTofunian).getInt();
 
+        conf.addCustomCategoryComment("entity", "Entity IDs to be assigned. -1 for auto assignment.");
         entityIdTofuSlime = conf.get("entity", "tofuSlimeId", entityIdTofuSlime).getInt();
-        entityIdTofuCreeper = conf.get("entity", "tofuCreeperId", entityIdTofuCreeper,
-                "Followings are entity IDs to be assigned. -1 for auto assignment.").getInt();
+        entityIdTofuCreeper = conf.get("entity", "tofuCreeperId", entityIdTofuCreeper).getInt();
         entityIdTofunian = conf.get("entity", "tofunianId", entityIdTofunian).getInt();
         
         //potionGlowingId = conf.get("potion", "glowingId", TcPotion.assignNewId()).getInt();
@@ -47,7 +47,7 @@ public class Settings
 
         updateCheck = conf.get("general", "updateCheck", updateCheck).getBoolean(true);
 
-        debug = conf.get("general", "debug", debug).getBoolean(false);
+        debug = Boolean.valueOf(System.getProperty("tofucraft.debug"));
     }
 
     public enum EnumCreativeTabOptions {

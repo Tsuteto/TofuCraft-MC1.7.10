@@ -389,7 +389,7 @@ public class TcAchievementList
                 .registerStat();
 
         TcAchievement.create(Key.strawberryTofu, 11, 11, TcItems.tofuStrawberry, Key.tfCondenser)
-                .setTriggerTfCondenser(new ItemStack(TcItems.tofuStrawberry))
+                .setTriggerTfCondenser(new ItemStack(TcBlocks.tofuStrawberry))
                 .registerStat();
 
         TcAchievement.create(Key.tofuActivation, 8, 13, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedTofuGem.id), Key.tfCondenser)

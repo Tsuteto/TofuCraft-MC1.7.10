@@ -116,8 +116,8 @@ public class TcItems
     public static Item soybeansHell;
     public static Item tofuScoop;
     public static ItemTcMaterials materials;
-    public static ItemFoodSetBase foodSet;
-    public static ItemFoodSetBase foodSetStick;
+    public static ItemFoodSet foodSet;
+    public static ItemFoodSetStick foodSetStick;
     public static Item doubanjiang;
     public static Item strawberryJam;
     public static Item tofuRadar;

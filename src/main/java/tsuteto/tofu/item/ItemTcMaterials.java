@@ -66,7 +66,14 @@ public class ItemTcMaterials extends TcItem
 
         public ItemStack getContainerItem()
         {
-            return container.copy();
+            if (container != null)
+            {
+                return container.copy();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public boolean hasContainerItem()

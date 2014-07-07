@@ -170,9 +170,7 @@ public class BlockTofu extends BlockTofuBase
                 && (weightBlock.getMaterial() == Material.rock || weightBlock.getMaterial() == Material.iron);
 
         float baseHardness = baseBlock.getBlockHardness(world, x, y - 1, z);
-        boolean isBaseValid = baseBlock != null
-                && baseBlock.isNormalCube()
-                && (baseHardness >= 1.0F || baseHardness < 0.0F);
+        boolean isBaseValid = baseBlock.isNormalCube() && (baseHardness >= 1.0F || baseHardness < 0.0F);
 
         return isWeightValid && isBaseValid;
     }
@@ -223,7 +221,7 @@ public class BlockTofu extends BlockTofuBase
 
     public static boolean isValidPlaceForDriedTofu(World world, int x, int y, int z)
     {
-        return world.getBiomeGenForCoords(x, z).getEnableSnow()
+        return world.getBiomeGenForCoords(x, z).getFloatTemperature(x, y, z) < 0.15F
                 && world.getHeightValue(x, z) - 10 < y
                 && world.isAirBlock(x, y + 1, z);
     }

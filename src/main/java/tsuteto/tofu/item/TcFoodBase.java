@@ -40,12 +40,12 @@ public class TcFoodBase<E extends TcFoodBase>
         return (E)this;
     }
 
-    public E setPotionEffect(int par1, int par2, int par3, float par4)
+    public E setPotionEffect(int potionId, int duration, int amplifier, float probability)
     {
-        this.potionId = par1;
-        this.potionDuration = par2;
-        this.potionAmplifier = par3;
-        this.potionEffectProbability = par4;
+        this.potionId = potionId;
+        this.potionDuration = duration;
+        this.potionAmplifier = amplifier;
+        this.potionEffectProbability = probability;
         return (E)this;
     }
     

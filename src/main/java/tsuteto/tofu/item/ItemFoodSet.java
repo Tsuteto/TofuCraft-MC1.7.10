@@ -3,10 +3,11 @@ package tsuteto.tofu.item;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 
 public class ItemFoodSet extends ItemFoodSetBase
 {
-    public static Food[] foodList = new Food[20];
+    public static Food[] foodList = new Food[22];
 
     public static TcFoodBase tofuChikuwa =
             new Food( 0,  6, 0.4f,  true, "tofuChikuwa");
@@ -48,6 +49,10 @@ public class ItemFoodSet extends ItemFoodSetBase
             new Food(18, 8, 0.8f, false, "nattoHiyayakko_glass").setContainer(new ItemStack(TcItems.materials, 1, ItemTcMaterials.glassBowl.id));
     public static TcFoodBase tofuSomen =
             new Food(19, 3, 0.3f, true, "tofuSomenBowl_glass").setContainer(new ItemStack(TcItems.somenTsuyuBowl));
+    public static Food zundaMochi =
+            new Food(20, 3, 0.8f, false, "zundaMochi").setPotionEffect(Potion.regeneration.id, 3, 0, 1.0F).setMaxItemUseDuration(64); // For External Mod
+    public static Food kinakoMochi =
+            new Food(21, 5, 0.8f, false, "kinakoMochi").setMaxItemUseDuration(64); // For External Mod
 
     public ItemFoodSet()
     {
@@ -81,4 +86,13 @@ public class ItemFoodSet extends ItemFoodSetBase
         return foodList;
     }
 
+    public ItemStack getItemStack(Food food)
+    {
+        return getItemStack(food, 1);
+    }
+
+    public ItemStack getItemStack(Food food, int qty)
+    {
+        return new ItemStack(this, qty, food.id);
+    }
 }
