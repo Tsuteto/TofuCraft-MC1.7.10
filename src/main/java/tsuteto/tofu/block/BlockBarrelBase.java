@@ -23,7 +23,7 @@ abstract public class BlockBarrelBase extends BlockFermentable
 	private IIcon iconTop;
 	private IIcon iconBottom;
 
-    private static final Field fldChunkCacheWorldObj = ReflectionHelper.findField(ChunkCache.class, "field_72815_e", "worldObj");
+//    private static final Field fldChunkCacheWorldObj = ReflectionHelper.findField(ChunkCache.class, "field_72815_e", "worldObj");
 
     public BlockBarrelBase(Material par3Material)
     {
@@ -38,27 +38,28 @@ abstract public class BlockBarrelBase extends BlockFermentable
         boolean isWeightValid = weightBlock != null
                 && (weightBlock.getMaterial() == Material.rock || weightBlock.getMaterial() == Material.iron);
 
-        float baseHardness;
-        if (blockAccess instanceof ChunkCache)
-        {
-            try
-            {
-                baseHardness = baseBlock.getBlockHardness((World)fldChunkCacheWorldObj.get(blockAccess), x, y, z);
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException("Failed to call worldObj in ChunkCache", e);
-            }
-        }
-        else if (blockAccess instanceof World)
-        {
-            baseHardness = baseBlock.getBlockHardness((World)blockAccess, x, y, z);
-        }
-        else
-        {
-            baseHardness = 0.0F;
-        }
-        boolean isBaseValid = baseBlock.isNormalCube() && (baseHardness >= 1.0F || baseHardness < 0.0F);
+//        float baseHardness;
+//        if (blockAccess instanceof ChunkCache)
+//        {
+//            try
+//            {
+//                baseHardness = baseBlock.getBlockHardness((World)fldChunkCacheWorldObj.get(blockAccess), x, y, z);
+//            }
+//            catch (IllegalAccessException e)
+//            {
+//                throw new RuntimeException("Failed to call worldObj in ChunkCache", e);
+//            }
+//        }
+//        else if (blockAccess instanceof World)
+//        {
+//            baseHardness = baseBlock.getBlockHardness((World)blockAccess, x, y, z);
+//        }
+//        else
+//        {
+//            baseHardness = 0.0F;
+//        }
+//        boolean isBaseValid = baseBlock.isNormalCube() && (baseHardness >= 1.0F || baseHardness < 0.0F);
+        boolean isBaseValid = baseBlock.isNormalCube();
 
         return isWeightValid && isBaseValid;
     }

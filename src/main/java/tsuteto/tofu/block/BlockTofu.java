@@ -179,13 +179,13 @@ public class BlockTofu extends BlockTofuBase
     {
         int drainStep = par1World.getBlockMetadata(par2, par3, par4);
 
-        if (drainStep < 7 && par5Random.nextInt((drainRate)) == 0)
+        if (drainStep < 7 && par5Random.nextInt(drainRate) == 0)
         {
             ++drainStep;
             ModLog.debug(drainStep);
             par1World.setBlockMetadataWithNotify(par2, par3, par4, drainStep, 2);
         }
-        else if (drainStep == 7 && par5Random.nextInt((2 * drainRate)) == 0)
+        else if (drainStep == 7 && par5Random.nextInt(2 * drainRate) == 0)
         {
             Block newBlock;
             if (this == TcBlocks.tofuMomen)

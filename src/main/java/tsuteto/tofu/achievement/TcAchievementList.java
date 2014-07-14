@@ -365,7 +365,7 @@ public class TcAchievementList
                 .registerStat();
 
         TcAchievement.create(Key.highPowerGem, 8, 10, new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id), Key.tofuGem)
-                .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id))
+                .setTriggerItemPickup(new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id))
                 .registerStat();
 
         TcAchievement.create(Key.tfStorage, 6, 9, TcBlocks.tfStorageIdle, Key.tfCapacitor)
