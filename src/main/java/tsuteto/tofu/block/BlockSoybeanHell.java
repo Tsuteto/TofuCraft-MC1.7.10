@@ -165,11 +165,7 @@ public class BlockSoybeanHell extends BlockFlower
     @Override
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-    	/*for (int i = 0; i < this.icons.length; ++i)
-    	{
-    		par3List.add(new ItemStack(par1, 1, i));
-    	}*/
-    	par3List.add(new ItemStack(par1, 1, 0));
+        par3List.add(new ItemStack(par1, 1, 0));
     }
 
 }
