@@ -142,6 +142,10 @@ public class BlockTofuStep extends BlockTofuStepBase
     @Override
     public IIcon getIcon(int par1, int par2)
     {
+        if (par2 >= this.icons.length)
+        {
+            par2 = 0;
+        }
         return icons[par2 & 7];
     }
 
