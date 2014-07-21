@@ -94,7 +94,7 @@ public class TcCraftingHandler
                 }
 
                 if (item instanceof INonDurabilityTool
-                        || item instanceof ItemTcMaterials && ((ItemTcMaterials)item).isNonDurabilityTool(var3))
+                        || item instanceof ItemSetBase && ((ItemSetBase)item).getItemInfo(var3.getItemDamage()).isNonDurabilityTool)
                 {
                     ItemStack var4 = new ItemStack(item, var3.stackSize + 1, var3.getItemDamage());
                     craftMatrix.setInventorySlotContents(var2, var4);

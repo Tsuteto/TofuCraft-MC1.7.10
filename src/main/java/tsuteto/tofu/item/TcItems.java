@@ -48,7 +48,7 @@ public class TcItems
     public static Item zunda;
     public static Item bucketSoymilk;
     public static Item edamameBoiled;
-    public static Item bottleSoymilk;
+    public static ItemBottleSoyMilk bottleSoymilk;
     public static Item barrelEmpty;
     public static Item barrelMiso;
     public static Item zundaManju;
@@ -104,7 +104,7 @@ public class TcItems
     public static Item sesame;
     public static Item okaraStick;
     public static Item tofuStrawberry;
-    public static Item gelatin; // Contains gelatin base
+    public static ItemGelatin gelatin; // Contains gelatin base
     public static Item riceNatto;
     public static Item riceNattoLeek;
     public static Item zundama;
@@ -521,9 +521,9 @@ public class TcItems
         materials = $("materials", new ItemTcMaterials()).register();
 
         TcBlocks.oreTofu.setItemContained(
-                new ItemStack(materials, 1, ItemTcMaterials.tofuGem.id));
+                materials.getItemStack(ItemTcMaterials.tofuGem));
         TcBlocks.oreTofuDiamond.setItemContained(
-                new ItemStack(materials, 1, ItemTcMaterials.tofuDiamondNugget.id));
+                materials.getItemStack(ItemTcMaterials.tofuDiamondNugget));
 
         /*
          * === Food Set ===

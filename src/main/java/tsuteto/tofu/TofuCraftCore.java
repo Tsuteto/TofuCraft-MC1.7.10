@@ -60,7 +60,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.6-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.7-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -75,7 +75,7 @@ public class TofuCraftCore
     @SidedProxy(clientSide = "tsuteto.tofu.TofuCraftCore$ClientProxy", serverSide = "tsuteto.tofu.TofuCraftCore$ServerProxy")
     public static ISidedProxy sidedProxy;
 
-    public static final BiomeDictionary.Type BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[0], new Object[0]);
+    public static final BiomeDictionary.Type BIOME_TYPE_TOFU;
     public static final CreativeTabs tabTofuCraft = new CreativeTabTofuCraft(modid);
 
     public static UpdateNotification update = null;
@@ -84,6 +84,15 @@ public class TofuCraftCore
     static
     {
         ModLog.modId = TofuCraftCore.modid;
+
+        if (ForgeVersion.getBuildVersion() >= 1174)
+        {
+            BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[] { BiomeDictionary.Type[].class }, new Object[]{ new BiomeDictionary.Type[0] });
+        }
+        else
+        {
+            BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[0], new Object[0]);
+        }
     }
 
     @Mod.EventHandler

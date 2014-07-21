@@ -1,17 +1,14 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import tsuteto.tofu.item.ItemFoodSet.Food;
+import tsuteto.tofu.item.iteminfo.TcFoodBase;
 
-public class ItemFoodSetStick extends ItemFoodSetBase
+public class ItemFoodSetStick extends ItemFoodSetBase<ItemFoodSetStick.Food>
 {
     public static Food[] foodList = new Food[1];
     
-    public static TcFoodBase goheimochi
+    public static Food goheimochi
         = new Food(0,  6, 0.8f, false, "goheimochi").setContainer(new ItemStack(Items.stick));
 
     public ItemFoodSetStick()
@@ -20,29 +17,18 @@ public class ItemFoodSetStick extends ItemFoodSetBase
         this.bFull3D = true;
     }
     
-    public static class Food extends TcFoodBase
+    public static class Food extends TcFoodBase<Food>
     {
 
         Food(int id, int healAmount, float saturationModifier, boolean alwaysEdible, String name)
         {
-            this(id, healAmount, saturationModifier, alwaysEdible, 32, name);
-        }
-        
-        Food(int id, int healAmount, float saturationModifier, boolean alwaysEdible, int itemUseDuration, String name)
-        {
-            super(id, healAmount, saturationModifier, alwaysEdible, itemUseDuration, name);
-            ItemFoodSetStick.foodList[id] = this;
+            super(id, healAmount, saturationModifier, alwaysEdible, name);
+            foodList[id] = this;
         }
     }
 
     @Override
-    public TcFoodBase getFood(int dmg)
-    {
-        return foodList[foodList.length < dmg ? dmg : 0];
-    }
-
-    @Override
-    public TcFoodBase[] getFoodList()
+    public Food[] getItemList()
     {
         return foodList;
     }

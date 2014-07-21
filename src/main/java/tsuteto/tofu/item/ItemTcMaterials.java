@@ -1,20 +1,15 @@
 package tsuteto.tofu.item;
 
-import java.util.List;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
+import tsuteto.tofu.item.iteminfo.TcItemType;
 
 /**
  * Material items with no function
  */
-public class ItemTcMaterials extends TcItem
+public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
 {
     public static TcMaterial[] materialList = new TcMaterial[14];
 
@@ -33,234 +28,33 @@ public class ItemTcMaterials extends TcItem
     public static final TcMaterial glassBowl = new TcMaterial(12, "glassBowl");
     public static final TcMaterial rollingPin = new TcMaterial(13, "rollingPin").setNonDurabilityTool();
 
-    public static IIcon bottleIconContent;
-
-    public boolean isNonDurabilityTool(ItemStack itemStack)
+    public static class TcMaterial extends TcItemSetInfo<TcMaterial>
     {
-        TcMaterial m = getMaterial(itemStack.getItemDamage());
-        return m.isNonDurabilityTool;
-    }
-
-    public static class TcMaterial
-    {
-        public final int id;
-        public final String name;
-        public ItemStack container = null;
-        public boolean isGlassBottle = false;
-        public int liquidColor;
-        public boolean hasEnchantEffect = false;
-        public boolean isNonDurabilityTool = false;
-
         public TcMaterial(int id, String name)
         {
-            this.id = id;
-            this.name = name;
+            super(id, TcItemType.NORMAL, name);
             ItemTcMaterials.materialList[id] = this;
-        }
-
-        public TcMaterial setContainerItem(ItemStack stack)
-        {
-            this.container = stack;
-            return this;
-        }
-
-        public ItemStack getContainerItem()
-        {
-            if (container != null)
-            {
-                return container.copy();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public boolean hasContainerItem()
-        {
-            return container != null;
-        }
-
-        public TcMaterial asGlassBottle(int liquidColor)
-        {
-            this.liquidColor = liquidColor;
-            setContainerItem(new ItemStack(Items.glass_bottle));
-            this.isGlassBottle = true;
-            return this;
-        }
-
-        public TcMaterial setEnchantEffect()
-        {
-            this.hasEnchantEffect = true;
-            return this;
-        }
-
-        public TcMaterial setNonDurabilityTool()
-        {
-            this.isNonDurabilityTool = true;
-            return this;
         }
 
         public boolean isItemEqual(ItemStack itemStack)
         {
             if (itemStack != null)
             {
-                return itemStack.getItem() == TcItems.materials && itemStack.getItemDamage() == id;
+                return itemStack.getItem() == TcItems.materials && itemStack.getItemDamage() == this.id;
             }
             return false;
         }
     }
-
-    private IIcon[] icons;
 
     public ItemTcMaterials()
     {
         super();
-        this.setHasSubtypes(true);
-        this.setMaxDamage(0);
         this.setCreativeTab(CreativeTabs.tabMaterials);
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack par1ItemStack)
+    public TcMaterial[] getItemList()
     {
-        int dmg = par1ItemStack.getItemDamage();
-        if (dmg < materialList.length)
-        {
-            return "item.tofucraft:" + materialList[dmg].name;
-        }
-        else
-        {
-            return super.getUnlocalizedName();
-        }
+        return materialList;
     }
-
-    @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        if (par1 < materialList.length)
-        {
-            return icons[par1];
-        }
-        else
-        {
-            return icons[0];
-        }
-    }
-
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     */
-    @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (int i = 0; i < materialList.length; ++i)
-        {
-            par3List.add(new ItemStack(par1, 1, i));
-        }
-    }
-
-    @Override
-    public void registerIcons(IIconRegister par1IconRegister)
-    {
-        this.icons = new IIcon[materialList.length];
-
-        for (int i = 0; i < materialList.length; ++i)
-        {
-            TcMaterial m = getMaterial(i);
-            if (m.isGlassBottle)
-            {
-                this.icons[i] = par1IconRegister.registerIcon("potion_bottle_drinkable");
-            }
-            else
-            {
-                this.icons[i] = par1IconRegister.registerIcon("tofucraft:" + materialList[i].name);
-            }
-        }
-
-        this.bottleIconContent = par1IconRegister.registerIcon("potion_overlay");
-    }
-
-    @Override
-    public ItemStack getContainerItem(ItemStack itemStack)
-    {
-        TcMaterial m = getMaterial(itemStack.getItemDamage());
-        return m.getContainerItem();
-    }
-
-    @Override
-    public boolean hasContainerItem(ItemStack itemStack)
-    {
-        TcMaterial m = getMaterial(itemStack.getItemDamage());
-        return m.hasContainerItem();
-    }
-
-    public TcMaterial getMaterial(int dmg)
-    {
-        return materialList[dmg < materialList.length ? dmg : 0];
-    }
-
-    /* === */
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack par1ItemStack, int pass)
-    {
-        TcMaterial m = getMaterial(par1ItemStack.getItemDamage());
-        if (m.isGlassBottle && pass == 0 || !m.isGlassBottle)
-        {
-            return m.hasEnchantEffect;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /**
-     * Gets an icon index based on an item's damage value and the given render pass
-     */
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int par1, int par2)
-    {
-        TcMaterial m = getMaterial(par1);
-        if (m.isGlassBottle)
-        {
-            return par2 == 0 ? this.bottleIconContent : super.getIconFromDamageForRenderPass(par1, par2);
-        }
-        else
-        {
-            return super.getIconFromDamageForRenderPass(par1, par2);
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack par1ItemStack, int par2)
-    {
-        return par2 == 0 ? this.getColorFromDamage(par1ItemStack.getItemDamage()) : 0xffffff;
-    }
-
-    @SideOnly(Side.CLIENT)
-    protected int getColorFromDamage(int itemDamage)
-    {
-        TcMaterial m = getMaterial(itemDamage);
-        if (m.isGlassBottle)
-        {
-            return m.liquidColor;
-        }
-        else
-        {
-            return 0xffffff;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses()
-    {
-        return true;
-    }
-
 }

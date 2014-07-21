@@ -29,11 +29,6 @@ public class ItemDrinkBottle extends ItemColoredBottle
         this.setContainerItem(Items.glass_bottle);
     }
 
-    public ItemDrinkBottle(int color, ItemFood food)
-    {
-        this(color, food.func_150905_g(new ItemStack(food)), food.func_150906_h(new ItemStack(food)));
-    }
-
     public ItemDrinkBottle(int color, int healAmount, float saturationModifier)
     {
         super(color);

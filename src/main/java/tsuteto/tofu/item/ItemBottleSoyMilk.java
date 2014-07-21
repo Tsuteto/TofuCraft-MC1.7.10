@@ -1,46 +1,53 @@
 package tsuteto.tofu.item;
 
-import java.util.List;
-
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.potion.Potion;
+import tsuteto.tofu.item.iteminfo.TcFoodBase;
 
-public class ItemBottleSoyMilk extends ItemDrinkBottle
+public class ItemBottleSoyMilk extends ItemFoodSetBase<ItemBottleSoyMilk.Flavor>
 {
-    public static final Flavor[] flavorList = new Flavor[16];
+    public static final Flavor[] flavorList = new Flavor[10];
 
-    public static Flavor flvPlain = new Flavor(0, null, 0xf5f7df, Items.melon);
-    public static Flavor flvKinako = new Flavor(1, "kinako", 0xd6bc2d, Items.baked_potato);
-    public static Flavor flvCocoa = new Flavor(2, "cocoa", 0x8d3d0d, Items.baked_potato);
-    public static Flavor flvZunda = new Flavor(3, "zunda", 0x95e24a, Items.baked_potato);
-    public static Flavor flvApple = new Flavor(4, "apple", 0xf2e087, Items.baked_potato);
-    public static Flavor flvPumpkin = new Flavor(5, "pumpkin", 0xffb504, Items.baked_potato);
-    public static Flavor flvRamune = new Flavor(6, "ramune", 0xa1c7ff, Items.baked_potato);
-    public static Flavor flvStrawberry = new Flavor(7, "strawberry", 0xf4a4b7, Items.baked_potato);
-    public static Flavor flvSakura = new Flavor(8, "sakura", 0xffd1d7, Items.baked_potato);
+    public static Flavor flvPlain = new Flavor(0, "plain", 0xf5f7df, 2, 0.5F);
 
-    public static class Flavor
+    public static Flavor flvKinako = new Flavor(1, "kinako", 0xd6bc2d, 4, 0.6F)
+            .addPotionEffect(Potion.digSpeed, 45, 0, 1.0f);
+    public static Flavor flvCocoa = new Flavor(2, "cocoa", 0x8d3d0d, 4, 0.6F)
+            .addPotionEffect(Potion.jump, 60, 0, 1.0f);
+    public static Flavor flvZunda = new Flavor(3, "zunda", 0x95e24a, 4, 0.6F)
+            .addPotionEffect(Potion.nightVision, 20, 0, 1.0f);
+    public static Flavor flvApple = new Flavor(4, "apple", 0xf2e087, 4, 0.6F)
+            .addPotionEffect(Potion.fireResistance, 45, 0, 1.0f);
+    public static Flavor flvPumpkin = new Flavor(5, "pumpkin", 0xffb504, 4, 0.6F)
+            .addPotionEffect(Potion.damageBoost, 45, 0, 1.0f);
+    public static Flavor flvRamune = new Flavor(6, "ramune", 0xa1c7ff, 4, 0.6F)
+            .addPotionEffect(Potion.digSpeed, 45, 0, 1.0f)
+            .addPotionEffect(Potion.jump, 60, 0, 1.0f)
+            .addPotionEffect(Potion.nightVision, 45, 0, 1.0f)
+            .addPotionEffect(Potion.fireResistance, 45, 0, 1.0f)
+            .addPotionEffect(Potion.damageBoost, 45, 0, 1.0f)
+            .addPotionEffect(Potion.moveSpeed, 60, 0, 1.0f)
+            .addPotionEffect(Potion.resistance, 45, 0, 1.0f)
+            .addPotionEffect(Potion.field_76444_x, 45, 0, 1.0f)
+            .setRandomPotionEffect(1.0f);
+    public static Flavor flvStrawberry = new Flavor(7, "strawberry", 0xf4a4b7, 4, 0.6F)
+            .addPotionEffect(Potion.moveSpeed, 60, 0, 1.0f);
+    public static Flavor flvSakura = new Flavor(8, "sakura", 0xffd1d7, 4, 0.6F)
+            .addPotionEffect(Potion.resistance, 45, 0, 1.0f);
+    public static Flavor flvAnnin = new Flavor(9, "annin", 0xf5f7f3, 4, 0.6F)
+            .addPotionEffect(Potion.field_76444_x, 45, 0, 1.0f);
+
+    public static class Flavor extends TcFoodBase<Flavor>
     {
-        public final int id;
-        public final String name;
-        public final int color;
-        public final ItemFood food;
-
-        public Flavor(int id, String name, int color, Item foodItem)
+        public Flavor(int id, String name, int color, int healAmount, float saturationModifier)
         {
-            this.id = id;
-            this.name = name;
-            this.color = color;
-            this.food = (ItemFood)foodItem;
+            super(id, healAmount, saturationModifier, true, name);
+            this.asGlassBottle(color);
+            this.setContainerItem(new ItemStack(Items.glass_bottle));
             ItemBottleSoyMilk.flavorList[id] = this;
         }
     }
-
 
     public ItemBottleSoyMilk()
     {
@@ -49,44 +56,15 @@ public class ItemBottleSoyMilk extends ItemDrinkBottle
         this.setHasSubtypes(true);
     }
 
-    public int getHealAmount(int itemDamage)
+    @Override
+    public Flavor[] getItemList()
     {
-        ItemFood food = flavorList[itemDamage].food;
-        return food.func_150905_g(new ItemStack(food));
-    }
-
-    public float getSaturationModifier(int itemDamage)
-    {
-        ItemFood food = flavorList[itemDamage].food;
-        return food.func_150906_h(new ItemStack(food));
+        return flavorList;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    protected int getColorFromDamage(int itemDamage)
+    public String getItemSetName()
     {
-        return flavorList[itemDamage].color;
-    }
-
-    @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (int i = 0; i < flavorList.length; i++)
-        {
-            if (flavorList[i] != null)
-            {
-                par3List.add(new ItemStack(this, 1, i));
-            }
-        }
-    }
-
-
-
-    @Override
-    public String getUnlocalizedName(ItemStack par1ItemStack)
-    {
-        int itemDamage = par1ItemStack.getItemDamage();
-        return this.getUnlocalizedName()
-                + (flavorList[itemDamage].name != null ? "." + flavorList[itemDamage].name : "");
+        return "bottleSoymilk";
     }
 }
