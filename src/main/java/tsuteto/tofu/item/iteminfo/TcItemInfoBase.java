@@ -45,11 +45,6 @@ public class TcItemInfoBase<T>
         return container != null;
     }
 
-    public ItemStack getNewContainer()
-    {
-        return container.copy();
-    }
-
     public T asGlassBottle(int liquidColor)
     {
         this.type = TcItemType.BOTTLE;

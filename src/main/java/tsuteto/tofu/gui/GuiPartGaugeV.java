@@ -1,13 +1,13 @@
 package tsuteto.tofu.gui;
 
-public class GuiPartGuageV extends GuiPartGuageBase<GuiPartGuageV>
+public class GuiPartGaugeV extends GuiPartGaugeBase<GuiPartGaugeV>
 {
-    public GuiPartGuageV(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator)
+    public GuiPartGaugeV(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator)
     {
         super(x, y, frame, indicator);
     }
 
-    public GuiPartGuageV(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator, int xIndicatorOffset, int yIndicatorOffset)
+    public GuiPartGaugeV(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator, int xIndicatorOffset, int yIndicatorOffset)
     {
         super(x, y, frame, indicator, xIndicatorOffset, yIndicatorOffset);
     }

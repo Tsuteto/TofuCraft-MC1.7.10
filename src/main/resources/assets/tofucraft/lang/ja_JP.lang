@@ -443,7 +443,7 @@ achievement.tofucraft:tfOven.desc=ＴＦオーブンを組み立てる
 achievement.tofucraft:tfCollector=ついに空中からＴＦが
 achievement.tofucraft:tfCollector.desc=ＴＦコレクターを組み立てる
 achievement.tofucraft:ultimateOven=オーブンを極めし者
-achievement.tofucraft:ultimateOven.desc=ＴＦオーブンの中央のスロットに活性豆腐石64個をセットする
+achievement.tofucraft:ultimateOven.desc=ＴＦオーブンの中央のスロットに活性地獄豆腐64個をセットする
 
 container.tofucraft.SaltFurnace=製塩用かまど
 container.tofucraft.TfAntenna=ＴＦアンテナ

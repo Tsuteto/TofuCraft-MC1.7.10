@@ -13,13 +13,13 @@ public class GuiTfAntenna extends GuiTfMachineBase
 {
     private final TileEntityTfAntenna machineInventory;
 
-    private GuiPartGuageBase supply = new GuiPartGuageRevH(31, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
+    private GuiPartGaugeBase supply = new GuiPartGaugeRevH(31, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
             .setIndicatorColor(0xffffad5d)
             .setInfoTip(57, 12, HoverTextPosition.LOWER_CENTER);
-    private GuiPartGuageBase demand = (GuiPartGuageH)new GuiPartGuageH(89, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
+    private GuiPartGaugeBase demand = (GuiPartGaugeH)new GuiPartGaugeH(89, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
             .setIndicatorColor(0xff56e492)
             .setInfoTip(57, 12, HoverTextPosition.LOWER_CENTER);
-//    private GuiPartGuageH balance = new GuiPartGuageH<GuiPartGuageH>(50, 40, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
+//    private GuiPartGaugeH balance = new GuiPartGaugeH<GuiPartGaugeH>(50, 40, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
 //            .setIndicatorColor(0x);
 
     public GuiTfAntenna(InventoryPlayer par1InventoryPlayer, TileEntityTfAntenna tfstorage)

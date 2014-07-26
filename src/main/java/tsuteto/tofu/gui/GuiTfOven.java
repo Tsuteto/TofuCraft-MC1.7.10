@@ -10,10 +10,10 @@ public class GuiTfOven extends GuiTfMachineBase
 {
     private final TileEntityTfOven machineInventory;
 
-    private GuiPartGuageH progress = new GuiPartGuageH(83, 31, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
+    private GuiPartGaugeH progress = new GuiPartGaugeH(83, 31, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
-    private GuiPartGuageH heaterLeft  = new GuiPartGuageH(31, 32, TfMachineGuiParts.heaterBgLeft, TfMachineGuiParts.heaterLeft);
-    private GuiPartGuageRevH heaterRight = new GuiPartGuageRevH(67, 32, TfMachineGuiParts.heaterBgRight, TfMachineGuiParts.heaterRight);
+    private GuiPartGaugeH heaterLeft  = new GuiPartGaugeH(31, 32, TfMachineGuiParts.heaterBgLeft, TfMachineGuiParts.heaterLeft);
+    private GuiPartGaugeRevH heaterRight = new GuiPartGaugeRevH(67, 32, TfMachineGuiParts.heaterBgRight, TfMachineGuiParts.heaterRight);
 
     public GuiTfOven(InventoryPlayer par1InventoryPlayer, TileEntityTfOven machine)
     {

@@ -27,7 +27,7 @@ public enum TfMachineGuiParts
     gaugeV2(20, 88, 8, 41),
     gaugeV2Frame(28, 88, 12, 47),
 
-    guageVItemDisplay(20, 135, 16, 17),
+    gaugeVItemDisplay(20, 135, 16, 17),
 
     smallArrowLeft(10, 0, 3, 6),
     smallArrowRight(13, 0, 3, 6),

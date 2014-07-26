@@ -21,22 +21,22 @@ public class GuiTfCondenser extends GuiTfMachineBase
 {
     private final TileEntityTfCondenser machineInventory;
 
-    private GuiPartGuageV nigariGuage = new GuiPartGuageV(33, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
+    private GuiPartGaugeV nigariGauge = new GuiPartGaugeV(33, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setIndicatorColor(0xc0d0ff)
-            .setItemDisplay(TfMachineGuiParts.guageVItemDisplay)
+            .setItemDisplay(TfMachineGuiParts.gaugeVItemDisplay)
             .setItemStack(new ItemStack(TcItems.nigari))
             .setFluidStack(new FluidStack(TcFluids.NIGARI, 0))
             .setInfoTip(51, 22, HoverTextPosition.LOWER_CENTER);
 
-    private GuiPartGuageV additiveGuage = new GuiPartGuageV(72, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
+    private GuiPartGaugeV additiveGauge = new GuiPartGaugeV(72, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setIndicatorColor(0xb0f0a7)
-            .setItemDisplay(TfMachineGuiParts.guageVItemDisplay)
+            .setItemDisplay(TfMachineGuiParts.gaugeVItemDisplay)
             .setInfoTip(51, 22, HoverTextPosition.LOWER_CENTER);
 
-    private GuiPartGuageV tfGuage = new GuiPartGuageV(95, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
+    private GuiPartGaugeV tfGauge = new GuiPartGaugeV(95, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setInfoTip(51, 22, HoverTextPosition.LOWER_CENTER);
 
-    private GuiPartGuageH progress = new GuiPartGuageH(115, 35, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
+    private GuiPartGaugeH progress = new GuiPartGaugeH(115, 35, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
     private GuiTcButtonFixed btnAdditiveDrop;
 
@@ -84,7 +84,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
         /*
          * Info Tips
          */
-        nigariGuage.showInfoTip(this, px, py, new IHoverDrawingHandler()
+        nigariGauge.showInfoTip(this, px, py, new IHoverDrawingHandler()
         {
             @Override
             public void draw(int ox, int oy, int fw, int fh)
@@ -98,7 +98,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
             }
         });
 
-        additiveGuage.showInfoTip(this, px, py, new IHoverDrawingHandler()
+        additiveGauge.showInfoTip(this, px, py, new IHoverDrawingHandler()
         {
             @Override
             public void draw(int ox, int oy, int fw, int fh)
@@ -112,7 +112,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
             }
         });
 
-        tfGuage.showInfoTip(this, px, py, new IHoverDrawingHandler()
+        tfGauge.showInfoTip(this, px, py, new IHoverDrawingHandler()
         {
             @Override
             public void draw(int ox, int oy, int fw, int fh)
@@ -146,18 +146,18 @@ public class GuiTfCondenser extends GuiTfMachineBase
         this.drawGuiPart(57, 42, TfMachineGuiParts.smallArrowDown);
 
         // Nigari guage
-        nigariGuage
+        nigariGauge
                 .setPercentage((double) machineInventory.nigariTank.getFluidAmount() / (double) machineInventory.nigariTank.getCapacity())
                 .draw(this);
 
         // Additive guage
-        additiveGuage
+        additiveGauge
                 .setPercentage((double) machineInventory.additiveTank.getFluidAmount() / (double) machineInventory.additiveTank.getCapacity())
                 .setItemStack(machineInventory.additiveFluidItem)
                 .setFluidStack(machineInventory.additiveTank.getFluid())
                 .draw(this);
 
-        tfGuage
+        tfGauge
                 .setPercentage(machineInventory.tfPooled / machineInventory.tfNeeded)
                 .draw(this);
         this.drawGuiPart(95, 62, TfMachineGuiParts.tfMark);
@@ -166,8 +166,8 @@ public class GuiTfCondenser extends GuiTfMachineBase
                 .draw(this);
 
         // Item Stacks
-        nigariGuage.drawItem(this);
-        additiveGuage.drawItem(this);
+        nigariGauge.drawItem(this);
+        additiveGauge.drawItem(this);
     }
 
     protected void actionPerformed(GuiButton btn)

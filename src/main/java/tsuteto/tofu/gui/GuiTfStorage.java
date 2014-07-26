@@ -1,7 +1,6 @@
 package tsuteto.tofu.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
@@ -16,9 +15,9 @@ public class GuiTfStorage extends GuiTfMachineBase
 {
     private final TileEntityTfStorage machineInventory;
 
-    private GuiPartGuageH progress = new GuiPartGuageH(69, 36, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
+    private GuiPartGaugeH progress = new GuiPartGaugeH(69, 36, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
-    private GuiPartGuageBase tfGuage = (GuiPartGuageBase)new GuiPartGuageH(100, 39, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
+    private GuiPartGaugeBase tfGauge = (GuiPartGaugeBase)new GuiPartGaugeH(100, 39, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
             .setInfoTip(57, 22, HoverTextPosition.LOWER_CENTER);
 
     public GuiTfStorage(InventoryPlayer par1InventoryPlayer, TileEntityTfStorage tfstorage)
@@ -38,7 +37,7 @@ public class GuiTfStorage extends GuiTfMachineBase
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 0x5c5e54);
         this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 3, 0x5c5e54);
 
-        tfGuage.showInfoTip(this, par1, par2, new IHoverDrawingHandler()
+        tfGauge.showInfoTip(this, par1, par2, new IHoverDrawingHandler()
         {
             @Override
             public void draw(int ox, int oy, int fw, int fh)
@@ -74,7 +73,7 @@ public class GuiTfStorage extends GuiTfMachineBase
                 .setPercentage(this.machineInventory.getProgressScaledInput())
                 .draw(this);
 
-        tfGuage
+        tfGauge
                 .setPercentage(this.machineInventory.getProgressScaledTfAmount())
                 .draw(this);
     }

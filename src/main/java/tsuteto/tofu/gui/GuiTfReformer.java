@@ -6,16 +6,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.tileentity.ContainerTfReformer;
-import tsuteto.tofu.tileentity.ContainerTfStorage;
 import tsuteto.tofu.tileentity.TileEntityTfReformer;
-import tsuteto.tofu.tileentity.TileEntityTfStorage;
 
 @SideOnly(Side.CLIENT)
 public class GuiTfReformer extends GuiTfMachineBase
 {
     private final TileEntityTfReformer machineInventory;
 
-    private GuiPartGuageRevH progress = new GuiPartGuageRevH(90, 36, TfMachineGuiParts.progressArrowRevBg, TfMachineGuiParts.progressArrowRev);
+    private GuiPartGaugeRevH progress = new GuiPartGaugeRevH(90, 36, TfMachineGuiParts.progressArrowRevBg, TfMachineGuiParts.progressArrowRev);
 
     public GuiTfReformer(InventoryPlayer par1InventoryPlayer, TileEntityTfReformer machine)
     {

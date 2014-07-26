@@ -3,9 +3,8 @@ package tsuteto.tofu.gui;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 
-abstract public class GuiPartGuageBase<T extends GuiPartGuageBase> extends GuiPart<T>
+abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPart<T>
 {
     public TfMachineGuiParts indicator;
     public TfMachineGuiParts itemDisplay = null;
@@ -21,12 +20,12 @@ abstract public class GuiPartGuageBase<T extends GuiPartGuageBase> extends GuiPa
     public ItemStack itemStack = null;
     public FluidStack fluidStack = null;
 
-    public GuiPartGuageBase(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator)
+    public GuiPartGaugeBase(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator)
     {
         this(x, y, frame, indicator, (frame.xSize - indicator.xSize) / 2, (frame.ySize - indicator.ySize) / 2);
     }
 
-    public GuiPartGuageBase(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator, int xIndicatorOffset, int yIndicatorOffset)
+    public GuiPartGaugeBase(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator, int xIndicatorOffset, int yIndicatorOffset)
     {
         super(x, y, frame);
         this.indicator = indicator;

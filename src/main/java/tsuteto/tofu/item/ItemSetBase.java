@@ -37,7 +37,7 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
     public ItemStack getContainerItem(ItemStack stack)
     {
         TcItemInfoBase info = getItemInfo(stack.getItemDamage());
-        return info.getNewContainer();
+        return info.getContainerItem();
     }
 
     @Override

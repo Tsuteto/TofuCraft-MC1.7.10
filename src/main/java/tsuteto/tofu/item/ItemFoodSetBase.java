@@ -31,16 +31,16 @@ public abstract class ItemFoodSetBase<T extends TcFoodBase> extends ItemSetBase<
             this.onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
         }
         
-        if (food.container != null)
+        if (food.hasContainerItem())
         {
             if (par1ItemStack.stackSize <= 0)
             {
-                return food.getNewContainer();
+                return food.getContainerItem();
             }
     
-            if (!par3EntityPlayer.inventory.addItemStackToInventory(food.getNewContainer()))
+            if (!par3EntityPlayer.inventory.addItemStackToInventory(food.getContainerItem()))
             {
-                par3EntityPlayer.dropPlayerItemWithRandomChoice(food.getNewContainer(), false);
+                par3EntityPlayer.dropPlayerItemWithRandomChoice(food.getContainerItem(), false);
             }
         }
 

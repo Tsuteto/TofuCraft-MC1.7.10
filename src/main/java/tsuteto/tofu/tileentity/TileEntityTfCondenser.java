@@ -219,7 +219,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     {
         ItemStack slotItemInput = itemStacks[inputSlotId];
         ItemStack slotItemOutput = itemStacks[outputSlotId];
-        ItemStack container;
+        ItemStack container = null;
 
         if (slotItemInput.getItem() instanceof ICraftingDurability)
         {
