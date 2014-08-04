@@ -166,7 +166,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         {
             FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(additiveItem);
             if (fluidStackInput != null
-                    && TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStackInput.getFluid()))
+                    && TfCondenserRecipeRegistry.ingredientToRecipeMap.containsKey(fluidStackInput.getFluid()))
             {
                 additiveTank.fill(fluidStackInput, true);
                 this.drainAndMoveSlotItem(SLOT_SPECIAL_INPUT, SLOT_SPECIAL_OUTPUT);
@@ -271,7 +271,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         if (recipe == null) return false;
 
         // Has enough ingredients?
-        if (recipe.additive != null && additiveTank.getFluidAmount() < recipe.additive.amount
+        if (recipe.ingredient != null && additiveTank.getFluidAmount() < recipe.ingredient.amount
                 || nigariTank.getFluidAmount() < NIGARI_COST_MB) return false;
 
         // Check if an output item can be stacked to the output slot
@@ -301,9 +301,9 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
             itemStacks[SLOT_TOFU_OUTPUT].stackSize += var1.stackSize;
         }
 
-        if (recipe.additive != null)
+        if (recipe.ingredient != null)
         {
-            this.additiveTank.drain(recipe.additive.amount, true);
+            this.additiveTank.drain(recipe.ingredient.amount, true);
             this.updateAdditiveItem();
         }
         this.nigariTank.drain(NIGARI_COST_MB, true);
@@ -313,7 +313,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     {
         if (additiveTank.getFluid() != null)
         {
-            return TfCondenserRecipeRegistry.additiveToRecipeMap.get(additiveTank.getFluid().getFluid());
+            return TfCondenserRecipeRegistry.ingredientToRecipeMap.get(additiveTank.getFluid().getFluid());
         }
         else
         {
@@ -367,7 +367,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         {
             FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(par2ItemStack);
             return fluidStackInput != null
-                    && TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStackInput.getFluid());
+                    && TfCondenserRecipeRegistry.ingredientToRecipeMap.containsKey(fluidStackInput.getFluid());
         }
         return false;
 

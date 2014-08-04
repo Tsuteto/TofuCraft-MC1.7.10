@@ -30,10 +30,23 @@ public class BlockGlowtofuBarrel extends BlockBarrelBase
         return TcItems.barrelGlowtofu;
     }
 
+    /**
+     * For client
+     */
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean checkEnvironment(IBlockAccess blockAccess, int x, int y, int z)
     {
         return blockAccess.getBiomeGenForCoords(x, z).biomeID == BiomeGenBase.hell.biomeID;
+    }
+
+    /**
+     * For server
+     */
+    @Override
+    public boolean checkEnvironment(World world, int x, int y, int z)
+    {
+        return world.getBiomeGenForCoords(x, z).biomeID == BiomeGenBase.hell.biomeID;
     }
 
     @Override

@@ -8,11 +8,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.ObjectUtils;
-import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
@@ -345,7 +343,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(itemStack);
         if (fluidStack != null)
         {
-            if (TfCondenserRecipeRegistry.additiveToRecipeMap.containsKey(fluidStack.getFluid()))
+            if (TfCondenserRecipeRegistry.ingredientToRecipeMap.containsKey(fluidStack.getFluid()))
             {
                 if (!this.mergeToSingleItemStack(itemStack, TileEntityTfCondenser.SLOT_SPECIAL_INPUT))
                 {

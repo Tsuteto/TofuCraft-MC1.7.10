@@ -1,14 +1,15 @@
 package tsuteto.tofu.gui;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Gui;
 
 import java.util.List;
 
-abstract public class GuiPart<T extends GuiPart> extends Gui
+public class GuiPart<T extends GuiPart> extends Gui
 {
     public int x;
     public int y;
-    public TfMachineGuiParts part;
+    public TfMachineGuiParts part = null;
     public GuiInfoTip infoTip = null;
 
     public GuiPart(int x, int y, TfMachineGuiParts part)
@@ -30,7 +31,10 @@ abstract public class GuiPart<T extends GuiPart> extends Gui
         return (T)this;
     }
 
-    abstract public void draw(GuiTfMachineBase gui);
+    public void draw(GuiTfMachineBase gui)
+    {
+        if (part != null) gui.drawGuiPart(x, y, part);
+    }
 
     public void showInfoTip(GuiTfMachineBase gui, int px, int py, GuiTfMachineBase.IHoverDrawingHandler handler)
     {
@@ -39,6 +43,12 @@ abstract public class GuiPart<T extends GuiPart> extends Gui
             gui.drawTfHoveringTipFixedSize(px, py, infoTip.wTip, infoTip.hTip, infoTip.pos, handler);
         }
     }
+
+    public void showInfoTip(GuiTfMachineBase gui, int px, int py, String text)
+    {
+        this.showInfoTip(gui, px, py, Lists.newArrayList(text));
+    }
+
     public void showInfoTip(GuiTfMachineBase gui, int px, int py, List text)
     {
         if (infoTip != null && gui.isPointInRegion(x, y, part.xSize, part.ySize, px, py)) // isPointInRegion

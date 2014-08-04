@@ -2,43 +2,64 @@ package tsuteto.tofu.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import tsuteto.tofu.api.TfMaterialRegistry;
+import tsuteto.tofu.api.recipe.TfReformerRecipe;
+import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.block.BlockTfReformer;
 import tsuteto.tofu.fluids.TcFluids;
-import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.api.util.TfUtils;
+import tsuteto.tofu.item.ICraftingDurability;
+import tsuteto.tofu.item.ItemCraftingDurability;
+import tsuteto.tofu.recipe.Ingredient;
 
 public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfConsumer
 {
+    public enum Model {
+        simple(0), mix(1);
+
+        public final int id;
+
+        Model(int id)
+        {
+            this.id = id;
+        }
+    }
     public static final int SLOT_INPUT_ITEM = 0;
     public static final int SLOT_OUTPUT_ITEM = 1;
+    public static final int SLOT_INGREDIENT_ITEM1 = 2;
+    public static final int SLOT_INGREDIENT_ITEM2 = 3;
+    public static final int SLOT_INGREDIENT_ITEM3 = 4;
+    public static final int[] slotsIng = new int[]{SLOT_INGREDIENT_ITEM1, SLOT_INGREDIENT_ITEM2, SLOT_INGREDIENT_ITEM3};
 
     public static final double COST_TF_PER_TICK = 1;
 
     private static final int[] slotsTop = new int[]{0};
-    private static final int[] slotsSides = new int[]{0, 1};
+    private static final int[] slotsSides1 = new int[]{0, 1};
+    private static final int[] slotsSides2 = new int[]{1, 2, 3, 4};
     private static final int[] slotsBottom = new int[]{1};
 
-    public float tfCapacity = 100;
-    public float tfAmount = 0;
-    public float wholeTfOutput = 0;
-    public float tfOutput = 0;
+    public Model model;
+    public double tfCapacity = 100;
+    public double tfAmount = 0;
+    public TfReformerRecipe currentRecipe;
+    public double tfOutput = 0;
+    public double wholeTfOutput = 0;
     public int externalProcessTime = 0;
     public boolean isExternalProcessed = false;
     public FluidTank fluidTank = new FluidTank(0);
 
     private double tfConsumed = 0.0D;
-    private ItemStack lastInputItem = null;
+    private TfReformerRecipe lastRecipe = null;
 
     public TileEntityTfReformer()
     {
-        this.itemStacks = new ItemStack[2];
+        this.itemStacks = new ItemStack[5];
         this.fluidTank.setFluid(new FluidStack(TcFluids.SOYMILK, 0));
         this.fluidTank.setCapacity(TfMaterialRegistry.calcFluidAmountFrom(this.tfCapacity, TcFluids.SOYMILK));
     }
@@ -46,7 +67,16 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     @Override
     protected String getInventoryNameTranslate()
     {
-        return "container.tofucraft.TfReformer";
+        return "container.tofucraft.TfReformer." + model.name();
+    }
+
+    public static Model getModelById(int id)
+    {
+        for (Model model : Model.values())
+        {
+            if (model.id == id) return model;
+        }
+        return null;
     }
 
     /**
@@ -56,18 +86,28 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
+        int rev = nbtTagCompound.getByte("Rev");
 
-        this.tfOutput = nbtTagCompound.getShort("ProcO");
-        this.tfCapacity = nbtTagCompound.getFloat("TfCap");
-        this.tfAmount = nbtTagCompound.getFloat("TfAmount");
-
-        if (this.canProcessOutput())
+        if (rev == 1)
         {
-            this.wholeTfOutput = (int)TfUtils.getItemTfAmount(new ItemStack(TcItems.bucketSoymilk));
+            this.model = Model.simple;
+            this.tfOutput = nbtTagCompound.getShort("ProcO");
+            this.tfCapacity = nbtTagCompound.getFloat("TfCap");
+            this.tfAmount = nbtTagCompound.getFloat("TfAmount");
+        }
+        else
+        {
+            this.model = getModelById(nbtTagCompound.getByte("Model"));
+            if (this.model == null) this.invalidate();
+
+            this.tfOutput = nbtTagCompound.getDouble("ProcO");
+            this.tfCapacity = nbtTagCompound.getDouble("TfCap");
+            this.tfAmount = nbtTagCompound.getDouble("TfAmount");
         }
 
         this.fluidTank.setCapacity(TfMaterialRegistry.calcFluidAmountFrom(this.tfCapacity, TcFluids.SOYMILK));
         this.updateFluidTank();
+        this.updateCurrentRecipe();
     }
 
     /**
@@ -78,15 +118,22 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     {
         super.writeToNBT(nbtTagCompound);
 
-        nbtTagCompound.setShort("ProcO", (short)this.tfOutput);
-        nbtTagCompound.setFloat("TfCap", this.tfCapacity);
-        nbtTagCompound.setFloat("TfAmount", this.tfAmount);
+        nbtTagCompound.setByte("Model", (byte)this.model.id);
+        nbtTagCompound.setDouble("ProcO", this.tfOutput);
+        nbtTagCompound.setDouble("TfCap", this.tfCapacity);
+        nbtTagCompound.setDouble("TfAmount", this.tfAmount);
+    }
+
+    @Override
+    protected int getNBTRevision()
+    {
+        return 2;
     }
 
     @SideOnly(Side.CLIENT)
     public double getProgressScaledOutput()
     {
-        if (this.wholeTfOutput > 0)
+        if (wholeTfOutput > 0)
         {
             return this.tfOutput / this.wholeTfOutput;
         }
@@ -101,13 +148,13 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
      */
     public boolean isProcessing()
     {
-        return this.wholeTfOutput > 0 || this.externalProcessTime > 0;
+        return this.tfOutput > 0 || this.externalProcessTime > 0;
     }
 
     @Override
     public void updateEntity()
     {
-        boolean isProcessingOutput = this.wholeTfOutput > 0;
+        boolean isProcessingOutput = this.tfOutput > 0;
         boolean isExternalProcessing = this.externalProcessTime > 0;
         boolean isInventoryChanged = false;
 
@@ -118,8 +165,8 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             if (this.tfOutput == 0 && this.canProcessOutput())
             {
                 this.updateFluidTank();
-                int containerVol = TfUtils.getSoymilkCapacityOf(this.itemStacks[SLOT_INPUT_ITEM], fluidTank.getFluid());
-                this.wholeTfOutput = (int) TfMaterialRegistry.calcTfAmountFrom(new FluidStack(TcFluids.SOYMILK, containerVol));
+//                int containerVol = TfUtils.getSoymilkCapacityOf(this.itemStacks[SLOT_INPUT_ITEM], fluidTank.getFluid());
+//                this.wholeTfOutput = (int) TfMaterialRegistry.calcTfAmountFrom(new FluidStack(TcFluids.SOYMILK, containerVol));
             }
 
             if (this.wholeTfOutput > 0 && this.canProcessOutput())
@@ -131,12 +178,12 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
                 if (this.tfOutput >= wholeTfOutput)
                 {
                     this.tfOutput = 0;
-                    this.wholeTfOutput = 0;
                     this.onOutputCompleted();
+                    this.updateCurrentRecipe();
                     isInventoryChanged = true;
                 }
             }
-            else if (lastInputItem != this.itemStacks[SLOT_INPUT_ITEM])
+            else if (this.lastRecipe != this.currentRecipe)
             {
                 // Stop processing
                 this.tfOutput = 0;
@@ -153,7 +200,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
                 --this.externalProcessTime;
             }
 
-            if (isProcessingOutput != this.wholeTfOutput > 0
+            if (isProcessingOutput != this.tfOutput > 0
                     || isExternalProcessing != this.externalProcessTime > 0)
             {
                 isInventoryChanged = true;
@@ -166,7 +213,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             this.markDirty();
         }
 
-        lastInputItem = itemStacks[SLOT_INPUT_ITEM];
+        this.lastRecipe = this.currentRecipe;
     }
 
     /**
@@ -176,10 +223,12 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     {
         if (this.itemStacks[SLOT_INPUT_ITEM] == null) return false;
         if (this.tfAmount <= 0) return false;
+        if (this.currentRecipe == null) return false;
 
-        // Get a item filled with soymilk from the container item for output
-        ItemStack var1 = TfUtils.fillSoymilk(this.itemStacks[SLOT_INPUT_ITEM], fluidTank.getFluid());
-        if (var1 == null) return false;
+        Ingredient containerItem = this.currentRecipe.containerItem;
+        if (!containerItem.matchesWithItemStack(this.itemStacks[SLOT_INPUT_ITEM])) return false;
+
+        ItemStack var1 = this.currentRecipe.result;
 
         // Check if the filled item can be stacked to the output slot
         if (this.itemStacks[SLOT_OUTPUT_ITEM] == null) return true;
@@ -195,7 +244,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
      */
     public void onOutputCompleted()
     {
-        ItemStack var1 = TfUtils.fillSoymilk(this.itemStacks[SLOT_INPUT_ITEM], fluidTank.getFluid());
+        ItemStack var1 = this.currentRecipe.result;
 
         if (this.itemStacks[SLOT_OUTPUT_ITEM] == null)
         {
@@ -210,6 +259,34 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         {
             this.itemStacks[SLOT_INPUT_ITEM] = null;
         }
+
+        // Ingredient slots
+        for (int id : slotsIng)
+        {
+            if (this.itemStacks[id] != null)
+            {
+                if (!this.currentRecipe.isCatalystItem(this.itemStacks[id]))
+                {
+                    if (this.itemStacks[id].getItem() instanceof ItemCraftingDurability)
+                    {
+                        ItemStack var3 = this.itemStacks[id];
+                        Item item = this.itemStacks[id].getItem();
+                        var3.setItemDamage(var3.getItemDamage() + 1);
+                        if(item.isDamageable() && var3.getItemDamage() >= var3.getMaxDamage())
+                        {
+                            this.itemStacks[id] = ((ICraftingDurability)item).getEmptyItem();
+                        }
+                    }
+                    else
+                    {
+                        if (--this.itemStacks[id].stackSize == 0)
+                        {
+                            this.itemStacks[id] = null;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -222,6 +299,24 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             this.fluidTank.setFluid(new FluidStack(TcFluids.SOYMILK, 0));
         }
         this.fluidTank.getFluid().amount = TfMaterialRegistry.calcFluidAmountFrom(this.tfAmount, TcFluids.SOYMILK);
+    }
+
+    public void updateCurrentRecipe()
+    {
+        TfReformerRecipe recipe = TfReformerRecipeRegistry.getRecipe(this.itemStacks[SLOT_INPUT_ITEM],
+                new ItemStack[]{
+                    this.itemStacks[SLOT_INGREDIENT_ITEM1],
+                    this.itemStacks[SLOT_INGREDIENT_ITEM2],
+                    this.itemStacks[SLOT_INGREDIENT_ITEM3]
+                }
+        );
+
+        if (recipe != null)
+        {
+            this.wholeTfOutput = recipe.tfAmountNeeded;
+        }
+
+        this.currentRecipe = recipe;
     }
 
     /**
@@ -323,7 +418,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     @Override
     public int[] getAccessibleSlotsFromSide(int var1)
     {
-        return var1 == 0 ? slotsBottom : (var1 == 1 ? slotsTop : slotsSides);
+        return var1 == 0 ? slotsBottom : (var1 == 1 ? slotsTop : model == Model.simple ? slotsSides1 : slotsSides2);
     }
 
     @Override

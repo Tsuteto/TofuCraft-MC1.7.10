@@ -1,6 +1,9 @@
 package tsuteto.tofu.gui;
 
+import cpw.mods.fml.common.event.FMLLoadEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.relauncher.FMLLaunchHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -18,17 +21,33 @@ public class TcGuiHandler implements IGuiHandler
     public static final int GUIID_TF_CONDENSER = 3;
     public static final int GUIID_TF_OVEN = 4;
     public static final int GUIID_TF_REFORMER = 5;
+    public static final int GUIID_TF_REFORMER2 = 6;
+    public static final int GUIID_TF_SATURATOR = 7;
 
     private HashMap<Integer, GuiEntry> guiRegistry = new HashMap<Integer, GuiEntry>();
 
     public TcGuiHandler()
     {
-        this.registerGuiEntry(new GuiEntry(GUIID_SALT_FURNACE, "SaltFurnace"));
-        this.registerGuiEntry(new GuiEntry(GUIID_TF_STORAGE, "TfStorage"));
-        this.registerGuiEntry(new GuiEntry(GUIID_TF_ANTENNA, "TfAntenna"));
-        this.registerGuiEntry(new GuiEntry(GUIID_TF_CONDENSER, "TfCondenser"));
-        this.registerGuiEntry(new GuiEntry(GUIID_TF_OVEN, "TfOven"));
-        this.registerGuiEntry(new GuiEntry(GUIID_TF_REFORMER, "TfReformer"));
+        this.registerGuiEntry(createEntry(GUIID_SALT_FURNACE).withName("SaltFurnace"));
+        this.registerGuiEntry(createEntry(GUIID_TF_STORAGE).withName("TfStorage"));
+        this.registerGuiEntry(createEntry(GUIID_TF_ANTENNA).withName("TfAntenna"));
+        this.registerGuiEntry(createEntry(GUIID_TF_CONDENSER).withName("TfCondenser"));
+        this.registerGuiEntry(createEntry(GUIID_TF_OVEN).withName("TfOven"));
+        this.registerGuiEntry(createEntry(GUIID_TF_REFORMER).withName("TfReformer"));
+        this.registerGuiEntry(createEntry(GUIID_TF_REFORMER2).withName("TfReformer2", "TfReformer", "TfReformer2"));
+        this.registerGuiEntry(createEntry(GUIID_TF_SATURATOR).withName("TfSaturator"));
+    }
+
+    private GuiEntry createEntry(int id)
+    {
+        if (FMLLaunchHandler.side() == Side.CLIENT)
+        {
+            return new GuiEntryClient(id);
+        }
+        else
+        {
+            return new GuiEntryServer(id);
+        }
     }
 
     public void registerGuiEntry(GuiEntry entry)

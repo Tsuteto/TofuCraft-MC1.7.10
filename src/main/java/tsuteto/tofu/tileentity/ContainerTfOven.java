@@ -18,6 +18,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
     private int lastCookTime = 0;
     private double lastTfPooled = 0;
     private int lastWholeCookTime = 0;
+    private boolean lastCharging = false;
 
     public ContainerTfOven(InventoryPlayer invPlayer, TileEntityTfOven machine)
     {
@@ -74,11 +75,23 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
                     }
                 });
             }
+            if (this.lastCharging != this.machine.isCharging)
+            {
+                this.sendTfMachineData(var2, this, 1, new PacketTfMachineData.DataHandler() {
+
+                    @Override
+                    public void addData(ByteBuf buffer)
+                    {
+                        buffer.writeBoolean(machine.isCharging);
+                    }
+                });
+            }
         }
 
         this.lastCookTime = this.machine.ovenCookTime;
         this.lastWholeCookTime = this.machine.wholeCookTime;
         this.lastTfPooled = this.machine.tfPooled;
+        this.lastCharging = this.machine.isCharging;
     }
 
     @SideOnly(Side.CLIENT)
@@ -103,6 +116,10 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         if (id == 0)
         {
             this.machine.tfPooled = data.readDouble();
+        }
+        if (id == 1)
+        {
+            this.machine.isCharging = data.readBoolean();
         }
     }
 

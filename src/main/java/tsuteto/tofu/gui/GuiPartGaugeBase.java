@@ -12,8 +12,8 @@ abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPa
     public int xIndicatorOffset;
     public int yIndicatorOffset;
 
-    public int frameColor = 0xffffffff;
-    public int indicatorColor = 0xffffffff;
+    public int frameColor = 0xffffff;
+    public int indicatorColor = 0xffffff;
 
     public double percentage = 0D;
 

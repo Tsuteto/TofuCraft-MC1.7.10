@@ -1,8 +1,13 @@
 package tsuteto.tofu.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.IFluidContainerItem;
+import tsuteto.tofu.TofuCraftCore;
+import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.tileentity.TileEntityTfSaturator;
 import tsuteto.tofu.util.Utils;
 
@@ -77,6 +82,19 @@ public class BlockTfSaturator extends BlockTfMachineBase
     public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6)
     {
         super.breakBlock(par1World, par2, par3, par4, par5, par6, keepMachineInventory);
+    }
+
+    @Override
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    {
+        TileEntity tile = par1World.getTileEntity(par2, par3, par4);
+
+        if (tile != null)
+        {
+            par5EntityPlayer.openGui(TofuCraftCore.instance, TcGuiHandler.GUIID_TF_SATURATOR, par1World, par2, par3, par4);
+        }
+
+        return true;
     }
 
     /**

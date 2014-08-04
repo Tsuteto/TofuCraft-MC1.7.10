@@ -1,45 +1,50 @@
 package tsuteto.tofu.gui;
 
-public class GuiEntry
+abstract public class GuiEntry
 {
-    final int id;
-    final String baseName;
+    public final int id;
 
-    public GuiEntry(int id, String name)
+    protected Class<?> guiClass;
+    protected Class<?> tileEntityClass;
+    protected Class<?> containerClass;
+
+    public GuiEntry(int id)
     {
         this.id = id;
-        this.baseName = name;
+    }
+
+    public GuiEntry withName(String name)
+    {
+        this.withName(name, name, name);
+        return this;
+    }
+
+    public GuiEntry withName(String guiClass, String tileEntityClass, String containerClass)
+    {
+        try
+        {
+            this.tileEntityClass = Class.forName("tsuteto.tofu.tileentity.TileEntity" + tileEntityClass);
+            this.containerClass = Class.forName("tsuteto.tofu.tileentity.Container" + containerClass);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return this;
     }
 
     public Class<?> getGuiClass()
     {
-        try
-        {
-            return Class.forName("tsuteto.tofu.gui.Gui" + this.baseName);
-        } catch (ClassNotFoundException e)
-        {
-            throw new RuntimeException("Couldn't get a GUI class.", e);
-        }
+        return this.guiClass;
     }
 
     public Class<?> getTileEntityClass()
     {
-        try
-        {
-            return Class.forName("tsuteto.tofu.tileentity.TileEntity" + this.baseName);
-        } catch (ClassNotFoundException e)
-        {
-            throw new RuntimeException("Couldn't get a TileEntity class.", e);
-        }
+        return this.tileEntityClass;
     }
+
     public Class<?> getContainerClass()
     {
-        try
-        {
-            return Class.forName("tsuteto.tofu.tileentity.Container" + this.baseName);
-        } catch (ClassNotFoundException e)
-        {
-            throw new RuntimeException("Couldn't get a Container class.", e);
-        }
+        return this.containerClass;
     }
 }

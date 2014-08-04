@@ -1,24 +1,33 @@
 package tsuteto.tofu.api.recipe;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Represents recipe for TF Condenser.
+ *
+ * For API users:
+ * There are samples in TfCondenserRecipeRegister class.
+ */
 public class TfCondenserRecipe
 {
     public double tfAmountNeeded;
-    public FluidStack additive;
+    public FluidStack ingredient;
     public ItemStack result;
     public int ticksNeeded;
 
-    public TfCondenserRecipe(double tfAmount, FluidStack additive, int ticks, ItemStack result)
+    /**
+     * Constructor
+     *
+     * @param tfAmount TF amount needed as ingredients
+     * @param ingredient Fluid needed as ingredients
+     * @param ticks Ticks needed to condense since the machine gave enough ingredients
+     * @param result Result item
+     */
+    public TfCondenserRecipe(double tfAmount, FluidStack ingredient, int ticks, ItemStack result)
     {
         this.tfAmountNeeded = tfAmount;
-        this.additive = additive;
+        this.ingredient = ingredient;
         this.ticksNeeded = ticks;
         this.result = result;
     }

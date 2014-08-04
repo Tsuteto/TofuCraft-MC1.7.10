@@ -39,6 +39,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
     private GuiPartGaugeH progress = new GuiPartGaugeH(115, 35, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
     private GuiTcButtonFixed btnAdditiveDrop;
+    private GuiRedstoneLamp redstoneLamp = new GuiRedstoneLamp(121, 58);
 
     public GuiTfCondenser(InventoryPlayer par1InventoryPlayer, TileEntityTfCondenser tfstorage)
     {
@@ -128,6 +129,8 @@ public class GuiTfCondenser extends GuiTfMachineBase
                 printTfSign(ox + 41, oy + 12, 0xb4b5aa);
             }
         });
+
+        redstoneLamp.showInfoTip(this, px, py);
     }
 
     /**
@@ -164,6 +167,8 @@ public class GuiTfCondenser extends GuiTfMachineBase
 
         progress.setPercentage((double) machineInventory.processTimeOutput / (double) machineInventory.wholeTimeOutput)
                 .draw(this);
+
+        redstoneLamp.setSwitch(machineInventory.isRedstonePowered()).draw(this);
 
         // Item Stacks
         nigariGauge.drawItem(this);

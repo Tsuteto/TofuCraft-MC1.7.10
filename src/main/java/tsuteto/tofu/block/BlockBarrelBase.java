@@ -95,6 +95,7 @@ abstract public class BlockBarrelBase extends BlockFermentable
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         int metadata = this.getFermStep(par1IBlockAccess.getBlockMetadata(par2, par3, par4));

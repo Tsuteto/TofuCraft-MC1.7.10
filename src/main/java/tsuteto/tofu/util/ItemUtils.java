@@ -148,13 +148,12 @@ public class ItemUtils
      * @param subregex
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static Item getExternalModItemWithRegex(String subregex)
     {
         String regex = "item\\." + subregex;
-        Iterator<Item> itr = Item.itemRegistry.iterator();
-        while (itr.hasNext())
+        for (Item item : (Iterable<Item>)Item.itemRegistry)
         {
-            Item item = itr.next();
             if (item.getUnlocalizedName() != null && item.getUnlocalizedName().matches(regex))
             {
                 return item;
@@ -183,5 +182,21 @@ public class ItemUtils
         }
         ModLog.log(Level.WARN, "Failed to get external mod block with /" + regex + "/");
         return null;
+    }
+
+    public static int compareToItemStacks(ItemStack i1, ItemStack i2)
+    {
+        if (i1 == null && i2 == null) return 0;
+        if (i1 == null) return 1;
+        if (i2 == null) return -1;
+
+        int id1 = Item.getIdFromItem(i1.getItem());
+        int id2 = Item.getIdFromItem(i2.getItem());
+        int comp1 = Integer.valueOf(id1).compareTo(id2);
+        if (comp1 != 0) return comp1;
+
+        int dmg1 = i1.getItemDamage();
+        int dmg2 = i2.getItemDamage();
+        return Integer.valueOf(dmg1).compareTo(dmg2);
     }
 }

@@ -1,5 +1,7 @@
 package tsuteto.tofu.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,15 +16,16 @@ import java.util.Random;
 public class TileEntityTfSaturator extends TileEntityTfMachineBase implements ITfConsumer
 {
     private static final double TF_CAPACITY = 1D;
-    private static final double tfNeededPerTick = 0.05D;
+    private static final double tfNeededPerTick = 0.015D;
     private static final int radius = 16;
 
     private final Random machineRand = new Random();
-    private double tfAmount = 0D;
-    private int interval = getNextInterval();
-    private int tickCounter = 0;
-    private int step = 0;
-    private boolean isProcessingLastTick = false;
+    public double tfAmount = 0D;
+    public int interval = getNextInterval();
+    public int tickCounter = 0;
+    public int step = 0;
+    public boolean isProcessingLastTick = false;
+    public int saturatingLampTick = 0;
 
     @Override
     protected String getInventoryNameTranslate()
@@ -56,6 +59,12 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
         step = nbtTagCompound.getByte("step");
     }
 
+    @SideOnly(Side.CLIENT)
+    public double getProgressScaled()
+    {
+        return (double)this.tickCounter / (double)interval;
+    }
+
     public boolean isProcessing()
     {
         return tfAmount >= tfNeededPerTick && this.isRedstonePowered();
@@ -67,28 +76,34 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     @Override
     public void updateEntity()
     {
-        if (worldObj.isRemote) return;
-
-        boolean isProcessing = isProcessing();
-        if (isProcessing)
+        if (!worldObj.isRemote)
         {
-            if (tickCounter >= interval)
+            boolean isProcessing = isProcessing();
+            if (isProcessing)
             {
-                saturateAround();
-                tickCounter = 0;
-                interval = getNextInterval();
+                if (tickCounter >= interval)
+                {
+                    saturateAround();
+                    tickCounter = 0;
+                    interval = getNextInterval();
+                }
+
+                tickCounter++;
+                tfAmount -= tfNeededPerTick;
+                //ModLog.debug("t=%d, i=%d, s=%d", tickCounter, interval, step);
             }
 
-            tickCounter++;
-            tfAmount -= tfNeededPerTick;
-            //ModLog.debug("t=%d, i=%d, s=%d", tickCounter, interval, step);
+            if (isProcessingLastTick != isProcessing())
+            {
+                BlockTfSaturator.updateMachineState(isProcessing(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            }
+            isProcessingLastTick = isProcessing();
         }
-
-        if (isProcessingLastTick != isProcessing())
+        else
         {
-            BlockTfSaturator.updateMachineState(isProcessing(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            if (tickCounter >= interval) saturatingLampTick = 30;
+            else if (saturatingLampTick > 0) saturatingLampTick--;
         }
-        isProcessingLastTick = isProcessing();
     }
 
     public void saturateAround()

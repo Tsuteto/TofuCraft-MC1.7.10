@@ -43,7 +43,14 @@ public enum TfMachineGuiParts
     heaterLeft(48, 26, 12, 18),
     heaterRight(60, 26, 12, 18),
 
-    antennaGuide(72, 0, 34, 18);
+    antennaGuide(72, 0, 34, 18),
+
+    redstoneOff(72, 18, 12, 11),
+    redstoneOn(84, 18, 12, 11),
+
+    saturatorCharging(72, 29, 22, 13),
+    saturatorSaturating(94, 29, 22, 13),
+    ;
 
     public int ox, oy, xSize, ySize;
 

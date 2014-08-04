@@ -14,10 +14,10 @@ public class GuiTfAntenna extends GuiTfMachineBase
     private final TileEntityTfAntenna machineInventory;
 
     private GuiPartGaugeBase supply = new GuiPartGaugeRevH(31, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
-            .setIndicatorColor(0xffffad5d)
+            .setIndicatorColor(0xffad5d)
             .setInfoTip(57, 12, HoverTextPosition.LOWER_CENTER);
     private GuiPartGaugeBase demand = (GuiPartGaugeH)new GuiPartGaugeH(89, 35, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
-            .setIndicatorColor(0xff56e492)
+            .setIndicatorColor(0x56e492)
             .setInfoTip(57, 12, HoverTextPosition.LOWER_CENTER);
 //    private GuiPartGaugeH balance = new GuiPartGaugeH<GuiPartGaugeH>(50, 40, TfMachineGuiParts.gaugeFrame, TfMachineGuiParts.gauge)
 //            .setIndicatorColor(0x);
@@ -25,7 +25,7 @@ public class GuiTfAntenna extends GuiTfMachineBase
     public GuiTfAntenna(InventoryPlayer par1InventoryPlayer, TileEntityTfAntenna tfstorage)
     {
         super(new ContainerTfAntenna(par1InventoryPlayer, tfstorage));
-        this.ySize = 190;
+        this.ySize = 80;
         this.machineInventory = tfstorage;
     }
 
@@ -79,7 +79,7 @@ public class GuiTfAntenna extends GuiTfMachineBase
         this.mc.getTextureManager().bindTexture(texture);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.drawBasePanel(this.xSize, this.ySize - 101);
+        this.drawBasePanel(this.xSize, this.ySize);
 
         this.drawGuiPart(75, 50, TfMachineGuiParts.antennaGuide);
 

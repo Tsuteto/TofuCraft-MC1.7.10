@@ -130,7 +130,7 @@ abstract public class TileEntityTfMachineBase extends TileEntity implements IInv
         PacketDispatcher.packet(packet).sendToServer();
     }
 
-    protected boolean isRedstonePowered()
+    public boolean isRedstonePowered()
     {
         return (worldObj.getBlockMetadata(xCoord, yCoord, zCoord) & 8) == 8;
     }

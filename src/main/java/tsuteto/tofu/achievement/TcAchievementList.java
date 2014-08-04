@@ -401,7 +401,7 @@ public class TcAchievementList
                 .registerStat();
 
         TcAchievement.create(Key.tfOven, 10, 14, TcBlocks.tfOvenActive, Key.hellTofuActivation)
-                .setTriggerItemCrafting(new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id))
+                .setTriggerItemCrafting(new ItemStack(TcBlocks.tfOvenIdle))
                 .registerStat();
 
         TcAchievement.create(Key.ultrawave, 5, 13, TcBlocks.tfAntennaUltra, Key.tofuActivation)

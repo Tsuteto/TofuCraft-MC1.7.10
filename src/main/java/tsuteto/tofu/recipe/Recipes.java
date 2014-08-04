@@ -10,10 +10,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tsuteto.tofu.api.recipe.TcOreDic;
+import tsuteto.tofu.api.recipe.TfReformerRecipe;
+import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.TcEntity;
 import cpw.mods.fml.common.registry.GameRegistry;
 import tsuteto.tofu.item.*;
+import tsuteto.tofu.tileentity.TileEntityTfReformer;
 import tsuteto.tofu.util.ItemUtils;
 
 public class Recipes
@@ -59,11 +62,17 @@ public class Recipes
          */
 
         // Soymilk
+
         addSharedRecipe(new ItemStack(TcItems.bucketSoymilk),
                 "S",
                 "B",
                 'S', TcOreDic.soybeans,
                 'B', Items.bucket
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                new ItemStack(TcItems.bucketSoymilk),
+                40)
         );
 
         // Soymilk and Okara
@@ -82,6 +91,12 @@ public class Recipes
                 "B",
                 'S', TcOreDic.soybeansHell,
                 'B', Items.bucket
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                new ItemStack(TcItems.bucketSoymilkHell),
+                600)
+                .addIngredients(TcOreDic.activatedHellTofu, true)
         );
 
         // Tofu Blocks
@@ -458,11 +473,22 @@ public class Recipes
                 TcOreDic.bucketSoymilk
         );
 
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPlain),
+                20)
+        );
+
         // Soy Milk Bottle (Kinako)
         addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvKinako),
                 Items.glass_bottle,
                 TcOreDic.bucketSoymilk,
                 TcOreDic.kinako
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvKinako),
+                20)
+                .addIngredients(TcOreDic.kinako, false)
         );
 
         // Soy Milk Bottle (Cocoa)
@@ -473,11 +499,24 @@ public class Recipes
                 Items.sugar
         );
 
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvCocoa),
+                20)
+                .addIngredients(new ItemStack(Items.dye, 1, 3), false)
+                .addIngredients(new ItemStack(Items.sugar), false)
+        );
+
         // Soy Milk Bottle (Zunda)
         addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvZunda),
                 Items.glass_bottle,
                 TcOreDic.bucketSoymilk,
                 TcOreDic.zunda
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvZunda),
+                20)
+                .addIngredients(TcOreDic.zunda, false)
         );
 
         // Soy Milk Bottle (Apple)
@@ -488,12 +527,26 @@ public class Recipes
                 Items.sugar
         );
 
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvApple),
+                20)
+                .addIngredients(Items.apple, false)
+                .addIngredients(Items.sugar, false)
+        );
+
         // Soy Milk Bottle (Pumpkin)
         addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPumpkin),
                 Items.glass_bottle,
                 TcOreDic.bucketSoymilk,
                 Blocks.pumpkin,
                 Items.sugar
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPumpkin),
+                20)
+                .addIngredients(Blocks.pumpkin, false)
+                .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Ramune)
@@ -503,7 +556,14 @@ public class Recipes
                 new ItemStack(Items.dye, 1, 12),
                 Items.sugar
         );
-        
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvRamune),
+                20)
+                .addIngredients(new ItemStack(Items.dye, 1, 12), false)
+                .addIngredients(Items.sugar, false)
+        );
+
         // Soy Milk Bottle (Strawberry)
         addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvStrawberry),
                 Items.glass_bottle,
@@ -512,12 +572,26 @@ public class Recipes
                 Items.sugar
         );
 
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvStrawberry),
+                20)
+                .addIngredients(TcOreDic.strawberryJam, false)
+                .addIngredients(Items.sugar, false)
+        );
+
         // Soy Milk Bottle (Annin)
         addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvAnnin),
                 Items.glass_bottle,
                 TcOreDic.bucketSoymilk,
                 TcOreDic.kyoninso,
                 Items.sugar
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvAnnin),
+                20)
+                .addIngredients(TcOreDic.kyoninso, false)
+                .addIngredients(Items.sugar, false)
         );
 
         // Dashi
@@ -1117,15 +1191,27 @@ public class Recipes
         );
 
         // TF Reformer
-        addSharedRecipe(TcBlocks.tfReformerIdle,
+        addSharedRecipe(new ItemStack(TcBlocks.tfReformerIdle, 1, TileEntityTfReformer.Model.simple.id),
                 "CXC",
                 "TBT",
                 " M ",
                 'C', TcOreDic.tfCoil,
                 'X', TcOreDic.tfOscillator,
                 'B', TcOreDic.tfCircuitBoard,
-                'T', TcOreDic.blockTofuDried
+                'T', TcOreDic.blockTofuDried,
+                'M', TcOreDic.blockTfMachineCase
                 );
+
+        // TF Mix Reformer
+        addSharedRecipe(new ItemStack(TcBlocks.tfReformerIdle, 1, TileEntityTfReformer.Model.mix.id),
+                " H ",
+                "GTG",
+                " M ",
+                'H', Blocks.hopper,
+                'T', Blocks.crafting_table,
+                'G', TcOreDic.advTofuGem,
+                'M', new ItemStack(TcBlocks.tfReformerIdle, 1, TileEntityTfReformer.Model.simple.id)
+        );
 
         // TF Condenser
         addSharedRecipe(TcBlocks.tfCondenserIdle,
@@ -1135,7 +1221,7 @@ public class Recipes
                 'P', Blocks.piston,
                 'S', TcBlocks.tfStorageIdle,
                 'D', TcOreDic.blockAdvTofuGem,
-                'R', TcBlocks.tfReformerIdle
+                'R', new ItemStack(TcBlocks.tfReformerIdle, 1, TileEntityTfReformer.Model.simple.id)
         );
 
         // TF Oven

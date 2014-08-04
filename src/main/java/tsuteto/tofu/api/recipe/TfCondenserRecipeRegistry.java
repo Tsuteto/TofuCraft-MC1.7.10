@@ -2,10 +2,8 @@ package tsuteto.tofu.api.recipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.block.TcBlock;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.item.ItemTcMaterials;
@@ -17,10 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * TF Condenser recipe entry class
+ *
+ * For API users:
+ * To register, call register() from init() in your mod class.
+ */
 public class TfCondenserRecipeRegistry
 {
     public static final List<TfCondenserRecipe> recipeRegistry = new ArrayList<TfCondenserRecipe>();
-    public static final Map<Fluid, TfCondenserRecipe> additiveToRecipeMap = new HashMap<Fluid, TfCondenserRecipe>();
+    public static final Map<Fluid, TfCondenserRecipe> ingredientToRecipeMap = new HashMap<Fluid, TfCondenserRecipe>();
 
     public static void init()
     {
@@ -45,20 +49,20 @@ public class TfCondenserRecipeRegistry
 
     public static void register(TfCondenserRecipe recipe)
     {
-        if (recipe.additive != null && additiveToRecipeMap.containsKey(recipe.additive.getFluid()))
+        if (recipe.ingredient != null && ingredientToRecipeMap.containsKey(recipe.ingredient.getFluid()))
         {
-            ModLog.log(Level.WARN, "Duplicated recipe for TF Condenser! Already registered additive: %s", recipe.additive.toString());
+            ModLog.log(Level.WARN, "Duplicated recipe for TF Condenser! Already registered ingredient: %s", recipe.ingredient.toString());
             return;
         }
 
         recipeRegistry.add(recipe);
-        if (recipe.additive != null)
+        if (recipe.ingredient != null)
         {
-            additiveToRecipeMap.put(recipe.additive.getFluid(), recipe);
+            ingredientToRecipeMap.put(recipe.ingredient.getFluid(), recipe);
         }
         else
         {
-            additiveToRecipeMap.put(null, recipe);
+            ingredientToRecipeMap.put(null, recipe);
         }
     }
 

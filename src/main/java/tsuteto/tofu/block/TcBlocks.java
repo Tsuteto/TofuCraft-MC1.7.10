@@ -555,7 +555,8 @@ public class TcBlocks
 
         tfReformerIdle = $("tfReformerIdle", new BlockTfReformer(false))
                 .withResource("tfReformer")
-                .wrappedByItemTcBlock()
+                .wrappedBy(ItemTcMultiTextureTile.class)
+                .havingArgs(new Object[]{BlockTfReformer.blockNames})
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
