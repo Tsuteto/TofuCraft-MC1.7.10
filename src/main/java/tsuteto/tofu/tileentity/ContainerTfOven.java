@@ -129,10 +129,10 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         {
             if (!this.mergeToSingleItemStack(itemStack, TileEntityTfOven.SLOT_ITEM_INPUT))
             {
-                return TransferResult.UNMATCHED;
+                return TransferResult.MISMATCHED;
             }
             return TransferResult.MATCHED;
         }
-        return TransferResult.SKIPPED;
+        return TransferResult.SKIPPING;
     }
 }

@@ -23,13 +23,13 @@ abstract public class TileEntityTfMachineBase extends TileEntity implements IInv
 
     abstract protected String getInventoryNameTranslate();
 
-    //@Override
+    @Override
     public String getInventoryName()
     {
         return this.hasCustomInventoryName() ? this.customName : this.getInventoryNameTranslate();
     }
 
-    //@Override
+    @Override
     public boolean hasCustomInventoryName() {
         return this.customName != null && this.customName.length() > 0;
     }

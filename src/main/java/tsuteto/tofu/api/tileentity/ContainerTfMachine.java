@@ -94,9 +94,9 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
             else if (par2 > machineSlotIdTo)
             {
                 TransferResult result = transferStackInMachineSlot(par1EntityPlayer, par2, var5);
-                if (result != TransferResult.SKIPPED)
+                if (result != TransferResult.SKIPPING)
                 {
-                    if (result == TransferResult.UNMATCHED) return null;
+                    if (result == TransferResult.MISMATCHED) return null;
                     // DO NOTHING WHEN MATCHED
                 }
                 else if (par2 >= playerInvSlotIdFrom && par2 <= playerInvSlotIdTo)
@@ -138,7 +138,7 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
 
     public TransferResult transferStackInMachineSlot(EntityPlayer player, int slot, ItemStack itemStack)
     {
-        return TransferResult.SKIPPED;
+        return TransferResult.SKIPPING;
     }
 
     protected boolean mergeToSingleItemStack(ItemStack itemStack, int slotId)
@@ -149,8 +149,8 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
 
     protected enum TransferResult
     {
-        SKIPPED,
+        SKIPPING,
         MATCHED,
-        UNMATCHED;
+        MISMATCHED;
     }
 }

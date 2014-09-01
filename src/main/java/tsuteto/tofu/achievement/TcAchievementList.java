@@ -203,44 +203,44 @@ public class TcAchievementList
 
 
         // === Miso ===
-        TcAchievement.create(Key.koujiBase, -1, -2, TcItems.koujiBase, Key.soybeans)
+        TcAchievement.create(Key.koujiBase, -1, -4, TcItems.koujiBase, Key.soybeans)
                 .setTriggerItemCrafting(new ItemStack(TcItems.koujiBase))
                 .registerStat();
 
         // When: Koujibase changes into kouji
-        TcAchievement.create(Key.kouji, -1, -4, TcItems.kouji, Key.koujiBase)
+        TcAchievement.create(Key.kouji, -1, -6, TcItems.kouji, Key.koujiBase)
                 .registerStat();
 
-        TcAchievement.create(Key.misoBarrel, 1, -6, TcItems.barrelMiso, Key.kouji)
+        TcAchievement.create(Key.misoBarrel, 1, -8, TcItems.barrelMiso, Key.kouji)
                 .setTriggerItemCrafting(new ItemStack(TcItems.barrelMiso))
                 .registerStat();
 
-        TcAchievement.create(Key.miso, 2, -7, TcItems.miso, Key.misoBarrel)
+        TcAchievement.create(Key.miso, 2, -9, TcItems.miso, Key.misoBarrel)
                 .setTriggerItemPickup(new ItemStack(TcItems.miso))
                 .registerStat();
 
-        TcAchievement.create(Key.misoSoup, 4, -7, TcItems.misoSoup, Key.miso)
+        TcAchievement.create(Key.misoSoup, 4, -9, TcItems.misoSoup, Key.miso)
                 .setTriggerItemCrafting(new ItemStack(TcItems.misoSoup))
                 .registerStat();
 
-        TcAchievement.create(Key.yakionigiriMiso, 4, -6, new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriMiso.id), Key.miso)
+        TcAchievement.create(Key.yakionigiriMiso, 4, -8, new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriMiso.id), Key.miso)
                 .setTriggerItemCrafting(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriMiso.id))
                 .registerStat();
 
-        TcAchievement.create(Key.goheimochi, 6, -6, new ItemStack(TcItems.foodSetStick, 1, ItemFoodSetStick.goheimochi.id), Key.yakionigiriMiso)
+        TcAchievement.create(Key.goheimochi, 6, -8, new ItemStack(TcItems.foodSetStick, 1, ItemFoodSetStick.goheimochi.id), Key.yakionigiriMiso)
                 .setTriggerItemCrafting(new ItemStack(TcItems.foodSetStick, 1, ItemFoodSetStick.goheimochi.id))
                 .registerStat();
 
         // === Soy Sauce ===
         // When: Soysauce comes out of miso barrel
-        TcAchievement.create(Key.soySauce, 2, -5, TcItems.bucketSoySauce, Key.misoBarrel)
+        TcAchievement.create(Key.soySauce, 2, -7, TcItems.bucketSoySauce, Key.misoBarrel)
                 .registerStat();
 
-        TcAchievement.create(Key.nikujaga, 4, -5, TcItems.nikujaga, Key.soySauce)
+        TcAchievement.create(Key.nikujaga, 4, -7, TcItems.nikujaga, Key.soySauce)
                 .setTriggerItemCrafting(new ItemStack(TcItems.nikujaga))
                 .registerStat();
 
-        TcAchievement.create(Key.yakionigiriShoyu, 4, -4, new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriShoyu.id), Key.soySauce)
+        TcAchievement.create(Key.yakionigiriShoyu, 4, -6, new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriShoyu.id), Key.soySauce)
                 .setTriggerItemCrafting(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.yakionigiriShoyu.id))
                 .registerStat();
 
@@ -273,6 +273,15 @@ public class TcAchievementList
         // === Soymilk ===
         TcAchievement.create(Key.soymilkFv, 1, -2, new ItemStack(TcItems.bottleSoymilk, 1, ItemBottleSoyMilk.flvRamune.id), Key.soymilk)
                 .setTriggerItemCrafting(new ItemStack(TcItems.bottleSoymilk, 1, ItemBottleSoyMilk.flvRamune.id))
+                .registerStat();
+
+        TcAchievement.create(Key.soymilk1st, 1, -4, new ItemStack(TcItems.bottleSoymilk, 1, ItemBottleSoyMilk.flvPlain.id), Key.soymilk)
+                .registerStat();
+
+        TcAchievement.create(Key.soymilkWeek, 3, -4, new ItemStack(TcItems.bottleSoymilk, 1, ItemBottleSoyMilk.flvCocoa.id), Key.soymilk1st)
+                .registerStat();
+
+        TcAchievement.create(Key.soymilkMax, 5, -4, new ItemStack(TcItems.bottleSoymilk, 1, ItemBottleSoyMilk.flvZunda.id), Key.soymilkWeek)
                 .registerStat();
 
         // === Zunda Arrow ===
@@ -416,7 +425,6 @@ public class TcAchievementList
         TcAchievement.create(Key.ultimateOven, 10, 16, new ItemStack(TcItems.materials, 1, ItemTcMaterials.activatedHellTofu.id), Key.tfOven)
                 .setSpecial()
                 .registerStat();
-
 
         // Add a new achievement page for the mod
         Achievement[] array = TcAchievementMgr.getAllAsArray();

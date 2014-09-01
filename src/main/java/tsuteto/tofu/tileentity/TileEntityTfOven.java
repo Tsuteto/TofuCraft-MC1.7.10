@@ -30,7 +30,6 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     private ItemStack lastInputItem = null;
     private boolean isHeating;
     private boolean isTfNeeded;
-    private boolean isAccelerated = false;
     public boolean isCharging;
 
     public TileEntityTfOven()
@@ -84,7 +83,6 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
 
         if (!this.worldObj.isRemote)
         {
-            this.isAccelerated = this.checkAccelerated();
             if (this.canSmelt())
             {
                 this.wholeCookTime = this.getWholeCookTime();
@@ -127,7 +125,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
         this.isCharging = false;
     }
 
-    private boolean checkAccelerated()
+    public boolean isAccelerated()
     {
         ItemStack itemStack = this.itemStacks[SLOT_ACCELERATION];
         return ItemTcMaterials.activatedHellTofu.isItemEqual(itemStack);
@@ -135,7 +133,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
 
     private int getWholeCookTime()
     {
-        if (isAccelerated)
+        if (this.isAccelerated())
         {
             ItemStack itemStack = this.itemStacks[SLOT_ACCELERATION];
             return WHOLE_COOK_TIME_BASE / itemStack.stackSize;
@@ -145,10 +143,10 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
 
     private double getTfAmountNeeded()
     {
-        if (isAccelerated)
+        if (this.isAccelerated())
         {
             ItemStack itemStack = this.itemStacks[SLOT_ACCELERATION];
-            return 5.0D / (double)this.getWholeCookTime() + COST_TF_PER_TICK / 10.0D * Math.pow(1.1, itemStack.stackSize);
+            return 5.0D / (double) this.getWholeCookTime() + COST_TF_PER_TICK / 10.0D * Math.pow(1.1, itemStack.stackSize);
         }
         return COST_TF_PER_TICK;
     }

@@ -26,10 +26,9 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.achievement.TcAchievementList;
 import tsuteto.tofu.api.TfMaterialRegistry;
+import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.block.RenderYubaBlock;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.network.PacketDispatcher;
-import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.dispanse.DispenserBehaviorTcEmptyBucket;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
@@ -39,15 +38,16 @@ import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
-import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.UpdateNotification;
 import tsuteto.tofu.village.*;
-import tsuteto.tofu.world.biome.BiomeGenTofuBase;
 import tsuteto.tofu.world.TcChunkProviderEvent;
 import tsuteto.tofu.world.WorldProviderTofu;
+import tsuteto.tofu.world.biome.BiomeGenTofuBase;
 import tsuteto.tofu.world.biome.TcBiomes;
 import tsuteto.tofu.world.tofuvillage.EntityJoinWorldEventHandler;
 import tsuteto.tofu.world.tofuvillage.GetVillageBlockIDEventHandler;
@@ -60,7 +60,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.9-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.10-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";

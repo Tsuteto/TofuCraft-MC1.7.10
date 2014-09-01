@@ -2,7 +2,7 @@ package tsuteto.tofu.item.iteminfo;
 
 import net.minecraft.item.ItemStack;
 
-public class TcItemInfoBase<T>
+public class TcItemInfoBase<T extends TcItemInfoBase>
 {
     public TcItemType type;
     public ItemStack container = null;

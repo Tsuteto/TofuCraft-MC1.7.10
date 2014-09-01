@@ -2,7 +2,7 @@ package tsuteto.tofu.item;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.item.iteminfo.TcFoodBase;
+import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
 
 public class ItemFoodSetStick extends ItemFoodSetBase<ItemFoodSetStick.Food>
 {
@@ -17,7 +17,7 @@ public class ItemFoodSetStick extends ItemFoodSetBase<ItemFoodSetStick.Food>
         this.bFull3D = true;
     }
     
-    public static class Food extends TcFoodBase<Food>
+    public static class Food extends TcEffectFoodBase<Food>
     {
 
         Food(int id, int healAmount, float saturationModifier, boolean alwaysEdible, String name)

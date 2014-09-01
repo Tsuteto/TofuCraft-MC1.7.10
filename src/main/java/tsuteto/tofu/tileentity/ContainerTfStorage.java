@@ -1,5 +1,7 @@
 package tsuteto.tofu.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,9 +12,6 @@ import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
 import tsuteto.tofu.gui.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
 {
@@ -176,11 +175,11 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
         {
             if (!this.mergeToSingleItemStack(itemStack, TileEntityTfStorage.SLOT_INPUT_ITEM))
             {
-                return TransferResult.UNMATCHED;
+                return TransferResult.MISMATCHED;
             }
             return TransferResult.MATCHED;
         }
-        return TransferResult.SKIPPED;
+        return TransferResult.SKIPPING;
     }
 
 }

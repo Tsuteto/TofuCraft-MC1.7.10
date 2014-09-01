@@ -1,6 +1,7 @@
 package tsuteto.tofu.network;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import tsuteto.tofu.network.packet.*;
 
@@ -28,6 +29,11 @@ public class PacketDispatcher
     public void sendToServer()
     {
         packetPipeline.sendToServer(packet);
+    }
+
+    public void sendToPlayer(EntityPlayer player)
+    {
+        packetPipeline.sendTo(packet, (EntityPlayerMP)player);
     }
 
     public void sendToPlayer(EntityPlayerMP player)
@@ -63,6 +69,7 @@ public class PacketDispatcher
         packetPipeline.registerPacket(PacketTfMachineData.class);
         packetPipeline.registerPacket(PacketGuiControl.class);
         packetPipeline.registerPacket(PacketSomenScooping.class);
+        packetPipeline.registerPacket(PacketSoymilkInfo.class);
     }
 
     public static void postInit()

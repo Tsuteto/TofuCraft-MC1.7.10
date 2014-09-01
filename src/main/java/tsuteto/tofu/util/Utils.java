@@ -1,21 +1,10 @@
 package tsuteto.tofu.util;
 
 import com.google.common.base.Strings;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.Level;
-import org.lwjgl.opengl.GL11;
-import tsuteto.tofu.Settings;
-import tsuteto.tofu.TofuCraftCore;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Utility Methods
@@ -40,6 +29,18 @@ public class Utils
         {
             p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, l & -9, 4);
         }
+    }
+
+    public static NBTTagCompound getNBTPlayerPersisted(EntityPlayer player)
+    {
+        NBTTagCompound nbt = player.getEntityData();
+
+        if (!nbt.hasKey(EntityPlayer.PERSISTED_NBT_TAG))
+        {
+            nbt.setTag(EntityPlayer.PERSISTED_NBT_TAG, new NBTTagCompound());
+        }
+
+        return nbt.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
     }
 
     /**

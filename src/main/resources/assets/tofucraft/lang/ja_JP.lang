@@ -379,6 +379,12 @@ achievement.tofucraft:fukumame=大豆で厄除け
 achievement.tofucraft:fukumame.desc=炒り豆をうつわに
 achievement.tofucraft:soymilkFv=ラムネ味!
 achievement.tofucraft:soymilkFv.desc=豆乳瓶と空色染料でラムネ味!
+achievement.tofucraft:soymilk1st=初めての豆乳
+achievement.tofucraft:soymilk1st.desc=瓶詰めにした豆乳を飲もう
+achievement.tofucraft:soymilkWeek=豆乳週間!
+achievement.tofucraft:soymilkWeek.desc=7日間毎日豆乳を飲む
+achievement.tofucraft:soymilkMax=豆乳健康体!
+achievement.tofucraft:soymilkMax.desc=効果レベルを20にする
 achievement.tofucraft:zundaBow=東北乙女の必殺技
 achievement.tofucraft:zundaBow.desc=ずんだ弓を作ろう
 achievement.tofucraft:zundaArrow=一矢、心込めて
@@ -476,9 +482,16 @@ commands.tofuslimecheck.notFound=このチャンクには豆腐スライムは�
 
 tofucraft.tofuForce=トーフフォース
 tofucraft.empty=空
-tofucraft.drop=捨てる
+tofucraft.dump=捨てる
 tofucraft.redstone.on=レッドストーン信号あり
 tofucraft.redstone.off=レッドストーン信号なし
+
+tofucraft.soymilkTaken.greetings=豆乳一日目です。毎日飲んで健康!
+tofucraft.soymilkTaken.recovered=%1$s日ぶりの豆乳です。今日の効果は%2$sポイント
+tofucraft.soymilkTaken.chain=豆乳 連続%1$s日目! 今日の効果は%2$sポイント
+tofucraft.soymilkInfo.randomEffect=ランダム効果(豆乳の味どれか一つ)
+tofucraft.soymilkInfo.stat1=毎日飲んで効果アップ!
+tofucraft.soymilkInfo.stat2=今日の効果: レベル%1$s
 
 tofucraft.update.server=豆腐Craft %1$sに更新しました! ダウンロード: %2$s
 tofucraft.update.client=§e豆腐Craft§r §a%1$s§rに更新しました! %2$s

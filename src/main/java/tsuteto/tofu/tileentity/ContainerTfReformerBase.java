@@ -9,9 +9,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
-import tsuteto.tofu.api.tileentity.SlotTfMachine;
-import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
-import tsuteto.tofu.gui.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEntityTfReformer>
@@ -173,11 +170,11 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
         {
             if (!this.mergeToSingleItemStack(itemStack, TileEntityTfStorage.SLOT_INPUT_ITEM))
             {
-                return TransferResult.UNMATCHED;
+                return TransferResult.MISMATCHED;
             }
             return TransferResult.MATCHED;
         }
-        return TransferResult.SKIPPED;
+        return TransferResult.SKIPPING;
     }
 
 }

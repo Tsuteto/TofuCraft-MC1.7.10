@@ -347,11 +347,11 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             {
                 if (!this.mergeToSingleItemStack(itemStack, TileEntityTfCondenser.SLOT_SPECIAL_INPUT))
                 {
-                    return TransferResult.UNMATCHED;
+                    return TransferResult.MISMATCHED;
                 }
                 return TransferResult.MATCHED;
             }
         }
-        return TransferResult.SKIPPED;
+        return TransferResult.SKIPPING;
     }
 }

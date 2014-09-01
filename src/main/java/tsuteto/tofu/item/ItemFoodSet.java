@@ -3,7 +3,7 @@ package tsuteto.tofu.item;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import tsuteto.tofu.item.iteminfo.TcFoodBase;
+import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
 
 public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
 {
@@ -59,7 +59,7 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
         super();
     }
 
-    public static class Food extends TcFoodBase<Food>
+    public static class Food extends TcEffectFoodBase<Food>
     {
 
         Food(int id, int healAmount, float saturationModifier, boolean alwaysEdible, String name)
