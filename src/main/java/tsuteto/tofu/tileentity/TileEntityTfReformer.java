@@ -2,9 +2,11 @@ package tsuteto.tofu.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import tsuteto.tofu.api.TfMaterialRegistry;
@@ -21,21 +23,26 @@ import tsuteto.tofu.recipe.Ingredient;
 public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfConsumer
 {
     public enum Model {
-        simple(0), mix(1);
+        simple(0, 2, new int[0]),
+        mix   (1, 5, new int[]{SLOT_INGREDIENT_ITEM1, SLOT_INGREDIENT_ITEM2, SLOT_INGREDIENT_ITEM3});
 
         public final int id;
+        public final int stackSize;
+        public final int[] ingredientSlots;
 
-        Model(int id)
+        Model(int id, int stackSize, int[] ingredientSlots)
         {
             this.id = id;
+            this.stackSize = stackSize;
+            this.ingredientSlots = ingredientSlots;
         }
     }
+
     public static final int SLOT_INPUT_ITEM = 0;
     public static final int SLOT_OUTPUT_ITEM = 1;
     public static final int SLOT_INGREDIENT_ITEM1 = 2;
     public static final int SLOT_INGREDIENT_ITEM2 = 3;
     public static final int SLOT_INGREDIENT_ITEM3 = 4;
-    public static final int[] slotsIng = new int[]{SLOT_INGREDIENT_ITEM1, SLOT_INGREDIENT_ITEM2, SLOT_INGREDIENT_ITEM3};
 
     public static final double COST_TF_PER_TICK = 1;
 
@@ -59,7 +66,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
     public TileEntityTfReformer()
     {
-        this.itemStacks = new ItemStack[5];
+        this.model = Model.simple;
         this.fluidTank.setFluid(new FluidStack(TcFluids.SOYMILK, 0));
         this.fluidTank.setCapacity(TfMaterialRegistry.calcFluidAmountFrom(this.tfCapacity, TcFluids.SOYMILK));
     }
@@ -79,18 +86,25 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         return null;
     }
 
+    @Override
+    public void onTileEntityCreated(World world, int x, int y, int z, EntityLivingBase entityCreatedBy, ItemStack itemstack)
+    {
+        this.model = TileEntityTfReformer.getModelById(itemstack.getItemDamage());
+        this.itemStacks = new ItemStack[model.stackSize];
+    }
+
     /**
      * Reads a tile entity from NBT.
      */
     @Override
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
-        super.readFromNBT(nbtTagCompound);
         int rev = nbtTagCompound.getByte("Rev");
 
         if (rev == 1)
         {
             this.model = Model.simple;
+            this.itemStacks = new ItemStack[model.stackSize];
             this.tfOutput = nbtTagCompound.getShort("ProcO");
             this.tfCapacity = nbtTagCompound.getFloat("TfCap");
             this.tfAmount = nbtTagCompound.getFloat("TfAmount");
@@ -100,10 +114,13 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             this.model = getModelById(nbtTagCompound.getByte("Model"));
             if (this.model == null) this.invalidate();
 
+            this.itemStacks = new ItemStack[model.stackSize];
             this.tfOutput = nbtTagCompound.getDouble("ProcO");
             this.tfCapacity = nbtTagCompound.getDouble("TfCap");
             this.tfAmount = nbtTagCompound.getDouble("TfAmount");
         }
+
+        super.readFromNBT(nbtTagCompound);
 
         this.fluidTank.setCapacity(TfMaterialRegistry.calcFluidAmountFrom(this.tfCapacity, TcFluids.SOYMILK));
         this.updateFluidTank();
@@ -261,7 +278,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         }
 
         // Ingredient slots
-        for (int id : slotsIng)
+        for (int id : model.ingredientSlots)
         {
             if (this.itemStacks[id] != null)
             {
@@ -303,13 +320,21 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
     public void updateCurrentRecipe()
     {
-        TfReformerRecipe recipe = TfReformerRecipeRegistry.getRecipe(this.itemStacks[SLOT_INPUT_ITEM],
-                new ItemStack[]{
-                    this.itemStacks[SLOT_INGREDIENT_ITEM1],
-                    this.itemStacks[SLOT_INGREDIENT_ITEM2],
-                    this.itemStacks[SLOT_INGREDIENT_ITEM3]
-                }
-        );
+        TfReformerRecipe recipe = null;
+        if (model == Model.mix)
+        {
+            recipe = TfReformerRecipeRegistry.getRecipe(this.itemStacks[SLOT_INPUT_ITEM],
+                    new ItemStack[]{
+                            this.itemStacks[SLOT_INGREDIENT_ITEM1],
+                            this.itemStacks[SLOT_INGREDIENT_ITEM2],
+                            this.itemStacks[SLOT_INGREDIENT_ITEM3]
+                    }
+            );
+        }
+        else if (model == Model.simple)
+        {
+            recipe = TfReformerRecipeRegistry.getRecipe(this.itemStacks[SLOT_INPUT_ITEM], new ItemStack[0]);
+        }
 
         if (recipe != null)
         {

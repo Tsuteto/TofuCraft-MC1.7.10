@@ -2,7 +2,7 @@
 # lang: Simplified Chinese - translated by darkice
 #----------------------------------------------------------
 
-itemGroup.TofuCraft=豆腐Craft
+itemGroup.TofuCraft=豆腐工艺
 
 tile.tofucraft:blockSoybeans.name=大豆
 tile.tofucraft:blockSoybeansHell.name=地狱大豆
@@ -383,6 +383,12 @@ achievement.tofucraft:fukumame=用豆子消除厄运！
 achievement.tofucraft:fukumame.desc=把炒豆装进碗里~
 achievement.tofucraft:soymilkFv=弹珠汽水味!
 achievement.tofucraft:soymilkFv.desc=豆奶加上天蓝色的染料，属于夏天的味道!
+achievement.tofucraft:soymilk1st=最初的豆奶
+achievement.tofucraft:soymilk1st.desc=饮用瓶装豆奶
+achievement.tofucraft:soymilkWeek=豆奶周！
+achievement.tofucraft:soymilkWeek.desc=坚持7天每日饮用豆奶
+achievement.tofucraft:soymilkMax=坚持每天喝豆奶，身体好得不得了！
+achievement.tofucraft:soymilkMax.desc=因为连续饮用豆奶的效果等级达到20
 achievement.tofucraft:zundaBow=东北大妹子的必杀技！
 achievement.tofucraft:zundaBow.desc=制作毛豆弓
 achievement.tofucraft:zundaArrow=一发入魂！
@@ -421,7 +427,7 @@ achievement.tofucraft:tofuFishing=钓起豆腐来！
 achievement.tofucraft:tofuFishing.desc=在豆浆池子里钓豆腐？
 achievement.tofucraft:tofunian=从豆腐里出生的人？
 achievement.tofucraft:tofunian.desc=在豆腐村和他相遇时，稍微说句话吧
-achievement.tofucraft:tfCapacitor=豆腐で電子工作？
+achievement.tofucraft:tfCapacitor=啥？豆腐电子科技？
 achievement.tofucraft:tfCapacitor.desc=用豆腐宝石制作豆腐能电容
 achievement.tofucraft:tfStorage=豆腐机器！
 achievement.tofucraft:tfStorage.desc=制作出豆腐能存储器
@@ -483,6 +489,13 @@ tofucraft.empty=空
 tofucraft.dump=丢弃
 tofucraft.redstone.on=有红石信号
 tofucraft.redstone.off=无红石信号
+
+tofucraft.soymilkTaken.greetings=第一次喝豆奶，每日饮用，效果更强！
+tofucraft.soymilkTaken.recovered=已经%1$s天没坚持喝豆奶了。今日的效果是%2$s点
+tofucraft.soymilkTaken.chain=连续饮用豆奶%1$s天啦! 今日的效果是%2$s点
+tofucraft.soymilkInfo.randomEffect=随机效果
+tofucraft.soymilkInfo.stat1=每日饮用，效果会变强哦!
+tofucraft.soymilkInfo.stat2=今日的效果: Lv.%1$s
 
 tofucraft.update.server=豆腐Craft %1$s更新啦！下载链接（日文原版）: %2$s
 tofucraft.update.client=§e豆腐Craft§r §a%1$s§rに更新成功！ %2$s

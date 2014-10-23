@@ -1,3 +1,7 @@
+#----------------------------------------------------------
+# lang: English
+#----------------------------------------------------------
+
 itemGroup.TofuCraft=TofuCraft
 
 tile.tofucraft:blockSoybeans.name=Soybean
@@ -473,6 +477,9 @@ potion.glowing.postfix=Potion of Glowing
 potion.filling=Filling
 potion.filling.postfix=Potion of Filling
 
+enchantment.batch=Batch
+enchantment.drain=Drain
+
 entity.TofuSlime.name=Tofu Slime
 entity.TofuCreeper.name=Tofu Creeper
 entity.Tofunian.name=Tofunian
@@ -488,12 +495,12 @@ tofucraft.redstone.on=Redstone signal detected
 tofucraft.redstone.off=No redstone signal
 
 tofucraft.soymilkTaken.greetings=The first day of soy milk. Drink every day to get healthy!
-tofucraft.soymilkTaken.recovered=Soy milk after %1$s days.
-tofucraft.soymilkTaken.chain=%1$s days of soy milk in a row!
+tofucraft.soymilkTaken.recovered=Soy milk after %1$s days. Today's effect is level %2$s
+tofucraft.soymilkTaken.chain=%1$s days of soy milk in a row! Today's effect is level %2$s
 tofucraft.soymilkInfo.randomEffect=Random effect (one of flavors)
 tofucraft.soymilkInfo.stat1=Drink daily to boost effect!
 tofucraft.soymilkInfo.stat2=Today's effect: Level %1$s
 
-tofucraft.update.server=TofuCraft updated to %1$s, available at %2$s
-tofucraft.update.client=§eTofuCraft§r updated to §a%1$s§r! %2$s
+tofucraft.update.server=TofuCraft has been updated to %1$s, available at %2$s
+tofucraft.update.client=§eTofuCraft§r has been updated to §a%1$s§r! %2$s
 tofucraft.update.link=§nDownload here§r

@@ -18,10 +18,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.tileentity.TileEntityTfAntenna;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineBase;
-import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.entity.EntityWhiteSmokeFX;
+import tsuteto.tofu.tileentity.TileEntityTfAntenna;
 import tsuteto.tofu.util.TileScanner;
 
 import java.util.Random;
@@ -150,12 +149,14 @@ abstract public class BlockTfMachineBase extends BlockContainer4Directions
 
         TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
 
-        if (par6ItemStack.hasDisplayName())
+        if (tileEntity instanceof TileEntityTfMachineBase)
         {
-            if (tileEntity instanceof TileEntityTfMachineSidedInventoryBase)
+            TileEntityTfMachineBase machineTE = (TileEntityTfMachineBase) tileEntity;
+            if (par6ItemStack.hasDisplayName())
             {
-                ((TileEntityTfMachineSidedInventoryBase)tileEntity).setCustomName(par6ItemStack.getDisplayName());
+                machineTE.setCustomName(par6ItemStack.getDisplayName());
             }
+            machineTE.onTileEntityCreated(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
         }
 
         this.connectToTfAntenna(tileEntity);

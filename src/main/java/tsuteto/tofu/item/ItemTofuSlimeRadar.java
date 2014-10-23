@@ -1,5 +1,7 @@
 package tsuteto.tofu.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,13 +14,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.TofuCraftCore;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.entity.EntityTofuSlime;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketTofuRadar;
-import tsuteto.tofu.params.DataType;
-import tsuteto.tofu.params.EntityInfo;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemTofuSlimeRadar extends TcItem
 {

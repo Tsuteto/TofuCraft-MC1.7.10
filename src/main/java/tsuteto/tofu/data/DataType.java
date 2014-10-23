@@ -1,4 +1,4 @@
-package tsuteto.tofu.params;
+package tsuteto.tofu.data;
 
 public enum DataType
 {
@@ -6,5 +6,6 @@ public enum DataType
     SlimeRadar,
     TicksPortalCooldown,
     GlowTofuLightPositionCl,
-    GlowTofuLightPositionSv, 
+    GlowTofuLightPositionSv,
+    DiamondSwordAttack,
 }

@@ -30,6 +30,7 @@ import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.block.RenderYubaBlock;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.dispanse.DispenserBehaviorTcEmptyBucket;
+import tsuteto.tofu.enchantment.TcEnchantment;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
 import tsuteto.tofu.eventhandler.*;
@@ -38,7 +39,8 @@ import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.network.PacketDispatcher;
+import tsuteto.tofu.network.PacketManager;
+import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
@@ -60,7 +62,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.10-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.11-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -84,6 +86,7 @@ public class TofuCraftCore
     static
     {
         ModLog.modId = TofuCraftCore.modid;
+        ModLog.isDebug = Boolean.valueOf(System.getProperty("tofucraft.debug", "false"));
 
         if (ForgeVersion.getBuildVersion() >= 1174)
         {
@@ -102,7 +105,6 @@ public class TofuCraftCore
         conf.load();
 
         Settings.load(conf);
-        ModLog.isDebug = Settings.debug;
 
         conf.save();
 
@@ -213,7 +215,18 @@ public class TofuCraftCore
         net.minecraft.world.gen.structure.MapGenStructureIO.func_143031_a(ComponentVillageHouseTofu.class, "ViTfH");
 
         // Register Packets
-        PacketDispatcher.init();
+        PacketManager.init(modid)
+                .registerPacket(PacketDimTrip.class)
+                .registerPacket(PacketBugle.class)
+                .registerPacket(PacketZundaArrowHit.class)
+                .registerPacket(PacketZundaArrowType.class)
+                .registerPacket(PacketTofuRadar.class)
+                .registerPacket(PacketGlowingFinish.class)
+                .registerPacket(PacketTfMachineData.class)
+                .registerPacket(PacketGuiControl.class)
+                .registerPacket(PacketSomenScooping.class)
+                .registerPacket(PacketSoymilkInfo.class)
+                .registerPacket(PacketBatchDigging.class);
 
         // Add chest loot
         this.registerChestLoot(new ItemStack(TcItems.defattingPotion), 1, 1, 8);
@@ -248,10 +261,10 @@ public class TofuCraftCore
 
         // Register potion effects
         TcPotion.register(conf);
+        // Register enchantments
+        TcEnchantment.register(conf);
 
         FluidUtils.init();
-
-        PacketDispatcher.postInit();
 
         conf.save();
     }

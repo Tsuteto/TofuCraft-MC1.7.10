@@ -64,7 +64,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 1, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 1, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -73,7 +73,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 2, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 2, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -82,7 +82,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 3, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 3, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -99,7 +99,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 4, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 4, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -108,7 +108,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 5, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 5, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -151,7 +151,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
 
             if (this.lastTfNeeded != this.machine.tfNeeded)
             {
-                this.sendTfMachineData(var2, this, 0, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
@@ -163,7 +163,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
 
             if (this.lastTfPooled != this.machine.tfPooled)
             {
-                this.sendTfMachineData(var2, this, 1, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
@@ -174,7 +174,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             }
             if (this.lastNigariAmount != this.machine.nigariTank.getFluidAmount())
             {
-                this.sendTfMachineData(var2, this, 2, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 2, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
@@ -188,7 +188,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                         && !this.lastAdditiveTank.isFluidEqual(this.machine.additiveTank.getFluid()))
             {
                 ModLog.debug("send additive tank fluid packet");
-                this.sendTfMachineData(var2, this, 3, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
@@ -208,7 +208,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             if (this.lastAdditiveTank == null
                     || this.lastAdditiveTank.amount != this.machine.additiveTank.getFluidAmount())
             {
-                this.sendTfMachineData(var2, this, 4, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 4, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
@@ -222,7 +222,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                     || this.lastAdditiveItem != null
                         && !this.lastAdditiveItem.isItemEqual(this.machine.additiveFluidItem))
             {
-                this.sendTfMachineData(var2, this, 5, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 5, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)

@@ -1,7 +1,5 @@
 package tsuteto.tofu.entity;
 
-import java.util.Calendar;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -10,8 +8,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
+import java.util.Calendar;
+
 public class EntityFukumame extends EntityThrowable
 {
+    private double damage = 1.0f;
     private boolean isCrit;
 
     public EntityFukumame(World par1World)
@@ -61,10 +62,11 @@ public class EntityFukumame extends EntityThrowable
     {
         if (par1MovingObjectPosition.entityHit != null)
         {
-            int d = this.isCrit ? 4 : 1;
+            double d = this.getDamage();
+            d *= this.isCrit ? 4.0D : 1.0D;
 
             Entity entityHit = par1MovingObjectPosition.entityHit;
-            entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), d);
+            entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float)d);
             if (entityHit instanceof EntityLivingBase)
             {
                 EntityLivingBase entityLivivng = (EntityLivingBase)entityHit;
@@ -94,5 +96,15 @@ public class EntityFukumame extends EntityThrowable
                 this.worldObj.spawnParticle("crit", this.posX + this.motionX * l / 2.0D, this.posY + this.motionY * l / 2.0D, this.posZ + this.motionZ * l / 2.0D, -this.motionX, -this.motionY + 0.2D, -this.motionZ);
             }
         }
+    }
+
+    public void setDamage(double d)
+    {
+        this.damage = d;
+    }
+
+    public double getDamage()
+    {
+        return this.damage;
     }
 }

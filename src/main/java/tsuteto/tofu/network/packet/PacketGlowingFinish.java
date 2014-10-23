@@ -1,16 +1,17 @@
 package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.glowtofu.GlowingHandler;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketGlowingFinish extends AbstractPacket
+public class PacketGlowingFinish extends AbstractPacket implements MessageToClient
 {
     private int entityId;
 
@@ -22,19 +23,19 @@ public class PacketGlowingFinish extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeInt(entityId);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         entityId = buffer.readInt();
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
 
@@ -44,11 +45,6 @@ public class PacketGlowingFinish extends AbstractPacket
         {
             GlowingHandler.removeLight(mc.theWorld, (EntityLivingBase)entity);
         }
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

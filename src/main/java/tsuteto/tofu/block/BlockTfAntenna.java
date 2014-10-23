@@ -7,13 +7,13 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.tileentity.TileEntityTfAntenna;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.tileentity.TileEntityTfAntenna;
 
 public class BlockTfAntenna extends BlockContainer4Directions
 {
     public static int MAX_RADIUS = 0;
-    public static final WaveFreq[] WAVE_LIST = new WaveFreq[3];
+    public static final WaveFreq[] WAVE_LIST = new WaveFreq[4];
     public static final WaveFreq MEDIUMWAVE = new WaveFreq(0, 10);
     public static final WaveFreq ULTRAWAVE = new WaveFreq(1, 16);
     public static final WaveFreq SUPERWAVE = new WaveFreq(2, 24);
@@ -115,6 +115,13 @@ public class BlockTfAntenna extends BlockContainer4Directions
             WAVE_LIST[id] = this;
 
             if (radius > MAX_RADIUS) MAX_RADIUS = radius;
+        }
+
+        public WaveFreq(int id)
+        {
+            this.id = id;
+            this.radius = -1;
+            WAVE_LIST[id] = this;
         }
     }
 }

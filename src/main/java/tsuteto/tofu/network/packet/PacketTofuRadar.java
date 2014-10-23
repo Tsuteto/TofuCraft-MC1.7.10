@@ -1,14 +1,15 @@
 package tsuteto.tofu.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.item.ItemTofuSlimeRadar;
 import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketTofuRadar extends AbstractPacket
+public class PacketTofuRadar extends AbstractPacket implements MessageToClient
 {
     boolean isSpawnChunk;
 
@@ -20,19 +21,19 @@ public class PacketTofuRadar extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeBoolean(isSpawnChunk);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         isSpawnChunk = buffer.readBoolean();
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         ItemStack itemstack = player.getCurrentEquippedItem();
 
@@ -40,11 +41,6 @@ public class PacketTofuRadar extends AbstractPacket
         {
             ((ItemTofuSlimeRadar)TcItems.tofuRadar).onUse(isSpawnChunk, itemstack, player.worldObj, player);
         }
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

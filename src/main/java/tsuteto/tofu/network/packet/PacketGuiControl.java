@@ -1,12 +1,13 @@
 package tsuteto.tofu.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToServer;
 
-public class PacketGuiControl extends AbstractPacket
+public class PacketGuiControl extends AbstractPacket implements MessageToServer
 {
     private int windowId;
     private int eventId;
@@ -24,7 +25,7 @@ public class PacketGuiControl extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeByte(windowId);
         buffer.writeShort(eventId);
@@ -32,7 +33,7 @@ public class PacketGuiControl extends AbstractPacket
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         this.windowId = buffer.readByte();
         this.eventId = buffer.readShort();
@@ -40,17 +41,13 @@ public class PacketGuiControl extends AbstractPacket
    }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
-    {
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
+    public IMessage handleServerSide(EntityPlayer player)
     {
         if (player.openContainer != null && player.openContainer.windowId == windowId)
         {
             ((ContainerTfMachine)player.openContainer).onGuiControl(eventId, buffer);
         }
+        return null;
     }
 
     public static interface DataHandler

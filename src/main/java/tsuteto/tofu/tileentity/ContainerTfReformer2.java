@@ -9,6 +9,11 @@ public class ContainerTfReformer2 extends ContainerTfReformerBase
     public ContainerTfReformer2(InventoryPlayer invPlayer, TileEntityTfReformer machine)
     {
         super(invPlayer, machine);
+    }
+
+    @Override
+    public void prepareMachineInventory()
+    {
         this.addSlotToContainer(new SlotTfReformer(machine, TileEntityTfReformer.SLOT_INPUT_ITEM, 48, 20, TfMachineGuiParts.itemSlotL1));
         this.addSlotToContainer(new SlotTfMachineOutput(machine, TileEntityTfReformer.SLOT_OUTPUT_ITEM, 50, 51, TfMachineGuiParts.itemSlot));
         this.addSlotToContainer(new SlotTfReformer(machine, TileEntityTfReformer.SLOT_INGREDIENT_ITEM1, 100, 35, TfMachineGuiParts.itemSlotL1));

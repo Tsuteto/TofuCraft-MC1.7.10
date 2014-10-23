@@ -9,10 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-import tsuteto.tofu.tileentity.ContainerTfCondenser;
-import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.tileentity.ContainerTfCondenser;
+import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 
 import java.util.Iterator;
 
@@ -52,7 +52,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
     {
         super.initGui();
 
-        btnAdditiveDrop = new GuiTcButtonFixed(0, this.guiLeft + 56, this.guiTop + 67, TfMachineGuiParts.btnSmallEnabled, StatCollector.translateToLocal("tofucraft.drop"))
+        btnAdditiveDrop = new GuiTcButtonFixed(0, this.guiLeft + 56, this.guiTop + 67, TfMachineGuiParts.btnSmallEnabled, StatCollector.translateToLocal("tofucraft.dump"))
                 .setTextureDisabled(TfMachineGuiParts.btnSmallDisabled)
                 .setTextureHover(TfMachineGuiParts.btnSmallHover);
 

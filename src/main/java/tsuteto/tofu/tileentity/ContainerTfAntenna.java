@@ -33,7 +33,7 @@ public class ContainerTfAntenna extends ContainerTfMachine<TileEntityTfAntenna>
             {
                 ICrafting var2 = (ICrafting) this.crafters.get(var1);
 
-                this.sendTfMachineData(var2, this, 0, new PacketTfMachineData.DataHandler()
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler()
                 {
 
                     @Override

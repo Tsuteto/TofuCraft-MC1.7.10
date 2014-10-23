@@ -3,8 +3,8 @@ package tsuteto.tofu.glowtofu;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
-import tsuteto.tofu.params.DataType;
-import tsuteto.tofu.params.EntityInfo;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.util.TilePos;
 
 public class GlowingHandler

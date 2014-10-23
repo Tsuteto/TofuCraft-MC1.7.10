@@ -1,4 +1,4 @@
-package tsuteto.tofu.params;
+package tsuteto.tofu.data;
 
 import java.util.EnumMap;
 import java.util.HashMap;

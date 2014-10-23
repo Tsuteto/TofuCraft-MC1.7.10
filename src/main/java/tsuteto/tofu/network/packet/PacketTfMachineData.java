@@ -1,15 +1,16 @@
 package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketTfMachineData extends AbstractPacket
+public class PacketTfMachineData extends AbstractPacket implements MessageToClient
 {
     private int windowId;
     private int dataId;
@@ -27,7 +28,7 @@ public class PacketTfMachineData extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeByte(windowId);
         buffer.writeShort(dataId);
@@ -35,7 +36,7 @@ public class PacketTfMachineData extends AbstractPacket
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         this.windowId = buffer.readByte();
         this.dataId = buffer.readShort();
@@ -43,7 +44,7 @@ public class PacketTfMachineData extends AbstractPacket
    }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
         EntityClientPlayerMP entityclientplayermp = mc.thePlayer;
@@ -52,12 +53,7 @@ public class PacketTfMachineData extends AbstractPacket
         {
             ((ContainerTfMachine)entityclientplayermp.openContainer).updateTfMachineData(dataId, buffer);
         }
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 
     public static interface DataHandler

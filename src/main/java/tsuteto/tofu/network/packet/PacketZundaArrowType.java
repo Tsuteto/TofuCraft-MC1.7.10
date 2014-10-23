@@ -1,14 +1,15 @@
 package tsuteto.tofu.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.item.ItemZundaBow.EnumArrowType;
 import tsuteto.tofu.network.AbstractPacket;
-import tsuteto.tofu.params.DataType;
-import tsuteto.tofu.params.EntityInfo;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketZundaArrowType extends AbstractPacket
+public class PacketZundaArrowType extends AbstractPacket implements MessageToClient
 {
     private int entityId;
     private int type;
@@ -22,28 +23,23 @@ public class PacketZundaArrowType extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeInt(entityId);
         buffer.writeByte(type);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         entityId = buffer.readInt();
         type = buffer.readByte();
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         EntityInfo.instance().set(entityId, DataType.ZundaArrowType, EnumArrowType.values()[type]);
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

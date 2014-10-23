@@ -1,17 +1,13 @@
 package tsuteto.tofu.eventhandler;
 
-import java.util.EnumSet;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.server.FMLServerHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import tsuteto.tofu.params.DataType;
-import tsuteto.tofu.params.EntityInfo;
-import tsuteto.tofu.params.PortalTripInfo;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
+import tsuteto.tofu.data.PortalTripInfo;
 import tsuteto.tofu.util.ModLog;
 
 public class GameTickHandler

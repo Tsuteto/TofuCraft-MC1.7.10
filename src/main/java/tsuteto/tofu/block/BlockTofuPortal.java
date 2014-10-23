@@ -19,16 +19,15 @@ import net.minecraft.world.World;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
+import tsuteto.tofu.data.PortalTripInfo;
 import tsuteto.tofu.dimension.DimensionTeleportation;
 import tsuteto.tofu.entity.EntityTofuPortalFX;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketDimTrip;
-import tsuteto.tofu.params.DataType;
-import tsuteto.tofu.params.EntityInfo;
-import tsuteto.tofu.params.PortalTripInfo;
 
-import javax.sound.sampled.Port;
 import java.util.Random;
 
 public class BlockTofuPortal extends BlockBreakable

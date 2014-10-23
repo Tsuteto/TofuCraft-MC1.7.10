@@ -560,7 +560,7 @@ public class TcItems
                 .register();
 
         armorDiamond = addArmorSet(TofuArmorMaterial.DIAMOND);
-        swordDiamond = $("swordDiamond", new ItemTofuSword(TofuToolMaterial.DIAMOND))
+        swordDiamond = $("swordDiamond", new ItemDiamondTofuSword(TofuToolMaterial.DIAMOND))
                 .register();
 
         /*
@@ -604,9 +604,18 @@ public class TcItems
         else throw new IllegalArgumentException("Unknown material for armor");
 
         Item[] tools = new Item[3];
-        tools[0] = $(getToolName(key, 0), new ItemTcSpade(material)).register();
-        tools[1] = $(getToolName(key, 1), new ItemTcPickaxe(material)).register();
-        tools[2] = $(getToolName(key, 2), new ItemTcAxe(material)).register();
+        if (material == TofuToolMaterial.DIAMOND)
+        {
+            tools[0] = $(getToolName(key, 0), new ItemDiamondTofuSpade(material)).register();
+            tools[1] = $(getToolName(key, 1), new ItemDiamondTofuPickaxe(material)).register();
+            tools[2] = $(getToolName(key, 2), new ItemDiamondTofuAxe(material)).register();
+        }
+        else
+        {
+            tools[0] = $(getToolName(key, 0), new ItemTcSpade(material)).register();
+            tools[1] = $(getToolName(key, 1), new ItemTcPickaxe(material)).register();
+            tools[2] = $(getToolName(key, 2), new ItemTcAxe(material)).register();
+        }
 
         return tools;
     }

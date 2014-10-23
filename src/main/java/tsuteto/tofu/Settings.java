@@ -19,7 +19,6 @@ public class Settings
 
     //public static int potionGlowingId;
     
-    public static boolean debug = false;
     public static boolean autoAssign = true;
     public static boolean achievement = true;
     public static int clientGlowTofuLightInterval = 2;
@@ -46,8 +45,6 @@ public class Settings
         achievement = conf.get("general", "achievement", achievement).getBoolean(true);
 
         updateCheck = conf.get("general", "updateCheck", updateCheck).getBoolean(true);
-
-        debug = Boolean.valueOf(System.getProperty("tofucraft.debug"));
     }
 
     public enum EnumCreativeTabOptions {

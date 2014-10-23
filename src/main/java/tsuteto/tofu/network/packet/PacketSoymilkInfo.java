@@ -1,18 +1,19 @@
 package tsuteto.tofu.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import org.apache.logging.log4j.Level;
 import tsuteto.tofu.item.iteminfo.SoymilkPlayerInfo;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 import tsuteto.tofu.util.ModLog;
 
 import java.io.IOException;
 
-public class PacketSoymilkInfo extends AbstractPacket
+public class PacketSoymilkInfo extends AbstractPacket implements MessageToClient
 {
     private NBTTagCompound rootNBT;
 
@@ -25,7 +26,7 @@ public class PacketSoymilkInfo extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         PacketBuffer packet = new PacketBuffer(buffer);
 
@@ -40,7 +41,7 @@ public class PacketSoymilkInfo extends AbstractPacket
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         PacketBuffer packet = new PacketBuffer(buffer);
         try
@@ -54,15 +55,10 @@ public class PacketSoymilkInfo extends AbstractPacket
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         SoymilkPlayerInfo info = SoymilkPlayerInfo.of(player).readNBTFrom(rootNBT);
         info.writeNBTToPlayer();
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

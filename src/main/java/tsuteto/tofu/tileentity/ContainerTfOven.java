@@ -27,7 +27,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         this.addSlotToContainer(new SlotTfOvenResult(invPlayer.player, machine, TileEntityTfOven.SLOT_ITEM_RESULT, 111, 28, TfMachineGuiParts.itemSlotL2));
         this.addSlotToContainer(new SlotTfOvenAccelerator(invPlayer.player, machine, TileEntityTfOven.SLOT_ACCELERATION, 86, 53, TfMachineGuiParts.itemSlot));
 
-        this.preparePlayerInventory(invPlayer, playerInventoryPosX, playerInventoryPosY);
+        this.preparePlayerInventory(invPlayer);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         par1ICrafting.sendProgressBarUpdate(this, 0, this.machine.ovenCookTime);
         par1ICrafting.sendProgressBarUpdate(this, 1, this.machine.wholeCookTime);
 
-        this.sendTfMachineData(par1ICrafting, this, 0, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 0, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -66,7 +66,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
             }
             if (this.lastTfPooled != this.machine.tfPooled)
             {
-                this.sendTfMachineData(var2, this, 0, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -77,7 +77,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
             }
             if (this.lastCharging != this.machine.isCharging)
             {
-                this.sendTfMachineData(var2, this, 1, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)

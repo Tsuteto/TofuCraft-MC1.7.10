@@ -1,43 +1,63 @@
 package tsuteto.tofu.network;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.NetHandlerPlayServer;
 
 
-/**
- * AbstractPacket class. Should be the parent of all packets wishing to use the PacketPipeline.
- * @author sirgingalot
- */
-public abstract class AbstractPacket {
+public abstract class AbstractPacket implements IMessage, IMessageHandler<AbstractPacket, IMessage>
+{
+    public void fromBytes(ByteBuf buf)
+    {
+        this.decodeInto(buf);
+    }
 
-    /**
-     * Encode the packet data into the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
-     *
-     * @param ctx    channel context
-     * @param buffer the buffer to encode into
-     */
-    public abstract void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
+    public void toBytes(ByteBuf buf)
+    {
+        this.encodeInto(buf);
+    }
 
-    /**
-     * Decode the packet data from the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
-     *
-     * @param ctx    channel context
-     * @param buffer the buffer to decode from
-     */
-    public abstract void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
+    @Override
+    public IMessage onMessage(AbstractPacket message, MessageContext ctx)
+    {
+        EntityPlayer player;
+        IMessage reply = null;
+        switch (FMLCommonHandler.instance().getEffectiveSide()) {
+            case CLIENT:
+                if (message instanceof MessageToClient)
+                {
+                    player = this.getClientPlayer();
+                    reply = ((MessageToClient)message).handleClientSide(player);
+                }
+                break;
 
-    /**
-     * Handle a packet on the client side. Note this occurs after decoding has completed.
-     *
-     * @param player the player reference
-     */
-    public abstract void handleClientSide(EntityPlayer player);
+            case SERVER:
+                if (message instanceof MessageToServer)
+                {
+                    player = ((NetHandlerPlayServer) ctx.netHandler).playerEntity;
+                    reply = ((MessageToServer)message).handleServerSide(player);
+                }
+                break;
 
-    /**
-     * Handle a packet on the server side. Note this occurs after decoding has completed.
-     *
-     * @param player the player reference
-     */
-    public abstract void handleServerSide(EntityPlayer player);
+            default:
+        }
+        return reply;
+    }
+
+    @SideOnly(Side.CLIENT)
+    private EntityPlayer getClientPlayer()
+    {
+        return Minecraft.getMinecraft().thePlayer;
+    }
+
+    public abstract void encodeInto(ByteBuf buffer);
+
+    public abstract void decodeInto(ByteBuf buffer);
 }

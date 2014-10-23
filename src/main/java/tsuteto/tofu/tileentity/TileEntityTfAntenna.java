@@ -3,9 +3,6 @@ package tsuteto.tofu.tileentity;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
@@ -56,22 +53,6 @@ public class TileEntityTfAntenna extends TileEntityTfMachineBase
     protected String getInventoryNameTranslate()
     {
         return "container.tofucraft.TfAntenna";
-    }
-
-    /**
-     * Overriden in a sign to provide the text.
-     */
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        NBTTagCompound nbttagcompound = new NBTTagCompound();
-        this.writeToNBT(nbttagcompound);
-        return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 4, nbttagcompound);
-    }
-
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-        this.readFromNBT(pkt.func_148857_g());
     }
 
     /**

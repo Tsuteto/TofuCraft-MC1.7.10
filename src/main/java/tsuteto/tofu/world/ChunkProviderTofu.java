@@ -1,9 +1,5 @@
 package tsuteto.tofu.world;
 
-import java.util.List;
-import java.util.Random;
-
-import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
@@ -24,8 +20,6 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.util.ModLog;
@@ -35,6 +29,9 @@ import tsuteto.tofu.world.gen.TcMapGenCaves;
 import tsuteto.tofu.world.gen.TcMapGenMineshaft;
 import tsuteto.tofu.world.gen.TcMapGenRavine;
 import tsuteto.tofu.world.gen.feature.WorldGenTofuDungeons;
+
+import java.util.List;
+import java.util.Random;
 
 public class ChunkProviderTofu implements IChunkProvider
 {
@@ -463,7 +460,7 @@ public class ChunkProviderTofu implements IChunkProvider
 
         worldgenminable = new WorldGenMinable(TcBlocks.oreTofuDiamond, 4, TcBlocks.tofuTerrain);
 
-        for (var12 = 0; var12 < 4; ++var12)
+        for (var12 = 0; var12 < 6; ++var12)
         {
             var13 = var4 + this.rand.nextInt(16);
             var14 = this.rand.nextInt(20) + 5;

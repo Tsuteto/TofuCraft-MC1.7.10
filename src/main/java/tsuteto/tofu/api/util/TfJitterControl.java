@@ -52,16 +52,26 @@ public class TfJitterControl
 
     private double getRate(long worldTime, int x, int y, int z)
     {
-        long pos = ((long)x << 33) + ((long)z << 8) + y;
-        double base = (double)(seed * (worldTime / interval) * pos * 2305843009213693951L + 7859210193484829329L & mask) / (double)(1L << 48);
+        long rand1 = genRand(seed, worldTime, x, y, z);
+        long rand2 = genRand(rand1, worldTime, x, y, z);
+        double base1 = (double)(rand1 & mask) / (double)(1L << 48);
+        double base2 = (double)(rand2 & mask) / (double)(1L << 48);
 
-        if (base > 0.5D)
+        double rate = base1 - base2;
+
+        if (rate > 0D)
         {
-            return (base - 0.5D) * (max - typical) + typical;
+            return rate * (max - typical) + typical;
         }
         else
         {
-            return base * (typical - min) + min;
+            return -rate * (typical - min) + min;
         }
+    }
+
+    private long genRand(long seed, long worldTime, int x, int y, int z)
+    {
+        long pos = ((long)x << 33) + ((long)z << 8) + y;
+        return seed * (worldTime / interval) * pos * 2305843009213693951L + 7859210193484829329L;
     }
 }

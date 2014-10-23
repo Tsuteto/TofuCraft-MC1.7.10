@@ -2,6 +2,7 @@ package tsuteto.tofu.api.tileentity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketGuiControl;
@@ -22,6 +24,8 @@ abstract public class TileEntityTfMachineBase extends TileEntity implements IInv
     protected String customName;
 
     abstract protected String getInventoryNameTranslate();
+
+    public void onTileEntityCreated(World world, int x, int y, int z, EntityLivingBase entityCreatedBy, ItemStack itemstack) {};
 
     @Override
     public String getInventoryName()

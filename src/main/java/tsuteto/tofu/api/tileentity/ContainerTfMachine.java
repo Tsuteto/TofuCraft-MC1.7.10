@@ -1,5 +1,6 @@
 package tsuteto.tofu.api.tileentity;
 
+import com.google.common.collect.Maps;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -8,8 +9,11 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import tsuteto.tofu.data.ContainerParam;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
+
+import java.util.Map;
 
 abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> extends Container
 {
@@ -17,24 +21,80 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
     public static final int playerInventoryPosY = 98;
 
     protected T machine;
+    protected Map<Integer, ContainerParam<?>> containerParams = Maps.newHashMap();
 
     public ContainerTfMachine(T machine)
     {
         this.machine = machine;
     }
 
-    public abstract void updateTfMachineData(int id, ByteBuf data);
+    public void addContainerParam(ContainerParam<?> param)
+    {
+        containerParams.put(param.id, param);
+    }
 
+    @Override
+    public void addCraftingToCrafters(ICrafting par1ICrafting)
+    {
+        super.addCraftingToCrafters(par1ICrafting);
+
+        for (ContainerParam param : containerParams.values())
+        {
+            param.send(par1ICrafting);
+        }
+    }
+
+    @Override
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+
+        if (containerParams.size() > 0)
+        {
+            for (int var1 = 0; var1 < this.crafters.size(); ++var1)
+            {
+                ICrafting var2 = (ICrafting) this.crafters.get(var1);
+
+                for (ContainerParam param : containerParams.values())
+                {
+                    param.sendIfChanged(var2);
+                }
+            }
+        }
+    }
+
+    public void updateTfMachineData(int id, ByteBuf data)
+    {
+        ContainerParam param = containerParams.get(id);
+        if (param != null)
+        {
+            param.receive(data);
+        }
+    }
+
+    /**
+     * @deprecated
+     */
     public void sendTfMachineData(ICrafting crafter, ContainerTfMachine par1Container, int par2, PacketTfMachineData.DataHandler data)
+    {
+        this.sendTfMachineData(crafter, par2, data);
+    }
+
+    public void sendTfMachineData(ICrafting crafter, int par2, PacketTfMachineData.DataHandler data)
     {
         if (crafter instanceof EntityPlayerMP)
         {
-            PacketTfMachineData packet = new PacketTfMachineData(par1Container.windowId, par2, data);
+            PacketTfMachineData packet = new PacketTfMachineData(this.windowId, par2, data);
             PacketDispatcher.packet(packet).sendToPlayer((EntityPlayerMP) crafter);
         }
     }
 
     public void onGuiControl(int eventId, ByteBuf buffer) {}
+
+    public void preparePlayerInventory(InventoryPlayer invPlayer)
+    {
+        this.preparePlayerInventory(invPlayer, playerInventoryPosX, playerInventoryPosY);
+    }
 
     public void preparePlayerInventory(InventoryPlayer invPlayer, int ox, int oy)
     {

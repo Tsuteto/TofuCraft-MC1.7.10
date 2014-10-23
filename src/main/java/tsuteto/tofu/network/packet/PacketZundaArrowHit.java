@@ -1,12 +1,13 @@
 package tsuteto.tofu.network.packet;
 
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.entity.EntityZundaArrow;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketZundaArrowHit extends AbstractPacket
+public class PacketZundaArrowHit extends AbstractPacket implements MessageToClient
 {
     double x;
     double y;
@@ -22,7 +23,7 @@ public class PacketZundaArrowHit extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeDouble(x);
         buffer.writeDouble(y);
@@ -30,7 +31,7 @@ public class PacketZundaArrowHit extends AbstractPacket
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         this.x = buffer.readDouble();
         this.y = buffer.readDouble();
@@ -38,14 +39,9 @@ public class PacketZundaArrowHit extends AbstractPacket
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         EntityZundaArrow.emitArrowHitEffect(x, y, z);
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

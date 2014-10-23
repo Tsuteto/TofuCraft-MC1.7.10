@@ -1,17 +1,18 @@
 package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import tsuteto.tofu.network.AbstractPacket;
+import tsuteto.tofu.network.MessageToClient;
 
-public class PacketBugle extends AbstractPacket
+public class PacketBugle extends AbstractPacket implements MessageToClient
 {
     private float x;
     private float y;
@@ -29,7 +30,7 @@ public class PacketBugle extends AbstractPacket
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void encodeInto(ByteBuf buffer)
     {
         buffer.writeFloat(x);
         buffer.writeFloat(y);
@@ -38,7 +39,7 @@ public class PacketBugle extends AbstractPacket
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+    public void decodeInto(ByteBuf buffer)
     {
         x = buffer.readFloat();
         y = buffer.readFloat();
@@ -48,7 +49,7 @@ public class PacketBugle extends AbstractPacket
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void handleClientSide(EntityPlayer player)
+    public IMessage handleClientSide(EntityPlayer player)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
 
@@ -60,11 +61,6 @@ public class PacketBugle extends AbstractPacket
         {
             mc.theWorld.playSound(x, y, z, "tofucraft:tofubugle", 1.0F, 1.0F, false);
         }
-    }
-
-    @Override
-    public void handleServerSide(EntityPlayer player)
-    {
-
+        return null;
     }
 }

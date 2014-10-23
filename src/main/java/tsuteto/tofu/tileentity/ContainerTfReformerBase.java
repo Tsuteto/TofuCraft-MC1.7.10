@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.api.TfMaterialRegistry;
+import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
@@ -21,15 +21,18 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
     public ContainerTfReformerBase(InventoryPlayer invPlayer, TileEntityTfReformer machine)
     {
         super(machine);
+        this.prepareMachineInventory();
         super.preparePlayerInventory(invPlayer, playerInventoryPosX, playerInventoryPosY);
     }
+
+    abstract public void prepareMachineInventory();
 
     @Override
     public void addCraftingToCrafters(ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
 
-        this.sendTfMachineData(par1ICrafting, this, 0, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 0, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -38,7 +41,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 1, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 1, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -47,7 +50,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 2, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 2, new PacketTfMachineData.DataHandler() {
             
             @Override
             public void addData(ByteBuf buffer)
@@ -56,7 +59,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
             }
         });
     
-        this.sendTfMachineData(par1ICrafting, this, 3, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 3, new PacketTfMachineData.DataHandler() {
             
             @Override
             public void addData(ByteBuf buffer)
@@ -80,7 +83,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
 
             if (this.lastWholeTfOutput != this.machine.wholeTfOutput)
             {
-                this.sendTfMachineData(var2, this, 0, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -92,7 +95,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
 
             if (this.lastTfOutput != this.machine.tfOutput)
             {
-                this.sendTfMachineData(var2, this, 1, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -104,7 +107,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
 
             if (this.lastTfCapacity != this.machine.tfCapacity)
             {
-                this.sendTfMachineData(var2, this, 2, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 2, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -116,7 +119,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
             
             if (this.lastTfAmount != this.machine.tfAmount)
             {
-                this.sendTfMachineData(var2, this, 3, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -166,7 +169,7 @@ abstract public class ContainerTfReformerBase extends ContainerTfMachine<TileEnt
 
     public TransferResult transferStackInMachineSlot(EntityPlayer player, int slot, ItemStack itemStack)
     {
-        if (TfMaterialRegistry.isTfMaterial(itemStack))
+        if (TfReformerRecipeRegistry.isContainerItem(itemStack))
         {
             if (!this.mergeToSingleItemStack(itemStack, TileEntityTfStorage.SLOT_INPUT_ITEM))
             {

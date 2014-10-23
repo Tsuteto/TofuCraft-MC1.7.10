@@ -33,7 +33,8 @@ public class ModLog
     {
         if (isDebug)
         {
-            System.out.printf("[" + modId + "] " + format + "%n", data);
+            //System.out.printf("[" + modId + "] " + format + "%n", data);
+            FMLLog.log(modId, Level.INFO, "(DEBUG) " + String.valueOf(format), data);
         }
     }
 }

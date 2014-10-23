@@ -5,7 +5,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.gui.TcGuiHandler;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.tileentity.TileEntityTfReformer;
 
 import java.util.List;
@@ -27,7 +25,7 @@ import java.util.List;
  * @author Tsuteto
  *
  */
-public class BlockTfReformer extends BlockTfMachineBase
+public class BlockTfReformer extends BlockTfMachineWithMultipleTypesOnNBT
 {
     public static final String[] blockNames = new String[]{
             TileEntityTfReformer.Model.simple.name(), TileEntityTfReformer.Model.mix.name()};
@@ -127,22 +125,6 @@ public class BlockTfReformer extends BlockTfMachineBase
     }
 
     /**
-     * Called when the block is placed in the world.
-     */
-    @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLivingBase, ItemStack par6ItemStack)
-    {
-        super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLivingBase, par6ItemStack);
-
-        TileEntity tileEntity = par1World.getTileEntity(par2, par3, par4);
-
-        if (tileEntity instanceof TileEntityTfReformer)
-        {
-            ((TileEntityTfReformer)tileEntity).model = TileEntityTfReformer.getModelById(par6ItemStack.getItemDamage());
-        }
-    }
-
-    /**
      * Called upon block activation (right click on the block.)
      */
     @Override
@@ -211,9 +193,8 @@ public class BlockTfReformer extends BlockTfMachineBase
     }
 
     @Override
-    public int getDamageValue(World par1World, int par2, int par3, int par4)
+    public int getDamageValueFromTileEntity(World world, int x, int y, int z, TileEntity te)
     {
-        TileEntityTfReformer tileEntity = (TileEntityTfReformer)par1World.getTileEntity(par2, par3, par4);
-        return tileEntity.model.id;
+        return ((TileEntityTfReformer)te).model.id;
     }
 }

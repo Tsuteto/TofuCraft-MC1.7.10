@@ -2,12 +2,11 @@ package tsuteto.tofu.api.recipe;
 
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.item.ItemBottleSoyMilk;
-import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * TF Reformer recipe entry class
@@ -40,4 +39,12 @@ public class TfReformerRecipeRegistry
         return null;
     }
 
+    public static boolean isContainerItem(ItemStack container)
+    {
+        for (TfReformerRecipe recipe : recipeRegistry)
+        {
+            if (recipe.isContainerItem(container)) return true;
+        }
+        return false;
+    }
 }

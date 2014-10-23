@@ -17,6 +17,6 @@ public class TofuToolMaterial
         MOMEN   = EnumHelper.addToolMaterial("TOFU_MOMEN",   0,    5, 1.2F, -3,  2);
         SOLID   = EnumHelper.addToolMaterial("TOFU_SOLID",   1,  183, 3.0F, -1,  6);
         METAL   = EnumHelper.addToolMaterial("TOFU_METAL",   2,  415, 6.0F,  2,  8);
-        DIAMOND = EnumHelper.addToolMaterial("TOFU_DIAMOND", 3, 1212, 8.0F,  4, 18);
+        DIAMOND = EnumHelper.addToolMaterial("TOFU_DIAMOND", 3, 0x1212, 8.0F,  4, 18);
     }
 }

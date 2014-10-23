@@ -10,7 +10,10 @@ import tsuteto.tofu.recipe.IngredientDic;
 import tsuteto.tofu.recipe.IngredientItem;
 import tsuteto.tofu.util.ItemUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents a recipe for TF Reformer.
@@ -177,8 +180,7 @@ public class TfReformerRecipe
     public boolean matches(ItemStack container, ItemStack[] inputs)
     {
         // Container
-        if (container == null) return false;
-        if (!this.containerItem.matchesWithItemStack(container)) return false;
+        if (!this.isContainerItem(container)) return false;
 
         // Ingredients
         int inputCount = 0;
@@ -201,6 +203,11 @@ public class TfReformerRecipe
             }
         }
         return list.size() == 0;
+    }
+
+    public boolean isContainerItem(ItemStack container)
+    {
+        return container != null && this.containerItem.matchesWithItemStack(container);
     }
 
     public boolean isCatalystItem(ItemStack target)

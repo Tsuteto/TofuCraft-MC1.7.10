@@ -1,4 +1,4 @@
-package tsuteto.tofu.params;
+package tsuteto.tofu.data;
 
 public class PortalTripInfo
 {

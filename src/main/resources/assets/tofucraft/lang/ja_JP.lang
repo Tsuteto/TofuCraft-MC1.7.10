@@ -1,3 +1,7 @@
+#----------------------------------------------------------
+# lang: Japanese
+#----------------------------------------------------------
+
 itemGroup.TofuCraft=豆腐Craft
 
 tile.tofucraft:blockSoybeans.name=大豆
@@ -473,6 +477,9 @@ potion.glowing.postfix=蛍光のポーション
 potion.filling=腹持ち
 potion.filling.postfix=腹持ちのポーション
 
+enchantment.batch=一括採掘
+enchantment.drain=吸収
+
 entity.TofuSlime.name=豆腐スライム
 entity.TofuCreeper.name=豆腐クリーパー
 entity.Tofunian.name=トーフニアン
@@ -486,9 +493,9 @@ tofucraft.dump=捨てる
 tofucraft.redstone.on=レッドストーン信号あり
 tofucraft.redstone.off=レッドストーン信号なし
 
-tofucraft.soymilkTaken.greetings=豆乳一日目です。毎日飲んで健康!
-tofucraft.soymilkTaken.recovered=%1$s日ぶりの豆乳です。今日の効果は%2$sポイント
-tofucraft.soymilkTaken.chain=豆乳 連続%1$s日目! 今日の効果は%2$sポイント
+tofucraft.soymilkTaken.greetings=豆乳一日目です。毎日飲んで健康になろう!
+tofucraft.soymilkTaken.recovered=%1$s日ぶりの豆乳です。今日の効果レベルは%2$s
+tofucraft.soymilkTaken.chain=豆乳 連続%1$s日目! 今日の効果レベルは%2$s
 tofucraft.soymilkInfo.randomEffect=ランダム効果(豆乳の味どれか一つ)
 tofucraft.soymilkInfo.stat1=毎日飲んで効果アップ!
 tofucraft.soymilkInfo.stat2=今日の効果: レベル%1$s

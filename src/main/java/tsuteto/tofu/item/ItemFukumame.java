@@ -1,5 +1,7 @@
 package tsuteto.tofu.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -13,8 +15,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import tsuteto.tofu.entity.EntityFukumame;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFukumame extends TcItem
 {
@@ -58,13 +58,13 @@ public class ItemFukumame extends TcItem
 
     public static void applyEffect(EntityFukumame fukumame, ItemStack itemstack)
     {
-//        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
-//
-//        if (k > 0)
-//        {
-//            fukumame.setDamage(fukumame.getDamage() + (double)k * 0.5D + 0.5D);
-//        }
-//
+        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemstack);
+
+        if (k > 0)
+        {
+            fukumame.setDamage(fukumame.getDamage() + (double)k * 0.25D + 0.25D);
+        }
+
 //        int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemstack);
 //
 //        if (l > 0)
