@@ -62,7 +62,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.11-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.12-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -86,7 +86,7 @@ public class TofuCraftCore
     static
     {
         ModLog.modId = TofuCraftCore.modid;
-        ModLog.isDebug = Boolean.valueOf(System.getProperty("tofucraft.debug", "false"));
+        ModLog.isDebug = Settings.debug;
 
         if (ForgeVersion.getBuildVersion() >= 1174)
         {

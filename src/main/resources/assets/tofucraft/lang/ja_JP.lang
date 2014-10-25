@@ -260,6 +260,7 @@ item.tofucraft:armorDiamondHelmet.name=金剛豆腐ヘルメット
 item.tofucraft:armorDiamondChestplate.name=金剛豆腐チェストプレート
 item.tofucraft:armorDiamondLeggings.name=金剛豆腐レギンス
 item.tofucraft:armorDiamondBoots.name=金剛豆腐ブーツ
+item.tofucraft:armorDiamond.desc=%s 無効化
 item.tofucraft:swordDiamond.name=金剛豆腐剣
 item.tofucraft:toolKinuShovel.name=絹ごし豆腐シャベル
 item.tofucraft:toolKinuPickaxe.name=絹ごし豆腐ツルハシ

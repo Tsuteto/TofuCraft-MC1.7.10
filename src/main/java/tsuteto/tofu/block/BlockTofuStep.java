@@ -1,8 +1,7 @@
 package tsuteto.tofu.block;
 
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,8 +17,9 @@ import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.material.TcMaterial;
 import tsuteto.tofu.util.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockTofuStep extends BlockTofuStepBase
 {
@@ -142,7 +142,7 @@ public class BlockTofuStep extends BlockTofuStepBase
     @Override
     public IIcon getIcon(int par1, int par2)
     {
-        if (par2 >= this.icons.length)
+        if ((par2 & 7) >= this.icons.length)
         {
             par2 = 0;
         }

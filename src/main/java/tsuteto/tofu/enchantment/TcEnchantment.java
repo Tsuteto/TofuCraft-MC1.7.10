@@ -17,7 +17,6 @@ public class TcEnchantment
 
     public static Enchantment enchantmentBatch = null;
     public static Enchantment enchantmentDrain = null;
-    public static Enchantment enchantmentReflection = null;
 
     public static void register(Configuration conf)
     {
@@ -79,34 +78,8 @@ public class TcEnchantment
                     return par1ItemStack.getItem() == TcItems.swordDiamond;
                 }
             };
-            enchantmentReflection = new Enchantment(assignId("reflection", conf), 10, typeDiamondTofu)
-            {
-                {
-                    this.setName("reflection");
-                }
 
-                public int getMinEnchantability(int par1)
-                {
-                    return 1 + 10 * (par1 - 1);
-                }
 
-                public int getMaxEnchantability(int par1)
-                {
-                    return this.getMinEnchantability(par1) + 50;
-                }
-
-                @Override
-                public int getMaxLevel()
-                {
-                    return 5;
-                }
-
-                @Override
-                public boolean canApply(ItemStack par1ItemStack)
-                {
-                    return ArrayUtils.contains(TcItems.armorDiamond, par1ItemStack.getItem());
-                }
-            };
         }
         catch (Exception e)
         {

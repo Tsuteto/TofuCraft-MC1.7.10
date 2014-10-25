@@ -18,7 +18,6 @@ import tsuteto.tofu.api.tileentity.SlotTfMachineCrafting;
 import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
 import tsuteto.tofu.gui.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
-import tsuteto.tofu.util.ModLog;
 
 public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondenser>
 {
@@ -55,7 +54,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         par1ICrafting.sendProgressBarUpdate(this, 0, this.machine.wholeTimeOutput);
         par1ICrafting.sendProgressBarUpdate(this, 1, this.machine.processTimeOutput);
 
-        this.sendTfMachineData(par1ICrafting, this, 0, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 0, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -113,7 +112,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             @Override
             public void addData(ByteBuf buffer)
             {
-                if (machine.additiveFluidItem.getItem() != null)
+                if (machine.additiveFluidItem != null)
                 {
                     buffer.writeBoolean(true);
                     buffer.writeInt(Item.getIdFromItem(machine.additiveFluidItem.getItem()));
@@ -187,7 +186,6 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                     || this.lastAdditiveTank != null
                         && !this.lastAdditiveTank.isFluidEqual(this.machine.additiveTank.getFluid()))
             {
-                ModLog.debug("send additive tank fluid packet");
                 this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler()
                 {
                     @Override

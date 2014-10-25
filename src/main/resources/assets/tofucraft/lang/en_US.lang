@@ -260,6 +260,7 @@ item.tofucraft:armorDiamondHelmet.name=Diamond Tofu Helmet
 item.tofucraft:armorDiamondChestplate.name=Diamond Tofu Chestplate
 item.tofucraft:armorDiamondLeggings.name=Diamond Tofu Leggings
 item.tofucraft:armorDiamondBoots.name=Diamond Tofu Boots
+item.tofucraft:armorDiamond.desc=Neutralizes %s
 item.tofucraft:swordDiamond.name=Diamond Tofu Sword
 item.tofucraft:toolKinuShovel.name=Kinugoshi Tofu Shovel
 item.tofucraft:toolKinuPickaxe.name=Kinugoshi Tofu Pickaxe

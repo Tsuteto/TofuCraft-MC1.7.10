@@ -25,6 +25,8 @@ public class Settings
     public static int serverGlowTofuLightInterval = 5;
     public static boolean updateCheck = true;
 
+    public static boolean debug = Boolean.valueOf(System.getProperty("tofucraft.debug", "false"));
+
     public static void load(Configuration conf)
     {
         tofuDimNo = conf.get("general", "tofuDim", tofuDimNo).getInt();

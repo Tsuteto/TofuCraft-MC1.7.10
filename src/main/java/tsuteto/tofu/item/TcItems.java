@@ -587,7 +587,16 @@ public class TcItems
         Item[] armors = new Item[4];
         for (int i = 0; i < 4; i++)
         {
-            armors[i] = $(getArmorName(key, i), new ItemTofuArmor(material, 2, i)).register()
+            ItemTofuArmor armor;
+            if (material == TofuArmorMaterial.DIAMOND)
+            {
+                armor = new ItemDiamondTofuArmor(material, 2, i);
+            }
+            else
+            {
+                armor = new ItemTofuArmor(material, 2, i);
+            }
+            armors[i] = $(getArmorName(key, i), armor).register()
                     .setArmorTexture(String.format("tofucraft:textures/armor/armor_%s_%d.png", key, i == 2 ? 2 : 1));
         }
         return armors;
