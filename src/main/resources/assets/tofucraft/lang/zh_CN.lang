@@ -260,6 +260,7 @@ item.tofucraft:armorDiamondHelmet.name=钻石豆腐头盔
 item.tofucraft:armorDiamondChestplate.name=钻石豆腐胸甲
 item.tofucraft:armorDiamondLeggings.name=钻石豆腐护腿
 item.tofucraft:armorDiamondBoots.name=钻石豆腐靴子
+item.tofucraft:armorDiamond.desc=抵消%s
 item.tofucraft:swordDiamond.name=钻石豆腐剑
 item.tofucraft:toolKinuShovel.name=嫩豆腐锹
 item.tofucraft:toolKinuPickaxe.name=嫩豆腐镐
