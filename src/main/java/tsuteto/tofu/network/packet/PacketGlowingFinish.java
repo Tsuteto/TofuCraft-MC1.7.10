@@ -2,6 +2,8 @@ package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -35,6 +37,7 @@ public class PacketGlowingFinish extends AbstractPacket implements MessageToClie
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IMessage handleClientSide(EntityPlayer player)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();

@@ -1,6 +1,8 @@
 package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.data.DataType;
@@ -37,6 +39,7 @@ public class PacketZundaArrowType extends AbstractPacket implements MessageToCli
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IMessage handleClientSide(EntityPlayer player)
     {
         EntityInfo.instance().set(entityId, DataType.ZundaArrowType, EnumArrowType.values()[type]);

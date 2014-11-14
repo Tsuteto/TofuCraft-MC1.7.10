@@ -16,6 +16,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Direction;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
@@ -35,7 +36,7 @@ public class BlockTofuPortal extends BlockBreakable
     public static final int[][] field_150001_a = new int[][] {new int[0], {3, 1}, {2, 0}};
 
     private final DimensionTeleportation teleportHandler = new DimensionTeleportation();
-    
+
     public BlockTofuPortal()
     {
         super("tofucraft:tofuPortal", Material.portal, false);
@@ -263,7 +264,7 @@ public class BlockTofuPortal extends BlockBreakable
                 var3 = (byte)Settings.tofuDimNo;
             }
 
-            if (!par1World.isRemote)
+            if (!par1World.isRemote && par5Entity.worldObj instanceof WorldServer)
             {
                 if (par5Entity instanceof EntityPlayerMP)
                 {
@@ -272,10 +273,10 @@ public class BlockTofuPortal extends BlockBreakable
                     if (!pinfo.doesDataExist(playermp.getEntityId(), DataType.TicksPortalCooldown))
                     {
                         this.travelToDimension(var3, playermp);
-    
+
                         // Make a sound on client side
                         PacketDispatcher.packet(new PacketDimTrip()).sendToPlayer(playermp);
-                        
+
                         TcAchievementMgr.achieve(playermp, Key.tofuWorld);
                     }
                     pinfo.set(playermp.getEntityId(), DataType.TicksPortalCooldown, this.getNewTripInfo(playermp.dimension));
@@ -380,7 +381,7 @@ public class BlockTofuPortal extends BlockBreakable
     {
         teleportHandler.transferPlayerToDimension(player, par1);
     }
-    
+
     /**
      * Teleports the entity to another dimension. Params: Dimension number to teleport to
      */

@@ -1,11 +1,13 @@
 package tsuteto.tofu.potion;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 import org.apache.logging.log4j.Level;
 import tsuteto.tofu.item.ItemTcFood;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.network.PacketDispatcher;
+import tsuteto.tofu.network.packet.PacketPotionIdCheck;
 import tsuteto.tofu.util.ModLog;
 
 public class TcPotion
@@ -73,4 +75,11 @@ public class TcPotion
         // Unable to find entry
         throw new Exception("Failed to register a POTION effect. Seems to be running out of potion ID.");
     }
+
+    public static void onLogin(EntityPlayer player)
+    {
+        ModLog.debug("Sent potion check packet");
+        PacketDispatcher.packet(new PacketPotionIdCheck(glowing.getId(), filling.getId())).sendToPlayer(player);
+    }
+
 }

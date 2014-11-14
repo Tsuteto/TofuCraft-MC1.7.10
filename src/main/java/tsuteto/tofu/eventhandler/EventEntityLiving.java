@@ -3,22 +3,59 @@ package tsuteto.tofu.eventhandler;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.data.DataType;
+import tsuteto.tofu.data.EntityInfo;
+import tsuteto.tofu.data.PortalTripInfo;
 import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class EventEntityLiving
 {
+
+    @SubscribeEvent
+    public void onUpdate(LivingEvent.LivingUpdateEvent event)
+    {
+        EntityInfo pinfo = EntityInfo.instance();
+        int entityId = event.entity.getEntityId();
+        Entity entity = event.entity;
+
+        if (!entity.worldObj.isRemote && entity.worldObj instanceof WorldServer)
+        {
+            if (pinfo.doesDataExist(event.entity.getEntityId(), DataType.TicksPortalCooldown))
+            {
+                PortalTripInfo info = pinfo.get(entityId, DataType.TicksPortalCooldown);
+                if (!(entity.worldObj instanceof WorldServer)) ModLog.debug(entity.worldObj.getClass().getSimpleName());
+                if (entity.addedToChunk
+                        && entity.worldObj.blockExists((int)entity.posX, (int)entity.posY, (int)entity.posZ))
+                {
+                    int ticks = info.ticksCooldown;
+                    if (ticks >= 20)
+                    {
+                        pinfo.remove(entityId, DataType.TicksPortalCooldown);
+                    }
+                    else
+                    {
+                        info.ticksCooldown += 1;
+                    }
+                    ModLog.debug("cooldown: %d", info.ticksCooldown);
+                }
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onSpawn(LivingSpawnEvent.CheckSpawn event)

@@ -6,17 +6,23 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.item.iteminfo.SoymilkPlayerInfo;
+import tsuteto.tofu.potion.TcPotion;
 
 public class EventPlayer
 {
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
     {
+        // Update Notification
         if (TofuCraftCore.update != null)
         {
             TofuCraftCore.update.notifyUpdate(event.player, Side.CLIENT);
         }
 
+        // Potion ID Check
+        TcPotion.onLogin(event.player);
+
+        // Load Soymilk Info
         SoymilkPlayerInfo info = SoymilkPlayerInfo.of(event.player).readNBTFromPlayer();
         info.onLogin();
         info.update();

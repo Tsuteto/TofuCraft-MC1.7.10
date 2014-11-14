@@ -933,11 +933,11 @@ public class TcBlocks
             block.setBlockTextureName(TofuCraftCore.resourceDomain + resourceName);
             if (itemCtorArgs != null)
             {
-                GameRegistry.registerBlock(block, itemBlock, uniqueName, TofuCraftCore.modid, itemCtorArgs);
+                GameRegistry.registerBlock(block, itemBlock, uniqueName, itemCtorArgs);
             }
             else
             {
-                GameRegistry.registerBlock(block, itemBlock, uniqueName, TofuCraftCore.modid);
+                GameRegistry.registerBlock(block, itemBlock, uniqueName);
             }
             return block;
         }

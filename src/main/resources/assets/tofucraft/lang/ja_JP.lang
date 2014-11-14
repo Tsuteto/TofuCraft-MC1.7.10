@@ -257,10 +257,13 @@ item.tofucraft:armorMetalLeggings.name=鋼豆腐レギンス
 item.tofucraft:armorMetalBoots.name=鋼豆腐ブーツ
 item.tofucraft:swordMetal.name=鋼豆腐剣
 item.tofucraft:armorDiamondHelmet.name=金剛豆腐ヘルメット
+item.tofucraft:armorDiamondHelmet.desc=%s 無効化
 item.tofucraft:armorDiamondChestplate.name=金剛豆腐チェストプレート
+item.tofucraft:armorDiamondChestplate.desc=%s 無効化
 item.tofucraft:armorDiamondLeggings.name=金剛豆腐レギンス
+item.tofucraft:armorDiamondLeggings.desc=%s 無効化
 item.tofucraft:armorDiamondBoots.name=金剛豆腐ブーツ
-item.tofucraft:armorDiamond.desc=%s 無効化
+item.tofucraft:armorDiamondBoots.desc=%s 無効化
 item.tofucraft:swordDiamond.name=金剛豆腐剣
 item.tofucraft:toolKinuShovel.name=絹ごし豆腐シャベル
 item.tofucraft:toolKinuPickaxe.name=絹ごし豆腐ツルハシ
@@ -504,3 +507,7 @@ tofucraft.soymilkInfo.stat2=今日の効果: レベル%1$s
 tofucraft.update.server=豆腐Craft %1$sに更新しました! ダウンロード: %2$s
 tofucraft.update.client=§e豆腐Craft§r §a%1$s§rに更新しました! %2$s
 tofucraft.update.link=§nこちらからダウンロード§r
+
+tofucraft.wrongPotionId1=[TofuCraft] §c＊警告＊§r ポーションIDがサーバと異なります。
+tofucraft.wrongPotionId2=このままだとクラッシュするので設定ファイルを次の通り変更してください。
+tofucraft.wrongPotionId3=I:glowing=%s   I:filling=%s

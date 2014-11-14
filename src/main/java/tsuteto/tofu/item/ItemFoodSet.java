@@ -50,7 +50,7 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
     public static Food tofuSomen =
             new Food(19, 3, 0.3f, true, "tofuSomenBowl_glass").setContainer(new ItemStack(TcItems.somenTsuyuBowl));
     public static Food zundaMochi = (Food)
-            new Food(20, 3, 0.8f, false, "zundaMochi").addPotionEffect(Potion.regeneration, 3, 0, 1.0F).setMaxItemUseDuration(64); // For External Mod
+            new Food(20, 3, 0.8f, false, "zundaMochi").addPotionEffect(Potion.regeneration, 4, 2, 1.0F).setMaxItemUseDuration(64); // For External Mod
     public static Food kinakoMochi = (Food)
             new Food(21, 5, 0.8f, false, "kinakoMochi").setMaxItemUseDuration(64); // For External Mod
 

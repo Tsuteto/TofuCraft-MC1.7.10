@@ -257,10 +257,13 @@ item.tofucraft:armorMetalLeggings.name=Metal Tofu Leggings
 item.tofucraft:armorMetalBoots.name=Metal Tofu Boots
 item.tofucraft:swordMetal.name=Metal Tofu Sword
 item.tofucraft:armorDiamondHelmet.name=Diamond Tofu Helmet
+item.tofucraft:armorDiamondHelmet.desc=Neutralizes %s
 item.tofucraft:armorDiamondChestplate.name=Diamond Tofu Chestplate
+item.tofucraft:armorDiamondChestplate.desc=Neutralizes %s
 item.tofucraft:armorDiamondLeggings.name=Diamond Tofu Leggings
+item.tofucraft:armorDiamondLeggings.desc=Neutralize %s
 item.tofucraft:armorDiamondBoots.name=Diamond Tofu Boots
-item.tofucraft:armorDiamond.desc=Neutralizes %s
+item.tofucraft:armorDiamondBoots.desc=Neutralize %s
 item.tofucraft:swordDiamond.name=Diamond Tofu Sword
 item.tofucraft:toolKinuShovel.name=Kinugoshi Tofu Shovel
 item.tofucraft:toolKinuPickaxe.name=Kinugoshi Tofu Pickaxe
@@ -505,3 +508,7 @@ tofucraft.soymilkInfo.stat2=Today's effect: Level %1$s
 tofucraft.update.server=TofuCraft has been updated to %1$s, available at %2$s
 tofucraft.update.client=§eTofuCraft§r has been updated to §a%1$s§r! %2$s
 tofucraft.update.link=§nDownload here§r
+
+tofucraft.wrongPotionId1=[TofuCraft] §c*WARNING*§r Different potion IDs with server.
+tofucraft.wrongPotionId2=Please change them in the setting file as follows, or the game will CRASH.
+tofucraft.wrongPotionId3=I:glowing=%s   I:filling=%s

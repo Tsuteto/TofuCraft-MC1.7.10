@@ -62,7 +62,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.12-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.13-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -101,6 +101,8 @@ public class TofuCraftCore
     @Mod.EventHandler
     public void preload(FMLPreInitializationEvent event)
     {
+        ModInfo.load(metadata);
+
         conf = new Configuration(event.getSuggestedConfigurationFile());
         conf.load();
 
@@ -165,9 +167,6 @@ public class TofuCraftCore
         // Register pick-up Handler
         FMLCommonHandler.instance().bus().register(new EventItemPickup());
 
-        // Register game tick handler
-        FMLCommonHandler.instance().bus().register(new GameTickHandler());
-
         {
             TcChunkProviderEvent eventhandler = new TcChunkProviderEvent();
             
@@ -226,7 +225,8 @@ public class TofuCraftCore
                 .registerPacket(PacketGuiControl.class)
                 .registerPacket(PacketSomenScooping.class)
                 .registerPacket(PacketSoymilkInfo.class)
-                .registerPacket(PacketBatchDigging.class);
+                .registerPacket(PacketBatchDigging.class)
+                .registerPacket(PacketPotionIdCheck.class);
 
         // Add chest loot
         this.registerChestLoot(new ItemStack(TcItems.defattingPotion), 1, 1, 8);

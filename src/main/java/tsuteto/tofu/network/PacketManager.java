@@ -2,7 +2,6 @@ package tsuteto.tofu.network;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.Side;
 import tsuteto.tofu.util.ModLog;
 
@@ -37,11 +36,8 @@ public class PacketManager
 
         if (MessageToClient.class.isAssignableFrom(packetClass))
         {
-            if (FMLLaunchHandler.side() == Side.CLIENT)
-            {
-                networkHandler.registerMessage(packetClass, message, id, Side.CLIENT);
-                ModLog.debug("Registered Packet: %s at ID %d", packetClass.getName(), id);
-            }
+            networkHandler.registerMessage(packetClass, message, id, Side.CLIENT);
+            ModLog.debug("Registered Packet: %s at ID %d", packetClass.getName(), id);
             id++;
         }
         return this;

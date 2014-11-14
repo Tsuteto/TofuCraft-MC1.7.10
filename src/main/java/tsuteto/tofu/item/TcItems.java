@@ -629,12 +629,12 @@ public class TcItems
         return tools;
     }
 
-    private static String getArmorName(String key, int id)
+    public static String getArmorName(String key, int id)
     {
         return "armor" + Utils.capitalize(key) + Utils.capitalize(armorNameList[id]);
     }
 
-    private static String getToolName(String key, int id)
+    public static String getToolName(String key, int id)
     {
         return "tool" + Utils.capitalize(key) + Utils.capitalize(toolNameList[id]);
     }

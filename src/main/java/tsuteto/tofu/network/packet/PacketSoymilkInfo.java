@@ -1,6 +1,8 @@
 package tsuteto.tofu.network.packet;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,6 +57,7 @@ public class PacketSoymilkInfo extends AbstractPacket implements MessageToClient
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IMessage handleClientSide(EntityPlayer player)
     {
         SoymilkPlayerInfo info = SoymilkPlayerInfo.of(player).readNBTFrom(rootNBT);
