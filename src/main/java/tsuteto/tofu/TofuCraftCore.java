@@ -14,9 +14,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
@@ -29,7 +27,6 @@ import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.block.RenderYubaBlock;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.dispanse.DispenserBehaviorTcEmptyBucket;
 import tsuteto.tofu.enchantment.TcEnchantment;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
@@ -62,7 +59,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.13-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.14RC-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -272,10 +269,6 @@ public class TofuCraftCore
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event){
         event.registerServerCommand(new CommandTofuSlimeCheck());
-
-        // Replace dispenser behavior for empty bucket
-        BlockDispenser.dispenseBehaviorRegistry.putObject(Items.bucket, new DispenserBehaviorTcEmptyBucket());
-        BlockDispenser.dispenseBehaviorRegistry.putObject(Items.bucket, new DispenserBehaviorTcEmptyBucket());
 
         // To handle spawn of Tofu Creeper ;)
         TofuCreeperSeed.initialize(12L);
