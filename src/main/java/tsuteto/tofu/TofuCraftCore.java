@@ -59,7 +59,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.14RC-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.14-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";

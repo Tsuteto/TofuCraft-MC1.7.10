@@ -1,5 +1,6 @@
 package tsuteto.tofu.recipe;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -14,7 +15,6 @@ import tsuteto.tofu.api.recipe.TfReformerRecipe;
 import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.TcEntity;
-import cpw.mods.fml.common.registry.GameRegistry;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.tileentity.TileEntityTfReformer;
 import tsuteto.tofu.util.ItemUtils;
@@ -592,6 +592,21 @@ public class Recipes
                 20)
                 .addIngredients(TcOreDic.kyoninso, false)
                 .addIngredients(Items.sugar, false)
+        );
+
+        // Soy Milk Bottle (Pudding)
+        addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPudding),
+                Items.glass_bottle,
+                TcOreDic.bucketSoymilk,
+                Items.egg,
+                Items.sugar
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPudding),
+                        20)
+                        .addIngredients(Items.egg, false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Dashi

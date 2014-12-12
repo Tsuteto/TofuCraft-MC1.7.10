@@ -27,15 +27,15 @@ import java.util.Random;
 
 public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Flavor>
 {
-    public static final Flavor[] flavorList = new Flavor[10];
+    public static final Flavor[] flavorList = new Flavor[11];
 
     // !! NOTE !! Potion Effect Tier is up to 20.
 
     public static Flavor flvPlain = new Flavor(0, "plain", 0xf5f7df, 2, 0.5F)
             .setPotionEffect(Potion.regeneration)
-            .addPotionEffectGrade(0, 0, 15, 15, 5)
-            .addPotionEffectGrade(5, 0, 40, 30, 10)
-            .addPotionEffectGrade(10, 0, 90, 60, 20)
+            .addPotionEffectGrade( 0, 0,  15,  15,  5)
+            .addPotionEffectGrade( 5, 0,  40,  30, 10)
+            .addPotionEffectGrade(10, 0,  90,  60, 20)
             .addPotionEffectGrade(15, 0, 190, 100, 25);
 
     public static Flavor flvKinako = new Flavor(1, "kinako", 0xd6bc2d, 4, 0.6F)
@@ -84,10 +84,16 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
 
     public static Flavor flvAnnin = new Flavor(9, "annin", 0xf5f7f3, 4, 0.6F)
             .setPotionEffect(Potion.field_76444_x)
-            .addPotionEffectGrade(0,  0,  60, 60, 30)
-            .addPotionEffectGrade(4,  1, 100, 60, 30)
-            .addPotionEffectGrade(8,  2, 150, 60, 20)
+            .addPotionEffectGrade( 0, 0,  60, 60, 30)
+            .addPotionEffectGrade( 4, 1, 100, 60, 30)
+            .addPotionEffectGrade( 8, 2, 150, 60, 20)
             .addPotionEffectGrade(13, 3, 180, 60, 10, 60);
+
+    public static Flavor flvPudding = new Flavor(10, "pudding", 0xf2e087, 4, 0.6F)
+            .setPotionEffect(Potion.regeneration)
+            .addPotionEffectGrade( 0, 0, 20, 60, 20)
+            .addPotionEffectGrade( 4, 1, 45, 60, 15)
+            .addPotionEffectGrade(12, 2, 90, 60, 15, 90);
 
     public static class Flavor extends TcFoodBase<Flavor>
     {

@@ -2,7 +2,6 @@ package tsuteto.tofu.dispanse;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.material.Material;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.init.Items;
@@ -12,7 +11,6 @@ import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.item.TcItems;
 
 public class DispenserBehaviorNigari extends BehaviorDefaultDispenseItem
 {
@@ -33,10 +31,20 @@ public class DispenserBehaviorNigari extends BehaviorDefaultDispenseItem
         //Material material = world.getBlock(i, j, k).getMaterial();
         //int l = world.getBlockMetadata(i, j, k);
         Item item;
+        Block blockToSet = null;
 
         if (block == TcBlocks.soymilkStill)
         {
-            world.setBlock(i, j, k, TcBlocks.tofuKinu);
+            blockToSet = TcBlocks.tofuKinu;
+        }
+        else if (block == TcBlocks.soymilkHellStill)
+        {
+            blockToSet = TcBlocks.tofuHell;
+        }
+
+        if (blockToSet != null)
+        {
+            world.setBlock(i, j, k, blockToSet);
             item = Items.glass_bottle;
 
             if (--par2ItemStack.stackSize == 0)
