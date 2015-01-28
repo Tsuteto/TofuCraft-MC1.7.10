@@ -1,13 +1,18 @@
 package tsuteto.tofu.block;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.item.*;
@@ -45,6 +50,8 @@ public class TcBlocks
     public static Block tofuCake;
     public static BlockTofuPortal tofuPortal;
     public static Block morijio;
+    public static Block chikuwaPlatformTofu;
+    public static Block chikuwaPlatformPlain;
 
     public static BlockTcStationary soymilkStill;
     public static BlockTcStationary soySauceStill;
@@ -320,7 +327,7 @@ public class TcBlocks
                 .setStepSound(Block.soundTypeStone)
                 .setLightLevel(0.875F)
                 ;
-        GameRegistry.registerTileEntity(TileEntitySaltFurnace.class, "tofucraft:SaltFurnace");
+        GameRegistry.registerTileEntity(TileEntitySaltFurnace.class, "SaltFurnace");
 
         tofuCake = $("blockTofuCake", new BlockTofuCake())
                 .withResource("tofuCake")
@@ -339,11 +346,11 @@ public class TcBlocks
 
         morijio = $("blockMorijio", new BlockMorijio())
                 .withResource("morijio")
+                .withTileEntity(TileEntityMorijio.class, "Morijio")
                 .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeCloth)
                 ;
-        GameRegistry.registerTileEntity(TileEntityMorijio.class, "tofucraft:Morijio");
 
         barrelMiso = $("blockBarrelMiso", new BlockMisoBarrel(Material.wood))
                 .withResource("barrelMiso")
@@ -426,6 +433,22 @@ public class TcBlocks
                 .setCreativeTab(CreativeTabs.tabDecorations)
                 ;
 
+        // Chikuwa Platforms
+        chikuwaPlatformTofu = $("chikuwaPlatformTofu", new BlockChikuwaPlatform("tofu"))
+                .wrappedByItemTcBlock()
+                .withTileEntity(TileEntityChikuwaPlatform.class, "ChikuwaPlatform")
+                .registerBlock()
+                .setHardness(0.6F)
+                .setStepSound(Block.soundTypeSnow)
+                .setCreativeTab(CreativeTabs.tabDecorations);
+
+        chikuwaPlatformPlain = $("chikuwaPlatformPlain", new BlockChikuwaPlatform("plain"))
+                .wrappedByItemTcBlock()
+                .registerBlock()
+                .setHardness(0.6F)
+                .setStepSound(Block.soundTypeSnow)
+                .setCreativeTab(CreativeTabs.tabDecorations);
+
         /*
          * TF machine
          */
@@ -450,22 +473,22 @@ public class TcBlocks
 
         tfStorageActive = $("tfStorageActive", new BlockTfStorage(true))
                 .withResource("tfStorage")
+                .withTileEntity(TileEntityTfStorage.class, "TfStorage")
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
                 ;
-        GameRegistry.registerTileEntity(TileEntityTfStorage.class, "tofucraft:TfStorage");
 
         tfAntennaMedium = $("tfAntenna", new BlockTfAntenna(BlockTfAntenna.MEDIUMWAVE))
                 .wrappedByItemTcBlock()
+                .withTileEntity(TileEntityTfAntenna.class, "TfAntenna")
                 .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeCloth)
                 .setCreativeTab(CreativeTabs.tabDecorations)
                 ;
-        GameRegistry.registerTileEntity(TileEntityTfAntenna.class, "tofucraft:TfAntenna");
 
         tfAntennaUltra = $("tfAntennaU", new BlockTfAntenna(BlockTfAntenna.ULTRAWAVE))
                 .wrappedByItemTcBlock()
@@ -495,15 +518,16 @@ public class TcBlocks
 
         tfSaturatorActive = $("tfSaturatorActive", new BlockTfSaturator(true))
                 .withResource("tfSaturator")
+                .withTileEntity(TileEntityTfSaturator.class, "TfSaturator")
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
                 ;
-        GameRegistry.registerTileEntity(TileEntityTfSaturator.class, "tofucraft:TfSaturator");
 
         tfCollector = $("tfCollector", new BlockTfCollector())
+                .withTileEntity(TileEntityTfCollector.class, "TfCollector")
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
@@ -511,7 +535,6 @@ public class TcBlocks
                 .setStepSound(Block.soundTypeMetal)
                 .setCreativeTab(CreativeTabs.tabDecorations)
         ;
-        GameRegistry.registerTileEntity(TileEntityTfCollector.class, "tofucraft:TfCollector");
 
         tfCondenserIdle = $("tfCondenserIdle", new BlockTfCondenser(false))
                 .withResource("tfCondenser")
@@ -525,13 +548,13 @@ public class TcBlocks
 
         tfCondenserActive = $("tfCondenserActive", new BlockTfCondenser(true))
                 .withResource("tfCondenser")
+                .withTileEntity(TileEntityTfCondenser.class, "TfCondenser")
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
         ;
-        GameRegistry.registerTileEntity(TileEntityTfCondenser.class, "tofucraft:TfCondenser");
 
         tfOvenIdle = $("tfOvenIdle", new BlockTfOven(false))
                 .withResource("tfOven")
@@ -545,13 +568,13 @@ public class TcBlocks
 
         tfOvenActive = $("tfOvenActive", new BlockTfOven(true))
                 .withResource("tfOven")
+                .withTileEntity(TileEntityTfOven.class, "TfOven")
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
         ;
-        GameRegistry.registerTileEntity(TileEntityTfOven.class, "tofucraft:TfOven");
 
         tfReformerIdle = $("tfReformerIdle", new BlockTfReformer(false))
                 .withResource("tfReformer")
@@ -566,13 +589,13 @@ public class TcBlocks
 
         tfReformerActive = $("tfReformerActive", new BlockTfReformer(true))
                 .withResource("tfReformer")
+                .withTileEntity(TileEntityTfReformer.class, "tfReformer")
                 .setHarvestLevel("pickaxe", 0)
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
                 .setLightLevel(0.875F)
         ;
-        GameRegistry.registerTileEntity(TileEntityTfReformer.class, "tofucraft:tfReformer");
 
         /*
          * Ore
@@ -877,6 +900,16 @@ public class TcBlocks
         }
     }
 
+    @SideOnly(Side.CLIENT)
+    public static void registerBlockRenderer()
+    {
+        RenderingRegistry.registerBlockHandler(new RenderYubaBlock());
+        RenderingRegistry.registerBlockHandler(new RenderChikuwaPlatform());
+
+        ClientRegistry.registerTileEntity(TileEntityMorijio.class, "TmMorijio", new TileEntityMorijioRenderer());
+        ClientRegistry.registerTileEntity(TileEntityTfAntenna.class, "TcTfAntenna", new TileEntityTfAntennaRenderer());
+    }
+
     public static <T extends Block> BlockRegister<T> $(String name, T block)
     {
         return new BlockRegister<T>(name, block);
@@ -924,6 +957,17 @@ public class TcBlocks
         public BlockRegister<T> setHarvestLevel(String tool, int level)
         {
             block.setHarvestLevel(tool, level);
+            return this;
+        }
+
+        public BlockRegister<T> withTileEntity(Class<? extends TileEntity> tileEntity)
+        {
+            return this.withTileEntity(tileEntity, uniqueName);
+        }
+
+        public BlockRegister<T> withTileEntity(Class<? extends TileEntity> tileEntity, String name)
+        {
+            GameRegistry.registerTileEntity(tileEntity, TofuCraftCore.resourceDomain + name);
             return this;
         }
 

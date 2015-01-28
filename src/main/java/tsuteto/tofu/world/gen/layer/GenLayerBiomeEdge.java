@@ -3,11 +3,11 @@ package tsuteto.tofu.world.gen.layer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
+import tsuteto.tofu.world.biome.BiomeGenTofuBase;
+import tsuteto.tofu.world.biome.TcBiomes;
 
 public class GenLayerBiomeEdge extends GenLayerTofu
 {
-    private static final String __OBFID = "CL_00000554";
-
     public GenLayerBiomeEdge(long p_i45475_1_, GenLayer p_i45475_3_)
     {
         super(p_i45475_1_);
@@ -30,56 +30,9 @@ public class GenLayerBiomeEdge extends GenLayerTofu
                 this.initChunkSeed((long)(j1 + par1), (long)(i1 + par2));
                 int k1 = aint[j1 + 1 + (i1 + 1) * (par3 + 2)];
 
-                if (!this.func_151636_a(aint, aint1, j1, i1, par3, k1, BiomeGenBase.extremeHills.biomeID, BiomeGenBase.extremeHillsEdge.biomeID) && !this.func_151635_b(aint, aint1, j1, i1, par3, k1, BiomeGenBase.mesaPlateau_F.biomeID, BiomeGenBase.mesa.biomeID) && !this.func_151635_b(aint, aint1, j1, i1, par3, k1, BiomeGenBase.mesaPlateau.biomeID, BiomeGenBase.mesa.biomeID) && !this.func_151635_b(aint, aint1, j1, i1, par3, k1, BiomeGenBase.megaTaiga.biomeID, BiomeGenBase.taiga.biomeID))
+                if (!this.func_151636_a(aint, aint1, j1, i1, par3, k1, TcBiomes.tofuExtremeHills.biomeID, TcBiomes.tofuHillsEdge.biomeID))
                 {
-                    int l1;
-                    int i2;
-                    int j2;
-                    int k2;
-
-                    if (k1 == BiomeGenBase.desert.biomeID)
-                    {
-                        l1 = aint[j1 + 1 + (i1 + 1 - 1) * (par3 + 2)];
-                        i2 = aint[j1 + 1 + 1 + (i1 + 1) * (par3 + 2)];
-                        j2 = aint[j1 + 1 - 1 + (i1 + 1) * (par3 + 2)];
-                        k2 = aint[j1 + 1 + (i1 + 1 + 1) * (par3 + 2)];
-
-                        if (l1 != BiomeGenBase.icePlains.biomeID && i2 != BiomeGenBase.icePlains.biomeID && j2 != BiomeGenBase.icePlains.biomeID && k2 != BiomeGenBase.icePlains.biomeID)
-                        {
-                            aint1[j1 + i1 * par3] = k1;
-                        }
-                        else
-                        {
-                            aint1[j1 + i1 * par3] = BiomeGenBase.extremeHillsPlus.biomeID;
-                        }
-                    }
-                    else if (k1 == BiomeGenBase.swampland.biomeID)
-                    {
-                        l1 = aint[j1 + 1 + (i1 + 1 - 1) * (par3 + 2)];
-                        i2 = aint[j1 + 1 + 1 + (i1 + 1) * (par3 + 2)];
-                        j2 = aint[j1 + 1 - 1 + (i1 + 1) * (par3 + 2)];
-                        k2 = aint[j1 + 1 + (i1 + 1 + 1) * (par3 + 2)];
-
-                        if (l1 != BiomeGenBase.desert.biomeID && i2 != BiomeGenBase.desert.biomeID && j2 != BiomeGenBase.desert.biomeID && k2 != BiomeGenBase.desert.biomeID && l1 != BiomeGenBase.coldTaiga.biomeID && i2 != BiomeGenBase.coldTaiga.biomeID && j2 != BiomeGenBase.coldTaiga.biomeID && k2 != BiomeGenBase.coldTaiga.biomeID && l1 != BiomeGenBase.icePlains.biomeID && i2 != BiomeGenBase.icePlains.biomeID && j2 != BiomeGenBase.icePlains.biomeID && k2 != BiomeGenBase.icePlains.biomeID)
-                        {
-                            if (l1 != BiomeGenBase.jungle.biomeID && k2 != BiomeGenBase.jungle.biomeID && i2 != BiomeGenBase.jungle.biomeID && j2 != BiomeGenBase.jungle.biomeID)
-                            {
-                                aint1[j1 + i1 * par3] = k1;
-                            }
-                            else
-                            {
-                                aint1[j1 + i1 * par3] = BiomeGenBase.jungleEdge.biomeID;
-                            }
-                        }
-                        else
-                        {
-                            aint1[j1 + i1 * par3] = BiomeGenBase.plains.biomeID;
-                        }
-                    }
-                    else
-                    {
-                        aint1[j1 + i1 * par3] = k1;
-                    }
+                    aint1[j1 + i1 * par3] = k1;
                 }
             }
         }
@@ -145,10 +98,10 @@ public class GenLayerBiomeEdge extends GenLayerTofu
         {
             return true;
         }
-        else if (BiomeGenBase.getBiome(p_151634_1_) != null && BiomeGenBase.getBiome(p_151634_2_) != null)
+        else if (BiomeGenTofuBase.getBiome(p_151634_1_) != null && BiomeGenTofuBase.getBiome(p_151634_2_) != null)
         {
-            BiomeGenBase.TempCategory tempcategory = BiomeGenBase.getBiome(p_151634_1_).getTempCategory();
-            BiomeGenBase.TempCategory tempcategory1 = BiomeGenBase.getBiome(p_151634_2_).getTempCategory();
+            BiomeGenTofuBase.TempCategory tempcategory = BiomeGenTofuBase.getBiome(p_151634_1_).getTempCategory();
+            BiomeGenTofuBase.TempCategory tempcategory1 = BiomeGenTofuBase.getBiome(p_151634_2_).getTempCategory();
             return tempcategory == tempcategory1 || tempcategory == BiomeGenBase.TempCategory.MEDIUM || tempcategory1 == BiomeGenBase.TempCategory.MEDIUM;
         }
         else

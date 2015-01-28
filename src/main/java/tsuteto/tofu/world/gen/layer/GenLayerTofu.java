@@ -6,6 +6,7 @@ import net.minecraft.util.ReportedException;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
+import tsuteto.tofu.world.biome.BiomeGenTofuBase;
 
 import java.util.concurrent.Callable;
 
@@ -95,11 +96,11 @@ public abstract class GenLayerTofu extends GenLayer
         {
             return true;
         }
-        else if (p_151616_0_ != BiomeGenBase.mesaPlateau_F.biomeID && p_151616_0_ != BiomeGenBase.mesaPlateau.biomeID)
+        else
         {
             try
             {
-                return BiomeGenBase.getBiome(p_151616_0_) != null && BiomeGenBase.getBiome(p_151616_1_) != null ? BiomeGenBase.getBiome(p_151616_0_).isEqualTo(BiomeGenBase.getBiome(p_151616_1_)) : false;
+                return BiomeGenTofuBase.getBiome(p_151616_0_) != null && BiomeGenTofuBase.getBiome(p_151616_1_) != null ? BiomeGenTofuBase.getBiome(p_151616_0_).isEqualTo(BiomeGenTofuBase.getBiome(p_151616_1_)) : false;
             }
             catch (Throwable throwable)
             {
@@ -110,6 +111,7 @@ public abstract class GenLayerTofu extends GenLayer
                 crashreportcategory.addCrashSectionCallable("Biome A", new Callable()
                 {
                     private static final String __OBFID = "CL_00000560";
+
                     public String call()
                     {
                         return String.valueOf(BiomeGenBase.getBiome(p_151616_0_));
@@ -118,6 +120,7 @@ public abstract class GenLayerTofu extends GenLayer
                 crashreportcategory.addCrashSectionCallable("Biome B", new Callable()
                 {
                     private static final String __OBFID = "CL_00000561";
+
                     public String call()
                     {
                         return String.valueOf(BiomeGenBase.getBiome(p_151616_1_));
@@ -125,10 +128,6 @@ public abstract class GenLayerTofu extends GenLayer
                 });
                 throw new ReportedException(crashreport);
             }
-        }
-        else
-        {
-            return p_151616_1_ == BiomeGenBase.mesaPlateau_F.biomeID || p_151616_1_ == BiomeGenBase.mesaPlateau.biomeID;
         }
     }
 

@@ -1,17 +1,17 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.util.BlockUtils;
 import tsuteto.tofu.util.ModLog;
+
+import java.util.Random;
 
 public class BlockTofu extends BlockTofuBase
 {
@@ -73,37 +73,15 @@ public class BlockTofu extends BlockTofuBase
                 {
                     return;
                 }
-                this.onEntityWeightedBlock(par1World, par5Entity);
-            }
-        }
-    }
 
-    private void onEntityWeightedBlock(World world, Entity entity)
-    {
-        int i = MathHelper.floor_double(entity.boundingBox.minX + 0.001D);
-        int j = MathHelper.floor_double(entity.boundingBox.minY + 0.001D);
-        int k = MathHelper.floor_double(entity.boundingBox.minZ + 0.001D);
-        int l = MathHelper.floor_double(entity.boundingBox.maxX - 0.001D);
-        int i1 = MathHelper.floor_double(entity.boundingBox.maxY - 0.001D);
-        int j1 = MathHelper.floor_double(entity.boundingBox.maxZ - 0.001D);
-
-        if (entity.worldObj.checkChunksExist(i, j, k, l, i1, j1))
-        {
-            for (int k1 = i; k1 <= l; ++k1)
-            {
-                for (int l1 = j; l1 <= i1; ++l1)
+                BlockUtils.handleEntityWeightingBlock(par1World, par5Entity, this, new BlockUtils.IEntityWeightingBlockHandler()
                 {
-                    for (int i2 = k; i2 <= j1; ++i2)
+                    @Override
+                    public void apply(World world, Entity entity, Block block, int x, int y, int z)
                     {
-                        int bx = k1;
-                        int by = l1 - 1;
-                        int bz = i2;
-                        if (world.getBlock(bx, by, bz) == this)
-                        {
-                            this.collapseBlock(entity, world, bx, by, bz);
-                        }
+                        collapseBlock(entity, world, x, y, z);
                     }
-                }
+                });
             }
         }
     }

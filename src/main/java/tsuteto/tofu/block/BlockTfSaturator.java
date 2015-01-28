@@ -2,14 +2,12 @@ package tsuteto.tofu.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidContainerItem;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.tileentity.TileEntityTfSaturator;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.BlockUtils;
 
 public class BlockTfSaturator extends BlockTfMachineBase
 {
@@ -75,7 +73,7 @@ public class BlockTfSaturator extends BlockTfMachineBase
     @Override
     public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
     {
-        Utils.onNeighborBlockChange_RedstoneSwitch(this, p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        BlockUtils.onNeighborBlockChange_RedstoneSwitch(this, p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
     }
 
     @Override

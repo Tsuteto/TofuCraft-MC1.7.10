@@ -69,7 +69,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     @SideOnly(Side.CLIENT)
     public double getHeaterScaled()
     {
-        return isHeating() ? this.tfPooled / TF_CAPACITY : 0;
+        return this.tfPooled / TF_CAPACITY;
     }
 
     public boolean isHeating()
@@ -205,7 +205,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     @Override
     public double getMaxTfCapacity()
     {
-        return Math.min(1, TF_CAPACITY - this.tfPooled);
+        return TF_CAPACITY - this.tfPooled;
     }
 
     @Override

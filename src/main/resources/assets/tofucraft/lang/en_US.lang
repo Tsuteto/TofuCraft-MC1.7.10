@@ -53,6 +53,8 @@ tile.tofucraft:blockOreTofu.name=Tofu Ore
 tile.tofucraft:blockOreTofuDiamond.name=Tofu Diamond Ore
 tile.tofucraft:barrelAdvTofuGem.name=Tofu Gem Barrel
 tile.tofucraft:blockAdvTofuGem.name=High-Powered Tofu Gem Block
+tile.tofucraft:chikuwaPlatformPlain.name=Chikuwa Platform Block
+tile.tofucraft:chikuwaPlatformTofu.name=Tofu Chikuwa Platform Block
 
 tile.tofucraft:soymilk.name=Soy Milk
 tile.tofucraft:soymilkHell.name=Hell Soy Milk
@@ -199,7 +201,7 @@ item.tofucraft:tofuGem.name=Tofu Gem
 item.tofucraft:tofuDiamondNugget.name=Diamond Tofu Nugget
 item.tofucraft:tofuHamburgRaw.name=Tofu Hamburg (Raw)
 item.tofucraft:tfCapacitor.name=TF Capacitor
-item.tofucraft:tofuChikuwa.name=Steamed Fish Tofu
+item.tofucraft:tofuChikuwa.name=Tofu Chikuwa
 item.tofucraft:oage.name=Fried Tofu Slice
 item.tofucraft:mabodofu.name=Mapo Tofu
 item.tofucraft:onigiri.name=Riceball
@@ -236,6 +238,8 @@ item.tofucraft:glassBowl.name=Glass Bowl
 item.tofucraft:rollingPin.name=Rolling Pin
 item.tofucraft:zundaMochi.name=Zunda Mochi
 item.tofucraft:kinakoMochi.name=Kinako Mochi
+item.tofucraft:chikuwa.name=Chikuwa
+item.tofucraft:tofuSteak.name=Tofu Steak
 
 item.tofucraft:armorKinuHelmet.name=Kinu Tofu Helmet
 item.tofucraft:armorKinuChestplate.name=Kinu Tofu Chestplate

@@ -1,6 +1,5 @@
 package tsuteto.tofu;
 
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -25,7 +24,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.achievement.TcAchievementList;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
-import tsuteto.tofu.block.RenderYubaBlock;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.enchantment.TcEnchantment;
 import tsuteto.tofu.entity.TcEntity;
@@ -59,7 +57,7 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.14-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(modid = TofuCraftCore.modid, version = "1.6.15-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
@@ -240,9 +238,6 @@ public class TofuCraftCore
         Recipes.unifyOreDicItems();
         Recipes.register();
 
-        // Register renderer of yuba
-        RenderingRegistry.registerBlockHandler(new RenderYubaBlock());
-
         // Register sided components
         sidedProxy.registerComponents();
     }
@@ -303,6 +298,7 @@ public class TofuCraftCore
         @Override
         public void registerComponents()
         {
+            TcBlocks.registerBlockRenderer();
             TcEntity.registerEntityRenderer();
 
             VillagerRegistry vill = VillagerRegistry.instance();

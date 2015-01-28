@@ -18,22 +18,6 @@ import net.minecraft.world.World;
  */
 public class Utils
 {
-    public static void onNeighborBlockChange_RedstoneSwitch(Block block, World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
-    {
-        boolean flag = p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_, p_149695_4_) || p_149695_1_.isBlockIndirectlyGettingPowered(p_149695_2_, p_149695_3_ + 1, p_149695_4_);
-        int l = p_149695_1_.getBlockMetadata(p_149695_2_, p_149695_3_, p_149695_4_);
-        boolean flag1 = (l & 8) != 0;
-
-        if (flag && !flag1)
-        {
-            p_149695_1_.scheduleBlockUpdate(p_149695_2_, p_149695_3_, p_149695_4_, block, block.tickRate(p_149695_1_));
-            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, l | 8, 4);
-        }
-        else if (!flag && flag1)
-        {
-            p_149695_1_.setBlockMetadataWithNotify(p_149695_2_, p_149695_3_, p_149695_4_, l & -9, 4);
-        }
-    }
 
     public static NBTTagCompound getNBTPlayerPersisted(EntityPlayer player)
     {
@@ -85,6 +69,13 @@ public class Utils
             }
         }
         return null;
+    }
+
+    public static long generateRandomFromCoord(int x, int y, int z)
+    {
+        long i1 = (long) (x * 3129871) ^ (long) y * 116129781L ^ (long) z;
+        i1 = i1 * i1 * 42317861L + i1 * 11L + i1;
+        return i1 >> 16;
     }
 
     public static String capitalize(String s)

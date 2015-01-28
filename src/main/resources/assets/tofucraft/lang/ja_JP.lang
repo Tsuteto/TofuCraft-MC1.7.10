@@ -53,6 +53,8 @@ tile.tofucraft:blockOreTofu.name=豆腐鉱石
 tile.tofucraft:blockOreTofuDiamond.name=金剛豆腐鉱石
 tile.tofucraft:barrelAdvTofuGem.name=豆腐石樽
 tile.tofucraft:blockAdvTofuGem.name=強化豆腐石ブロック
+tile.tofucraft:chikuwaPlatformPlain.name=ちくわ床ブロック
+tile.tofucraft:chikuwaPlatformTofu.name=とうふちくわ床ブロック
 
 tile.tofucraft:soymilk.name=豆乳
 tile.tofucraft:soymilkHell.name=地獄豆乳
@@ -236,6 +238,8 @@ item.tofucraft:glassBowl.name=ガラスの器
 item.tofucraft:rollingPin.name=麺棒
 item.tofucraft:zundaMochi.name=ずんだ餅
 item.tofucraft:kinakoMochi.name=きなこ餅
+item.tofucraft:chikuwa.name=ちくわ
+item.tofucraft:tofuSteak.name=豆腐ステーキ
 
 item.tofucraft:armorKinuHelmet.name=絹豆腐ヘルメット
 item.tofucraft:armorKinuChestplate.name=絹豆腐チェストプレート

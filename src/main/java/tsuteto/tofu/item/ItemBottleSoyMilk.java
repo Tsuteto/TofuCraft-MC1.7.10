@@ -27,7 +27,7 @@ import java.util.Random;
 
 public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Flavor>
 {
-    public static final Flavor[] flavorList = new Flavor[11];
+    public static final List<Flavor> flavorList = Lists.newArrayList();
 
     // !! NOTE !! Potion Effect Tier is up to 20.
 
@@ -107,7 +107,7 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
             super(id, healAmount, saturationModifier, true, name);
             this.asGlassBottle(color);
             this.setContainerItem(new ItemStack(Items.glass_bottle));
-            ItemBottleSoyMilk.flavorList[id] = this;
+            flavorList.add(id, this);
         }
 
         public Flavor setPotionEffect(Potion potion)
@@ -223,7 +223,7 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
     }
 
     @Override
-    public Flavor[] getItemList()
+    public List<Flavor> getItemList()
     {
         return flavorList;
     }

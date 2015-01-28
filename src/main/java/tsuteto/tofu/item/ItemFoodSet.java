@@ -1,13 +1,16 @@
 package tsuteto.tofu.item;
 
+import com.google.common.collect.Lists;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
 
+import java.util.List;
+
 public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
 {
-    public static Food[] foodList = new Food[22];
+    public static List<Food> foodList = Lists.newArrayList();
 
     public static Food tofuChikuwa =
             new Food( 0,  6, 0.4f,  true, "tofuChikuwa");
@@ -49,10 +52,15 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
             new Food(18, 8, 0.8f, false, "nattoHiyayakko_glass").setContainer(TcItems.materials.getItemStack(ItemTcMaterials.glassBowl));
     public static Food tofuSomen =
             new Food(19, 3, 0.3f, true, "tofuSomenBowl_glass").setContainer(new ItemStack(TcItems.somenTsuyuBowl));
-    public static Food zundaMochi = (Food)
+    public static Food zundaMochi =
             new Food(20, 3, 0.8f, false, "zundaMochi").addPotionEffect(Potion.regeneration, 4, 2, 1.0F).setMaxItemUseDuration(64); // For External Mod
-    public static Food kinakoMochi = (Food)
+    public static Food kinakoMochi =
             new Food(21, 5, 0.8f, false, "kinakoMochi").setMaxItemUseDuration(64); // For External Mod
+    public static Food chikuwa =
+            new Food(22, 4, 0.6f, false, "chikuwa");
+    public static Food tofuSteak =
+            new Food(23, 6, 0.6f, false, "tofuSteak").setMaxItemUseDuration(48);
+
 
     public ItemFoodSet()
     {
@@ -65,12 +73,12 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
         Food(int id, int healAmount, float saturationModifier, boolean alwaysEdible, String name)
         {
             super(id, healAmount, saturationModifier, alwaysEdible, name);
-            foodList[id] = this;
+            foodList.add(this);
         }
     }
 
     @Override
-    public Food[] getItemList()
+    public List<Food> getItemList()
     {
         return foodList;
     }

@@ -1,11 +1,14 @@
 package tsuteto.tofu.item;
 
+import com.google.common.collect.Lists;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
+import java.util.List;
+
 public class ItemGelatin extends ItemSetBase<ItemGelatin.ItemInfo>
 {
-    public static final ItemInfo[] itemList = new ItemInfo[2];
+    public static final List<ItemInfo> itemList = Lists.newArrayList();
     public static final ItemInfo gelatin = new ItemInfo(0, TcItemType.NORMAL, "gelatin");
     public static final ItemInfo gelatinRaw = new ItemInfo(1, TcItemType.NORMAL, "gelatinRaw");
 
@@ -15,7 +18,7 @@ public class ItemGelatin extends ItemSetBase<ItemGelatin.ItemInfo>
         public ItemInfo(int id, TcItemType type, String name)
         {
             super(id, type, name);
-            itemList[id] = this;
+            itemList.add(id, this);
         }
     }
 
@@ -25,7 +28,7 @@ public class ItemGelatin extends ItemSetBase<ItemGelatin.ItemInfo>
     }
 
     @Override
-    public ItemInfo[] getItemList()
+    public List<ItemInfo> getItemList()
     {
         return itemList;
     }

@@ -1,7 +1,5 @@
 package tsuteto.tofu.api.recipe;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.block.TcBlocks;
@@ -9,6 +7,7 @@ import tsuteto.tofu.item.ItemFoodSet;
 import tsuteto.tofu.item.ItemGelatin;
 import tsuteto.tofu.item.ItemTcMaterials;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.util.ItemUtils;
 
 public enum TcOreDic
 {
@@ -62,7 +61,6 @@ public enum TcOreDic
     edamameBoiled(TcItems.edamameBoiled),
     zunda(TcItems.zunda),
     okara(TcItems.okara),
-
 
     tofuKinu(TcItems.tofuKinu),
     tofuMomen(TcItems.tofuMomen),
@@ -126,6 +124,7 @@ public enum TcOreDic
     tofuSomen(TcItems.materials.getItemStack(ItemTcMaterials.tofuSomen)),
     glassBowl(TcItems.materials.getItemStack(ItemTcMaterials.glassBowl)),
     somenTsuyuBowl(TcItems.somenTsuyuBowl),
+    chikuwa(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa)),
 
     tfCapacitor(TcItems.materials.getItemStack(ItemTcMaterials.tfCapacitor)),
     tfCoil(TcItems.materials.getItemStack(ItemTcMaterials.tfCoil)),
@@ -134,30 +133,60 @@ public enum TcOreDic
     advTofuGem(TcItems.materials.getItemStack(ItemTcMaterials.advTofuGem)),
     activatedTofuGem(TcItems.materials.getItemStack(ItemTcMaterials.activatedTofuGem)),
     activatedHellTofu(TcItems.materials.getItemStack(ItemTcMaterials.activatedHellTofu)),
+
+
+    // For Compatibility
+    foodTofuKinu(tofuKinu),
+    foodTofuMomen(tofuMomen),
+    foodTofuIshi(tofuIshi),
+    foodTofuGrilled(tofuGrilled),
+    foodTofuFriedPouch(tofuFriedPouch),
+    foodTofuFried(tofuFried),
+    foodTofuEgg(tofuEgg),
+    foodTofuAnnin(tofuAnnin),
+    foodTofuSesame(tofuSesame),
+    foodTofuZunda(tofuZunda),
+    foodTofuStrawberry(tofuStrawberry),
+    foodTofuMiso(tofuMiso),
+    foodTofuHell(tofuHell),
+    foodTofuGlow(tofuGlow),
+
+    foodApricot(apricot),
+    foodOnigiri(onigiri),
+    foodSprouts(sprouts),
+    foodOage(oage),
+    foodTofuChikuwa(tofuChikuwa),
+    foodYuba(yuba),
+    foodTofuHamburg(tofuHamburg),
+    foodHamburg(tofuHamburg),
+    foodTofuCookie(tofuCookie),
+    foodCookie(tofuCookie),
+    foodTofufishRaw(tofufishRaw),
+    foodTofufishCooked(tofufishCooked),
+    foodChikuwa(chikuwa)
+
     ;
 
+    private ItemStack[] items;
 
-    TcOreDic(Item... items)
+    TcOreDic(Object... itemObjects)
     {
-        for (Item item : items)
+        this.items = new ItemStack[itemObjects.length];
+        int i = 0;
+        for (Object obj : itemObjects)
+        {
+            ItemStack itemstack = ItemUtils.getItemStack(obj);
+            OreDictionary.registerOre(this.name(), itemstack);
+            this.items[i++] = itemstack;
+        }
+    }
+
+    TcOreDic(TcOreDic dic)
+    {
+        for (ItemStack item : dic.items)
         {
             OreDictionary.registerOre(this.name(), item);
         }
     }
 
-    TcOreDic(Block... blocks)
-    {
-        for (Block block : blocks)
-        {
-            OreDictionary.registerOre(this.name(), block);
-        }
-    }
-
-    TcOreDic(ItemStack... itemstacks)
-    {
-        for (ItemStack itemstack : itemstacks)
-        {
-            OreDictionary.registerOre(this.name(), itemstack);
-        }
-    }
 }

@@ -7,10 +7,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemInfoBase;
+import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
-import tsuteto.tofu.util.ModLog;
 
 import java.util.List;
 
@@ -25,12 +24,12 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
         this.setMaxDamage(0);
     }
 
-    abstract public T[] getItemList();
+    abstract public List<T> getItemList();
 
     public T getItemInfo(int dmg)
     {
-        T[] list = this.getItemList();
-        return list[dmg >= 0 && dmg < list.length ? dmg : 0];
+        List<T> list = this.getItemList();
+        return list.get(dmg >= 0 && dmg < list.size() ? dmg : 0);
     }
 
     @Override
@@ -58,15 +57,15 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
         int dmg = par1ItemStack.getItemDamage();
-        TcItemInfoBase[] list = this.getItemList();
-        return "item." + this.getFullName(dmg < list.length ? dmg : 0);
+        List<T> list = this.getItemList();
+        return "item." + this.getFullName(dmg < list.size() ? dmg : 0);
     }
 
     @Override
     public IIcon getIconFromDamage(int par1)
     {
-        TcItemInfoBase[] list = getItemList();
-        if (par1 >= 0 && par1 < list.length)
+        List<T> list = getItemList();
+        if (par1 >= 0 && par1 < list.size())
         {
             return icons[par1];
         }
@@ -80,8 +79,8 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        TcItemInfoBase[] list = getItemList();
-        for (int i = 0; i < list.length; ++i)
+        List<T> list = getItemList();
+        for (int i = 0; i < list.size(); ++i)
         {
             par3List.add(new ItemStack(par1, 1, i));
         }
@@ -93,13 +92,13 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
     {
         super.registerIcons(par1IconRegister);
 
-        TcItemInfoBase[] list = getItemList();
+        List<T> list = getItemList();
 
-        this.icons = new IIcon[list.length];
+        this.icons = new IIcon[list.size()];
 
-        for (int i = 0; i < list.length; ++i)
+        for (int i = 0; i < list.size(); ++i)
         {
-            if (list[i].type == TcItemType.BOTTLE)
+            if (list.get(i).type == TcItemType.BOTTLE)
             {
                 this.icons[i] = par1IconRegister.registerIcon("potion_bottle_drinkable");
             }

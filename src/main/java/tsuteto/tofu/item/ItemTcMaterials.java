@@ -1,17 +1,19 @@
 package tsuteto.tofu.item;
 
+import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
+
+import java.util.List;
 
 /**
  * Material items with no function
  */
 public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
 {
-    public static TcMaterial[] materialList = new TcMaterial[14];
+    public static List<TcMaterial> materialList = Lists.newArrayList();
 
     public static final TcMaterial tofuGem = new TcMaterial(0, "tofuGem");
     public static final TcMaterial tofuDiamondNugget = new TcMaterial(1, "tofuDiamondNugget");
@@ -33,7 +35,7 @@ public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
         public TcMaterial(int id, String name)
         {
             super(id, TcItemType.NORMAL, name);
-            ItemTcMaterials.materialList[id] = this;
+            materialList.add(id, this);
         }
 
         public boolean isItemEqual(ItemStack itemStack)
@@ -53,7 +55,7 @@ public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
     }
 
     @Override
-    public TcMaterial[] getItemList()
+    public List<TcMaterial> getItemList()
     {
         return materialList;
     }

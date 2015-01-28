@@ -1,7 +1,5 @@
 package tsuteto.tofu.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -11,7 +9,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import tsuteto.tofu.item.ItemTcMaterials;
 import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.util.Utils;
+import tsuteto.tofu.util.BlockUtils;
 
 import java.util.List;
 
@@ -51,6 +49,6 @@ public class BlockAdvTofuGemBarrel extends BlockBarrelBase
     @Override
     public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_)
     {
-        Utils.onNeighborBlockChange_RedstoneSwitch(this, p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
+        BlockUtils.onNeighborBlockChange_RedstoneSwitch(this, p_149695_1_, p_149695_2_, p_149695_3_, p_149695_4_, p_149695_5_);
     }
 }

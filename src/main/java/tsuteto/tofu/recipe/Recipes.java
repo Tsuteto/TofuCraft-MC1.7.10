@@ -6,7 +6,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -25,6 +24,7 @@ public class Recipes
     private static final String oredic_cookingRice = "cookingRice";
     private static final String oredic_cookedMochi = "cookedMochi";
     private static final String oredic_cropStraw = "cropStraw";
+    private static final String oredic_foodChikuwa = "foodChikuwa";
 
     public static void unifyOreDicItems()
     {
@@ -40,22 +40,22 @@ public class Recipes
         /*
          * Smelting
          */
-        FurnaceRecipes frecipes = FurnaceRecipes.smelting();
-
-        frecipes.func_151396_a(TcItems.tofuKinu, new ItemStack(TcItems.tofuGrilled), 0.2f);
-        frecipes.func_151396_a(TcItems.tofuMomen, new ItemStack(TcItems.tofuGrilled), 0.2f);
-        frecipes.func_151393_a(TcBlocks.tofuKinu, new ItemStack(TcBlocks.tofuGrilled), 0.8f);
-        frecipes.func_151393_a(TcBlocks.tofuMomen, new ItemStack(TcBlocks.tofuGrilled), 0.8f);
-        frecipes.func_151396_a(TcItems.edamame, new ItemStack(TcItems.edamameBoiled, 12), 0.5f);
-        frecipes.func_151396_a(TcItems.soybeans, new ItemStack(TcItems.soybeansParched), 0.2f);
-        frecipes.func_151396_a(TcItems.starchRaw, new ItemStack(TcItems.starch), 0.5f);
-        frecipes.func_151393_a(TcBlocks.tcLog, new ItemStack(Items.coal, 1, 1), 0.5f);
-        frecipes.func_151394_a(TcItems.gelatin.getItemStack(ItemGelatin.gelatinRaw),
+        GameRegistry.addSmelting(TcItems.tofuKinu, new ItemStack(TcItems.tofuGrilled), 0.2f);
+        GameRegistry.addSmelting(TcItems.tofuMomen, new ItemStack(TcItems.tofuGrilled), 0.2f);
+        GameRegistry.addSmelting(TcBlocks.tofuKinu, new ItemStack(TcBlocks.tofuGrilled), 0.8f);
+        GameRegistry.addSmelting(TcBlocks.tofuMomen, new ItemStack(TcBlocks.tofuGrilled), 0.8f);
+        GameRegistry.addSmelting(TcItems.edamame, new ItemStack(TcItems.edamameBoiled, 12), 0.5f);
+        GameRegistry.addSmelting(TcItems.soybeans, new ItemStack(TcItems.soybeansParched), 0.2f);
+        GameRegistry.addSmelting(TcItems.starchRaw, new ItemStack(TcItems.starch), 0.5f);
+        GameRegistry.addSmelting(TcBlocks.tcLog, new ItemStack(Items.coal, 1, 1), 0.5f);
+        GameRegistry.addSmelting(TcItems.gelatin.getItemStack(ItemGelatin.gelatinRaw),
                 TcItems.gelatin.getItemStack(ItemGelatin.gelatin), 0.5f);
-        frecipes.func_151394_a(TcItems.materials.getItemStack(ItemTcMaterials.tofuHamburgRaw),
+        GameRegistry.addSmelting(TcItems.materials.getItemStack(ItemTcMaterials.tofuHamburgRaw),
                 TcItems.foodSet.getItemStack(ItemFoodSet.tofuHamburg), 0.8f);
-        frecipes.func_151394_a(TcItems.foodSet.getItemStack(ItemFoodSet.tofufishRow),
+        GameRegistry.addSmelting(TcItems.foodSet.getItemStack(ItemFoodSet.tofufishRow),
                 TcItems.foodSet.getItemStack(ItemFoodSet.tofufishCooked), 1.5f);
+        GameRegistry.addSmelting(TcItems.tofuIshi,
+                TcItems.foodSet.getItemStack(ItemFoodSet.tofuSteak), 0.5f);
 
         /*
          * Crafting
@@ -1081,6 +1081,51 @@ public class Recipes
         addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.kinakoMochi, 3),
                 TcOreDic.kinako,
                 oredic_cookedMochi);
+
+        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa, 4),
+                " F ",
+                "SET",
+                " F ",
+                'F', Items.cooked_fished,
+                'S', TcOreDic.salt,
+                'E', Items.egg,
+                'T', TcOreDic.starch
+        );
+
+        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa, 4),
+                " F ",
+                "TES",
+                " F ",
+                'F', Items.cooked_fished,
+                'S', TcOreDic.salt,
+                'E', Items.egg,
+                'T', TcOreDic.starch
+        );
+
+        // Chikuwa Platform
+        addSharedRecipe(TcBlocks.chikuwaPlatformTofu,
+                " C ",
+                "C C",
+                " C ",
+                'C', TcOreDic.tofuChikuwa);
+
+        addSharedRecipe(TcBlocks.chikuwaPlatformTofu,
+                " C ",
+                "C C",
+                " C ",
+                'C', TcOreDic.foodTofuChikuwa);
+
+        addSharedRecipe(TcBlocks.chikuwaPlatformPlain,
+                " C ",
+                "C C",
+                " C ",
+                'C', TcOreDic.foodChikuwa);
+
+        addSharedRecipe(TcBlocks.chikuwaPlatformPlain,
+                " C ",
+                "C C",
+                " C ",
+                'C', TcOreDic.chikuwa);
 
         /*
          * Tofu force series

@@ -1,19 +1,15 @@
 package tsuteto.tofu.entity;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.tileentity.TileEntityMorijio;
-import tsuteto.tofu.tileentity.TileEntityMorijioRenderer;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.tileentity.TileEntityTfAntenna;
-import tsuteto.tofu.tileentity.TileEntityTfAntennaRenderer;
+import tsuteto.tofu.block.RenderFallingChikuwaPlatform;
 
 public class TcEntity
 {
@@ -45,6 +41,9 @@ public class TcEntity
         // Fukumame
         EntityRegistry.registerModEntity(EntityFukumame.class, "Fukumame", 3, core, 64, 2, true);
 
+        // Falling Chikuwa Platform
+        EntityRegistry.registerModEntity(EntityFallingChikuwaPlatform.class, "ChikuwaPlatform", 5, core, 64, 20, false);
+
         allBiomesList = (BiomeGenBase[]) BiomeGenBase.explorationBiomesList.toArray(new BiomeGenBase[0]);
     }
 
@@ -57,13 +56,12 @@ public class TcEntity
     @SideOnly(Side.CLIENT) // added on purpose!
     public static void registerEntityRenderer()
     {
-        ClientRegistry.registerTileEntity(TileEntityMorijio.class, "TmMorijio", new TileEntityMorijioRenderer());
-        ClientRegistry.registerTileEntity(TileEntityTfAntenna.class, "TcTfAntenna", new TileEntityTfAntennaRenderer());
-
         RenderingRegistry.registerEntityRenderingHandler(EntityZundaArrow.class, new RenderZundaArrow());
         RenderingRegistry.registerEntityRenderingHandler(EntityFukumame.class, new RenderFukumame());
         RenderingRegistry.registerEntityRenderingHandler(EntityTofuSlime.class, new RenderTofuSlime(new ModelSlime(16), new ModelSlime(0), 0.25F));
         RenderingRegistry.registerEntityRenderingHandler(EntityTofuCreeper.class, new RenderTofuCreeper());
         RenderingRegistry.registerEntityRenderingHandler(EntityTofunian.class, new RenderTofunian());
+        RenderingRegistry.registerEntityRenderingHandler(EntityFallingChikuwaPlatform.class, new RenderFallingChikuwaPlatform());
+
     }
 }

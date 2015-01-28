@@ -10,6 +10,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.asm.entry.TEntityDispenserBehaviorEmptyBucket;
+import tsuteto.tofu.asm.entry.TEntryBlockCollisionCheck;
 import tsuteto.tofu.asm.entry.TEntryPotionApplied;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class TransformerMain implements IClassTransformer, Opcodes
         ArrayList<ITransformerEntry> registry = new ArrayList<ITransformerEntry>();
         registry.add(new TEntryPotionApplied());
         registry.add(new TEntityDispenserBehaviorEmptyBucket());
+        registry.add(new TEntryBlockCollisionCheck());
 
         classToEntryMapping = new HashMap<String, List<ITransformerEntry>>();
         for (ITransformerEntry entry : registry)
