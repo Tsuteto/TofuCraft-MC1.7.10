@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.Settings;
@@ -16,7 +15,6 @@ import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -41,6 +39,11 @@ public class ComponentVillageHouseTofu extends StructureVillagePieces.Road
         this.startPiece = par1ComponentVillageStartPiece;
         this.coordBaseMode = par5;
         this.boundingBox = par4StructureBoundingBox;
+    }
+
+    public static StructureBoundingBox getStructureBoundingBox(int par3, int par4, int par5, int par6)
+    {
+        return StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, -4, 0, 9, 6, 7, par6);
     }
 
     @Override

@@ -204,6 +204,7 @@ abstract public class BlockTfMachineBase extends BlockContainer4Directions
                         par1World.spawnEntityInWorld(var14);
                     }
                 }
+                par1World.func_147453_f(par2, par3, par4, par5);
             }
         }
 

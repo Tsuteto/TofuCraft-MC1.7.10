@@ -15,7 +15,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.item.iteminfo.SoymilkPlayerInfo;
 import tsuteto.tofu.item.iteminfo.SoymilkPotionEffect;
 import tsuteto.tofu.item.iteminfo.TcFoodBase;

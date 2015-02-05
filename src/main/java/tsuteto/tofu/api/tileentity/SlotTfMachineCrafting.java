@@ -3,7 +3,7 @@ package tsuteto.tofu.api.tileentity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.gui.TfMachineGuiParts;
 
 public class SlotTfMachineCrafting extends SlotTfMachineOutput

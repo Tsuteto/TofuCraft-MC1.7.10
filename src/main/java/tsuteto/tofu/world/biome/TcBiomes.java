@@ -19,27 +19,28 @@ public class TcBiomes
 
     public static BiomeGenTofuBase[] decorationBiomes;
 
-    private static final String CONF_CATEGORY = "biome";
-    private static boolean haveIdsAssigned = true;
+    public static final String CONF_CATEGORY = "biome";
 
     public static void register(Configuration conf)
     {
+        BiomeIdManager idManager = new BiomeIdManager();
+
         conf.addCustomCategoryComment(CONF_CATEGORY, "Biome IDs. They must be 255 or less");
 
-        int tofuPlainsId = assignId("tofuPlains", conf);
-        int tofuForestId = assignId("tofuForest", conf);
-        int tofuBuildingsId = assignId("tofuBuildings", conf);
-        int tofuExtremeHillsId = assignId("tofuExtremeHills", conf);
-        int tofuPlainHillsId = assignId("tofuPlainHills", conf);
-        int tofuForestHillsId = assignId("tofuForestHills", conf);
-        int tofuHillsEdgeId = assignId("tofuHillsEdge", conf);
-        int tofuLeekPlainsId = assignId("tofuLeekPlains", conf);
-        int tofuRiverId = assignId("tofuRiver", conf);
+        int tofuPlainsId = idManager.assignId("tofuPlains", conf);
+        int tofuForestId = idManager.assignId("tofuForest", conf);
+        int tofuBuildingsId = idManager.assignId("tofuBuildings", conf);
+        int tofuExtremeHillsId = idManager.assignId("tofuExtremeHills", conf);
+        int tofuPlainHillsId = idManager.assignId("tofuPlainHills", conf);
+        int tofuForestHillsId = idManager.assignId("tofuForestHills", conf);
+        int tofuHillsEdgeId = idManager.assignId("tofuHillsEdge", conf);
+        int tofuLeekPlainsId = idManager.assignId("tofuLeekPlains", conf);
+        int tofuRiverId = idManager.assignId("tofuRiver", conf);
 
-        if (!haveIdsAssigned)
+        if (!idManager.isCompleted())
         {
             conf.save();
-            throw new RuntimeException("Failed to register BIOME. Seems to be running out of biome ID.");
+            throw new RuntimeException("[TofuCraft] Failed to register BIOME. Seems to be running out of biome ID.");
         }
 
         tofuPlains = (BiomeGenTofuBase) (new BiomeGenTofuPlains(0, tofuPlainsId))
@@ -95,34 +96,6 @@ public class TcBiomes
         decorationBiomes = new BiomeGenTofuBase[]{
                 tofuPlains, tofuLeekPlains, tofuPlains, tofuForest, tofuBuildings, tofuExtremeHills};
 
-    }
-
-    private static int assignId(String confKey, Configuration conf)
-    {
-        if (conf.hasKey(CONF_CATEGORY, confKey))
-        {
-            int id = conf.get(CONF_CATEGORY, confKey, -1).getInt();
-            if (id != -1)
-            {
-                return id;
-            }
-        }
-
-        // Find an undefined entry
-        for (int i = 127; i >= 0; i--)
-        {
-            BiomeGenBase biome = BiomeGenBase.getBiomeGenArray()[i];
-            if (biome == null)
-            {
-                conf.get(CONF_CATEGORY, confKey, i).set(i);
-                return i;
-            }
-        }
-
-        // Unable to find entry
-        haveIdsAssigned = false;
-        conf.get(CONF_CATEGORY, confKey, -1).set(-1);
-        return -1;
     }
 
 }

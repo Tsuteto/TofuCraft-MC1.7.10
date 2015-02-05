@@ -6,8 +6,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
-import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.util.BlockUtils;
 import tsuteto.tofu.util.ModLog;
 

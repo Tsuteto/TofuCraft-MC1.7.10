@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
-import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.material.TcMaterial;
 import tsuteto.tofu.util.Utils;
 

@@ -6,7 +6,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 
 public class SlotSaltFurnace extends Slot
 {

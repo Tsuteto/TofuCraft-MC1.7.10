@@ -1,4 +1,4 @@
-package tsuteto.tofu.api.achievement;
+package tsuteto.tofu.achievement;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

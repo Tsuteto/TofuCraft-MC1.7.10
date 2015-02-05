@@ -10,9 +10,9 @@ import net.minecraftforge.fluids.*;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.tileentity.ITfTank;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
+import tsuteto.tofu.api.util.TfUtils;
 import tsuteto.tofu.block.BlockTfStorage;
 import tsuteto.tofu.fluids.TcFluids;
-import tsuteto.tofu.api.util.TfUtils;
 
 public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfTank
 {
@@ -195,27 +195,28 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
         if (this.tfAmount >= this.tfCapacity) return false;
 
         // Check if the empty item drained can be stacked to the input container slot
-        ItemStack var1 = itemStacks[SLOT_INPUT_CONTAINER_ITEM];
-        if (var1 == null) return true;
+        ItemStack inputContainer = itemStacks[SLOT_INPUT_CONTAINER_ITEM];
+        if (inputContainer == null) return true;
         
         // Attempt to drain
+        ItemStack inputItem = itemStacks[SLOT_INPUT_ITEM];
         ItemStack container;
-        if (var1.getItem() instanceof IFluidContainerItem)
+        if (inputItem.getItem() instanceof IFluidContainerItem)
         {
-            container = TfUtils.drainFluidContainer(var1);
+            container = TfUtils.drainFluidContainer(inputItem);
         }
         else
         {
-            Item item = itemStacks[SLOT_INPUT_ITEM].getItem().getContainerItem();
+            Item item = inputItem.getItem().getContainerItem();
             if (item == null) return true;
             container = new ItemStack(item);
         }
         
-        if (!var1.isItemEqual(container)) return false;
+        if (container != null && !inputContainer.isItemEqual(container)) return false;
         
         // Check if the stack will overflow
-        int result = itemStacks[SLOT_INPUT_CONTAINER_ITEM].stackSize + 1;
-        return (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
+        int result = inputContainer.stackSize + 1;
+        return (result <= getInventoryStackLimit() && result <= inputContainer.getMaxStackSize());
     }
 
     /**

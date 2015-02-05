@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.block.TcBlocks;
 
 public class EventPlayerInteract

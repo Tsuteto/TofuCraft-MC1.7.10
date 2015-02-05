@@ -3,8 +3,8 @@ package tsuteto.tofu.tileentity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.TfMaterialRegistry;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
 import tsuteto.tofu.gui.TfMachineGuiParts;
 

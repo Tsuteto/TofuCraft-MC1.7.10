@@ -27,7 +27,7 @@ public class TofuCookHouseHandler implements IVillageCreationHandler
     @Override
     public Object buildComponent(StructureVillagePieces.PieceWeight villagePiece, StructureVillagePieces.Start par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
     {
-        StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, -4, 0, 7, 6, 7, par6);
+        StructureBoundingBox structureboundingbox = ComponentVillageHouseTofu.getStructureBoundingBox(par3, par4, par5, par6);
         return StructureComponent.findIntersecting(par1List, structureboundingbox) == null ? new ComponentVillageHouseTofu(par0ComponentVillageStartPiece, par7, par2Random, structureboundingbox, par6) : null;
     }
 

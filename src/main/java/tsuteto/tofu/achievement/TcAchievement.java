@@ -1,18 +1,17 @@
-package tsuteto.tofu.api.achievement;
+package tsuteto.tofu.achievement;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
 
 public class TcAchievement extends Achievement
 {
     public final TcAchievementMgr.Key key;
     private AchievementTrigger trigger;
 
-    public static TcAchievement create(Key key, int par3, int par4, Object obj, Key relation)
+    public static TcAchievement create(TcAchievementMgr.Key key, int par3, int par4, Object obj, TcAchievementMgr.Key relation)
     {
         if (obj instanceof Block)
         {
@@ -30,19 +29,19 @@ public class TcAchievement extends Achievement
         throw new RuntimeException("Caught an error in achievement registration.");
     }
 
-    private TcAchievement(Key key, int par3, int par4, Block block, Key relation)
+    private TcAchievement(TcAchievementMgr.Key key, int par3, int par4, Block block, TcAchievementMgr.Key relation)
     {
         super(getId(key.name()), getId(key.name()), par3, par4, block, TcAchievementMgr.get(relation));
         this.key = key;
     }
 
-    private TcAchievement(Key key, int par3, int par4, Item item, Key relation)
+    private TcAchievement(TcAchievementMgr.Key key, int par3, int par4, Item item, TcAchievementMgr.Key relation)
     {
         super(getId(key.name()), getId(key.name()), par3, par4, item, TcAchievementMgr.get(relation));
         this.key = key;
     }
 
-    private TcAchievement(Key key, int par3, int par4, ItemStack itemstack, Key relation)
+    private TcAchievement(TcAchievementMgr.Key key, int par3, int par4, ItemStack itemstack, TcAchievementMgr.Key relation)
     {
         super(getId(key.name()), getId(key.name()), par3, par4, itemstack, TcAchievementMgr.get(relation));
         this.key = key;

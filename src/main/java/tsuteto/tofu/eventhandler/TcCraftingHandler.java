@@ -1,7 +1,5 @@
 package tsuteto.tofu.eventhandler;
 
-import java.util.ArrayList;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,9 +7,14 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
-import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
-import tsuteto.tofu.item.*;
+import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.item.ICraftingDurability;
+import tsuteto.tofu.item.INonDurabilityTool;
+import tsuteto.tofu.item.ItemSetBase;
+import tsuteto.tofu.item.TcItems;
+
+import java.util.ArrayList;
 
 public class TcCraftingHandler
 {

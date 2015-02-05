@@ -1,7 +1,5 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
@@ -9,8 +7,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.api.achievement.TcAchievementMgr;
-import tsuteto.tofu.api.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+
+import java.util.Random;
 
 public class BlockTofuStairs extends BlockStairs
 {
