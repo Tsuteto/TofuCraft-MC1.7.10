@@ -249,8 +249,6 @@ public class BlockChikuwaPlatform extends BlockContainer
         @Override
     public void registerBlockIcons(IIconRegister p_149651_1_)
     {
-        super.registerBlockIcons(p_149651_1_);
-
         for (ConnectionStat stat : ConnectionStat.values())
         {
             iconSideH.put(stat, p_149651_1_.registerIcon("tofucraft:chikuwaPlatform_sideH" + stat.texSign + "_" + typeName));

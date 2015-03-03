@@ -3,10 +3,7 @@ package tsuteto.tofu.api.recipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.item.ItemFoodSet;
-import tsuteto.tofu.item.ItemGelatin;
-import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.item.*;
 import tsuteto.tofu.util.ItemUtils;
 
 public enum TcOreDic
@@ -86,6 +83,7 @@ public enum TcOreDic
 
     defattingPotion(TcItems.defattingPotion),
     dashi(new ItemStack(TcItems.dashi, 1, OreDictionary.WILDCARD_VALUE)),
+    soupStock(dashi),
     soyOil(new ItemStack(TcItems.soyOil, 1, OreDictionary.WILDCARD_VALUE)),
     bottleSoySauce(new ItemStack(TcItems.bottleSoySauce, 1, OreDictionary.WILDCARD_VALUE)),
     
@@ -106,37 +104,56 @@ public enum TcOreDic
     starch(TcItems.starch),
     doubanjiang(new ItemStack(TcItems.doubanjiang, 1, OreDictionary.WILDCARD_VALUE)),
     strawberryJam(new ItemStack(TcItems.strawberryJam, 1, OreDictionary.WILDCARD_VALUE)),
-    onigiri(TcItems.foodSet.getItemStack(ItemFoodSet.onigiri)),
-    sprouts(TcItems.foodSet.getItemStack(ItemFoodSet.sprouts)),
-    oage(TcItems.foodSet.getItemStack(ItemFoodSet.oage)),
-    tofuChikuwa(TcItems.foodSet.getItemStack(ItemFoodSet.tofuChikuwa)),
-    tofuDiamondNugget(TcItems.materials.getItemStack(ItemTcMaterials.tofuDiamondNugget)),
-    tofuGem(TcItems.materials.getItemStack(ItemTcMaterials.tofuGem)),
+    onigiri(ItemFoodSet.onigiri.getStack()),
+    onigiriSalt(ItemFoodSet.onigiriSalt.getStack()),
+    onigiriMiso(ItemFoodSet.yakionigiriMiso.getStack()),
+    onigiriSoySauce(ItemFoodSet.yakionigiriShoyu.getStack()),
+    sprouts(ItemFoodSet.sprouts.getStack()),
+    oage(ItemFoodSet.oage.getStack()),
+    tofuChikuwa(ItemFoodSet.tofuChikuwa.getStack()),
+    tofuDiamondNugget(ItemTcMaterials.tofuDiamondNugget.getStack()),
+    tofuGem(ItemTcMaterials.tofuGem.getStack()),
     yuba(TcItems.yuba),
-    tofuHamburgRaw(TcItems.materials.getItemStack(ItemTcMaterials.tofuHamburgRaw)),
-    tofuHamburg(TcItems.foodSet.getItemStack(ItemFoodSet.tofuHamburg)),
-    hamburg(TcItems.foodSet.getItemStack(ItemFoodSet.tofuHamburg)),
-    tofuCookie(TcItems.foodSet.getItemStack(ItemFoodSet.tofuCookie)),
-    cookie(TcItems.foodSet.getItemStack(ItemFoodSet.tofuCookie)),
-    tofufishRaw(TcItems.foodSet.getItemStack(ItemFoodSet.tofufishRow)),
-    tofufishCooked(TcItems.foodSet.getItemStack(ItemFoodSet.tofufishCooked)),
-    rollingPin(TcItems.materials.getItemStack(ItemTcMaterials.rollingPin)),
-    tofuSomen(TcItems.materials.getItemStack(ItemTcMaterials.tofuSomen)),
-    glassBowl(TcItems.materials.getItemStack(ItemTcMaterials.glassBowl)),
+    tofuHamburgRaw(ItemTcMaterials.tofuHamburgRaw.getStack()),
+    tofuHamburg(ItemFoodSet.tofuHamburg.getStack()),
+    hamburg(ItemFoodSet.tofuHamburg.getStack()),
+    tofuCookie(ItemFoodSet.tofuCookie.getStack()),
+    cookie(ItemFoodSet.tofuCookie.getStack()),
+    tofufishRaw(ItemFoodSet.tofufishRow.getStack()),
+    tofufishCooked(ItemFoodSet.tofufishCooked.getStack()),
+    rollingPin(ItemTcMaterials.rollingPin.getStack()),
+    tofuSomen(ItemTcMaterials.tofuSomen.getStack()),
+    glassBowl(ItemTcMaterials.glassBowl.getStack()),
     somenTsuyuBowl(TcItems.somenTsuyuBowl),
-    chikuwa(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa)),
+    chikuwa(ItemFoodSet.chikuwa.getStack()),
+    bottleSoymilk(ItemBottleSoyMilk.flvPlain.getStack()),
+    zundaMochi(ItemFoodSet.zundaMochi.getStack()),
+    kinakoMochi(ItemFoodSet.kinakoMochi.getStack()),
+    tofuSteak(ItemFoodSet.tofuSteak.getStack()),
+    inari(ItemFoodSet.inari.getStack()),
+    zundama(TcItems.zundama),
+    okaraStick(TcItems.okaraStick),
+    tofuScoop(new ItemStack(TcItems.tofuScoop, 1, OreDictionary.WILDCARD_VALUE)),
+    zundaArrow(TcItems.zundaArrow),
+    zundaBow(TcItems.zundaBow),
+    goheimochi(ItemFoodSetStick.goheimochi.getStack()),
+    misoSoup(TcItems.misoSoup),
+    TTTBurger(TcItems.tttBurger),
+    morijio(TcItems.morijio),
+    melonSalt(TcItems.saltyMelon),
 
-    tfCapacitor(TcItems.materials.getItemStack(ItemTcMaterials.tfCapacitor)),
-    tfCoil(TcItems.materials.getItemStack(ItemTcMaterials.tfCoil)),
-    tfOscillator(TcItems.materials.getItemStack(ItemTcMaterials.tfOscillator)),
-    tfCircuitBoard(TcItems.materials.getItemStack(ItemTcMaterials.tfCircuit)),
-    advTofuGem(TcItems.materials.getItemStack(ItemTcMaterials.advTofuGem)),
-    activatedTofuGem(TcItems.materials.getItemStack(ItemTcMaterials.activatedTofuGem)),
-    activatedHellTofu(TcItems.materials.getItemStack(ItemTcMaterials.activatedHellTofu)),
+    tfCapacitor(ItemTcMaterials.tfCapacitor.getStack()),
+    tfCoil(ItemTcMaterials.tfCoil.getStack()),
+    tfOscillator(ItemTcMaterials.tfOscillator.getStack()),
+    tfCircuitBoard(ItemTcMaterials.tfCircuit.getStack()),
+    advTofuGem(ItemTcMaterials.advTofuGem.getStack()),
+    activatedTofuGem(ItemTcMaterials.activatedTofuGem.getStack()),
+    activatedHellTofu(ItemTcMaterials.activatedHellTofu.getStack()),
 
 
     // For Compatibility
     foodTofuKinu(tofuKinu),
+    foodTofu(tofuMomen),
     foodTofuMomen(tofuMomen),
     foodTofuIshi(tofuIshi),
     foodTofuGrilled(tofuGrilled),
@@ -151,8 +168,12 @@ public enum TcOreDic
     foodTofuHell(tofuHell),
     foodTofuGlow(tofuGlow),
 
+    foodEdamameBoiled(edamameBoiled),
     foodApricot(apricot),
     foodOnigiri(onigiri),
+    foodOnigiriSalt(onigiriSalt),
+    foodOnigiriMiso(onigiriMiso),
+    foodOnigiriSoySauce(onigiriSoySauce),
     foodSprouts(sprouts),
     foodOage(oage),
     foodTofuChikuwa(tofuChikuwa),
@@ -163,8 +184,27 @@ public enum TcOreDic
     foodCookie(tofuCookie),
     foodTofufishRaw(tofufishRaw),
     foodTofufishCooked(tofufishCooked),
-    foodChikuwa(chikuwa)
+    foodChikuwa(chikuwa),
+    foodSoymilk(bottleSoymilk),
+    foodZundaMochi(zundaMochi),
+    foodKinakoMochi(kinakoMochi),
+    foodTofuSteak(tofuSteak),
+    foodInari(inari),
+    foodOkaraStick(okaraStick),
+    foodGoheimochi(goheimochi),
+    foodMisoSoup(misoSoup),
+    foodTTTBurger(TTTBurger),
+    foodMelonSalt(melonSalt),
 
+    seedSoybean(soybeans),
+    seedSoybeanHell(soybeansHell),
+    seedSesame(sesame),
+    cropLeek(leek),
+    cropSprouts(sprouts),
+    cropEdamame(edamame),
+
+    gemTofu(tofuGem),
+    gemAdvTofu(advTofuGem)
     ;
 
     private ItemStack[] items;

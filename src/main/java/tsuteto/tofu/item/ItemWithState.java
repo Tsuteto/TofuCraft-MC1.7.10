@@ -3,19 +3,82 @@ package tsuteto.tofu.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import tsuteto.tofu.item.iteminfo.TcItemInfoBase;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
-abstract public class ItemColoredBottleImpl<T extends TcItemInfoBase> extends TcItem
+abstract public class ItemWithState<T extends TcItemInfoBase> extends TcItem
 {
     private IIcon iconContent;
 
-    public ItemColoredBottleImpl()
+    public ItemWithState()
     {
         super();
-        // Don't set any container items!
+    }
+
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack)
+    {
+        TcItemInfoBase info = this.getItemInfo(stack.getItemDamage());
+        return !((info.isNonDurabilityTool || info.isCraftingDurabilityTool) && !this.isRepairable());
+    }
+
+    @Override
+    public ItemStack getContainerItem(ItemStack stack)
+    {
+        int dmg = stack.getItemDamage();
+        TcItemInfoBase info = getItemInfo(dmg);
+        if (info.isNonDurabilityTool)
+        {
+            return stack;
+        }
+        else if (info.isCraftingDurabilityTool && dmg < this.getMaxDamage(stack))
+        {
+            stack.setItemDamage(dmg + 1);
+            return stack;
+        }
+        else
+        {
+            return info.getContainerItem();
+        }
+    }
+
+    @Override
+    public boolean hasContainerItem(ItemStack stack)
+    {
+        int dmg = stack.getItemDamage();
+        TcItemInfoBase info = getItemInfo(dmg);
+        if (info.isNonDurabilityTool || info.isCraftingDurabilityTool && dmg < this.getMaxDamage(stack))
+        {
+            return true;
+        }
+        else
+        {
+            return info.hasContainerItem();
+        }
+    }
+
+    @Override
+    public Item getContainerItem()
+    {
+        TcItemInfoBase info = getItemInfo();
+        if (info != null)
+        {
+            if (info.isNonDurabilityTool)
+            {
+                return this;
+            }
+            else
+            {
+                return info.getContainerItem().getItem();
+            }
+        }
+        else
+        {
+            return super.getContainerItem();
+        }
     }
 
     @Override
@@ -83,8 +146,14 @@ abstract public class ItemColoredBottleImpl<T extends TcItemInfoBase> extends Tc
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister par1IconRegister)
     {
+        // For bottles. Others' icon is registered in each classes
         this.iconContent = par1IconRegister.registerIcon("potion_overlay");
     }
 
     abstract public T getItemInfo(int itemDmg);
+
+    public T getItemInfo()
+    {
+        return null;
+    }
 }

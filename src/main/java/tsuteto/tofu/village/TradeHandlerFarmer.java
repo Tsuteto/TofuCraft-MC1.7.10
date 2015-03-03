@@ -6,7 +6,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.item.TcItems;
 
 import java.util.Random;
@@ -18,7 +17,7 @@ public class TradeHandlerFarmer implements IVillageTradeHandler
     {
         recipeList.addToListWithCheck(new MerchantRecipe(
                 new ItemStack(Items.emerald, 1),
-                new ItemStack(TcBlocks.sesame, 4 + random.nextInt(4)))
+                new ItemStack(TcItems.sesame, 4 + random.nextInt(4)))
         );
         
         recipeList.addToListWithCheck(new MerchantRecipe(

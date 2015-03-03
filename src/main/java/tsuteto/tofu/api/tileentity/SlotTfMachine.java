@@ -2,7 +2,7 @@ package tsuteto.tofu.api.tileentity;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class SlotTfMachine extends Slot
 {

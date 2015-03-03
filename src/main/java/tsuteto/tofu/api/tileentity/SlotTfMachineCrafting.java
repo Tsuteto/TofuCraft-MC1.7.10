@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class SlotTfMachineCrafting extends SlotTfMachineOutput
 {

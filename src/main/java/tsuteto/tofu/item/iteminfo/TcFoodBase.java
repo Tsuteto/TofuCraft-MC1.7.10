@@ -2,7 +2,7 @@ package tsuteto.tofu.item.iteminfo;
 
 import net.minecraft.item.ItemStack;
 
-public class TcFoodBase<T extends TcFoodBase> extends TcItemSetInfo<T>
+public abstract class TcFoodBase<T extends TcFoodBase> extends TcItemSetInfo<T>
 {
     public int healAmount;
     public float saturationModifier;

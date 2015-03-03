@@ -6,12 +6,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.recipe.Ingredient;
-import tsuteto.tofu.recipe.IngredientDic;
+import tsuteto.tofu.recipe.IngredientDicSet;
 import tsuteto.tofu.recipe.IngredientItem;
 import tsuteto.tofu.util.ItemUtils;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,8 +42,20 @@ public class TfReformerRecipe
         {
             throw new RuntimeException("Tf Reformer recipe needs an item with CONTAINER as result!");
         }
-        int oreId = OreDictionary.getOreID(container);
-        this.containerItem = oreId == -1 ? new IngredientItem(container) : new IngredientDic(OreDictionary.getOreName(oreId));
+        int[] oreIds = OreDictionary.getOreIDs(container);
+        if (oreIds.length > 0)
+        {
+            List<String> names = Lists.newArrayList();
+            for (int oreId : oreIds)
+            {
+                names.add(OreDictionary.getOreName(oreId));
+            }
+            this.containerItem = new IngredientDicSet(names.toArray(new String[names.size()]));
+        }
+        else
+        {
+            this.containerItem = new IngredientItem(container);
+        }
         this.tfAmountNeeded = tfAmount;
         this.result = result;
     }
@@ -58,7 +69,7 @@ public class TfReformerRecipe
      */
     public TfReformerRecipe addIngredients(TcOreDic dic, boolean isCatalyzer)
     {
-        return this.addIngredients(dic.name(), isCatalyzer);
+        return this.addIngredients(new String[]{dic.name()}, isCatalyzer);
     }
 
     /**
@@ -68,7 +79,7 @@ public class TfReformerRecipe
      * @param isCatalyzer If true, the item is not consumed when completed
      * @return myself to chain
      */
-    public TfReformerRecipe addIngredients(String dicName, boolean isCatalyzer)
+    public TfReformerRecipe addIngredients(String[] dicName, boolean isCatalyzer)
     {
         ingDic.add(new IngInfoDic(dicName, isCatalyzer));
         sortIngredients();
@@ -135,9 +146,9 @@ public class TfReformerRecipe
      *
      * @param dicName Ore name
      */
-    public TfReformerRecipe setInputContainerItem(String dicName)
+    public TfReformerRecipe setInputContainerItem(String[] dicName)
     {
-        this.containerItem = new IngredientDic(dicName);
+        this.containerItem = new IngredientDicSet(dicName);
         return this;
     }
 
@@ -147,25 +158,11 @@ public class TfReformerRecipe
     {
         if (ingItems.size() >= 2)
         {
-            Collections.sort(ingItems, new Comparator<IngInfoItem>()
-            {
-                @Override
-                public int compare(IngInfoItem o1, IngInfoItem o2)
-                {
-                    return ItemUtils.compareToItemStacks(o1.ingredient.itemObj, o2.ingredient.itemObj);
-                }
-            });
+            Collections.sort(ingItems);
         }
         if (ingDic.size() >= 2)
         {
-            Collections.sort(ingDic, new Comparator<IngInfoDic>()
-            {
-                @Override
-                public int compare(IngInfoDic o1, IngInfoDic o2)
-                {
-                     return o1.ingredient.itemObj.compareTo(o2.ingredient.itemObj);
-                }
-            });
+            Collections.sort(ingDic);
         }
     }
 
@@ -195,7 +192,7 @@ public class TfReformerRecipe
             IngInfo ing = itr.next();
             for (ItemStack stack : inputs)
             {
-                if (ing.ingredient.matchesWithItemStack(stack))
+                if (ing.ingredient.matches(stack))
                 {
                     itr.remove();
                     break;
@@ -207,7 +204,7 @@ public class TfReformerRecipe
 
     public boolean isContainerItem(ItemStack container)
     {
-        return container != null && this.containerItem.matchesWithItemStack(container);
+        return container != null && this.containerItem.matches(container);
     }
 
     public boolean isCatalystItem(ItemStack target)
@@ -222,7 +219,7 @@ public class TfReformerRecipe
 
         for (IngInfo info : ingredients)
         {
-            if (info.ingredient.matchesWithItemStack(target)) return info;
+            if (info.ingredient.matches(target)) return info;
         }
         return null;
     }
@@ -257,7 +254,7 @@ public class TfReformerRecipe
         return true;
     }
 
-    public static class IngInfo<T>
+    public abstract static class IngInfo<T> implements Comparable<IngInfo<T>>
     {
         public final boolean isCatalyst;
         public final Ingredient<T> ingredient;
@@ -285,6 +282,7 @@ public class TfReformerRecipe
         {
             return ingredient.hashCode();
         }
+
     }
     public static class IngInfoItem extends IngInfo<ItemStack>
     {
@@ -292,12 +290,24 @@ public class TfReformerRecipe
         {
             super(new IngredientItem(item), isCatalyst);
         }
-    }
-    public static class IngInfoDic extends IngInfo<String>
-    {
-        public IngInfoDic(String dicName, boolean isCatalyst)
+
+        @Override
+        public int compareTo(IngInfo<ItemStack> o)
         {
-            super(new IngredientDic(dicName), isCatalyst);
+            return ItemUtils.compareToItemStacks(this.ingredient.itemObj, o.ingredient.itemObj);
+        }
+    }
+    public static class IngInfoDic extends IngInfo<String[]>
+    {
+        public IngInfoDic(String[] dicName, boolean isCatalyst)
+        {
+            super(new IngredientDicSet(dicName), isCatalyst);
+        }
+
+        @Override
+        public int compareTo(IngInfo<String[]> o)
+        {
+            return Integer.valueOf(this.hashCode()).compareTo(o.hashCode());
         }
     }
 }

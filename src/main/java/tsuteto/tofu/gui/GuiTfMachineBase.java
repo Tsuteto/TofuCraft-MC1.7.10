@@ -3,7 +3,6 @@ package tsuteto.tofu.gui;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -12,26 +11,31 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import tsuteto.tofu.TcTextures;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
+import tsuteto.tofu.gui.guiparts.HoverTextPosition;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 import tsuteto.tofu.util.GuiUtils;
 
-import java.util.Iterator;
+import java.awt.*;
 import java.util.List;
 
 abstract public class GuiTfMachineBase extends GuiContainer
 {
-    protected static final ResourceLocation texture = TcTextures.tfMachineGui;
+    protected static final ResourceLocation GUI_TEXTURE = TcTextures.tfMachineGui;
     public static final int COLOR_TIP_TEXT = 0xf1f2e6;
-
-    protected enum HoverTextPosition
-    {
-        MC_STANDARD,
-        UPPER_CENTER,
-        LOWER_CENTER,
-    }
 
     public GuiTfMachineBase(Container par1Container)
     {
         super(par1Container);
+    }
+
+    public void bindStandardTexture()
+    {
+        this.bindTexture(GUI_TEXTURE);
+    }
+
+    public void bindTexture(ResourceLocation loc)
+    {
+        this.mc.getTextureManager().bindTexture(loc);
     }
 
     public void drawStandardBasePanel()
@@ -107,6 +111,11 @@ abstract public class GuiTfMachineBase extends GuiContainer
         itemRender.zLevel = 0.0F;
     }
 
+    public void printTfSignInTip(int x, int y)
+    {
+        this.printTfSign(x, y, COLOR_TIP_TEXT);
+    }
+
     public void printTfSign(int x, int y, int color)
     {
         this.mc.getTextureManager().bindTexture(TcTextures.tfSign);
@@ -151,9 +160,7 @@ abstract public class GuiTfMachineBase extends GuiContainer
 
     public void drawTfHoveringText(String str, int par2, int par3, HoverTextPosition pos, int color)
     {
-        List<String> list = Lists.newArrayList();
-        list.add(str);
-        this.drawTfHoveringText(list, par2, par3, pos, color);
+        this.drawTfHoveringText(Lists.newArrayList(str), par2, par3, pos, color);
     }
 
     public void drawTfHoveringText(List par1List, int par2, int par3)
@@ -168,8 +175,8 @@ abstract public class GuiTfMachineBase extends GuiContainer
 
     public void drawTfHoveringText(List par1List, int par2, int par3, HoverTextPosition pos, int color)
     {
-        par2 -= this.guiLeft;
-        par3 -= this.guiTop;
+        par2 += this.getToolTipOffsetX();
+        par3 += this.getToolTipOffsetY();
 
         if (!par1List.isEmpty())
         {
@@ -178,11 +185,10 @@ abstract public class GuiTfMachineBase extends GuiContainer
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
             int k = 0;
-            Iterator iterator = par1List.iterator();
 
-            while (iterator.hasNext())
+            for (Object line : par1List)
             {
-                String s = (String)iterator.next();
+                String s = (String) line;
                 int l = fontRendererObj.getStringWidth(s);
 
                 if (l > k)
@@ -199,17 +205,18 @@ abstract public class GuiTfMachineBase extends GuiContainer
             }
 
             this.zLevel = 300.0F;
-            this.itemRender.zLevel = 300.0F;
-            
-            int i1 = calcHoverOffsetX(par2, k, pos);
-            int j1 = calcHoverOffsetY(par3, k1, pos);
-            
-            this.doDrawTfHoveringTextBg(i1, j1, k, k1, 2);
+            itemRender.zLevel = 300.0F;
 
+            Point mousePos = new Point(par2, par3);
+            pos.applyOffset(mousePos, k, k1);
+
+            this.doDrawTfHoveringTextBg(mousePos.x, mousePos.y, k, k1, 2);
+
+            int j1 = mousePos.y;
             for (int k2 = 0; k2 < par1List.size(); ++k2)
             {
                 String s1 = (String)par1List.get(k2);
-                fontRendererObj.drawString(s1, i1, j1, color);
+                fontRendererObj.drawString(s1, mousePos.x, j1, color);
 
                 if (k2 == 0)
                 {
@@ -220,7 +227,7 @@ abstract public class GuiTfMachineBase extends GuiContainer
             }
 
             this.zLevel = 0.0F;
-            this.itemRender.zLevel = 0.0F;
+            itemRender.zLevel = 0.0F;
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glEnable(GL11.GL_DEPTH_TEST);
             //RenderHelper.enableStandardItemLighting();
@@ -241,30 +248,30 @@ abstract public class GuiTfMachineBase extends GuiContainer
     public void drawTfHoveringTipFixedSize(int ox, int oy, int fw, int fh, HoverTextPosition pos, IHoverDrawingHandler handler)
     {
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        RenderHelper.disableStandardItemLighting();
+        //RenderHelper.disableStandardItemLighting();
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         this.zLevel = 300.0F;
-        this.itemRender.zLevel = 300.0F;
+        itemRender.zLevel = 300.0F;
 
-        ox -= this.guiLeft;
-        oy -= this.guiTop;
-        
-        int i1 = calcHoverOffsetX(ox, fw, pos);
-        int j1 = calcHoverOffsetY(oy, fh, pos);
+        ox += this.getToolTipOffsetX();
+        oy += this.getToolTipOffsetY();
 
-        this.doDrawTfHoveringTextBg(i1, j1, fw, fh, 0);
+        Point mousePos = new Point(ox, oy);
+        pos.applyOffset(mousePos, fw, fh);
+
+        this.doDrawTfHoveringTextBg(mousePos.x, mousePos.y, fw, fh, 0);
         
         if (handler != null)
         {
-            handler.draw(i1, j1, fw, fh);
+            handler.draw(mousePos.x, mousePos.y, fw, fh);
         }
         
         this.zLevel = 0.0F;
-        this.itemRender.zLevel = 0.0F;
+        itemRender.zLevel = 0.0F;
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
-        RenderHelper.enableStandardItemLighting();
+        //RenderHelper.enableStandardItemLighting();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
     }
     
@@ -289,37 +296,42 @@ abstract public class GuiTfMachineBase extends GuiContainer
         this.drawGradientRect(ox + fw + p, oy - p,      ox + fw + p + 1, oy + fh + p,     color, color);
         // Background
         color = 0xff5c5e54;
-        this.drawGradientRect(ox - p,      oy - p,      ox + fw + p, oy + fh + p, color, color);
+        this.drawGradientRect(ox - p, oy - p, ox + fw + p, oy + fh + p, color, color);
     }
-    
-    private int calcHoverOffsetX(int mouseX, int fw, HoverTextPosition pos)
+
+    public void drawStringInTip(String s, int x, int y)
     {
-        switch (pos)
-        {
-        case MC_STANDARD:
-            return mouseX + 12;
-        case UPPER_CENTER:
-            return mouseX - fw / 2;
-        case LOWER_CENTER:
-            return mouseX - fw / 2;
-        default:
-            return mouseX;
-        }
+        this.drawString(s, x, y, COLOR_TIP_TEXT);
     }
-    
-    private int calcHoverOffsetY(int mouseY, int fh, HoverTextPosition pos)
+
+    public void drawString(String s, int x, int y, int color)
     {
-        switch (pos)
-        {
-        case MC_STANDARD:
-            return mouseY - 12;
-        case UPPER_CENTER:
-            return mouseY - fh - 6;
-        case LOWER_CENTER:
-            return mouseY + 8;
-        default:
-            return mouseY;
-        }
+        super.fontRendererObj.drawString(s, x, y, color);
+    }
+
+    public void drawStringWithShadow(String s, int x, int y, int color)
+    {
+        super.drawString(this.fontRendererObj, s, x, y, color);
+    }
+
+    public int getStringWidth(String s)
+    {
+        return this.fontRendererObj.getStringWidth(s);
+    }
+
+    public FontRenderer getFontRenderer()
+    {
+        return this.fontRendererObj;
+    }
+
+    public int getToolTipOffsetX()
+    {
+        return -this.guiLeft;
+    }
+
+    public int getToolTipOffsetY()
+    {
+        return -this.guiTop;
     }
 
     public boolean isPointInRegion(int ox, int oy, int w, int h, int x, int y)
@@ -327,8 +339,9 @@ abstract public class GuiTfMachineBase extends GuiContainer
         return this.func_146978_c(ox, oy, w, h, x, y);
     }
 
-    protected interface IHoverDrawingHandler
+    public interface IHoverDrawingHandler
     {
         void draw(int ox, int oy, int fw, int fh);
     }
+
 }

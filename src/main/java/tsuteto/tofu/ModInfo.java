@@ -9,7 +9,7 @@ public class ModInfo
         meta.modId = TofuCraftCore.modid;
         meta.name = "豆腐Craft (TofuCraft)";
         meta.description = "豆腐をおいしく頂きつつ本格豆腐建築を嗜むMODです。味噌、醤油、納豆、ずんだ、もやし、湯葉もあるよ。\n\n"
-                + "TofuCraft adds Tofu, which is a food made of soybeans and tastes very light but has so many ways to use and various dishes, and will show you so many features of Tofu such as many variation of tofu, dishes, mobs, tools, weapons, energy system, and Tofu world. I wish you liked Tofu :)";
+                + "TofuCraft adds Tofu that is a food made of soybeans and tastes very light but has so many ways to use and various dishes, and will show you a lot of features of Tofu such as many variations of tofu, dishes, mobs, tools, weapons, energy system, and Tofu world. I wish you liked Tofu :)";
         meta.version = "1.6";
         meta.credits = "Tofu fishing originally implemented by dewfalse";
         meta.logoFile = "assets/tofucraft/textures/logo.png";

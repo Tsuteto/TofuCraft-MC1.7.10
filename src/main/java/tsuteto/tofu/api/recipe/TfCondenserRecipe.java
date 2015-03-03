@@ -21,7 +21,7 @@ public class TfCondenserRecipe
      *
      * @param tfAmount TF amount needed as ingredients
      * @param ingredient Fluid needed as ingredients
-     * @param ticks Ticks needed to condense since the machine gave enough ingredients
+     * @param ticks Ticks needed to condense since the machine got enough ingredients
      * @param result Result item
      */
     public TfCondenserRecipe(double tfAmount, FluidStack ingredient, int ticks, ItemStack result)

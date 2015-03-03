@@ -1,8 +1,9 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
+import tsuteto.tofu.gui.GuiTfMachineBase;
 
 abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPart<T>
 {
@@ -19,6 +20,7 @@ abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPa
 
     public ItemStack itemStack = null;
     public FluidStack fluidStack = null;
+    public HoverTextPosition itemTipPosition = HoverTextPosition.UPPER_CENTER;
 
     public GuiPartGaugeBase(int x, int y, TfMachineGuiParts frame, TfMachineGuiParts indicator)
     {
@@ -47,7 +49,7 @@ abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPa
 
     public T setPercentage(double val)
     {
-        this.percentage = val;
+        this.percentage = Math.min(1.0D, Math.max(0.0D, val));
         return (T)this;
     }
 
@@ -107,11 +109,11 @@ abstract public class GuiPartGaugeBase<T extends GuiPartGaugeBase> extends GuiPa
             {
                 if (fluidStack != null)
                 {
-                    gui.drawTfHoveringText(fluidStack.getFluid().getLocalizedName(), px, py);
+                    gui.drawTfHoveringText(fluidStack.getFluid().getLocalizedName(fluidStack), px, py, itemTipPosition);
                 }
                 else
                 {
-                    gui.drawTfHoveringText(StatCollector.translateToLocal("tofucraft.empty"), px, py);
+                    gui.drawTfHoveringText(StatCollector.translateToLocal("tofucraft.empty"), px, py, itemTipPosition);
                 }
             }
         }

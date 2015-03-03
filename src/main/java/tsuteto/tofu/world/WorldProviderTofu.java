@@ -1,7 +1,10 @@
 package tsuteto.tofu.world;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.storage.DerivedWorldInfo;
+import net.minecraft.world.storage.WorldInfo;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.util.Utils;
 
@@ -25,6 +28,24 @@ public class WorldProviderTofu extends WorldProvider
     {
         long newSeed = Utils.getSeedForTofuWorld(this.worldObj);
         return new ChunkProviderTofu(this.worldObj, newSeed, true);
+    }
+
+    @Override
+    public void resetRainAndThunder() {
+        super.resetRainAndThunder();
+
+        if(this.worldObj.getGameRules().getGameRuleBooleanValue("doDaylightCycle"))
+        {
+            WorldInfo worldInfo = ObfuscationReflectionHelper.getPrivateValue(DerivedWorldInfo.class, (DerivedWorldInfo) worldObj.getWorldInfo(), "theWorldInfo", "field_76115_a");
+            long i = worldInfo.getWorldTime() + 24000L;
+            worldInfo.setWorldTime(i - i % 24000L);
+        }
+    }
+
+    @Override
+    public boolean canRespawnHere()
+    {
+        return true;
     }
 
     /**

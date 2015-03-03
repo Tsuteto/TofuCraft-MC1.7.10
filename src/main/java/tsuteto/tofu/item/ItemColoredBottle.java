@@ -4,9 +4,9 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import tsuteto.tofu.item.iteminfo.TcItemInfoBase;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
-public class ItemColoredBottle extends ItemColoredBottleImpl<TcItemInfoBase>
+abstract public class ItemColoredBottle extends ItemWithState<TcItemInfoBase>
 {
-    private final TcItemInfoBase itemInfo = new TcItemInfoBase(TcItemType.BOTTLE);
+    protected final TcItemInfoBase itemInfo = new TcItemInfoBase(TcItemType.BOTTLE);
 
     public ItemColoredBottle(int color)
     {
@@ -18,7 +18,6 @@ public class ItemColoredBottle extends ItemColoredBottleImpl<TcItemInfoBase>
     {
         super();
         this.setNoRepair();
-        // Don't set any container items!
     }
 
     @Override

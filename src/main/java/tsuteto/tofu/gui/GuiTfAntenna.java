@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+import tsuteto.tofu.gui.guiparts.*;
 import tsuteto.tofu.tileentity.ContainerTfAntenna;
 import tsuteto.tofu.tileentity.TileEntityTfAntenna;
 
@@ -76,7 +77,7 @@ public class GuiTfAntenna extends GuiTfMachineBase
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
-        this.mc.getTextureManager().bindTexture(texture);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.drawBasePanel(this.xSize, this.ySize);

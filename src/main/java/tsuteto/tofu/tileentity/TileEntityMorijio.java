@@ -7,11 +7,43 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import tsuteto.tofu.TofuCraftCore;
+import tsuteto.tofu.data.MorijioManager;
+import tsuteto.tofu.util.TileCoord;
 
 public class TileEntityMorijio extends TileEntity
 {
     /** The morijio's rotation. */
     private int rotation;
+
+    private boolean isInit = false;
+    private MorijioInfo info;
+
+    @Override
+    public void updateEntity()
+    {
+        if (!worldObj.isRemote && !this.isInit)
+        {
+            this.info = new MorijioInfo();
+            this.info.coord = new TileCoord(this.xCoord, this.yCoord, this.zCoord, this.worldObj.getWorldInfo().getVanillaDimension());
+
+            MorijioManager infoHandler = TofuCraftCore.getMorijioManager();
+            if (infoHandler != null)
+            {
+                if (!infoHandler.isInfoRegistered(info))
+                {
+                    infoHandler.registerInfo(info);
+                }
+                this.isInit = true;
+            }
+        }
+    }
+
+    public void removeInfo()
+    {
+        MorijioManager infoHandler = TofuCraftCore.getMorijioManager();
+        infoHandler.removeInfo(this.info);
+    }
 
     /**
      * Writes a tile entity to NBT.
@@ -60,5 +92,23 @@ public class TileEntityMorijio extends TileEntity
     public int getRotation()
     {
         return this.rotation;
+    }
+
+    public static class MorijioInfo
+    {
+        public TileCoord coord;
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (coord == null || !(obj instanceof MorijioInfo)) return false;
+            return coord.equals(((MorijioInfo)obj).coord);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return coord.hashCode();
+        }
     }
 }

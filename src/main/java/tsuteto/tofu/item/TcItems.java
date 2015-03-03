@@ -14,7 +14,6 @@ import net.minecraftforge.common.MinecraftForge;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.dispanse.DispenserBehaviorNigari;
-import tsuteto.tofu.eventhandler.TcCraftingHandler;
 import tsuteto.tofu.util.ItemUtils;
 import tsuteto.tofu.util.Utils;
 
@@ -126,8 +125,8 @@ public class TcItems
     public static Item barrelMisoTofu;
     public static Item barrelGlowtofu;
     public static Item barrelAdvTofuGem;
-    public static Item mineralSoymilk;
     public static Item somenTsuyuBowl;
+    public static Item tofuHoe;
 
     // === External Mod Items ===
     public static Item plantBall; // from IC2
@@ -360,11 +359,9 @@ public class TcItems
 //                .setCreativeTab(CreativeTabs.tabMaterials)
 //                .setUnlocalizedName("tofucraft:phialEmpty");
 
-        bottleSoySauce = $("bottleSoySause", new ItemSeasoningBottle(0x432709))
+        bottleSoySauce = $("bottleSoySause", new ItemSeasoningBottle(0x432709, 19))
                 .register()
-                .setMaxDamage(19)
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        TcCraftingHandler.registerDurabilityItem(bottleSoySauce);
 
         soybeansParched = $("soybeansParched", new TcItem())
                 .register()
@@ -381,17 +378,13 @@ public class TcItems
                 .register()
                 .setCreativeTab(CreativeTabs.tabMaterials);
 
-        dashi = $("dashi", new ItemSeasoningBottle(0xfcf6ac))
+        dashi = $("dashi", new ItemSeasoningBottle(0xfcf6ac, 9))
                 .register()
-                .setMaxDamage(9)
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        TcCraftingHandler.registerDurabilityItem(dashi);
 
-        soyOil = $("soyOil", new ItemSeasoningBottle(0xfeff82))
+        soyOil = $("soyOil", new ItemSeasoningBottle(0xfeff82, 19))
                 .register()
-                .setMaxDamage(19)
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        TcCraftingHandler.registerDurabilityItem(soyOil);
 
         agedashiTofu = $("agedashiTofu", new ItemSoupBase(6, 0.6F, false))
                 .register();
@@ -479,17 +472,13 @@ public class TcItems
         tofuScoop = $("tofuScoop", new ItemTofuScoop())
                 .register();
 
-        doubanjiang = $("doubanjiang", new ItemCraftingDurability())
+        doubanjiang = $("doubanjiang", new ItemSeasoningBottleAltIcon(57))
                 .register()
-                .setMaxDamage(57)
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        TcCraftingHandler.registerDurabilityItem(doubanjiang);
 
-        strawberryJam = $("strawberryJam", new ItemCraftingDurability())
+        strawberryJam = $("strawberryJam", new ItemSeasoningBottleAltIcon(99))
                 .register()
-                .setMaxDamage(99)
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        TcCraftingHandler.registerDurabilityItem(strawberryJam);
 
         tofuRadar = $("tofuRadar", new ItemTofuSlimeRadar())
                 .register();
@@ -572,6 +561,9 @@ public class TcItems
         toolMetal = addToolSet(TofuToolMaterial.METAL);
         toolDiamond = addToolSet(TofuToolMaterial.DIAMOND);
 
+        tofuHoe = $("tofuHoe", new ItemTofuHoe(TofuToolMaterial.GEM))
+                .register()
+                .setCreativeTab(CreativeTabs.tabTools);
     }
 
     private static Item[] addArmorSet(ItemArmor.ArmorMaterial material)

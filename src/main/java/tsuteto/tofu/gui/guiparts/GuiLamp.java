@@ -1,6 +1,7 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
 
 import com.google.common.collect.Lists;
+import tsuteto.tofu.gui.GuiTfMachineBase;
 
 import java.util.List;
 
@@ -43,22 +44,19 @@ public class GuiLamp extends GuiPart<GuiLamp>
     @Override
     public void draw(GuiTfMachineBase gui)
     {
-        if (this.stat)
+        TfMachineGuiParts part = this.stat ? guiParts[STAT_ON] : guiParts[STAT_OFF];
+        if (part != null)
         {
-            gui.drawGuiPart(x, y, guiParts[STAT_ON]);
-        }
-        else
-        {
-            gui.drawGuiPart(x, y, guiParts[STAT_OFF]);
+            gui.drawGuiPart(x, y, part);
         }
     }
 
     public void showInfoTip(GuiTfMachineBase gui, int px, int py)
     {
-        if (infoTip != null && this.tipMessages != null && gui.isPointInRegion(x, y, part.xSize, part.ySize, px, py)) // isPointInRegion
+        if (this.tipMessages != null)
         {
             List text = this.stat ? this.tipMessages[STAT_ON] : this.tipMessages[STAT_OFF];
-            gui.drawTfHoveringText(text, px, py, infoTip.pos);
+            super.showInfoTip(gui, px, py, text);
         }
     }
 }

@@ -1,4 +1,4 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
 
 public class GuiInfoTip
 {
@@ -6,9 +6,9 @@ public class GuiInfoTip
     public int hArea;
     public int wTip = 0;
     public int hTip = 0;
-    GuiTfMachineBase.HoverTextPosition pos;
+    HoverTextPosition pos;
 
-    public GuiInfoTip(int w, int h, int tw, int th, GuiTfMachineBase.HoverTextPosition pos)
+    public GuiInfoTip(int w, int h, int tw, int th, HoverTextPosition pos)
     {
         this.wArea = w;
         this.hArea = h;
@@ -17,7 +17,7 @@ public class GuiInfoTip
         this.pos = pos;
     }
 
-    public GuiInfoTip(int w, int h, GuiTfMachineBase.HoverTextPosition pos)
+    public GuiInfoTip(int w, int h, HoverTextPosition pos)
     {
         this.wArea = w;
         this.hArea = h;

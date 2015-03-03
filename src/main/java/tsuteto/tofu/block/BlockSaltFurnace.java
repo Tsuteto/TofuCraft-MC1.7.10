@@ -20,8 +20,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
-import tsuteto.tofu.tileentity.TileEntitySaltFurnace;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.tileentity.TileEntitySaltFurnace;
 
 import java.util.Random;
 
@@ -70,26 +70,26 @@ public class BlockSaltFurnace extends BlockContainer
             Block block1 = par1World.getBlock(par2, par3, par4 + 1);
             Block block2 = par1World.getBlock(par2 - 1, par3, par4);
             Block block3 = par1World.getBlock(par2 + 1, par3, par4);
-            byte b0 = 3;
+            byte b0 = 1;
 
             if (block.func_149730_j() && !block1.func_149730_j())
             {
-                b0 = 3;
+                b0 = 1;
             }
 
             if (block1.func_149730_j() && !block.func_149730_j())
             {
-                b0 = 2;
+                b0 = 0;
             }
 
             if (block2.func_149730_j() && !block3.func_149730_j())
             {
-                b0 = 5;
+                b0 = 3;
             }
 
             if (block3.func_149730_j() && !block2.func_149730_j())
             {
-                b0 = 4;
+                b0 = 2;
             }
 
             par1World.setBlockMetadataWithNotify(par2, par3, par4, b0, 2);
@@ -100,6 +100,8 @@ public class BlockSaltFurnace extends BlockContainer
     @Override
     public IIcon getIcon(int par1, int par2)
     {
+        par2 &= 3;
+
         if (par1 == 1) // top
         {
             return this.iconTop;
@@ -114,7 +116,7 @@ public class BlockSaltFurnace extends BlockContainer
         }
         else
         {
-            return par1 != par2 ? this.blockIcon // side & back
+            return par1 != par2 + 2 ? this.blockIcon // side & back
                                 : this.iconFront; // front
         }
     }
@@ -257,22 +259,22 @@ public class BlockSaltFurnace extends BlockContainer
 
         if (var6 == 0)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
         }
 
         if (var6 == 1)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
         }
 
         if (var6 == 2)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 2);
         }
 
         if (var6 == 3)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
         }
 
         if (par6ItemStack.hasDisplayName())

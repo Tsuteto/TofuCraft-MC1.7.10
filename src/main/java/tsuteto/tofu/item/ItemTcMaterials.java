@@ -2,6 +2,7 @@ package tsuteto.tofu.item;
 
 import com.google.common.collect.Lists;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
@@ -36,6 +37,12 @@ public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
         {
             super(id, TcItemType.NORMAL, name);
             materialList.add(id, this);
+        }
+
+        @Override
+        public Item getItemInstance()
+        {
+            return TcItems.materials;
         }
 
         public boolean isItemEqual(ItemStack itemStack)

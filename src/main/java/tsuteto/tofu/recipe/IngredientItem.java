@@ -1,8 +1,10 @@
 package tsuteto.tofu.recipe;
 
-import net.minecraft.item.Item;
+import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class IngredientItem extends Ingredient<ItemStack>
 {
@@ -12,9 +14,15 @@ public class IngredientItem extends Ingredient<ItemStack>
     }
 
     @Override
-    public boolean matchesWithItemStack(ItemStack input)
+    public boolean matches(ItemStack input)
     {
         return OreDictionary.itemMatches(this.itemObj, input, false);
+    }
+
+    @Override
+    public List<ItemStack> getApplicableItems()
+    {
+        return Lists.newArrayList(this.itemObj);
     }
 
     @Override
@@ -22,11 +30,12 @@ public class IngredientItem extends Ingredient<ItemStack>
     {
         if (!(obj instanceof IngredientItem)) return false;
         IngredientItem other = (IngredientItem)obj;
-        return itemObj.isItemEqual(other.itemObj);
+        return this.matches(other.itemObj);
     }
 
+    @Override
     public int hashCode()
     {
-        return Item.getIdFromItem(itemObj.getItem()) + (itemObj.getItemDamage() << 15);
+        return itemObj.getItem().hashCode();
     }
 }

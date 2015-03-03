@@ -10,6 +10,7 @@ public class TcItemInfoBase<T extends TcItemInfoBase>
     public int itemUseDuration = 32;
     public boolean hasEnchantEffect = false;
     public boolean isNonDurabilityTool = false;
+    public boolean isCraftingDurabilityTool = false;
 
 
     public TcItemInfoBase(TcItemType type)
@@ -68,5 +69,16 @@ public class TcItemInfoBase<T extends TcItemInfoBase>
     {
         this.isNonDurabilityTool = true;
         return (T)this;
+    }
+
+    public T setCraftingDurabilityTool()
+    {
+        this.isCraftingDurabilityTool = true;
+        return (T)this;
+    }
+
+    public boolean isCraftingDurabilityTool()
+    {
+        return this.isCraftingDurabilityTool;
     }
 }

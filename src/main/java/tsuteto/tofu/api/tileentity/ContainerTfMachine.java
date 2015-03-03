@@ -40,7 +40,7 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
 
         for (ContainerParam param : containerParams.values())
         {
-            param.send(par1ICrafting);
+            param.send(par1ICrafting, this);
         }
     }
 
@@ -57,7 +57,7 @@ abstract public class ContainerTfMachine<T extends TileEntityTfMachineBase> exte
 
                 for (ContainerParam param : containerParams.values())
                 {
-                    param.sendIfChanged(var2);
+                    param.sendIfChanged(var2, this);
                 }
             }
         }

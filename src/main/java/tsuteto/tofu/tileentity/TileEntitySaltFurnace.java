@@ -21,7 +21,7 @@ import tsuteto.tofu.util.ModLog;
 
 public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
 {
-    private static final int[] slotForSide = new int[] {0};
+    private static final int[] slotForSide = new int[] {0, 1};
     private static final int[] slotForLower = new int[] {1};
 
     /**
@@ -432,7 +432,7 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
     {
-        return true;
+        return par1 == 1;
     }
 
     private int getLiveMetadata()

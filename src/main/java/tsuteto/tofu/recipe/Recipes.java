@@ -28,7 +28,7 @@ public class Recipes
 
     public static void unifyOreDicItems()
     {
-        ItemUtils.integrateOreItems("salt", "itemSalt", "oreSalt", "Salt");
+        ItemUtils.integrateOreItems("salt", "itemSalt", "Salt");
         ItemUtils.integrateOreItems("tofuMomen", "tofu", "Tofu", "itemTofu");
         ItemUtils.integrateOreItems("blockTofuMomen", "blockTofu");
         ItemUtils.integrateOreItems("rollingPin", "itemRollingPin");
@@ -206,24 +206,24 @@ public class Recipes
         addShapelessSharedRecipe(new ItemStack(TcItems.tofuFriedPouch),
                 TcOreDic.tofuKinu,
                 TcOreDic.starch,
-                new ItemStack(TcItems.soyOil, 1, 0x7fff)
+                TcOreDic.soyOil
         );
 
         addShapelessSharedRecipe(new ItemStack(TcItems.tofuFriedPouch),
                 TcOreDic.tofuMomen,
                 TcOreDic.starch,
-                new ItemStack(TcItems.soyOil, 1, 0x7fff)
+                TcOreDic.soyOil
         );
 
         // Fried Tofu
         addShapelessSharedRecipe(new ItemStack(TcItems.tofuFried),
                 TcOreDic.tofuKinu,
-                new ItemStack(TcItems.soyOil, 1, 0x7fff)
+                TcOreDic.soyOil
         );
 
         addShapelessSharedRecipe(new ItemStack(TcItems.tofuFried),
                 TcOreDic.tofuMomen,
-                new ItemStack(TcItems.soyOil, 1, 0x7fff)
+                TcOreDic.soyOil
         );
 
         // Egg Tofu
@@ -732,7 +732,7 @@ public class Recipes
         // Filter Cloth
         GameRegistry.addRecipe(new ItemStack(TcItems.filterCloth, 32),
                 "WWW",
-                'W', new ItemStack(Blocks.wool, 1, 0x7fff)
+                'W', new ItemStack(Blocks.wool, 1, DMG_WILDCARD)
         );
 
         // Okara Stick

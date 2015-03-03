@@ -3,7 +3,6 @@ package tsuteto.tofu.tileentity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -16,8 +15,6 @@ import tsuteto.tofu.api.tileentity.ITfConsumer;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.block.BlockTfReformer;
 import tsuteto.tofu.fluids.TcFluids;
-import tsuteto.tofu.item.ICraftingDurability;
-import tsuteto.tofu.item.ItemCraftingDurability;
 import tsuteto.tofu.recipe.Ingredient;
 
 public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfConsumer
@@ -44,6 +41,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     public static final int SLOT_INGREDIENT_ITEM2 = 3;
     public static final int SLOT_INGREDIENT_ITEM3 = 4;
 
+    public static final double TF_CAPACITY = 20;
     public static final double COST_TF_PER_TICK = 1;
 
     private static final int[] slotsTop = new int[]{0};
@@ -52,7 +50,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
     private static final int[] slotsBottom = new int[]{1};
 
     public Model model;
-    public double tfCapacity = 100;
+    public double tfCapacity = TF_CAPACITY;
     public double tfAmount = 0;
     public TfReformerRecipe currentRecipe;
     public double tfOutput = 0;
@@ -63,6 +61,8 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
     private double tfConsumed = 0.0D;
     private TfReformerRecipe lastRecipe = null;
+    public boolean isWorking;
+    private boolean prevWorking;
 
     public TileEntityTfReformer()
     {
@@ -106,7 +106,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             this.model = Model.simple;
             this.itemStacks = new ItemStack[model.stackSize];
             this.tfOutput = nbtTagCompound.getShort("ProcO");
-            this.tfCapacity = nbtTagCompound.getFloat("TfCap");
+            //this.tfCapacity = nbtTagCompound.getFloat("TfCap");
             this.tfAmount = nbtTagCompound.getFloat("TfAmount");
         }
         else
@@ -116,7 +116,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
             this.itemStacks = new ItemStack[model.stackSize];
             this.tfOutput = nbtTagCompound.getDouble("ProcO");
-            this.tfCapacity = nbtTagCompound.getDouble("TfCap");
+            //this.tfCapacity = nbtTagCompound.getDouble("TfCap");
             this.tfAmount = nbtTagCompound.getDouble("TfAmount");
         }
 
@@ -137,7 +137,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
         nbtTagCompound.setByte("Model", (byte)this.model.id);
         nbtTagCompound.setDouble("ProcO", this.tfOutput);
-        nbtTagCompound.setDouble("TfCap", this.tfCapacity);
+        //nbtTagCompound.setDouble("TfCap", this.tfCapacity);
         nbtTagCompound.setDouble("TfAmount", this.tfAmount);
     }
 
@@ -165,15 +165,14 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
      */
     public boolean isProcessing()
     {
-        return this.tfOutput > 0 || this.externalProcessTime > 0;
+        return this.isWorking;
     }
 
     @Override
     public void updateEntity()
     {
-        boolean isProcessingOutput = this.tfOutput > 0;
-        boolean isExternalProcessing = this.externalProcessTime > 0;
         boolean isInventoryChanged = false;
+        this.isWorking = false;
 
         if (!this.worldObj.isRemote)
         {
@@ -188,12 +187,15 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
             if (this.wholeTfOutput > 0 && this.canProcessOutput())
             {
+                // Processing
                 this.tfConsumed = Math.min(this.tfAmount, COST_TF_PER_TICK);
                 this.tfOutput += tfConsumed;
                 this.tfAmount -= tfConsumed;
+                this.isWorking = true;
 
                 if (this.tfOutput >= wholeTfOutput)
                 {
+                    // Finish
                     this.tfOutput = 0;
                     this.onOutputCompleted();
                     this.updateCurrentRecipe();
@@ -216,9 +218,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
             {
                 --this.externalProcessTime;
             }
-
-            if (isProcessingOutput != this.tfOutput > 0
-                    || isExternalProcessing != this.externalProcessTime > 0)
+            if (this.isWorking != this.prevWorking)
             {
                 isInventoryChanged = true;
                 BlockTfReformer.updateMachineState(this.isProcessing(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
@@ -231,6 +231,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         }
 
         this.lastRecipe = this.currentRecipe;
+        this.prevWorking = this.isWorking;
     }
 
     /**
@@ -243,7 +244,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         if (this.currentRecipe == null) return false;
 
         Ingredient containerItem = this.currentRecipe.containerItem;
-        if (!containerItem.matchesWithItemStack(this.itemStacks[SLOT_INPUT_ITEM])) return false;
+        if (!containerItem.matches(this.itemStacks[SLOT_INPUT_ITEM])) return false;
 
         ItemStack var1 = this.currentRecipe.result;
 
@@ -280,19 +281,15 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         // Ingredient slots
         for (int id : model.ingredientSlots)
         {
-            if (this.itemStacks[id] != null)
+            ItemStack input = this.itemStacks[id];
+            if (input != null)
             {
-                if (!this.currentRecipe.isCatalystItem(this.itemStacks[id]))
+                if (!this.currentRecipe.isCatalystItem(input))
                 {
-                    if (this.itemStacks[id].getItem() instanceof ItemCraftingDurability)
+                    ItemStack container = input.getItem().getContainerItem(input);
+                    if (container != null)
                     {
-                        ItemStack var3 = this.itemStacks[id];
-                        Item item = this.itemStacks[id].getItem();
-                        var3.setItemDamage(var3.getItemDamage() + 1);
-                        if(item.isDamageable() && var3.getItemDamage() >= var3.getMaxDamage())
-                        {
-                            this.itemStacks[id] = ((ICraftingDurability)item).getEmptyItem();
-                        }
+                        this.itemStacks[id] = container;
                     }
                     else
                     {

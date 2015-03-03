@@ -10,6 +10,7 @@ public class TofuToolMaterial
     public static Item.ToolMaterial SOLID;
     public static Item.ToolMaterial METAL;
     public static Item.ToolMaterial DIAMOND;
+    public static Item.ToolMaterial GEM;
     
     static
     {
@@ -18,5 +19,6 @@ public class TofuToolMaterial
         SOLID   = EnumHelper.addToolMaterial("TOFU_SOLID",   1,  183, 3.0F, -1,  6);
         METAL   = EnumHelper.addToolMaterial("TOFU_METAL",   2,  415, 6.0F,  2,  8);
         DIAMOND = EnumHelper.addToolMaterial("TOFU_DIAMOND", 3, 0x1212, 8.0F,  4, 18);
+        GEM     = EnumHelper.addToolMaterial("TOFU_GEM",     2,  868, 6.0F,  2, 10);
     }
 }

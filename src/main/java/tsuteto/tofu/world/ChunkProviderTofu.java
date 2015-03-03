@@ -256,7 +256,7 @@ public class ChunkProviderTofu implements IChunkProvider
         if (this.mapFeaturesEnabled)
         {
             this.mineshaftGenerator.func_151539_a(this, this.worldObj, par1, par2, var3);
-            //this.villageGenerator.func_151539_a(this, this.worldObj, par1, par2, var3);
+            this.villageGenerator.func_151539_a(this, this.worldObj, par1, par2, var3);
             //this.strongholdGenerator.func_151539_a(this, this.worldObj, par1, par2, var3);
             //this.scatteredFeatureGenerator.func_151539_a(this, this.worldObj, par1, par2, var3);
         }
@@ -427,7 +427,7 @@ public class ChunkProviderTofu implements IChunkProvider
             var11 = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
             if (var11)
             {
-                ModLog.debug("village: x=%d z=%d", par2 << 4, par3 << 4);
+                ModLog.debug("village generated: x=%d z=%d, biome: %s", par2 << 4, par3 << 4, var6);
             }
             //this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
             //this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);

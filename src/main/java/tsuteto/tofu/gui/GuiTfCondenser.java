@@ -10,25 +10,24 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.gui.guiparts.*;
 import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.tileentity.ContainerTfCondenser;
 import tsuteto.tofu.tileentity.TileEntityTfCondenser;
-
-import java.util.Iterator;
 
 @SideOnly(Side.CLIENT)
 public class GuiTfCondenser extends GuiTfMachineBase
 {
     private final TileEntityTfCondenser machineInventory;
 
-    private GuiPartGaugeV nigariGauge = new GuiPartGaugeV(33, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
+    private GuiPartGaugeV nigariGauge = new GuiPartGaugeV(32, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setIndicatorColor(0xc0d0ff)
             .setItemDisplay(TfMachineGuiParts.gaugeVItemDisplay)
             .setItemStack(new ItemStack(TcItems.nigari))
             .setFluidStack(new FluidStack(TcFluids.NIGARI, 0))
             .setInfoTip(51, 22, HoverTextPosition.LOWER_CENTER);
 
-    private GuiPartGaugeV additiveGauge = new GuiPartGaugeV(72, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
+    private GuiPartGaugeV ingredientGauge = new GuiPartGaugeV(72, 18, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setIndicatorColor(0xb0f0a7)
             .setItemDisplay(TfMachineGuiParts.gaugeVItemDisplay)
             .setInfoTip(51, 22, HoverTextPosition.LOWER_CENTER);
@@ -38,8 +37,9 @@ public class GuiTfCondenser extends GuiTfMachineBase
 
     private GuiPartGaugeH progress = new GuiPartGaugeH(115, 35, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
-    private GuiTcButtonFixed btnAdditiveDrop;
+    private GuiTcButtonFixed btnIngredientDrop;
     private GuiRedstoneLamp redstoneLamp = new GuiRedstoneLamp(121, 58);
+    private GuiPartTfCharge tfCharge = new GuiPartTfCharge(95, 67, Double.MIN_VALUE);
 
     public GuiTfCondenser(InventoryPlayer par1InventoryPlayer, TileEntityTfCondenser tfstorage)
     {
@@ -52,11 +52,11 @@ public class GuiTfCondenser extends GuiTfMachineBase
     {
         super.initGui();
 
-        btnAdditiveDrop = new GuiTcButtonFixed(0, this.guiLeft + 56, this.guiTop + 67, TfMachineGuiParts.btnSmallEnabled, StatCollector.translateToLocal("tofucraft.dump"))
+        btnIngredientDrop = new GuiTcButtonFixed(0, this.guiLeft + 56, this.guiTop + 67, TfMachineGuiParts.btnSmallEnabled, StatCollector.translateToLocal("tofucraft.dump"))
                 .setTextureDisabled(TfMachineGuiParts.btnSmallDisabled)
                 .setTextureHover(TfMachineGuiParts.btnSmallHover);
 
-        buttonList.add(btnAdditiveDrop);
+        buttonList.add(btnIngredientDrop);
     }
 
     /**
@@ -69,11 +69,9 @@ public class GuiTfCondenser extends GuiTfMachineBase
         this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 0x5c5e54);
         this.fontRendererObj.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 3, 0x5c5e54);
 
-        Iterator iterator = this.buttonList.iterator();
-
-        while (iterator.hasNext())
+        for (Object aButtonList : this.buttonList)
         {
-            GuiTcButtonBase guibutton = (GuiTcButtonBase) iterator.next();
+            GuiTcButtonBase guibutton = (GuiTcButtonBase) aButtonList;
 
             if (guibutton.func_146115_a())
             {
@@ -99,16 +97,16 @@ public class GuiTfCondenser extends GuiTfMachineBase
             }
         });
 
-        additiveGauge.showInfoTip(this, px, py, new IHoverDrawingHandler()
+        ingredientGauge.showInfoTip(this, px, py, new IHoverDrawingHandler()
         {
             @Override
             public void draw(int ox, int oy, int fw, int fh)
             {
                 String s;
-                s = String.format("%dmB", machineInventory.additiveTank.getFluidAmount());
+                s = String.format("%dmB", machineInventory.ingredientTank.getFluidAmount());
                 fontRendererObj.drawString(s, ox + 46 - fontRendererObj.getStringWidth(s), oy + 2, COLOR_TIP_TEXT);
 
-                s = String.format("/%dmB", machineInventory.additiveTank.getCapacity());
+                s = String.format("/%dmB", machineInventory.ingredientTank.getCapacity());
                 fontRendererObj.drawString(s, ox + 50 - fontRendererObj.getStringWidth(s), oy + 12, 0xb4b5aa);
             }
         });
@@ -130,6 +128,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
             }
         });
 
+        tfCharge.showInfoTip(this, px, py);
         redstoneLamp.showInfoTip(this, px, py);
     }
 
@@ -139,7 +138,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
-        this.mc.getTextureManager().bindTexture(texture);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.drawStandardBasePanel();
@@ -153,17 +152,19 @@ public class GuiTfCondenser extends GuiTfMachineBase
                 .setPercentage((double) machineInventory.nigariTank.getFluidAmount() / (double) machineInventory.nigariTank.getCapacity())
                 .draw(this);
 
-        // Additive guage
-        additiveGauge
-                .setPercentage((double) machineInventory.additiveTank.getFluidAmount() / (double) machineInventory.additiveTank.getCapacity())
-                .setItemStack(machineInventory.additiveFluidItem)
-                .setFluidStack(machineInventory.additiveTank.getFluid())
+        // Ingredient guage
+        ingredientGauge
+                .setPercentage((double) machineInventory.ingredientTank.getFluidAmount() / (double) machineInventory.ingredientTank.getCapacity())
+                .setItemStack(machineInventory.ingredientFluidItem)
+                .setFluidStack(machineInventory.ingredientTank.getFluid())
                 .draw(this);
 
         tfGauge
                 .setPercentage(machineInventory.tfPooled / machineInventory.tfNeeded)
                 .draw(this);
-        this.drawGuiPart(95, 62, TfMachineGuiParts.tfMark);
+        //this.drawGuiPart(95, 62, TfMachineGuiParts.tfMark);
+        tfCharge.setPercentage(machineInventory.paramTfPowered.get() ? 1.0D : 0.0D)
+                .draw(this);
 
         progress.setPercentage((double) machineInventory.processTimeOutput / (double) machineInventory.wholeTimeOutput)
                 .draw(this);
@@ -172,7 +173,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
 
         // Item Stacks
         nigariGauge.drawItem(this);
-        additiveGauge.drawItem(this);
+        ingredientGauge.drawItem(this);
     }
 
     protected void actionPerformed(GuiButton btn)
@@ -181,7 +182,7 @@ public class GuiTfCondenser extends GuiTfMachineBase
 
         if (btn.id == 0)
         {
-            this.machineInventory.additiveTank.setFluid(null);
+            this.machineInventory.ingredientTank.setFluid(null);
             this.machineInventory.postGuiControl(player.openContainer.windowId, 0);
         }
     }

@@ -1,7 +1,7 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,13 +14,14 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import tsuteto.tofu.tileentity.TileEntityMorijio;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
+
+import java.util.Random;
 
 public class BlockMorijio extends BlockContainer
 {
+    public static final int EFFECTIVE_RANGE = 20;
 
     public BlockMorijio()
     {
@@ -147,6 +148,7 @@ public class BlockMorijio extends BlockContainer
     @Override
     public void breakBlock(World par1World, int par2, int par3, int par4, Block par5, int par6)
     {
+        ((TileEntityMorijio)par1World.getTileEntity(par2, par3, par4)).removeInfo();
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
 

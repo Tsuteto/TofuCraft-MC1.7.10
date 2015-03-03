@@ -16,21 +16,22 @@ import java.util.List;
  * @author Tsuteto
  *
  */
-public class TcWorldInfo
+public class TfAntennaInfoHandler
 {
+    // For TF Distance Antenna
     public static final String NBT_ANTENNA = "Antenna";
     public static final String NBT_ANTENNA_ENTRY = "Entry";
     public static final String NBT_ANTENNA_DANT = "DAnt";
     public static final String NBT_ANTENNA_TYPE = "Type";
-
     public List<TileEntityTfDistanceAntenna.AntennaInfo> antennaInfoList = Lists.newArrayList();
 
-    public TcWorldInfo()
+    public TfAntennaInfoHandler()
     {
     }
 
-    public TcWorldInfo(NBTTagCompound nbt)
+    public TfAntennaInfoHandler(NBTTagCompound nbt)
     {
+        // Load info from NBT
         NBTTagList nbttaglist = nbt.getTagList(NBT_ANTENNA, Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
@@ -44,17 +45,16 @@ public class TcWorldInfo
 
             antennaInfoList.add(antenna);
         }
-
     }
 
     public NBTTagCompound getNBTTagCompound()
     {
         NBTTagCompound nbt = new NBTTagCompound();
-        updateTagCompound(nbt);
+        writeToTagCompound(nbt);
         return nbt;
     }
 
-    private void updateTagCompound(NBTTagCompound nbt)
+    public void writeToTagCompound(NBTTagCompound nbt)
     {
         NBTTagList tagList = new NBTTagList();
         for (TileEntityTfDistanceAntenna.AntennaInfo antenna : antennaInfoList)

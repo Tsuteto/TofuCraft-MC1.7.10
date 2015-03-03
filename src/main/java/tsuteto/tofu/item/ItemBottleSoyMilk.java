@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -108,6 +109,12 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
             this.asGlassBottle(color);
             this.setContainerItem(new ItemStack(Items.glass_bottle));
             flavorList.add(id, this);
+        }
+
+        @Override
+        public Item getItemInstance()
+        {
+            return TcItems.bottleSoymilk;
         }
 
         public Flavor setPotionEffect(Potion potion)

@@ -1,4 +1,6 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
+
+import net.minecraftforge.common.util.EnumHelper;
 
 public enum TfMachineGuiParts
 {
@@ -15,6 +17,9 @@ public enum TfMachineGuiParts
     progressArrowRev(0, 27, 24, 17),
     progressArrowBg(24, 10, 24, 17),
     progressArrowRevBg(24, 27, 24, 17),
+
+    gaugeTfCharged(106, 0, 13, 13),
+    gaugeTfChargedBg(119, 0, 13, 13),
 
     itemSlotL2(0, 44, 24, 24),
     itemSlotL1(24, 44, 20, 20),
@@ -48,8 +53,10 @@ public enum TfMachineGuiParts
     redstoneOff(72, 18, 12, 11),
     redstoneOn(84, 18, 12, 11),
 
-    saturatorCharging(72, 29, 22, 13),
-    saturatorSaturating(94, 29, 22, 13),
+    saturatorChargingBg(72, 29, 10, 10),
+    saturatorCharging(82, 29, 10, 10),
+    saturatorSaturating(96, 13, 26, 18),
+    saturatorSuffocating(122, 13, 26, 18),
     ;
 
     public int ox, oy, xSize, ySize;
@@ -60,5 +67,12 @@ public enum TfMachineGuiParts
         this.oy = oy;
         this.xSize = xSize;
         this.ySize = ySize;
+    }
+
+    public static TfMachineGuiParts addPart(String name, int ox, int oy, int xSize, int ySize)
+    {
+        return EnumHelper.addEnum(TfMachineGuiParts.class, name,
+                new Class[]{int.class, int.class, int.class, int.class},
+                new Object[]{ox, oy, xSize, ySize});
     }
 }

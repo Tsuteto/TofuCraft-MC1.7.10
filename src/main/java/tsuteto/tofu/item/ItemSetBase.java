@@ -13,7 +13,7 @@ import tsuteto.tofu.item.iteminfo.TcItemType;
 
 import java.util.List;
 
-abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBottleImpl<T>
+abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemWithState<T>
 {
     protected IIcon icons[];
 
@@ -30,13 +30,6 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemColoredBo
     {
         List<T> list = this.getItemList();
         return list.get(dmg >= 0 && dmg < list.size() ? dmg : 0);
-    }
-
-    @Override
-    public ItemStack getContainerItem(ItemStack stack)
-    {
-        TcItemInfoBase info = getItemInfo(stack.getItemDamage());
-        return info.getContainerItem();
     }
 
     @Override

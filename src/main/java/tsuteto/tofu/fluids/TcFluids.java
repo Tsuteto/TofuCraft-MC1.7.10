@@ -2,15 +2,15 @@ package tsuteto.tofu.fluids;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
+import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.item.ItemTcMaterials;
 import tsuteto.tofu.item.TcItems;
@@ -24,6 +24,7 @@ public class TcFluids
     public static final Fluid NIGARI = new Fluid("Nigari");
     public static final Fluid MINERAL_SOYMILK = new Fluid("MineralSoymilk");
     public static final Fluid STRAWBERRY_JAM = new Fluid("StrawberryJam");
+    public static final Fluid SOUP_STOCK = new Fluid("SoupStock");
 //    public static final Fluid MAGMA_CREAM = new Fluid("Magma Cream");
 
     static
@@ -35,6 +36,7 @@ public class TcFluids
         FluidRegistry.registerFluid(NIGARI);
         FluidRegistry.registerFluid(MINERAL_SOYMILK);
         FluidRegistry.registerFluid(STRAWBERRY_JAM);
+        FluidRegistry.registerFluid(SOUP_STOCK);
 //        FluidRegistry.registerFluid(MAGMA_CREAM);
     }
 
@@ -62,6 +64,8 @@ public class TcFluids
                 .setUnlocalizedName(TcBlocks.soySauceStill.getUnlocalizedName());
         FluidContainerRegistry.registerFluidContainer(SOY_SAUCE,
                 new ItemStack(TcItems.bucketSoySauce), FluidContainerRegistry.EMPTY_BUCKET);
+        FluidContainerRegistry.registerFluidContainer(SOY_SAUCE,
+                new ItemStack(TcItems.bottleSoySauce), FluidContainerRegistry.EMPTY_BOTTLE);
 
         // Nigari
         NIGARI.setUnlocalizedName("tofucraft:nigari");
@@ -78,6 +82,11 @@ public class TcFluids
         FluidContainerRegistry.registerFluidContainer(new FluidStack(STRAWBERRY_JAM, 500),
                 new ItemStack(TcItems.strawberryJam), FluidContainerRegistry.EMPTY_BOTTLE);
 
+        // Dashi
+        SOUP_STOCK.setUnlocalizedName("tofucraft:soupStock");
+        FluidContainerRegistry.registerFluidContainer(new FluidStack(SOUP_STOCK, 500),
+                new ItemStack(TcItems.dashi), FluidContainerRegistry.EMPTY_BOTTLE);
+
         // Magma cream
 //        MAGMA_CREAM.setUnlocalizedName(Items.magma_cream.getUnlocalizedName());
 //
@@ -86,10 +95,23 @@ public class TcFluids
     }
 
     @SubscribeEvent
-    public void onTextureStitch(TextureStitchEvent.Post event)
+    public void onTextureStitch(TextureStitchEvent.Pre event)
     {
         SOYMILK.setIcons(TcBlocks.soymilkStill.getIcon(0, 0), TcBlocks.soymilkStill.getIcon(2, 0));
         SOYMILK_HELL.setIcons(TcBlocks.soymilkHellStill.getIcon(0, 0), TcBlocks.soymilkHellStill.getIcon(2, 0));
         SOY_SAUCE.setIcons(TcBlocks.soySauceStill.getIcon(0, 0), TcBlocks.soySauceStill.getIcon(2, 0));
+
+        if (event.map.getTextureType() == 0)
+        {
+            IIcon icon;
+            icon = event.map.registerIcon(TofuCraftCore.resourceDomain + "nigari");
+            NIGARI.setIcons(icon);
+            icon = event.map.registerIcon(TofuCraftCore.resourceDomain + "soupStock");
+            SOUP_STOCK.setIcons(icon);
+            icon = event.map.registerIcon(TofuCraftCore.resourceDomain + "strawberryJam");
+            STRAWBERRY_JAM.setIcons(icon);
+            icon = event.map.registerIcon(TofuCraftCore.resourceDomain + "soymilkMineral");
+            MINERAL_SOYMILK.setIcons(icon);
+        }
     }
 }

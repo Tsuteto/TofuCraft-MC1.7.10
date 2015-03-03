@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.MathHelper;
 import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class SlotTfOvenResult extends SlotTfMachineOutput
 {

@@ -28,9 +28,9 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     public int wholeCookTime;
     public double tfPooled;
     private ItemStack lastInputItem = null;
-    private boolean isHeating;
     private boolean isTfNeeded;
-    public boolean isCharging;
+    public boolean isWorking;
+    private boolean prevWorking;
 
     public TileEntityTfOven()
     {
@@ -67,22 +67,24 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     }
 
     @SideOnly(Side.CLIENT)
-    public double getHeaterScaled()
+    public double getTfCharged()
     {
         return this.tfPooled / TF_CAPACITY;
     }
 
     public boolean isHeating()
     {
-        return ovenCookTime > 0 && this.isCharging;
+        return this.isWorking;
     }
 
     public void updateEntity()
     {
-        boolean flag1 = false;
+        boolean updated = false;
 
         if (!this.worldObj.isRemote)
         {
+            this.isWorking = false;
+
             if (this.canSmelt())
             {
                 this.wholeCookTime = this.getWholeCookTime();
@@ -90,13 +92,14 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
                 // Cooking
                 ++this.ovenCookTime;
                 this.tfPooled -= this.getTfAmountNeeded();
+                this.isWorking = true;
 
                 if (this.ovenCookTime >= wholeCookTime)
                 {
                     // Finish
                     this.ovenCookTime = 0;
                     this.smeltItem();
-                    flag1 = true;
+                    updated = true;
                 }
             }
             else
@@ -108,21 +111,21 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
                 }
             }
 
-            if (this.isHeating != isHeating())
+            if (this.isWorking != this.prevWorking)
             {
-                flag1 = true;
+                updated = true;
                 BlockTfOven.updateMachineState(isHeating(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
             }
 
         }
 
-        if (flag1)
+        if (updated)
         {
             this.markDirty();
         }
+
         lastInputItem = itemStacks[SLOT_ITEM_INPUT];
-        this.isHeating = isHeating();
-        this.isCharging = false;
+        this.prevWorking = this.isWorking;
     }
 
     public boolean isAccelerated()
@@ -141,7 +144,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
         return WHOLE_COOK_TIME_BASE;
     }
 
-    private double getTfAmountNeeded()
+    public double getTfAmountNeeded()
     {
         if (this.isAccelerated())
         {
@@ -218,7 +221,6 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     public void chargeTf(double amount)
     {
         this.tfPooled += amount;
-        this.isCharging = amount != 0.0D;
     }
 
     @Override

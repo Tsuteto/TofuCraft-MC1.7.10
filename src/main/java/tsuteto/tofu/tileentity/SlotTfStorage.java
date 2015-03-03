@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class SlotTfStorage extends SlotTfMachine
 {

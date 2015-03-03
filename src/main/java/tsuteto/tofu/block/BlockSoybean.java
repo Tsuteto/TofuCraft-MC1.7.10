@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
-import tsuteto.tofu.item.TcItem;
 import tsuteto.tofu.item.TcItems;
 
 import java.util.Random;

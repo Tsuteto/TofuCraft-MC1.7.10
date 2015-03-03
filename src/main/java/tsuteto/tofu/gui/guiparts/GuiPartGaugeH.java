@@ -1,4 +1,6 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
+
+import tsuteto.tofu.gui.GuiTfMachineBase;
 
 public class GuiPartGaugeH<T extends GuiPartGaugeH> extends GuiPartGaugeBase<T>
 {

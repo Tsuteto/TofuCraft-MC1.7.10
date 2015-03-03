@@ -16,7 +16,7 @@ import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachineCrafting;
 import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondenser>
@@ -26,8 +26,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
     private double lastTfPooled;
     private double lastTfNeeded;
     private int lastNigariAmount;
-    private FluidStack lastAdditiveTank;
-    private ItemStack lastAdditiveItem;
+    private FluidStack lastIngredientTank;
+    private ItemStack lastIngredientItem;
 
     public ContainerTfCondenser(InventoryPlayer invPlayer, TileEntityTfCondenser machine)
     {
@@ -45,6 +45,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                 invPlayer.player, machine, TileEntityTfCondenser.SLOT_TOFU_OUTPUT, 142, 32, TfMachineGuiParts.itemSlotL2));
 
         super.preparePlayerInventory(invPlayer, playerInventoryPosX, playerInventoryPosY + 5);
+
+        this.addContainerParam(machine.paramTfPowered);
     }
 
     @Override
@@ -86,7 +88,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             @Override
             public void addData(ByteBuf buffer)
             {
-                FluidStack fluidStack = machine.additiveTank.getFluid();
+                FluidStack fluidStack = machine.ingredientTank.getFluid();
                 if (fluidStack != null)
                 {
                     buffer.writeBoolean(true);
@@ -103,7 +105,7 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             @Override
             public void addData(ByteBuf buffer)
             {
-                buffer.writeInt(machine.additiveTank.getFluidAmount());
+                buffer.writeInt(machine.ingredientTank.getFluidAmount());
             }
         });
 
@@ -112,11 +114,11 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             @Override
             public void addData(ByteBuf buffer)
             {
-                if (machine.additiveFluidItem != null)
+                if (machine.ingredientFluidItem != null)
                 {
                     buffer.writeBoolean(true);
-                    buffer.writeInt(Item.getIdFromItem(machine.additiveFluidItem.getItem()));
-                    buffer.writeInt(machine.additiveFluidItem.getItemDamage());
+                    buffer.writeInt(Item.getIdFromItem(machine.ingredientFluidItem.getItem()));
+                    buffer.writeInt(machine.ingredientFluidItem.getItemDamage());
                 }
                 else
                 {
@@ -182,16 +184,16 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                     }
                 });
             }
-            if (!ObjectUtils.equals(this.lastAdditiveTank, this.machine.additiveTank.getFluid())
-                    || this.lastAdditiveTank != null
-                        && !this.lastAdditiveTank.isFluidEqual(this.machine.additiveTank.getFluid()))
+            if (!ObjectUtils.equals(this.lastIngredientTank, this.machine.ingredientTank.getFluid())
+                    || this.lastIngredientTank != null
+                        && !this.lastIngredientTank.isFluidEqual(this.machine.ingredientTank.getFluid()))
             {
                 this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
                     {
-                        FluidStack fluidStack = machine.additiveTank.getFluid();
+                        FluidStack fluidStack = machine.ingredientTank.getFluid();
                         if (fluidStack != null)
                         {
                             buffer.writeBoolean(true);
@@ -203,33 +205,33 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                     }
                 });
             }
-            if (this.lastAdditiveTank == null
-                    || this.lastAdditiveTank.amount != this.machine.additiveTank.getFluidAmount())
+            if (this.lastIngredientTank == null
+                    || this.lastIngredientTank.amount != this.machine.ingredientTank.getFluidAmount())
             {
                 this.sendTfMachineData(var2, 4, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
                     {
-                        buffer.writeInt(machine.additiveTank.getFluidAmount());
+                        buffer.writeInt(machine.ingredientTank.getFluidAmount());
                     }
                 });
             }
-            if (this.lastAdditiveItem != null && this.machine.additiveFluidItem == null
-                    || this.lastAdditiveItem == null && this.machine.additiveFluidItem != null
-                    || this.lastAdditiveItem != null
-                        && !this.lastAdditiveItem.isItemEqual(this.machine.additiveFluidItem))
+            if (this.lastIngredientItem != null && this.machine.ingredientFluidItem == null
+                    || this.lastIngredientItem == null && this.machine.ingredientFluidItem != null
+                    || this.lastIngredientItem != null
+                        && !this.lastIngredientItem.isItemEqual(this.machine.ingredientFluidItem))
             {
                 this.sendTfMachineData(var2, 5, new PacketTfMachineData.DataHandler()
                 {
                     @Override
                     public void addData(ByteBuf buffer)
                     {
-                        if (machine.additiveFluidItem != null)
+                        if (machine.ingredientFluidItem != null)
                         {
                             buffer.writeBoolean(true);
-                            buffer.writeInt(Item.getIdFromItem(machine.additiveFluidItem.getItem()));
-                            buffer.writeInt(machine.additiveFluidItem.getItemDamage());
+                            buffer.writeInt(Item.getIdFromItem(machine.ingredientFluidItem.getItem()));
+                            buffer.writeInt(machine.ingredientFluidItem.getItemDamage());
                         }
                         else
                         {
@@ -246,15 +248,15 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         this.lastTfNeeded = this.machine.tfNeeded;
         this.lastTfPooled = this.machine.tfPooled;
         this.lastNigariAmount = this.machine.nigariTank.getFluidAmount();
-        if (this.machine.additiveTank.getFluid() != null)
+        if (this.machine.ingredientTank.getFluid() != null)
         {
-            this.lastAdditiveTank = this.machine.additiveTank.getFluid().copy();
+            this.lastIngredientTank = this.machine.ingredientTank.getFluid().copy();
         }
         else
         {
-            this.lastAdditiveTank = null;
+            this.lastIngredientTank = null;
         }
-        this.lastAdditiveItem = ItemStack.copyItemStack(this.machine.additiveFluidItem);
+        this.lastIngredientItem = ItemStack.copyItemStack(this.machine.ingredientFluidItem);
     }
 
     @SideOnly(Side.CLIENT)
@@ -275,6 +277,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
     @Override
     public void updateTfMachineData(int id, ByteBuf data)
     {
+        super.updateTfMachineData(id, data);
+
         if (id == 0)
         {
             this.machine.tfNeeded = data.readDouble();
@@ -292,36 +296,36 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         {
             if (data.readBoolean())
             {
-                if (this.machine.additiveTank.getFluid() == null)
+                if (this.machine.ingredientTank.getFluid() == null)
                 {
-                    this.machine.additiveTank.setFluid(new FluidStack(data.readInt(), 0));
+                    this.machine.ingredientTank.setFluid(new FluidStack(data.readInt(), 0));
                 }
                 else
                 {
-                    this.machine.additiveTank.getFluid().fluidID = data.readInt();
+                    this.machine.ingredientTank.getFluid().fluidID = data.readInt();
                 }
             }
             else
             {
-                this.machine.additiveTank.setFluid(null);
+                this.machine.ingredientTank.setFluid(null);
             }
         }
         if (id == 4)
         {
-            if (this.machine.additiveTank.getFluid() != null)
+            if (this.machine.ingredientTank.getFluid() != null)
             {
-                this.machine.additiveTank.getFluid().amount = data.readInt();
+                this.machine.ingredientTank.getFluid().amount = data.readInt();
             }
         }
         if (id == 5)
         {
             if (data.readBoolean())
             {
-                this.machine.additiveFluidItem = new ItemStack(Item.getItemById(data.readInt()), 1, data.readInt());
+                this.machine.ingredientFluidItem = new ItemStack(Item.getItemById(data.readInt()), 1, data.readInt());
             }
             else
             {
-                this.machine.additiveFluidItem = null;
+                this.machine.ingredientFluidItem = null;
             }
         }
     }
@@ -331,8 +335,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
     {
         if (eventId == 0)
         {
-            this.machine.additiveTank.setFluid(null);
-            this.machine.updateAdditiveItem();
+            this.machine.ingredientTank.setFluid(null);
+            this.machine.updateIngredientItem();
          }
     }
 

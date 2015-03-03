@@ -5,14 +5,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import tsuteto.tofu.api.recipe.TfCondenserRecipe;
+import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.block.BlockTfCondenser;
+import tsuteto.tofu.data.ContainerParam;
+import tsuteto.tofu.data.ContainerParamBool;
 import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.fluids.TcFluids;
-import tsuteto.tofu.api.recipe.TfCondenserRecipe;
-import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
-import tsuteto.tofu.item.ICraftingDurability;
 import tsuteto.tofu.item.TcItems;
 
 public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase implements ITfConsumer
@@ -24,6 +25,8 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     public static final int SLOT_TOFU_OUTPUT = 4;
 
     public static final int NIGARI_COST_MB = 5;
+    public static final int TANK_CAPACITY_NIGARI = 200;
+    public static final int TANK_CAPACITY_INGREDIENT = 10000;
 
     public static final int[] slotsTop = new int[]{0, 2};
     public static final int[] slotsSides = new int[]{0, 1, 2, 3, 4};
@@ -35,18 +38,22 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
 
     public int wholeTimeOutput = 0;
     public FluidTank nigariTank = new FluidTank(0);
-    public FluidTank additiveTank = new FluidTank(0);
-    public ItemStack additiveFluidItem;
-    private boolean isProcessing = false;
-    private boolean isTfCharging = false;
+    public FluidTank ingredientTank = new FluidTank(0);
+    public ItemStack ingredientFluidItem;
+    private boolean isTfCharged = false;
+    public boolean isWorking = false;
+    private boolean prevWorking;
+
+    public ContainerParam<Boolean> paramTfPowered = new ContainerParamBool(6, false);
+    private boolean isTfPoweredInternal = false;
 
     public TileEntityTfCondenser()
     {
         this.itemStacks = new ItemStack[5];
 
         this.nigariTank.setFluid(new FluidStack(TcFluids.NIGARI, 0));
-        this.nigariTank.setCapacity(200);
-        this.additiveTank.setCapacity(10000);
+        this.nigariTank.setCapacity(TANK_CAPACITY_NIGARI);
+        this.ingredientTank.setCapacity(TANK_CAPACITY_INGREDIENT);
     }
 
     @Override
@@ -66,12 +73,9 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         this.processTimeOutput = nbtTagCompound.getShort("ProcO");
         this.tfPooled = nbtTagCompound.getDouble("TfP");
         this.tfNeeded = nbtTagCompound.getDouble("TfN");
-        this.isTfCharging = nbtTagCompound.getBoolean("TfC");
-        this.isProcessing = isProcessing();
-
         this.nigariTank.readFromNBT(nbtTagCompound.getCompoundTag("Tank1"));
-        this.additiveTank.readFromNBT(nbtTagCompound.getCompoundTag("Tank2"));
-        this.updateAdditiveItem();
+        this.ingredientTank.readFromNBT(nbtTagCompound.getCompoundTag("Tank2"));
+        this.updateIngredientItem();
     }
 
     /**
@@ -85,73 +89,91 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         nbtTagCompound.setShort("WholeO", (short) this.wholeTimeOutput);
         nbtTagCompound.setDouble("TfP", this.tfPooled);
         nbtTagCompound.setDouble("TfN", this.tfNeeded);
-        nbtTagCompound.setBoolean("TfC", this.isTfCharging);
 
         NBTTagCompound tag1 = this.nigariTank.writeToNBT(new NBTTagCompound());
         nbtTagCompound.setTag("Tank1", tag1);
 
-        NBTTagCompound tag2 = this.additiveTank.writeToNBT(new NBTTagCompound());
+        NBTTagCompound tag2 = this.ingredientTank.writeToNBT(new NBTTagCompound());
         nbtTagCompound.setTag("Tank2", tag2);
     }
 
     public boolean isProcessing()
     {
-        return this.wholeTimeOutput > 0 && this.isRedstonePowered()
-                && (this.tfPooled < tfNeeded && isTfCharging || this.tfPooled >= tfNeeded);
+        return this.isWorking;
     }
 
     @Override
     public void updateEntity()
     {
         boolean isInventoryChanged = false;
+        this.isWorking = false;
 
-        if (!this.worldObj.isRemote && this.isRedstonePowered())
+        if (!this.worldObj.isRemote)
         {
-            if ((wholeTimeOutput == 0 || this.tfNeeded == 0) && this.canCondenseTf())
+            if (this.isRedstonePowered())
             {
-                // Make a start on process
-                TfCondenserRecipe recipe = getCurrentRecipe();
-                this.wholeTimeOutput = recipe.ticksNeeded;
-                this.tfNeeded = recipe.tfAmountNeeded;
-            }
-
-            if (this.wholeTimeOutput > 0 && this.canCondenseTf())
-            {
-                if (this.tfPooled >= tfNeeded)
+                if ((wholeTimeOutput == 0 || this.tfNeeded == 0) && this.canCondenseTf())
                 {
-                    // Condensing
-                    this.processTimeOutput++;
+                    // Make a start on process
+                    TfCondenserRecipe recipe = getCurrentRecipe();
+                    this.wholeTimeOutput = recipe.ticksNeeded;
+                    this.tfNeeded = recipe.tfAmountNeeded;
                 }
 
-                if (this.processTimeOutput >= this.wholeTimeOutput)
+                if (this.wholeTimeOutput > 0 && this.canCondenseTf())
                 {
-                    // Process Complete
+                    if (this.tfPooled >= tfNeeded)
+                    {
+                        // Condensing
+                        this.processTimeOutput++;
+                        this.isWorking = true;
+                    }
+
+                    if (this.processTimeOutput >= this.wholeTimeOutput)
+                    {
+                        // Process Complete
+                        this.processTimeOutput = 0;
+                        this.wholeTimeOutput = 0;
+                        this.tfPooled = 0;
+                        this.tfNeeded = 0;
+                        this.onOutputCompleted();
+                        isInventoryChanged = true;
+                    }
+                }
+                else if (this.wholeTimeOutput > 0)
+                {
+                    // Process stopped
                     this.processTimeOutput = 0;
                     this.wholeTimeOutput = 0;
                     this.tfPooled = 0;
-                    this.tfNeeded = 0;
-                    this.onOutputCompleted();
-                    isInventoryChanged = true;
                 }
             }
-            else if (this.wholeTimeOutput > 0)
+
+            if (isTfCharged)
             {
-                // Process stopped
-                this.processTimeOutput = 0;
-                this.wholeTimeOutput = 0;
-                this.tfPooled = 0;
+                this.isWorking = true;
+                this.isTfCharged = false;
+            }
+
+            if (isTfPoweredInternal)
+            {
+                this.paramTfPowered.set(true);
+                this.isTfPoweredInternal = false;
+            }
+            else
+            {
+                this.paramTfPowered.set(false);
             }
         }
 
         // Update machine appearance
-        if (isProcessing != this.isProcessing())
+        if (this.isWorking != this.prevWorking)
         {
             isInventoryChanged = true;
             BlockTfCondenser.updateMachineState(this.isProcessing(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
         }
 
-        isProcessing = this.isProcessing();
-        isTfCharging = false;
+        isTfCharged = false;
 
         // Nigari slot
         if (nigariTank.getFluid() == null)
@@ -160,44 +182,36 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         }
         this.addFluidToTank(SLOT_NIGARI_INPUT, SLOT_NIGARI_OUTPUT, nigariTank);
 
-        // Additive slot
-        ItemStack additiveItem = itemStacks[SLOT_SPECIAL_INPUT];
-        if (additiveItem != null && additiveTank.getFluid() == null)
+        // Ingredient slot
+        ItemStack ingredientItem = itemStacks[SLOT_SPECIAL_INPUT];
+        if (ingredientItem != null)
         {
-            FluidStack fluidStackInput = FluidContainerRegistry.getFluidForFilledItem(additiveItem);
-            if (fluidStackInput != null
-                    && TfCondenserRecipeRegistry.ingredientToRecipeMap.containsKey(fluidStackInput.getFluid()))
-            {
-                additiveTank.fill(fluidStackInput, true);
-                this.drainAndMoveSlotItem(SLOT_SPECIAL_INPUT, SLOT_SPECIAL_OUTPUT);
-                this.updateAdditiveItem();
-            }
-        }
-        else
-        {
-            this.addFluidToTank(SLOT_SPECIAL_INPUT, SLOT_SPECIAL_OUTPUT, additiveTank);
+            this.addFluidToTank(SLOT_SPECIAL_INPUT, SLOT_SPECIAL_OUTPUT, ingredientTank);
+            this.updateIngredientItem();
         }
 
         if (isInventoryChanged)
         {
             this.markDirty();
         }
+
+        this.prevWorking = this.isWorking;
     }
 
     private boolean addFluidToTank(int inputSlotId, int outputSlotId, FluidTank tank)
     {
         ItemStack slotItemInput = itemStacks[inputSlotId];
         ItemStack slotItemOutput = itemStacks[outputSlotId];
-        if (slotItemInput != null && canAddItemToSlot(slotItemOutput, slotItemInput.getItem().getContainerItem(slotItemInput)))
+        if (slotItemInput != null)
         {
             FluidStack fluidInput = FluidContainerRegistry.getFluidForFilledItem(slotItemInput);
-            if (fluidInput != null && fluidInput.isFluidEqual(tank.getFluid()))
+            if (fluidInput != null && canAddItemToSlot(slotItemOutput, FluidContainerRegistry.drainFluidContainer(slotItemInput)))
             {
-                // If the tank will overflow adding fluid, do not pour the fluid into the tank
+                // Check if the input fluid is the same and the tank will not overflow
                 if (fluidInput.amount == tank.fill(fluidInput, false))
                 {
                     tank.fill(fluidInput, true);
-                    this.drainAndMoveSlotItem(inputSlotId, outputSlotId);
+                    this.moveDrainedItem(inputSlotId, outputSlotId);
                     return true;
                 }
             }
@@ -215,23 +229,14 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         return (result <= getInventoryStackLimit() && result <= slotItem.getMaxStackSize());
     }
 
-    private void drainAndMoveSlotItem(int inputSlotId, int outputSlotId)
+    private void moveDrainedItem(int inputSlotId, int outputSlotId)
     {
         ItemStack slotItemInput = itemStacks[inputSlotId];
         ItemStack slotItemOutput = itemStacks[outputSlotId];
-        ItemStack container = null;
+        ItemStack container = FluidContainerRegistry.drainFluidContainer(slotItemInput);
 
-        if (slotItemInput.getItem() instanceof ICraftingDurability)
-        {
-            container = ((ICraftingDurability)slotItemInput.getItem()).getEmptyItem();
-        }
-        else
-        {
-            container = slotItemInput.getItem().getContainerItem(slotItemInput);
-        }
         if (container != null)
         {
-            this.canAddItemToSlot(slotItemOutput, container);
             if (slotItemOutput == null)
             {
                 itemStacks[outputSlotId] = container.copy();
@@ -248,15 +253,15 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         }
     }
 
-    public void updateAdditiveItem()
+    public void updateIngredientItem()
     {
-        if (additiveTank.getFluid() != null)
+        if (ingredientTank.getFluid() != null)
         {
-            this.additiveFluidItem = FluidUtils.getSampleFilledItemFromFluid(additiveTank.getFluid().getFluid());
+            this.ingredientFluidItem = FluidUtils.getSampleFilledItemFromFluid(ingredientTank.getFluid().getFluid());
         }
         else
         {
-            this.additiveFluidItem = null;
+            this.ingredientFluidItem = null;
         }
     }
 
@@ -271,7 +276,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
         if (recipe == null) return false;
 
         // Has enough ingredients?
-        if (recipe.ingredient != null && additiveTank.getFluidAmount() < recipe.ingredient.amount
+        if (recipe.ingredient != null && ingredientTank.getFluidAmount() < recipe.ingredient.amount
                 || nigariTank.getFluidAmount() < NIGARI_COST_MB) return false;
 
         // Check if an output item can be stacked to the output slot
@@ -303,17 +308,17 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
 
         if (recipe.ingredient != null)
         {
-            this.additiveTank.drain(recipe.ingredient.amount, true);
-            this.updateAdditiveItem();
+            this.ingredientTank.drain(recipe.ingredient.amount, true);
+            this.updateIngredientItem();
         }
         this.nigariTank.drain(NIGARI_COST_MB, true);
     }
 
     public TfCondenserRecipe getCurrentRecipe()
     {
-        if (additiveTank.getFluid() != null)
+        if (ingredientTank.getFluid() != null)
         {
-            return TfCondenserRecipeRegistry.ingredientToRecipeMap.get(additiveTank.getFluid().getFluid());
+            return TfCondenserRecipeRegistry.ingredientToRecipeMap.get(ingredientTank.getFluid().getFluid());
         }
         else
         {
@@ -344,9 +349,10 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     public void chargeTf(double amount)
     {
         this.tfPooled += amount;
+        this.isTfPoweredInternal = true;
         if (amount > 0)
         {
-            this.isTfCharging = true;
+            this.isTfCharged = true;
         }
     }
 

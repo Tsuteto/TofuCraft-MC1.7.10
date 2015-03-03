@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachineOutput;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
@@ -34,7 +34,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
     {
         super.addCraftingToCrafters(par1ICrafting);
 
-        this.sendTfMachineData(par1ICrafting, this, 0, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 0, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -43,7 +43,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 1, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 1, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -52,7 +52,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
             }
         });
 
-        this.sendTfMachineData(par1ICrafting, this, 2, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 2, new PacketTfMachineData.DataHandler() {
             
             @Override
             public void addData(ByteBuf buffer)
@@ -61,7 +61,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
             }
         });
     
-        this.sendTfMachineData(par1ICrafting, this, 3, new PacketTfMachineData.DataHandler() {
+        this.sendTfMachineData(par1ICrafting, 3, new PacketTfMachineData.DataHandler() {
             
             @Override
             public void addData(ByteBuf buffer)
@@ -85,7 +85,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
 
             if (this.lastWholeTfInput != this.machine.wholeTfInput)
             {
-                this.sendTfMachineData(var2, this, 0, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -97,7 +97,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
 
             if (this.lastTfInput != this.machine.tfInput)
             {
-                this.sendTfMachineData(var2, this, 1, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -109,7 +109,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
 
             if (this.lastTfCapacity != this.machine.tfCapacity)
             {
-                this.sendTfMachineData(var2, this, 2, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 2, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -121,7 +121,7 @@ public class ContainerTfStorage extends ContainerTfMachine<TileEntityTfStorage>
             
             if (this.lastTfAmount != this.machine.tfAmount)
             {
-                this.sendTfMachineData(var2, this, 3, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)

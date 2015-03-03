@@ -1,10 +1,17 @@
 package tsuteto.tofu.util;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 
+import java.lang.reflect.Field;
+
 public class GuiUtils
 {
+    private static Field fldGuiLeft = ReflectionHelper.findField(GuiContainer.class, "field_146294_l", "guiLeft");
+    private static Field fldGuiTop = ReflectionHelper.findField(GuiContainer.class, "field_146295_m", "guiTop");
+
     public static void drawColorTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6, int color, float zLevel)
     {
         if ((color & -67108864) == 0)
@@ -49,4 +56,27 @@ public class GuiUtils
         int b = color & 255;
         GL11.glColor4b((byte)r, (byte)g, (byte)b, (byte)255);
     }
+
+    public static int getGuiLeft(GuiContainer gui)
+    {
+        try {
+            return fldGuiLeft.getInt(gui);
+        }
+        catch (Exception e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static int getGuiTop(GuiContainer gui)
+    {
+        try {
+            return fldGuiTop.getInt(gui);
+        }
+        catch (Exception e)
+        {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }

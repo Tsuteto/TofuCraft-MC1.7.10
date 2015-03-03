@@ -1,14 +1,16 @@
 package tsuteto.tofu.gui;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.StatCollector;
-
-import org.lwjgl.opengl.GL11;
-
-import tsuteto.tofu.tileentity.ContainerTfStorage;
-import tsuteto.tofu.tileentity.TileEntityTfStorage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
+import tsuteto.tofu.gui.guiparts.GuiPartGaugeBase;
+import tsuteto.tofu.gui.guiparts.GuiPartGaugeH;
+import tsuteto.tofu.gui.guiparts.HoverTextPosition;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
+import tsuteto.tofu.tileentity.ContainerTfStorage;
+import tsuteto.tofu.tileentity.TileEntityTfStorage;
 
 @SideOnly(Side.CLIENT)
 public class GuiTfStorage extends GuiTfMachineBase
@@ -61,7 +63,7 @@ public class GuiTfStorage extends GuiTfMachineBase
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
-        this.mc.getTextureManager().bindTexture(texture);
+        this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         this.drawStandardBasePanel();

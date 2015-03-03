@@ -5,7 +5,7 @@ import net.minecraft.potion.Potion;
 
 import java.util.List;
 
-public class TcEffectFoodBase<T extends TcEffectFoodBase> extends TcFoodBase<T>
+public abstract class TcEffectFoodBase<T extends TcEffectFoodBase> extends TcFoodBase<T>
 {
     public List<PotionEffectEntry> potionEffects = null;
     public boolean randomPotionEffect = false;

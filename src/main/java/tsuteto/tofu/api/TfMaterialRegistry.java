@@ -1,8 +1,6 @@
 package tsuteto.tofu.api;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -14,9 +12,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.item.ItemTcMaterials;
-
-import com.google.common.collect.Lists;
 import tsuteto.tofu.item.TcItems;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Collection of TF materials
@@ -29,7 +28,7 @@ public class TfMaterialRegistry
     public static void init()
     {
         registerMaterial(TcItems.bucketSoymilk, 40);
-        registerMaterial(TcItems.bucketSoymilkHell, 1200);
+        registerMaterial(TcItems.bucketSoymilkHell, 600);
 
         registerMaterial(TcItems.soybeans, 20);
         registerMaterial(TcItems.tofuKinu, 10);
@@ -48,8 +47,8 @@ public class TfMaterialRegistry
         registerMaterial(TcBlocks.tofuGrilled, 48);
 
         registerMaterial(TcItems.materials, ItemTcMaterials.tofuGem.id, 600);
-        registerMaterial(TcItems.tofuHell, 300);
-        registerMaterial(TcBlocks.tofuHell, 1200);
+        registerMaterial(TcItems.tofuHell, 150);
+        registerMaterial(TcBlocks.tofuHell, 600);
         registerMaterial(TcItems.materials, ItemTcMaterials.tofuDiamondNugget.id, 200);
         registerMaterial(TcItems.tofuDiamond, 1800);
         registerMaterial(TcBlocks.tofuDiamond, 7200);
@@ -161,6 +160,16 @@ public class TfMaterialRegistry
     {
         return is != null && is.getItem() == this.item
                 && (!is.getItem().getHasSubtypes() || this.itemDmg == OreDictionary.WILDCARD_VALUE || this.itemDmg == is.getItemDamage());
+    }
+
+    public ItemStack getItemStack()
+    {
+        return new ItemStack(item, 1, itemDmg);
+    }
+
+    public static List<TfMaterialRegistry> getTfMaterialList()
+    {
+        return tfMaterialList;
     }
 
     private static class FluidEntry

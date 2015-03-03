@@ -1,23 +1,17 @@
 package tsuteto.tofu.item;
 
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSeasoningBottle extends ItemColoredBottle implements ICraftingDurability
+public class ItemSeasoningBottle extends ItemColoredBottle
 {
-    public ItemSeasoningBottle(int color)
+    public ItemSeasoningBottle(int color, int durability)
     {
         super(color);
-        this.setMaxDamage(9);
+        this.setMaxDamage(durability);
+        this.setNoRepair();
+        itemInfo.setCraftingDurabilityTool();
+        itemInfo.setContainerItem(new ItemStack(Items.glass_bottle));
         this.setMaxStackSize(1);
-    }
-
-    @Override
-    public ItemStack getEmptyItem()
-    {
-        return new ItemStack(Items.glass_bottle);
     }
 }

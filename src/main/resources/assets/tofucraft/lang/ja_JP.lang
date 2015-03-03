@@ -55,6 +55,7 @@ tile.tofucraft:barrelAdvTofuGem.name=豆腐石樽
 tile.tofucraft:blockAdvTofuGem.name=強化豆腐石ブロック
 tile.tofucraft:chikuwaPlatformPlain.name=ちくわ床ブロック
 tile.tofucraft:chikuwaPlatformTofu.name=とうふちくわ床ブロック
+tile.tofucraft:tofuFarmland.name=耕した豆腐
 
 tile.tofucraft:soymilk.name=豆乳
 tile.tofucraft:soymilkHell.name=地獄豆乳
@@ -240,6 +241,7 @@ item.tofucraft:zundaMochi.name=ずんだ餅
 item.tofucraft:kinakoMochi.name=きなこ餅
 item.tofucraft:chikuwa.name=ちくわ
 item.tofucraft:tofuSteak.name=豆腐ステーキ
+item.tofucraft:tofuHoe.name=トーフニアンのクワ
 
 item.tofucraft:armorKinuHelmet.name=絹豆腐ヘルメット
 item.tofucraft:armorKinuChestplate.name=絹豆腐チェストプレート
@@ -480,6 +482,7 @@ fluid.tile.tofucraft:soySauce=醤油
 fluid.tofucraft:nigari=にがり
 fluid.tofucraft:mineralSoymilk=ミネラル豆乳
 fluid.tofucraft:strawberryJam=いちごジャム
+fluid.tofucraft:soupStock=出汁
 
 potion.glowing=蛍光
 potion.glowing.postfix=蛍光のポーション
@@ -499,8 +502,14 @@ commands.tofuslimecheck.notFound=このチャンクには豆腐スライムは�
 tofucraft.tofuForce=トーフフォース
 tofucraft.empty=空
 tofucraft.dump=捨てる
-tofucraft.redstone.on=レッドストーン信号あり
-tofucraft.redstone.off=レッドストーン信号なし
+tofucraft.redstone=レッドストーン
+tofucraft.redstone.on=信号あり
+tofucraft.redstone.off=信号なし
+tofucraft.tfPowered=トーフフォース
+tofucraft.tfPowered.true=入力あり
+tofucraft.tfPowered.false=入力なし
+tofucraft.tfProduced=TF供給
+tofucraft.seconds=%.1f秒
 
 tofucraft.soymilkTaken.greetings=豆乳一日目です。毎日飲んで健康になろう!
 tofucraft.soymilkTaken.recovered=%1$s日ぶりの豆乳です。今日の効果レベルは%2$s

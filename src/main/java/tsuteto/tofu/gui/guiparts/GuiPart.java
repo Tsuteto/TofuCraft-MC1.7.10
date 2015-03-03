@@ -1,8 +1,10 @@
-package tsuteto.tofu.gui;
+package tsuteto.tofu.gui.guiparts;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Gui;
+import tsuteto.tofu.gui.GuiTfMachineBase;
 
+import java.awt.*;
 import java.util.List;
 
 public class GuiPart<T extends GuiPart> extends Gui
@@ -19,15 +21,31 @@ public class GuiPart<T extends GuiPart> extends Gui
         this.part = part;
     }
 
-    public T setInfoTip(int tipW, int tipH, GuiTfMachineBase.HoverTextPosition pos)
+    public T setInfoTip(int tipW, int tipH, HoverTextPosition pos)
     {
-        this.infoTip = new GuiInfoTip(part.xSize, part.ySize, tipW, tipH, pos);
+        if (this.infoTip == null)
+        {
+            this.infoTip = new GuiInfoTip(part.xSize, part.ySize, tipW, tipH, pos);
+        }
+        else
+        {
+            this.infoTip.wTip = tipW;
+            this.infoTip.hTip = tipH;
+            this.infoTip.pos = pos;
+        }
         return (T)this;
     }
 
-    public T setInfoTip(GuiTfMachineBase.HoverTextPosition pos)
+    public T setInfoTip(HoverTextPosition pos)
     {
-        this.infoTip = new GuiInfoTip(part.xSize, part.ySize, pos);
+        if (this.infoTip == null)
+        {
+            this.infoTip = new GuiInfoTip(part.xSize, part.ySize, pos);
+        }
+        else
+        {
+            this.infoTip.pos = pos;
+        }
         return (T)this;
     }
 
@@ -55,5 +73,10 @@ public class GuiPart<T extends GuiPart> extends Gui
         {
             gui.drawTfHoveringText(text, px, py, infoTip.pos);
         }
+    }
+
+    public Rectangle getBoundingBox()
+    {
+        return new Rectangle(x, y, part.xSize, part.ySize);
     }
 }

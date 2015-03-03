@@ -1,6 +1,7 @@
 package tsuteto.tofu.data;
 
 import net.minecraft.nbt.NBTTagCompound;
+import tsuteto.tofu.util.ModLog;
 
 import java.io.File;
 
@@ -12,28 +13,56 @@ import java.io.File;
  */
 public class TcSaveHandler extends ModSaveHandler
 {
-    private static final String filename = "TofuCraft";
+    public static final String DIR_NAME = "TofuCraft";
+    public static final String FILE_ANTENNA = "Antenna";
+    public static final String FILE_MORIJIO = "Morijio";
 
     public TcSaveHandler(File worldDir)
     {
-        super(worldDir);
+        super(new File(worldDir, DIR_NAME));
     }
 
-    public TcWorldInfo loadData()
+    public TfAntennaInfoHandler loadTfAntennaData()
     {
-        NBTTagCompound var2 = this.readData(filename);
+        NBTTagCompound var2 = this.readData(FILE_ANTENNA);
         if (var2 != null)
         {
-            return new TcWorldInfo(var2);
+            return new TfAntennaInfoHandler(var2);
         }
         else
         {
-            return null;
+            TfAntennaInfoHandler newHandler = new TfAntennaInfoHandler();
+            this.saveAntennaData(newHandler);
+            return newHandler;
         }
     }
 
-    public void saveData(TcWorldInfo worldInfo)
+    public MorijioManager loadMorijioData()
     {
-        super.saveData(worldInfo.getNBTTagCompound(), filename);
+        NBTTagCompound var2 = this.readData(FILE_MORIJIO);
+        if (var2 != null)
+        {
+            return new MorijioManager(var2);
+        }
+        else
+        {
+            MorijioManager newHandler = new MorijioManager();
+            this.saveMorijioData(newHandler);
+            return newHandler;
+        }
+    }
+
+    public void saveAntennaData(TfAntennaInfoHandler worldInfo)
+    {
+        super.saveData(worldInfo.getNBTTagCompound(), FILE_ANTENNA);
+    }
+
+    public void saveMorijioData(MorijioManager worldInfo)
+    {
+        if (worldInfo.isModified())
+        {
+            super.saveData(worldInfo.getNBTTagCompound(), FILE_MORIJIO);
+            ModLog.debug("Saved morijio save handler");
+        }
     }
 }

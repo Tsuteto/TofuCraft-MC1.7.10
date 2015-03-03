@@ -1,15 +1,14 @@
 package tsuteto.tofu.data;
 
 import io.netty.buffer.ByteBuf;
-import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 public class ContainerParamDouble extends ContainerParam<Double>
 {
 
-    public ContainerParamDouble(ContainerTfMachine container, int id)
+    public ContainerParamDouble(int id, double value)
     {
-        super(container, id);
+        super(id, value);
     }
 
     public void receive(ByteBuf data)

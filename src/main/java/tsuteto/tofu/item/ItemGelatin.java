@@ -1,6 +1,7 @@
 package tsuteto.tofu.item;
 
 import com.google.common.collect.Lists;
+import net.minecraft.item.Item;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
@@ -19,6 +20,12 @@ public class ItemGelatin extends ItemSetBase<ItemGelatin.ItemInfo>
         {
             super(id, type, name);
             itemList.add(id, this);
+        }
+
+        @Override
+        public Item getItemInstance()
+        {
+            return TcItems.gelatin;
         }
     }
 

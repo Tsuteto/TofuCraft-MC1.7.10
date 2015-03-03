@@ -1,13 +1,7 @@
 package tsuteto.tofu;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
@@ -17,6 +11,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
@@ -25,6 +20,8 @@ import tsuteto.tofu.achievement.TcAchievementList;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.data.MorijioManager;
+import tsuteto.tofu.data.TcSaveHandler;
 import tsuteto.tofu.enchantment.TcEnchantment;
 import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
@@ -38,6 +35,7 @@ import tsuteto.tofu.network.PacketManager;
 import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
+import tsuteto.tofu.recipe.craftguide.CraftGuideLoader;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.UpdateNotification;
@@ -57,10 +55,16 @@ import java.util.Arrays;
  * @author Tsuteto
  *
  */
-@Mod(modid = TofuCraftCore.modid, version = "1.6.16-MC1.7.2", acceptedMinecraftVersions = "[1.7.2,1.8)")
+@Mod(
+    modid = TofuCraftCore.modid,
+    name = "TofuCraft",
+    version = TofuCraftCore.version,
+    acceptedMinecraftVersions = "[1.7.10,1.8)"
+)
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
+    public static final String version = "1.6.17-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -77,6 +81,8 @@ public class TofuCraftCore
 
     public static UpdateNotification update = null;
     private Configuration conf;
+    private TcSaveHandler saveHandler = null;
+    private MorijioManager morijioManager = null;
 
     static
     {
@@ -149,6 +155,9 @@ public class TofuCraftCore
 
         // Register event on tofu fishing
         MinecraftForge.EVENT_BUS.register(new TofuFishing());
+
+        // Register world event handler
+        MinecraftForge.EVENT_BUS.register(new EventWorld());
 
         // Register event on player
         FMLCommonHandler.instance().bus().register(new EventPlayer());
@@ -238,6 +247,12 @@ public class TofuCraftCore
         Recipes.unifyOreDicItems();
         Recipes.register();
 
+        // CraftGuide
+        if (Loader.isModLoaded("craftguide"))
+        {
+            CraftGuideLoader.load();
+        }
+
         // Register sided components
         sidedProxy.registerComponents();
     }
@@ -265,6 +280,13 @@ public class TofuCraftCore
     public void serverStarting(FMLServerStartingEvent event){
         event.registerServerCommand(new CommandTofuSlimeCheck());
 
+        // Initialize world save handler
+        SaveHandler saveHandler = (SaveHandler)event.getServer().worldServerForDimension(0).getSaveHandler();
+        this.saveHandler = new TcSaveHandler(saveHandler.getWorldDirectory());
+
+        // Load Morijio info
+        this.morijioManager = this.saveHandler.loadMorijioData();
+
         // To handle spawn of Tofu Creeper ;)
         TofuCreeperSeed.initialize(12L);
         TofuCreeperSeed.instance().initSeed(event.getServer().worldServerForDimension(0).getSeed());
@@ -274,6 +296,11 @@ public class TofuCraftCore
         {
             update.notifyUpdate(event.getServer(), event.getSide());
         }
+    }
+
+    @Mod.EventHandler
+    public void serverStopping(FMLServerStoppingEvent event)
+    {
     }
 
     public void registerChestLoot(ItemStack loot, int min, int max, int rarity)
@@ -292,12 +319,24 @@ public class TofuCraftCore
                 new WeightedRandomChestContent(loot, min, max, rarity));
     }
 
+    public static TcSaveHandler getSaveHandler()
+    {
+        return instance.saveHandler;
+    }
+
+    public static MorijioManager getMorijioManager()
+    {
+        return instance.morijioManager;
+    }
+
     @SideOnly(Side.CLIENT)
     public static class ClientProxy implements ISidedProxy
     {
         @Override
         public void registerComponents()
         {
+            MinecraftForge.EVENT_BUS.register(new TcTextures());
+
             TcBlocks.registerBlockRenderer();
             TcEntity.registerEntityRenderer();
 

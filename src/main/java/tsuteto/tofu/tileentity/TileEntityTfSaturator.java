@@ -8,24 +8,27 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineBase;
-import tsuteto.tofu.block.*;
+import tsuteto.tofu.block.BlockTfSaturator;
+import tsuteto.tofu.block.BlockTofu;
+import tsuteto.tofu.data.ContainerParamBool;
 import tsuteto.tofu.util.TileScanner;
 
 import java.util.Random;
 
 public class TileEntityTfSaturator extends TileEntityTfMachineBase implements ITfConsumer
 {
-    private static final double TF_CAPACITY = 1D;
-    private static final double tfNeededPerTick = 0.015D;
-    private static final int radius = 16;
+    public static final double TF_CAPACITY = 1D;
+    public static final double COST_TF_PER_TICK = 0.008D;
+    public static final int RADIUS = 16;
 
     private final Random machineRand = new Random();
-    public double tfAmount = 0D;
+    public double tfPooled = 0D;
     public int interval = getNextInterval();
     public int tickCounter = 0;
     public int step = 0;
     public boolean isProcessingLastTick = false;
-    public int saturatingLampTick = 0;
+    public int saturatingTime = 0;
+    public ContainerParamBool paramSuffocating = new ContainerParamBool(1, false);
 
     @Override
     protected String getInventoryNameTranslate()
@@ -40,7 +43,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     public void writeToNBT(NBTTagCompound nbtTagCompound)
     {
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setFloat("amount", (float) tfAmount);
+        nbtTagCompound.setFloat("amount", (float) tfPooled);
         nbtTagCompound.setShort("tick", (short) tickCounter);
         nbtTagCompound.setShort("intv", (short) interval);
         nbtTagCompound.setShort("step", (byte) step);
@@ -53,7 +56,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     public void readFromNBT(NBTTagCompound nbtTagCompound)
     {
         super.readFromNBT(nbtTagCompound);
-        tfAmount = nbtTagCompound.getFloat("amount");
+        tfPooled = nbtTagCompound.getFloat("amount");
         tickCounter = nbtTagCompound.getShort("tick");
         interval = nbtTagCompound.getShort("intv");
         step = nbtTagCompound.getByte("step");
@@ -67,7 +70,13 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
 
     public boolean isProcessing()
     {
-        return tfAmount >= tfNeededPerTick && this.isRedstonePowered();
+        return tfPooled >= COST_TF_PER_TICK && this.isRedstonePowered() && !this.paramSuffocating.get();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public double getTfCharged()
+    {
+        return this.tfPooled / TF_CAPACITY;
     }
 
     /**
@@ -78,6 +87,8 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     {
         if (!worldObj.isRemote)
         {
+            this.paramSuffocating.set(!worldObj.isAirBlock(xCoord, yCoord + 1, zCoord));
+
             boolean isProcessing = isProcessing();
             if (isProcessing)
             {
@@ -89,7 +100,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
                 }
 
                 tickCounter++;
-                tfAmount -= tfNeededPerTick;
+                tfPooled -= COST_TF_PER_TICK;
                 //ModLog.debug("t=%d, i=%d, s=%d", tickCounter, interval, step);
             }
 
@@ -101,8 +112,14 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
         }
         else
         {
-            if (tickCounter >= interval) saturatingLampTick = 30;
-            else if (saturatingLampTick > 0) saturatingLampTick--;
+            if (tickCounter >= interval)
+            {
+                saturatingTime = 30;
+            }
+            else if (saturatingTime > 0)
+            {
+                saturatingTime--;
+            }
         }
     }
 
@@ -110,7 +127,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     {
         TileScanner scanner = new TileScanner(worldObj, xCoord, yCoord, zCoord);
 
-        int len = Math.min(step * 2, radius);
+        int len = Math.min(step * 2, RADIUS);
         scanner.scan(len, TileScanner.Method.full, new TileScanner.Impl()
         {
             public void apply(World world, int x, int y, int z)
@@ -127,7 +144,7 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
             }
         });
 
-        if (++step * 2 > radius) step = 1;
+        if (++step * 2 > RADIUS) step = 1;
     }
 
     private int getNextInterval()
@@ -138,19 +155,19 @@ public class TileEntityTfSaturator extends TileEntityTfMachineBase implements IT
     @Override
     public double getMaxTfCapacity()
     {
-        return Math.min(0.1, TF_CAPACITY - tfAmount);
+        return Math.min(0.1, TF_CAPACITY - tfPooled);
     }
 
     @Override
     public double getCurrentTfConsumed()
     {
-        return this.isRedstonePowered() ? tfNeededPerTick : 0;
+        return this.isRedstonePowered() ? COST_TF_PER_TICK : 0;
     }
 
     @Override
     public void chargeTf(double amount)
     {
-        tfAmount += amount;
+        tfPooled += amount;
     }
 
     @Override

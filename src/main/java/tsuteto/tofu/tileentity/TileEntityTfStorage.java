@@ -31,10 +31,12 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
     public float wholeTfInput = 0;
 
     public int externalProcessTime = 0;
-    public boolean isExternalProcessed = false;
+    public boolean isExternalFluidAccepted = false;
 
     public float tfAmount = 0;
     public float tfCapacity = 5000;
+    public boolean isWorking;
+    private boolean prevWorking;
 
     public TileEntityTfStorage()
     {
@@ -121,7 +123,7 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
      */
     public boolean isProcessing()
     {
-        return this.wholeTfInput > 0;
+        return this.isWorking;
     }
 
     /**
@@ -130,9 +132,8 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
     @Override
     public void updateEntity()
     {
-        boolean isProcessingInput = this.wholeTfInput > 0;
-        boolean isExternalProcessing = this.externalProcessTime > 0;
         boolean isInventoryChanged = false;
+        this.isWorking = false;
 
         if (this.wholeTfInput > 0 && this.tfAmount < this.tfCapacity)
         {
@@ -156,24 +157,25 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
 
             if (this.wholeTfInput > 0)
             {
+                this.isWorking = true;
                 if (this.tfInput >= wholeTfInput)
                 {
                     this.tfInput = 0;
                     this.wholeTfInput = 0;
                 }
             }
-            if (this.isExternalProcessed)
+            if (this.isExternalFluidAccepted)
             {
                 this.externalProcessTime = 20;
-                this.isExternalProcessed = false;
+                this.isExternalFluidAccepted = false;
             }
             else if (this.externalProcessTime > 0)
             {
                 --this.externalProcessTime;
+                this.isWorking = true;
             }
 
-            if (isProcessingInput != this.wholeTfInput > 0
-                    || isExternalProcessing != this.externalProcessTime > 0)
+            if (this.isWorking != this.prevWorking)
             {
                 isInventoryChanged = true;
                 BlockTfStorage.updateMachineState(this.isProcessing(), this.worldObj, this.xCoord, this.yCoord, this.zCoord);
@@ -184,6 +186,8 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
         {
             this.markDirty();
         }
+
+        this.prevWorking = this.isWorking;
     }
 
     /**
@@ -282,7 +286,7 @@ public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase i
             {
                 tfAmount += TfMaterialRegistry.calcTfAmountFrom(new FluidStack(resource, amount));
                 this.updateFluidTank();
-                this.isExternalProcessed = true;
+                this.isExternalFluidAccepted = true;
             }
             return amount;
         }

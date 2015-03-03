@@ -3,17 +3,19 @@ package tsuteto.tofu.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
+import tsuteto.tofu.gui.guiparts.HoverTextPosition;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class GuiTcButtonFixed extends GuiTcButtonBase<GuiTcButtonFixed>
 {
-    protected GuiTfMachineBase.HoverTextPosition tipPosition = GuiTfMachineBase.HoverTextPosition.UPPER_CENTER;
+    protected HoverTextPosition tipPosition = HoverTextPosition.UPPER_CENTER;
 
     public GuiTcButtonFixed(int id, int x, int y, TfMachineGuiParts guiPartEnabled, String str)
     {
         super(id, x, y, guiPartEnabled, str);
     }
 
-    public GuiTcButtonFixed setTipPosition(GuiTfMachineBase.HoverTextPosition pos)
+    public GuiTcButtonFixed setTipPosition(HoverTextPosition pos)
     {
         this.tipPosition = pos;
         return this;

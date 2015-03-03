@@ -1,7 +1,7 @@
 package tsuteto.tofu.tileentity;
 
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 
 public class SlotTfReformer extends SlotTfMachine
 {

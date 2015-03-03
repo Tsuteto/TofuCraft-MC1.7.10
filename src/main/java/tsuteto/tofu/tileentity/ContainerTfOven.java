@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import tsuteto.tofu.api.tileentity.ContainerTfMachine;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
-import tsuteto.tofu.gui.TfMachineGuiParts;
+import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
 import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
@@ -18,7 +18,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
     private int lastCookTime = 0;
     private double lastTfPooled = 0;
     private int lastWholeCookTime = 0;
-    private boolean lastCharging = false;
+    private boolean lastWorking = false;
 
     public ContainerTfOven(InventoryPlayer invPlayer, TileEntityTfOven machine)
     {
@@ -75,14 +75,14 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
                     }
                 });
             }
-            if (this.lastCharging != this.machine.isCharging)
+            if (this.lastWorking != this.machine.isWorking)
             {
                 this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
                     {
-                        buffer.writeBoolean(machine.isCharging);
+                        buffer.writeBoolean(machine.isWorking);
                     }
                 });
             }
@@ -91,7 +91,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         this.lastCookTime = this.machine.ovenCookTime;
         this.lastWholeCookTime = this.machine.wholeCookTime;
         this.lastTfPooled = this.machine.tfPooled;
-        this.lastCharging = this.machine.isCharging;
+        this.lastWorking = this.machine.isWorking;
     }
 
     @SideOnly(Side.CLIENT)
@@ -119,7 +119,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
         }
         if (id == 1)
         {
-            this.machine.isCharging = data.readBoolean();
+            this.machine.isWorking = data.readBoolean();
         }
     }
 

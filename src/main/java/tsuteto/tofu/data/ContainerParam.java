@@ -10,25 +10,23 @@ abstract public class ContainerParam<T>
     public final int id;
     protected T value;
     protected T lastValue;
-    protected ContainerTfMachine container;
 
-    public ContainerParam(ContainerTfMachine container, int id)
+    public ContainerParam(int id, T value)
     {
-        this.container = container;
         this.id = id;
-        this.container.addContainerParam(this);
+        this.value = value;
     }
 
-    public void send(ICrafting iCrafting)
+    public void send(ICrafting iCrafting, ContainerTfMachine container)
     {
         container.sendTfMachineData(iCrafting, this.id, this.getDataHandler());
     }
 
-    public void sendIfChanged(ICrafting iCrafting)
+    public void sendIfChanged(ICrafting iCrafting, ContainerTfMachine container)
     {
         if (!value.equals(lastValue))
         {
-            this.send(iCrafting);
+            this.send(iCrafting, container);
         }
 
         this.lastValue = this.value;

@@ -27,6 +27,7 @@ public class TcBlocks
     public static Block leek;
 
     public static Block tofuTerrain;
+    public static Block tofuFarmland;
     public static BlockTofuBase tofuKinu;
     public static BlockTofuBase tofuMomen;
     public static BlockTofuBase tofuIshi;
@@ -139,6 +140,13 @@ public class TcBlocks
          * Tofu
          */
         tofuTerrain = $("blockTofuTerrain", new BlockTofuTerrain())
+                .setHarvestLevel("shovel", 0)
+                .registerBlock()
+                .setHardness(0.4F)
+                .setStepSound(Block.soundTypeSnow)
+                ;
+
+        tofuFarmland = $("tofuFarmland", new BlockTofuFarmland())
                 .setHarvestLevel("shovel", 0)
                 .registerBlock()
                 .setHardness(0.4F)
@@ -607,7 +615,7 @@ public class TcBlocks
                 .registerBlock()
                 .setHardness(3.0F)
                 .setResistance(5.0F)
-                .setStepSound(Block.soundTypeStone)
+                .setStepSound(Block.soundTypePiston)
                 ;
 
         oreTofuDiamond = (BlockTcOre)$("blockOreTofuDiamond", new BlockTcOreDiamond(3, 7))
@@ -885,7 +893,6 @@ public class TcBlocks
                 .setStepSound(Block.soundTypeSnow)
                 .setBlockTextureName("tofucraft:blockTofuGlow")
                 .setBlockName("tofucraft:tofuSlab.glow");
-
     }
 
     /**

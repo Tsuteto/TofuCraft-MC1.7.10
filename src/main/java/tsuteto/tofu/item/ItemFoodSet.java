@@ -2,6 +2,7 @@ package tsuteto.tofu.item;
 
 import com.google.common.collect.Lists;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
@@ -74,6 +75,12 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
         {
             super(id, healAmount, saturationModifier, alwaysEdible, name);
             foodList.add(this);
+        }
+
+        @Override
+        public Item getItemInstance()
+        {
+            return TcItems.foodSet;
         }
     }
 
