@@ -9,8 +9,8 @@ import java.lang.reflect.Field;
 
 public class GuiUtils
 {
-    private static Field fldGuiLeft = ReflectionHelper.findField(GuiContainer.class, "field_146294_l", "guiLeft");
-    private static Field fldGuiTop = ReflectionHelper.findField(GuiContainer.class, "field_146295_m", "guiTop");
+    private static Field fldGuiLeft = ReflectionHelper.findField(GuiContainer.class, "field_147003_i", "guiLeft");
+    private static Field fldGuiTop = ReflectionHelper.findField(GuiContainer.class, "field_147009_r", "guiTop");
 
     public static void drawColorTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6, int color, float zLevel)
     {
