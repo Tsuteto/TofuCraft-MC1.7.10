@@ -64,7 +64,7 @@ import java.util.Arrays;
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "1.6.18-MC1.7.10";
+    public static final String version = "1.6.19-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)

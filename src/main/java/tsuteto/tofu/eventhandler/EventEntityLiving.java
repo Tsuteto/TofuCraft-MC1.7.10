@@ -125,14 +125,17 @@ public class EventEntityLiving
         int tileY = (int)event.targetY;
         int tileZ = (int)event.targetZ;
 
-        MorijioManager morijioManager = TofuCraftCore.getMorijioManager();
-        if (morijioManager.isInRangeOfMorijio(world, tileX, tileY, tileZ, living.dimension))
+        if (!world.isRemote)
         {
-            if (living instanceof EntityEnderman)
+            MorijioManager morijioManager = TofuCraftCore.getMorijioManager();
+            if (morijioManager.isInRangeOfMorijio(world, tileX, tileY, tileZ, living.dimension))
             {
-                ((EntityEnderman) living).setTarget(null);
+                if (living instanceof EntityEnderman)
+                {
+                    ((EntityEnderman) living).setTarget(null);
+                }
+                event.setCanceled(true);
             }
-            event.setCanceled(true);
         }
     }
 }

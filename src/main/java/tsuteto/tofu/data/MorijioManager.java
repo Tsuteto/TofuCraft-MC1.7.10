@@ -130,7 +130,7 @@ public class MorijioManager
         }
     }
 
-    public List<TileEntityMorijio.MorijioInfo> getInfo(DataSectorCoord sectorCoord)
+    private List<TileEntityMorijio.MorijioInfo> getInfo(DataSectorCoord sectorCoord)
     {
         if (morijioInfoMapping.containsKey(sectorCoord.dim))
         {
