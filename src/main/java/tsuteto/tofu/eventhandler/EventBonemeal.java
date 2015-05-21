@@ -11,7 +11,7 @@ import tsuteto.tofu.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.block.BlockLeek;
 import tsuteto.tofu.block.BlockTcSapling;
 import tsuteto.tofu.block.BlockTofuBase;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 
 import java.util.Random;
 

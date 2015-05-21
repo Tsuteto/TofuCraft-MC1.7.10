@@ -1,5 +1,7 @@
 package tsuteto.tofu.entity;
 
+import net.minecraft.command.IEntitySelector;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,12 +15,21 @@ import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTofuSword;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class EntityTofuSlime extends EntitySlime
 {
+    public static final IEntitySelector entitySelectorMyself = new IEntitySelector()
+    {
+        @Override
+        public boolean isEntityApplicable(Entity p_82704_1_)
+        {
+            return p_82704_1_ instanceof EntityTofuSlime;
+        }
+    };
+
     public EntityTofuSlime(World par1World)
     {
         super(par1World);
@@ -77,7 +88,8 @@ public class EntityTofuSlime extends EntitySlime
         {
             int lightValue = this.worldObj.getBlockLightValue(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ));
             BiomeGenBase biome = this.worldObj.getBiomeGenForCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posZ));
-            if (BiomeDictionary.isBiomeOfType(biome, TofuCraftCore.BIOME_TYPE_TOFU) && this.rand.nextInt(20) == 0)
+            if (BiomeDictionary.isBiomeOfType(biome, TofuCraftCore.BIOME_TYPE_TOFU) && this.rand.nextInt(20) == 0
+                    && this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(48.0D, 24.0D, 48.0D), entitySelectorMyself).size() == 0)
             {
                 return this.baseGetCanSpawnHere();
             }

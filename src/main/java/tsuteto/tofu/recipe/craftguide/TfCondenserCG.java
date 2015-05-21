@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import tsuteto.tofu.api.recipe.TfCondenserRecipe;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcFluids;
 import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 import uristqwerty.CraftGuide.api.*;
 

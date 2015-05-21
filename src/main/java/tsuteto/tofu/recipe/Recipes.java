@@ -12,11 +12,14 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tsuteto.tofu.api.recipe.TcOreDic;
 import tsuteto.tofu.api.recipe.TfReformerRecipe;
 import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.entity.TcEntity;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcEntity;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.tileentity.TileEntityTfReformer;
 import tsuteto.tofu.util.ItemUtils;
+
+import java.util.Map;
 
 public class Recipes
 {
@@ -24,7 +27,6 @@ public class Recipes
     private static final String oredic_cookingRice = "cookingRice";
     private static final String oredic_cookedMochi = "cookedMochi";
     private static final String oredic_cropStraw = "cropStraw";
-    private static final String oredic_foodChikuwa = "foodChikuwa";
 
     public static void unifyOreDicItems()
     {
@@ -48,14 +50,10 @@ public class Recipes
         GameRegistry.addSmelting(TcItems.soybeans, new ItemStack(TcItems.soybeansParched), 0.2f);
         GameRegistry.addSmelting(TcItems.starchRaw, new ItemStack(TcItems.starch), 0.5f);
         GameRegistry.addSmelting(TcBlocks.tcLog, new ItemStack(Items.coal, 1, 1), 0.5f);
-        GameRegistry.addSmelting(TcItems.gelatin.getItemStack(ItemGelatin.gelatinRaw),
-                TcItems.gelatin.getItemStack(ItemGelatin.gelatin), 0.5f);
-        GameRegistry.addSmelting(TcItems.materials.getItemStack(ItemTcMaterials.tofuHamburgRaw),
-                TcItems.foodSet.getItemStack(ItemFoodSet.tofuHamburg), 0.8f);
-        GameRegistry.addSmelting(TcItems.foodSet.getItemStack(ItemFoodSet.tofufishRow),
-                TcItems.foodSet.getItemStack(ItemFoodSet.tofufishCooked), 1.5f);
-        GameRegistry.addSmelting(TcItems.tofuIshi,
-                TcItems.foodSet.getItemStack(ItemFoodSet.tofuSteak), 0.5f);
+        GameRegistry.addSmelting(ItemGelatin.gelatinRaw.getStack(), ItemGelatin.gelatin.getStack(), 0.5f);
+        GameRegistry.addSmelting(ItemTcMaterials.tofuHamburgRaw.getStack(), ItemFoodSet.tofuHamburg.getStack(), 0.8f);
+        GameRegistry.addSmelting(ItemFoodSet.tofufishRow.getStack(), ItemFoodSet.tofufishCooked.getStack(), 1.5f);
+        GameRegistry.addSmelting(TcItems.tofuIshi, ItemFoodSet.tofuSteak.getStack(), 0.5f);
 
         /*
          * Crafting
@@ -202,6 +200,20 @@ public class Recipes
                 'T', TcOreDic.tofuDiamond
         );
 
+        addSharedRecipe(new ItemStack(TcBlocks.tofuMinced, 1),
+                "TT",
+                "TT",
+                'T', TcOreDic.tofuMinced
+        );
+
+        // Minced Tofu
+        addShapelessSharedRecipe(ItemFoodSet.tofuMinced.getStack(4),
+                TcOreDic.blockTofuMomen,
+                TcOreDic.rollingPin);
+        addShapelessSharedRecipe(ItemFoodSet.tofuMinced.getStack(1),
+                TcOreDic.tofuMomen,
+                TcOreDic.rollingPin);
+
         // Fried Tofu Pouch
         addShapelessSharedRecipe(new ItemStack(TcItems.tofuFriedPouch),
                 TcOreDic.tofuKinu,
@@ -238,12 +250,6 @@ public class Recipes
                 "@ @",
                 "@@@",
                 '@', Blocks.cobblestone
-        );
-
-        // Nigari
-        addShapelessSharedRecipe(new ItemStack(TcItems.nigari),
-                TcOreDic.salt,
-                Items.glass_bottle
         );
 
         // Golden Salt
@@ -528,10 +534,10 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvApple),
-                20)
-                .addIngredients(Items.apple, false)
-                .addIngredients(Items.sugar, false)
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvApple),
+                        20)
+                        .addIngredients(Items.apple, false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Pumpkin)
@@ -543,10 +549,10 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPumpkin),
-                20)
-                .addIngredients(Blocks.pumpkin, false)
-                .addIngredients(Items.sugar, false)
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPumpkin),
+                        20)
+                        .addIngredients(Blocks.pumpkin, false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Ramune)
@@ -558,10 +564,10 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvRamune),
-                20)
-                .addIngredients(new ItemStack(Items.dye, 1, 12), false)
-                .addIngredients(Items.sugar, false)
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvRamune),
+                        20)
+                        .addIngredients(new ItemStack(Items.dye, 1, 12), false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Strawberry)
@@ -573,10 +579,10 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvStrawberry),
-                20)
-                .addIngredients(TcOreDic.strawberryJam, false)
-                .addIngredients(Items.sugar, false)
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvStrawberry),
+                        20)
+                        .addIngredients(TcOreDic.strawberryJam, false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Annin)
@@ -588,10 +594,10 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvAnnin),
-                20)
-                .addIngredients(TcOreDic.kyoninso, false)
-                .addIngredients(Items.sugar, false)
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvAnnin),
+                        20)
+                        .addIngredients(TcOreDic.kyoninso, false)
+                        .addIngredients(Items.sugar, false)
         );
 
         // Soy Milk Bottle (Pudding)
@@ -665,7 +671,7 @@ public class Recipes
                 Items.bowl
         );
 
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.nattoHiyayakkoGl),
+        addShapelessSharedRecipe(ItemFoodSet.nattoHiyayakkoGl.getStack(),
                 TcOreDic.tofuKinu,
                 TcOreDic.natto,
                 TcOreDic.leek,
@@ -770,7 +776,7 @@ public class Recipes
         );
 
         // Gelatin Base
-        GameRegistry.addShapelessRecipe(TcItems.gelatin.getItemStack(ItemGelatin.gelatinRaw),
+        GameRegistry.addShapelessRecipe(ItemGelatin.gelatinRaw.getStack(),
                 Items.leather,
                 Items.bone
         );
@@ -794,16 +800,16 @@ public class Recipes
         );
 
         // Tofu Chikuwa
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.tofuChikuwa),
+        addShapelessSharedRecipe(ItemFoodSet.tofuChikuwa.getStack(),
                 TcOreDic.tofuMomen,
                 Items.cooked_fished
         );
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.tofuChikuwa),
+        addShapelessSharedRecipe(ItemFoodSet.tofuChikuwa.getStack(),
                 TcOreDic.tofufishCooked
         );
 
         // Oage
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.oage, 4),
+        addShapelessSharedRecipe(ItemFoodSet.oage.getStack(4),
                 new ItemStack(TcBlocks.tofuSingleSlab1, 1, 1),
                 TcOreDic.soyOil
         );
@@ -837,7 +843,7 @@ public class Recipes
         );
 
         // Moyashiitame
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.sproutSaute),
+        addShapelessSharedRecipe(ItemFoodSet.sproutSaute.getStack(),
                 TcOreDic.soyOil,
                 TcOreDic.bottleSoySauce,
                 TcOreDic.salt,
@@ -846,7 +852,7 @@ public class Recipes
         );
 
         // Moyashi no ohitashi
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.moyashiOhitashi),
+        addShapelessSharedRecipe(ItemFoodSet.moyashiOhitashi.getStack(),
                 TcOreDic.bottleSoySauce,
                 TcOreDic.dashi,
                 TcOreDic.sprouts,
@@ -854,7 +860,7 @@ public class Recipes
         );
 
         // Goheimochi
-        addSharedRecipe(TcItems.foodSetStick.getItemStack(ItemFoodSetStick.goheimochi),
+        addSharedRecipe(ItemFoodSetStick.goheimochi.getStack(),
                 "M",
                 "O",
                 "S",
@@ -873,32 +879,32 @@ public class Recipes
         );
 
         // Onigiri
-        GameRegistry.addRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.onigiri, 2),
+        GameRegistry.addRecipe(ItemFoodSet.onigiri.getStack(2),
                 " W ",
                 "WWW",
                 'W', new ItemStack(Items.wheat)
         );
 
         // Salty Onigiri
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.onigiriSalt),
+        addShapelessSharedRecipe(ItemFoodSet.onigiriSalt.getStack(),
                 TcOreDic.salt,
                 TcOreDic.onigiri
         );
 
         // Miso yakionigiri
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.yakionigiriMiso),
+        addShapelessSharedRecipe(ItemFoodSet.yakionigiriMiso.getStack(),
                 TcOreDic.miso,
                 TcOreDic.onigiri
         );
 
         // Shoyu yakionigiri
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.yakionigiriShoyu),
+        addShapelessSharedRecipe(ItemFoodSet.yakionigiriShoyu.getStack(),
                 TcOreDic.bottleSoySauce,
                 TcOreDic.onigiri
         );
 
         // Mabodofu (momen)
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.mabodofu),
+        addShapelessSharedRecipe(ItemFoodSet.mabodofu.getStack(),
                 TcOreDic.tofuMomen,
                 TcOreDic.starch,
                 Items.porkchop,
@@ -908,7 +914,7 @@ public class Recipes
         );
 
         // Mabodofu (kinu)
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.mabodofu),
+        addShapelessSharedRecipe(ItemFoodSet.mabodofu.getStack(),
                 TcOreDic.tofuKinu,
                 TcOreDic.starch,
                 Items.porkchop,
@@ -933,7 +939,7 @@ public class Recipes
                 "NNN",
                 'N', TcOreDic.tofuDiamondNugget);
 
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tofuDiamondNugget, 9),
+        addSharedRecipe(ItemTcMaterials.tofuDiamondNugget.getStack(9),
                 "D",
                 'D', TcOreDic.tofuDiamond);
 
@@ -953,14 +959,14 @@ public class Recipes
         );
 
         // Negi Hiyayakko
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.hiyayakko),
+        addShapelessSharedRecipe(ItemFoodSet.hiyayakko.getStack(),
                 TcOreDic.tofuKinu,
                 TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
                 Items.bowl
         );
 
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.hiyayakkoGl),
+        addShapelessSharedRecipe(ItemFoodSet.hiyayakkoGl.getStack(),
                 TcOreDic.tofuKinu,
                 TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
@@ -983,7 +989,7 @@ public class Recipes
         );
 
         // Tofu Rice
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.riceTofu),
+        addShapelessSharedRecipe(ItemFoodSet.riceTofu.getStack(),
                 TcOreDic.tofuKinu,
                 TcOreDic.leek,
                 TcOreDic.bottleSoySauce,
@@ -991,7 +997,7 @@ public class Recipes
         );
 
         // Tofu Hamburg (Raw)
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tofuHamburgRaw, 3),
+        addSharedRecipe(ItemTcMaterials.tofuHamburgRaw.getStack(3),
                 "TTT",
                 "MPB",
                 "TTT",
@@ -1001,8 +1007,21 @@ public class Recipes
                 'B', Items.bread
         );
 
+        // Tofu Hamburg Tempra
+        addShapelessSharedRecipe(ItemFoodSet.tofuHamburgTempra.getStack(),
+                TcOreDic.tofuHamburgRaw,
+                TcOreDic.soyOil,
+                Items.wheat);
+
+        // Tofu Hamburg Ankake Tempra
+        addShapelessSharedRecipe(ItemFoodSet.tofuHamburgTempraAnkake.getStack(),
+                ItemFoodSet.tofuHamburgTempra.getStack(),
+                TcOreDic.starch,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.soupStock);
+
         // Tofu Cookie
-        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.tofuCookie, 8),
+        addSharedRecipe(ItemFoodSet.tofuCookie.getStack(8),
                 "WTW",
                 'T', TcOreDic.tofuMomen,
                 'W', Items.wheat
@@ -1018,7 +1037,7 @@ public class Recipes
                 'B', TcOreDic.barrel);
 
         // Inari
-        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.inari, 2),
+        addSharedRecipe(ItemFoodSet.inari.getStack(2),
                 "#O*",
                 " R ",
                 '#', TcOreDic.bottleSoySauce,
@@ -1038,14 +1057,14 @@ public class Recipes
         );
 
         // Glass bowl
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.glassBowl, 2),
+        addSharedRecipe(ItemTcMaterials.glassBowl.getStack(2),
                 "P P",
                 " P ",
                 'P', Blocks.glass_pane
         );
 
         // Tofu somen
-        addShapelessSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tofuSomen, 4),
+        addShapelessSharedRecipe(ItemTcMaterials.tofuSomen.getStack(4),
                 TcOreDic.rollingPin,
                 TcOreDic.tofuKinu,
                 TcOreDic.starch,
@@ -1053,14 +1072,14 @@ public class Recipes
         );
 
         // Tofu somen bowl
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.tofuSomen),
+        addShapelessSharedRecipe(ItemFoodSet.tofuSomen.getStack(),
                 TcOreDic.tofuSomen,
                 TcOreDic.dashi,
                 TcOreDic.bottleSoySauce,
                 TcOreDic.glassBowl
         );
 
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.tofuSomen),
+        addShapelessSharedRecipe(ItemFoodSet.tofuSomen.getStack(),
                 TcOreDic.tofuSomen,
                 TcOreDic.somenTsuyuBowl
         );
@@ -1073,16 +1092,16 @@ public class Recipes
         );
 
         // Zunda mochi
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.zundaMochi, 3),
+        addShapelessSharedRecipe(ItemFoodSet.zundaMochi.getStack(3),
                 TcOreDic.zunda,
                 oredic_cookedMochi);
 
         // Kinako mochi
-        addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.kinakoMochi, 3),
+        addShapelessSharedRecipe(ItemFoodSet.kinakoMochi.getStack(3),
                 TcOreDic.kinako,
                 oredic_cookedMochi);
 
-        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa, 4),
+        addSharedRecipe(ItemFoodSet.chikuwa.getStack(4),
                 " F ",
                 "SET",
                 " F ",
@@ -1092,7 +1111,7 @@ public class Recipes
                 'T', TcOreDic.starch
         );
 
-        addSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.chikuwa, 4),
+        addSharedRecipe(ItemFoodSet.chikuwa.getStack(4),
                 " F ",
                 "TES",
                 " F ",
@@ -1127,6 +1146,34 @@ public class Recipes
                 " C ",
                 'C', TcOreDic.chikuwa);
 
+        // Soboro tofu rice
+        addSharedRecipe(ItemFoodSet.riceSoboroTofu.getStack(),
+                " Y ",
+                "STs",
+                " R ",
+                'Y', TcOreDic.leek,
+                'S', TcOreDic.bottleSoySauce,
+                'T', TcOreDic.tofuMinced,
+                's', TcOreDic.salt,
+                'R', oredic_cookingRice);
+
+        // Soboro tofu saute
+        addShapelessSharedRecipe(ItemFoodSet.soboroTofuSaute.getStack(),
+                TcOreDic.tofuMinced,
+                Items.cooked_porkchop,
+                Items.carrot,
+                TcOreDic.bottleSoySauce,
+                TcOreDic.dashi,
+                TcOreDic.soyOil,
+                Items.bowl);
+
+        // Salt pan
+        addSharedRecipe(TcBlocks.saltPan,
+                "/ /",
+                " _ ",
+                '/', Items.stick,
+                '_', new ItemStack(Blocks.stone_slab, 1, 3)
+                );
         /*
          * Tofu force series
          */
@@ -1155,7 +1202,7 @@ public class Recipes
         );
         
         // TF Capacitor
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tfCapacitor, 1),
+        addSharedRecipe(ItemTcMaterials.tfCapacitor.getStack(1),
                 " T ",
                 "RGR",
                 " T ",
@@ -1174,7 +1221,7 @@ public class Recipes
         );
 
         // Mineral soymilk
-        addShapelessSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.mineralSoymilk, 1),
+        addShapelessSharedRecipe(ItemTcMaterials.mineralSoymilk.getStack(1),
                 TcOreDic.tofuGem,
                 TcOreDic.tofuGem,
                 TcOreDic.tofuGem,
@@ -1185,7 +1232,7 @@ public class Recipes
         );
 
         // Rolling Pin
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.rollingPin, 1),
+        addSharedRecipe(ItemTcMaterials.rollingPin.getStack(1),
                 "  /",
                 " P ",
                 "/  ",
@@ -1194,7 +1241,7 @@ public class Recipes
         );
 
         // TF Circuit Board
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tfCircuit, 1),
+        addSharedRecipe(ItemTcMaterials.tfCircuit.getStack(1),
                 "RTR",
                 "___",
                 'R', Items.redstone,
@@ -1203,7 +1250,7 @@ public class Recipes
         );
 
         // TF Coil
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tfCoil, 1),
+        addSharedRecipe(ItemTcMaterials.tfCoil.getStack(1),
                 "SSS",
                 "TTT",
                 "SSS",
@@ -1212,7 +1259,7 @@ public class Recipes
         );
 
         // TF Oscillator
-        addSharedRecipe(TcItems.materials.getItemStack(ItemTcMaterials.tfOscillator, 1),
+        addSharedRecipe(ItemTcMaterials.tfOscillator.getStack(1),
                 "TQT",
                 "M M",
                 'T', TcItems.tofuKinu,
@@ -1293,6 +1340,18 @@ public class Recipes
                 'X', TcOreDic.tfOscillator,
                 'A', TcOreDic.tfCapacitor,
                 'C', Blocks.hardened_clay,
+                'G', Blocks.glass,
+                'M', TcOreDic.blockTfMachineCase
+        );
+
+        addSharedRecipe(TcBlocks.tfOvenIdle,
+                "XHA",
+                "CGC",
+                " M ",
+                'H', TcOreDic.activatedHellTofu,
+                'X', TcOreDic.tfOscillator,
+                'A', TcOreDic.tfCapacitor,
+                'C', new ItemStack(Blocks.stained_hardened_clay, 1, DMG_WILDCARD),
                 'G', Blocks.glass,
                 'M', TcOreDic.blockTfMachineCase
         );
@@ -1385,6 +1444,72 @@ public class Recipes
         addToolItemRecipes(TcOreDic.blockTofuIshi, TcItems.toolSolid);
         addToolItemRecipes(TcOreDic.blockTofuMetal, TcItems.toolMetal);
         addToolItemRecipes(TcOreDic.blockTofuDiamond, TcItems.toolDiamond);
+
+        // Doors
+        for (TofuMaterial tofuMaterial: TofuMaterial.values())
+        {
+            addSharedRecipe(new ItemStack(TcItems.tofuDoor, 1, tofuMaterial.id()),
+                    "TT",
+                    "TT",
+                    "TT",
+                    'T', tofuMaterial.getBlock());
+        }
+
+        // Walls
+        for (Map.Entry<TofuMaterial, Block> entry: TcBlocks.tofuWalls.entrySet())
+        {
+            addSharedRecipe(new ItemStack(entry.getValue(), 6),
+                    "TTT",
+                    "TTT",
+                    'T', entry.getKey().getBlock());
+        }
+
+        // Fence gates
+        for (Map.Entry<TofuMaterial, Block> entry: TcBlocks.tofuFenceGates.entrySet())
+        {
+            addSharedRecipe(entry.getValue(),
+                    "BIB",
+                    "BIB",
+                    'B', entry.getKey().getBlock(),
+                    'I', entry.getKey().getItem());
+        }
+
+        // Torches
+        for (Map.Entry<TofuMaterial, Block> entry: TcBlocks.tofuTorches.entrySet())
+        {
+            addSharedRecipe(new ItemStack(entry.getValue(), 4),
+                    "C",
+                    "T",
+                    "T",
+                    'T', entry.getKey().getItem(),
+                    'C', new ItemStack(Items.coal, 1, OreDictionary.WILDCARD_VALUE));
+            addSharedRecipe(new ItemStack(entry.getValue(), 4),
+                    "O",
+                    "T",
+                    "T",
+                    'T', entry.getKey().getItem(),
+                    'O', TcOreDic.soyOil);
+        }
+
+        // Ladders
+        for (Map.Entry<TofuMaterial, Block> entry: TcBlocks.tofuLadders.entrySet())
+        {
+            addSharedRecipe(new ItemStack(entry.getValue(), 3),
+                    "T T",
+                    "TTT",
+                    "T T",
+                    'T', entry.getKey().getItem());
+        }
+
+        // Trapdoors
+        for (Map.Entry<TofuMaterial, Block> entry: TcBlocks.tofuTrapdoors.entrySet())
+        {
+            addSharedRecipe(new ItemStack(entry.getValue(), 2),
+                    "TTT",
+                    "TTT",
+                    'T', entry.getKey().getBlock());
+        }
+
     }
 
     private static void addCombatItemRecipes(TcOreDic tofu, Item[] armors, Item sword)
@@ -1501,12 +1626,12 @@ public class Recipes
             if (OreDictionary.getOres(oredic_cookedMochi).size() == 0)
             {
                 // Zunda mochi
-                addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.zundaMochi, 3),
+                addShapelessSharedRecipe(ItemFoodSet.zundaMochi.getStack(3),
                         TcOreDic.zunda,
                         new ItemStack(TcItems.bambooFood, 1, 23));
 
                 // Kinako mochi
-                addShapelessSharedRecipe(TcItems.foodSet.getItemStack(ItemFoodSet.kinakoMochi, 3),
+                addShapelessSharedRecipe(ItemFoodSet.kinakoMochi.getStack(3),
                         TcOreDic.kinako,
                         new ItemStack(TcItems.bambooFood, 1, 23));
             }

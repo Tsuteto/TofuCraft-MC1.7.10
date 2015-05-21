@@ -11,8 +11,8 @@ import net.minecraftforge.common.BiomeDictionary;
 import tsuteto.tofu.Settings;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.block.BlockLeek;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 import java.util.Random;

@@ -1,13 +1,13 @@
 package tsuteto.tofu.world.gen.feature;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import tsuteto.tofu.block.BlockLeek;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+
+import java.util.Random;
 
 public class WorldGenTofuBuilding extends WorldGenerator
 {

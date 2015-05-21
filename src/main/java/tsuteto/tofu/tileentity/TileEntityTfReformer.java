@@ -14,7 +14,7 @@ import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.block.BlockTfReformer;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcFluids;
 import tsuteto.tofu.recipe.Ingredient;
 
 public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfConsumer

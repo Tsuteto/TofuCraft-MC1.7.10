@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.achievement.TcAchievementMgr.Key;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class ItemKoujiBase extends TcItem

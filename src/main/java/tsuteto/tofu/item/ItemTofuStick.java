@@ -7,7 +7,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 
 public class ItemTofuStick extends TcItem
 {

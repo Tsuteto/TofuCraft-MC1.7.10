@@ -7,6 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.init.TcItems;
 
 public class SlotSaltFurnace extends Slot
 {
@@ -73,7 +74,7 @@ public class SlotSaltFurnace extends Slot
         if (!this.thePlayer.worldObj.isRemote)
         {
             int i = this.field_75228_b;
-            float f = 0.4f;
+            float f = par1ItemStack.getItem() == TcItems.salt ? 0.2f : par1ItemStack.getItem() == TcItems.nigari ? 0.3f : 0.0f;
             int j;
 
             if (f == 0.0F)
@@ -102,6 +103,13 @@ public class SlotSaltFurnace extends Slot
 
         this.field_75228_b = 0;
 
-        TcAchievementMgr.achieve(this.thePlayer, TcAchievementMgr.Key.salt);
+        if (par1ItemStack.getItem() == TcItems.salt)
+        {
+            TcAchievementMgr.achieve(this.thePlayer, TcAchievementMgr.Key.salt);
+        }
+        else if (par1ItemStack.getItem() == TcItems.nigari)
+        {
+            TcAchievementMgr.achieve(this.thePlayer, TcAchievementMgr.Key.nigari);
+        }
     }
 }

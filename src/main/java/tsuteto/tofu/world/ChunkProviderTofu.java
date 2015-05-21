@@ -21,7 +21,7 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.Utils;
 import tsuteto.tofu.world.gen.TcMapGenBase;

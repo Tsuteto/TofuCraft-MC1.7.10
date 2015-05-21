@@ -3,7 +3,7 @@ package tsuteto.tofu.recipe.craftguide;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.api.recipe.TfReformerRecipe;
 import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 import uristqwerty.CraftGuide.api.*;
 
 public class TfReformerCG extends TfMachineCGBase

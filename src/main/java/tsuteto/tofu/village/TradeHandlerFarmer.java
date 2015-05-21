@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 
 import java.util.Random;
 

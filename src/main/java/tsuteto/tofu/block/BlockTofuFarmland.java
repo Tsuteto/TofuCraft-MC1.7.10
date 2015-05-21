@@ -8,26 +8,27 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
-import tsuteto.tofu.material.TcMaterial;
+import tsuteto.tofu.init.TcBlocks;
 
 import java.util.Random;
 
-public class BlockTofuFarmland extends TcBlock
+public class BlockTofuFarmland extends BlockTofuBase
 {
     @SideOnly(Side.CLIENT)
     private IIcon field_149824_a;
     @SideOnly(Side.CLIENT)
     private IIcon field_149823_b;
 
-    protected BlockTofuFarmland()
+    public BlockTofuFarmland()
     {
-        super(TcMaterial.tofu);
+        super();
         this.setTickRandomly(true);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.9375F, 1.0F);
         this.setLightOpacity(255);
@@ -50,6 +51,12 @@ public class BlockTofuFarmland extends TcBlock
     public boolean isFertile(World world, int x, int y, int z)
     {
         return world.getBlockMetadata(x, y, z) > 0;
+    }
+
+    @Override
+    public ItemStack createScoopedBlockStack()
+    {
+        return new ItemStack(TcBlocks.tofuMomen);
     }
 
     /**

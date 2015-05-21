@@ -12,7 +12,7 @@ import tsuteto.tofu.api.tileentity.ITfTank;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.api.util.TfUtils;
 import tsuteto.tofu.block.BlockTfStorage;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcFluids;
 
 public class TileEntityTfStorage extends TileEntityTfMachineSidedInventoryBase implements IFluidHandler, ITfTank
 {

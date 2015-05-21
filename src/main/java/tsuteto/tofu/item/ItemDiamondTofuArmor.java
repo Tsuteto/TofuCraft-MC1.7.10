@@ -32,7 +32,7 @@ public class ItemDiamondTofuArmor extends ItemTofuArmor
             if (sb.length() > 0) sb.append(", ");
             sb.append(I18n.format(Potion.potionTypes[id].getName()));
         }
-        par3List.add(StatCollector.translateToLocalFormatted("item.tofucraft:" + TcItems.getArmorName("diamond", this.armorType) + ".desc", sb.toString()));
+        par3List.add(StatCollector.translateToLocalFormatted("item.tofucraft:" + tsuteto.tofu.init.TcItems.getArmorName("diamond", this.armorType) + ".desc", sb.toString()));
 
         super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
     }

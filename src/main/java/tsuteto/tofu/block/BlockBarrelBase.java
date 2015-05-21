@@ -1,21 +1,16 @@
 package tsuteto.tofu.block;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.ChunkCache;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Random;
 
 abstract public class BlockBarrelBase extends BlockFermentable

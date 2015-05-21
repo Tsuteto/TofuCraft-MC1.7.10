@@ -2,8 +2,7 @@ package tsuteto.tofu.world.gen.feature;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 
 import java.util.Random;
 

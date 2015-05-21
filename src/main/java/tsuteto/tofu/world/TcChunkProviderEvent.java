@@ -7,10 +7,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
-import tsuteto.tofu.Settings;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.ModLog;
-import tsuteto.tofu.world.biome.BiomeGenTofuBase;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.world.gen.feature.WorldGenCrops;
 
 import java.util.Random;

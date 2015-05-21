@@ -4,15 +4,13 @@ import net.minecraftforge.common.config.Configuration;
 
 public class Settings
 {
-    public static EnumCreativeTabOptions creativeTab = EnumCreativeTabOptions.ORIGINAL;
-
     public static int entityIdTofuSlime = -1;
     public static int entityIdTofuCreeper = -1;
     public static int entityIdTofunian = -1;
 
     public static int tofuDimNo = 12;
-
     public static int tofuBiomeId = 40;
+    public static boolean canSaltPanUseAlpha;
 
     public static int professionIdTofucook = 1212;
     public static int professionIdTofunian = 1213;
@@ -31,6 +29,7 @@ public class Settings
     {
         tofuDimNo = conf.get("general", "tofuDim", tofuDimNo).getInt();
         tofuBiomeId = conf.get("general", "tofuBiomeId", tofuBiomeId).getInt();
+        canSaltPanUseAlpha = conf.get("general", "saltPanUsesAlpha", true, "Whether the Salt Pan uses transparent texture. If you feel weird in the Salt Pan's appearance, set false.").getBoolean();
 
         professionIdTofucook = conf.get("villager", "tofucookId", professionIdTofucook).getInt();
         professionIdTofunian = conf.get("villager", "tofunianId", professionIdTofunian).getInt();
@@ -42,15 +41,8 @@ public class Settings
         
         //potionGlowingId = conf.get("potion", "glowingId", TcPotion.assignNewId()).getInt();
 
-        creativeTab = EnumCreativeTabOptions.values()[conf.get("general", "creativeTab", creativeTab.ordinal(),
-                "Creative tab register shows TofuCraft items and blocks. 0=original tab, 1=sorted into vanilla tabs, 2=both").getInt()];
         achievement = conf.get("general", "achievement", achievement).getBoolean(true);
 
         updateCheck = conf.get("general", "updateCheck", updateCheck).getBoolean(true);
     }
-
-    public enum EnumCreativeTabOptions {
-    	ORIGINAL, SORTED, BOTH;
-    }
-
 }

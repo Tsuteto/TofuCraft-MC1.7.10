@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.material.TcMaterial;
 import tsuteto.tofu.util.ModLog;
 

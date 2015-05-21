@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 
 public class ItemDiamondTofuSpade extends ItemTcSpade
 {
-    private DiamondTofuToolImpl impl;
+    private DiamondTofuToolHandler impl;
 
     public ItemDiamondTofuSpade(ToolMaterial par2EnumToolMaterial)
     {
         super(par2EnumToolMaterial);
-        this.impl = new DiamondTofuToolImpl(this);
+        this.impl = new DiamondTofuToolHandler(this);
     }
 
     @Override

@@ -1,13 +1,12 @@
 package tsuteto.tofu.block;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import tsuteto.tofu.item.TofuMaterial;
 
 public class BlockTofuIshi extends BlockTofu
 {
 
-    public BlockTofuIshi(Material material)
+    public BlockTofuIshi(TofuMaterial material)
     {
         super(material);
     }

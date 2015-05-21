@@ -1,15 +1,14 @@
 package tsuteto.tofu.world;
 
-import java.util.Random;
-
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItem;
-import tsuteto.tofu.item.TcItems;
+
+import java.util.Random;
 
 public class TofuDangeonChest
 {

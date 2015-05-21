@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 import tsuteto.tofu.util.BlockUtils;
 
@@ -11,7 +12,7 @@ public class BlockTfCondenser extends BlockTfMachineBase
 {
     private static boolean keepMachineInventory = false;
 
-    protected BlockTfCondenser(boolean isActive)
+    public BlockTfCondenser(boolean isActive)
     {
         super(isActive);
         this.setGuiScreen(TcGuiHandler.GUIID_TF_CONDENSER);

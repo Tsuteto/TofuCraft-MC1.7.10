@@ -10,9 +10,9 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
 
 import java.util.List;
 import java.util.Map;

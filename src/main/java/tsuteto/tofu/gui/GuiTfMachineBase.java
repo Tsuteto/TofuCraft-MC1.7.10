@@ -2,23 +2,22 @@ package tsuteto.tofu.gui;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import tsuteto.tofu.TcTextures;
 import tsuteto.tofu.api.tileentity.SlotTfMachine;
 import tsuteto.tofu.gui.guiparts.HoverTextPosition;
 import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
+import tsuteto.tofu.texture.TcTextures;
 import tsuteto.tofu.util.GuiUtils;
 
 import java.awt.*;
 import java.util.List;
 
-abstract public class GuiTfMachineBase extends GuiContainer
+abstract public class GuiTfMachineBase extends GuiMachineBase
 {
     protected static final ResourceLocation GUI_TEXTURE = TcTextures.tfMachineGui;
     public static final int COLOR_TIP_TEXT = 0xf1f2e6;
@@ -136,16 +135,6 @@ abstract public class GuiTfMachineBase extends GuiContainer
         tessellator.addVertexWithUV(x + 8d, y + 0d, this.zLevel, 1d, 0d);
         tessellator.addVertexWithUV(x + 0d, y + 0d, this.zLevel, 0d, 0d);
         tessellator.draw();
-    }
-
-    public int getGuiLeft()
-    {
-        return this.guiLeft;
-    }
-
-    public int getGuiTop()
-    {
-        return this.guiTop;
     }
 
     public void drawTfHoveringText(String str, int par2, int par3)
@@ -304,26 +293,6 @@ abstract public class GuiTfMachineBase extends GuiContainer
         this.drawString(s, x, y, COLOR_TIP_TEXT);
     }
 
-    public void drawString(String s, int x, int y, int color)
-    {
-        super.fontRendererObj.drawString(s, x, y, color);
-    }
-
-    public void drawStringWithShadow(String s, int x, int y, int color)
-    {
-        super.drawString(this.fontRendererObj, s, x, y, color);
-    }
-
-    public int getStringWidth(String s)
-    {
-        return this.fontRendererObj.getStringWidth(s);
-    }
-
-    public FontRenderer getFontRenderer()
-    {
-        return this.fontRendererObj;
-    }
-
     public int getToolTipOffsetX()
     {
         return -this.guiLeft;
@@ -332,11 +301,6 @@ abstract public class GuiTfMachineBase extends GuiContainer
     public int getToolTipOffsetY()
     {
         return -this.guiTop;
-    }
-
-    public boolean isPointInRegion(int ox, int oy, int w, int h, int x, int y)
-    {
-        return this.func_146978_c(ox, oy, w, h, x, y);
     }
 
     public interface IHoverDrawingHandler

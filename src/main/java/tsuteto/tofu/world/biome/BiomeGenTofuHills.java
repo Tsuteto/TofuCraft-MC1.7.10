@@ -1,9 +1,9 @@
 package tsuteto.tofu.world.biome;
 
-import java.util.Random;
-
 import net.minecraft.world.World;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+
+import java.util.Random;
 
 public class BiomeGenTofuHills extends BiomeGenTofuBase
 {

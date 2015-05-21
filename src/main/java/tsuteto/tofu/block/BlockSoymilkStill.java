@@ -1,7 +1,5 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -9,7 +7,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcFluids;
+
+import java.util.Random;
 
 public class BlockSoymilkStill extends BlockTcStationary
 {

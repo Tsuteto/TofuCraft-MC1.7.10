@@ -3,10 +3,10 @@ package tsuteto.tofu.item;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
@@ -15,14 +15,17 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.client.IItemRenderer;
+import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.data.DataType;
 import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.entity.EntityZundaArrow;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketZundaArrowType;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.util.RenderUtils;
 
-public class ItemZundaBow extends ItemBow
+public class ItemZundaBow extends ItemBow implements IItemRenderer
 {
     public enum EnumArrowType
     {
@@ -38,7 +41,7 @@ public class ItemZundaBow extends ItemBow
         }
     }
 
-    public static final String[] iconNameSuffix = new String[] {"pull_0", "pull_1", "pull_2"};
+    public static final String[] iconNameSuffix = new String[]{"pull_0", "pull_1", "pull_2"};
 
     public ItemZundaBow()
     {
@@ -56,8 +59,8 @@ public class ItemZundaBow extends ItemBow
 
             int k = usingItem.getMaxItemUseDuration() - useRemaining;
             if (k >= 18) return arrowType.icons[2];
-            if (k >  13) return arrowType.icons[1];
-            if (k >   0) return arrowType.icons[0];
+            if (k > 13) return arrowType.icons[1];
+            if (k > 0) return arrowType.icons[0];
         }
         return this.getIconIndex(stack);
     }
@@ -97,7 +100,7 @@ public class ItemZundaBow extends ItemBow
 
                 if (var5)
                 {
-                    ((EntityArrow)var8).canBePickedUp = 2;
+                    ((EntityArrow) var8).canBePickedUp = 2;
                 }
             }
             else
@@ -106,7 +109,7 @@ public class ItemZundaBow extends ItemBow
 
                 if (var5)
                 {
-                    ((EntityZundaArrow)var8).canBePickedUp = 2;
+                    ((EntityZundaArrow) var8).canBePickedUp = 2;
                 }
             }
 
@@ -207,7 +210,6 @@ public class ItemZundaBow extends ItemBow
     {
         boolean var5 = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
-        EnumArrowType arrowType;
         if (var5 || player.inventory.hasItem(EnumArrowType.ZUNDA.item))
         {
             return EnumArrowType.ZUNDA;
@@ -236,17 +238,40 @@ public class ItemZundaBow extends ItemBow
 
         for (EnumArrowType type : EnumArrowType.values())
         {
-        	type.icons = new IIcon[iconNameSuffix.length];
+            type.icons = new IIcon[iconNameSuffix.length];
 
-	        for (int i = 0; i < type.icons.length; ++i)
-	        {
-	        	type.icons[i] = par1IconRegister.registerIcon(String.format("tofucraft:zundaBow_%s_%s", type.toString().toLowerCase(), iconNameSuffix[i]));
-	        }
+            for (int i = 0; i < type.icons.length; ++i)
+            {
+                type.icons[i] = par1IconRegister.registerIcon(String.format("tofucraft:zundaBow_%s_%s", type.toString().toLowerCase(), iconNameSuffix[i]));
+            }
         }
     }
 
-	@Override
-	public CreativeTabs[] getCreativeTabs() {
-		return ItemUtils.getCreativeTabs(this);
-	}
+    /*
+     * === IItemRenderer ===
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean handleRenderType(ItemStack item, IItemRenderer.ItemRenderType type)
+    {
+        return type == IItemRenderer.ItemRenderType.EQUIPPED;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType type, ItemStack item, IItemRenderer.ItemRendererHelper helper)
+    {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data)
+    {
+        GL11.glRotatef(15.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(-130.0F, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(10.0F, 0.0F, 0.0F, 1.0F);
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+        RenderUtils.renderStandardItem((EntityLivingBase) data[1], item, 0);
+    }
 }

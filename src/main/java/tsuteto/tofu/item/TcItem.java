@@ -1,12 +1,10 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
-import tsuteto.tofu.util.ItemUtils;
 
 /**
  * Item Registry Class
@@ -21,11 +19,6 @@ public class TcItem extends Item
     {
     	super();
     }
-
-	@Override
-	public CreativeTabs[] getCreativeTabs() {
-		return ItemUtils.getCreativeTabs(this);
-	}
 
     public void breakItem(ItemStack itemstack, EntityLivingBase entityLiving)
     {

@@ -9,10 +9,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import tsuteto.tofu.TcTextures;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.entity.EntitySmokeTofuFX;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.texture.TcTextures;
 import tsuteto.tofu.tileentity.TileEntityTfSaturator;
 import tsuteto.tofu.util.BlockUtils;
 
@@ -23,7 +24,7 @@ public class BlockTfSaturator extends BlockTfMachineBase
     private static boolean keepMachineInventory = false;
     private IIcon iconTop;
 
-    protected BlockTfSaturator(boolean isActive)
+    public BlockTfSaturator(boolean isActive)
     {
         super(isActive);
         if (isActive) setTickRandomly(true);

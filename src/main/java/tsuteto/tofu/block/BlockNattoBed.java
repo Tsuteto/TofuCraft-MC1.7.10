@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 
 import java.util.List;
 import java.util.Random;

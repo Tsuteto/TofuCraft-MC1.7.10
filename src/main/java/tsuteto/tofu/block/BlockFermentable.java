@@ -1,9 +1,5 @@
 package tsuteto.tofu.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -11,7 +7,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import tsuteto.tofu.item.TcItem;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public abstract class BlockFermentable extends TcBlock
 {

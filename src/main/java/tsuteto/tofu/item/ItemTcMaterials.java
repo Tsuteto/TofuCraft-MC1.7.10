@@ -1,9 +1,8 @@
 package tsuteto.tofu.item;
 
 import com.google.common.collect.Lists;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
@@ -44,21 +43,11 @@ public class ItemTcMaterials extends ItemSetBase<ItemTcMaterials.TcMaterial>
         {
             return TcItems.materials;
         }
-
-        public boolean isItemEqual(ItemStack itemStack)
-        {
-            if (itemStack != null)
-            {
-                return itemStack.getItem() == TcItems.materials && itemStack.getItemDamage() == this.id;
-            }
-            return false;
-        }
     }
 
     public ItemTcMaterials()
     {
         super();
-        this.setCreativeTab(CreativeTabs.tabMaterials);
     }
 
     @Override

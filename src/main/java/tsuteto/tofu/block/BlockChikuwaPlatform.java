@@ -16,6 +16,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import tsuteto.tofu.block.render.RenderChikuwaPlatform;
 import tsuteto.tofu.entity.EntityFallingChikuwaPlatform;
 import tsuteto.tofu.material.TcMaterial;
 import tsuteto.tofu.tileentity.TileEntityChikuwaPlatform;
@@ -67,7 +68,7 @@ public class BlockChikuwaPlatform extends BlockContainer
     private IIcon iconTip;
     private IIcon iconInner;
 
-    protected BlockChikuwaPlatform(String typeName)
+    public BlockChikuwaPlatform(String typeName)
     {
         super(TcMaterial.tofu);
         this.typeName = typeName;

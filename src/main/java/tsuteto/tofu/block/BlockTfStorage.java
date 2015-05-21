@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityTfStorage;
 
 /**
@@ -20,7 +21,7 @@ public class BlockTfStorage extends BlockTfMachineBase
 {
     private static boolean keepMachineInventory = false;
 
-    protected BlockTfStorage(boolean par2)
+    public BlockTfStorage(boolean par2)
     {
         super(par2);
     }

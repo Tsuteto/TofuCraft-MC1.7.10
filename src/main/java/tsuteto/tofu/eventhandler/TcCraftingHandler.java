@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.achievement.TcAchievementMgr.Key;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 
 public class TcCraftingHandler
 {

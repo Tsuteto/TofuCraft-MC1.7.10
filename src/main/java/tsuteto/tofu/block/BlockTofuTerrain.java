@@ -1,28 +1,26 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.TcItem;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import tsuteto.tofu.item.TcItems;
+import java.util.Random;
 
 public class BlockTofuTerrain extends BlockTofuBase
 {
     public BlockTofuTerrain()
     {
-        super(Material.sponge);
+        super();
     }
 
     @Override
@@ -40,9 +38,6 @@ public class BlockTofuTerrain extends BlockTofuBase
         }
     }
 
-    /**
-     * Returns the ID of the items to drop on destruction.
-     */
     @Override
     public Item getItemDropped(int par1, Random par2Random, int par3)
     {

@@ -1,7 +1,6 @@
 package tsuteto.tofu.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -12,15 +11,13 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.achievement.TcAchievementMgr.Key;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.init.TcBlocks;
 
 public class ItemSoybeans extends TcItem implements IPlantable
 {
     public ItemSoybeans()
     {
         super();
-        this.setCreativeTab(CreativeTabs.tabMaterials);
     }
 
     /**
@@ -89,11 +86,5 @@ public class ItemSoybeans extends TcItem implements IPlantable
     public int getPlantMetadata(IBlockAccess world, int x, int y, int z)
     {
         return 0;
-    }
-
-    @Override
-    public CreativeTabs[] getCreativeTabs()
-    {
-        return ItemUtils.getCreativeTabs(this);
     }
 }

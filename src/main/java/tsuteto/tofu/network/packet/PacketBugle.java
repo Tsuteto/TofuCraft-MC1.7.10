@@ -59,7 +59,7 @@ public class PacketBugle extends AbstractPacket implements MessageToClient
         }
         else
         {
-            mc.theWorld.playSound(x, y, z, "tofucraft:tofubugle", 1.0F, 1.0F, false);
+            mc.theWorld.playSound(x, y, z, "tofucraft:tofubugle", 4.0F, 1.0F, false);
         }
         return null;
     }

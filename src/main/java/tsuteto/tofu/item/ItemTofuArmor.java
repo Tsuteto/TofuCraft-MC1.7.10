@@ -1,10 +1,9 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
 
 public class ItemTofuArmor extends ItemArmor
 {
@@ -13,6 +12,7 @@ public class ItemTofuArmor extends ItemArmor
     public ItemTofuArmor(ArmorMaterial material, int par3, int par4)
     {
         super(material, par3, par4);
+        this.setCreativeTab(TcCreativeTabs.COMBAT);
 
     }
 
@@ -27,10 +27,4 @@ public class ItemTofuArmor extends ItemArmor
     {
         return armorTextureFile;
     }
-
-	@Override
-	public CreativeTabs[] getCreativeTabs()
-    {
-		return ItemUtils.getCreativeTabs(this);
-	}
 }

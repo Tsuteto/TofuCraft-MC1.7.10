@@ -6,8 +6,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTofuSlimeRadar;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.network.AbstractPacket;
 import tsuteto.tofu.network.MessageToClient;
 

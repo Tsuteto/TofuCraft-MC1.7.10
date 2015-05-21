@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityTfReformer;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class BlockTfReformer extends BlockTfMachineWithMultipleTypesOnNBT
     private static boolean keepMachineInventory = false;
     private IIcon iconFront2;
 
-    protected BlockTfReformer(boolean par2)
+    public BlockTfReformer(boolean par2)
     {
         super(par2);
     }

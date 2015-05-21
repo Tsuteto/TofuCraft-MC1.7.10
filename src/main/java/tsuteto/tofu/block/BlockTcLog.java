@@ -1,8 +1,7 @@
 package tsuteto.tofu.block;
 
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,8 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import tsuteto.tofu.init.TcBlocks;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockTcLog extends Block
 {
@@ -21,7 +22,7 @@ public class BlockTcLog extends Block
     public static final String[] woodType = new String[] {"apricot", ""};
     private IIcon iconTop;
 
-    protected BlockTcLog()
+    public BlockTcLog()
     {
         super(Material.wood);
         this.setCreativeTab(CreativeTabs.tabBlock);

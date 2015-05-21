@@ -11,15 +11,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.EntityTofuCreeper;
 import tsuteto.tofu.entity.EntityTofuSlime;
 import tsuteto.tofu.fishing.TofuFishingLoot.TofuFishingEntryEntity;
 import tsuteto.tofu.fishing.TofuFishingLoot.TofuFishingEntryEntity.ISpawnImpl;
 import tsuteto.tofu.fishing.TofuFishingLoot.TofuFishingEntryItem;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemFoodSet;
-import tsuteto.tofu.item.TcItem;
-import tsuteto.tofu.item.TcItems;
 
 /**
  * Tofu fishing implementation

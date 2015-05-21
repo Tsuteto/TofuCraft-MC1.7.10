@@ -1,38 +1,30 @@
 package tsuteto.tofu.block;
 
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockFlower;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.world.gen.feature.WorldGenApricotTrees;
 import tsuteto.tofu.world.gen.feature.WorldGenTcTreesBase;
 import tsuteto.tofu.world.gen.feature.WorldGenTofuTrees;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-import static net.minecraftforge.common.util.ForgeDirection.UP;
+import java.util.List;
+import java.util.Random;
 
 public class BlockTcSapling extends BlockFlower
 {
     public static final String[] WOOD_TYPES = new String[] {"apricot", "tofu"};
     private IIcon[] icons;
 
-    protected BlockTcSapling(int par1)
+    public BlockTcSapling(int par1)
     {
         super(par1);
         float var3 = 0.4F;

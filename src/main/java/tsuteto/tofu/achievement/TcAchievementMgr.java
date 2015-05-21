@@ -1,10 +1,11 @@
 package tsuteto.tofu.achievement;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 
@@ -20,17 +21,18 @@ public class TcAchievementMgr
         dengaku(50), goheimochi(51), tofuCook(52), hellTofu(53), tofuGem(54), tofuSlimeRadar(55), tofuSlimeHunter(56), tofuStick(57), tofuWorld(58), tofuFishing(59),
         tofuMental(60), kiyome(61), strawberryTofu(62), morijio(63), sesameTofu(64), zundaTofu(65), eggTofu(66), anninTofu(67), misoTofu(68), glowtofu(69),
         tofunian(70), oinarisan(71), tfCapacitor(72), tfStorage(73), tofuForce(74), tfAntenna(75), tfCondenser(76), tofuActivation(77), highPowerGem(78), hellTofuActivation(79),
-        tfOven(80), tfCollector(81), ultimateOven(82), tfReformer(83), tfSaturator(84), ultrawave(85), soymilk1st(86), soymilkWeek(87), soymilkMax(88);
+        tfOven(80), tfCollector(81), ultimateOven(82), tfReformer(83), tfSaturator(84), ultrawave(85), soymilk1st(86), soymilkWeek(87), soymilkMax(88), tofunianHoe(89),
+        saltPan(90), baySalt(91), bayBittern(92), soboroTofu(93);
 
         Key(int localId)
         {
         }
     }
 
-    public static Map<Key, TcAchievement> achievementList = new EnumMap<Key, TcAchievement>(Key.class);
-    public static ArrayList<TcAchievement> itemPickupMap = new ArrayList<TcAchievement>();
-    public static ArrayList<TcAchievement> itemCraftingMap = new ArrayList<TcAchievement>();
-    public static ArrayList<TcAchievement> itemSmeltingMap = new ArrayList<TcAchievement>();
+    public static Map<Key, TcAchievement> achievementList = Maps.newEnumMap(Key.class);
+    public static ArrayList<TcAchievement> itemPickupMap = Lists.newArrayList();
+    public static ArrayList<TcAchievement> itemCraftingMap = Lists.newArrayList();
+    public static ArrayList<TcAchievement> itemSmeltingMap = Lists.newArrayList();
 
     public static EnumSet<Key> unregisteredKeys = EnumSet.allOf(Key.class);
 

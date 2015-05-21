@@ -15,58 +15,40 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.*;
 import tsuteto.tofu.block.BlockSaltFurnace;
-import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.util.ModLog;
+import tsuteto.tofu.fluids.FluidUtils;
+import tsuteto.tofu.init.TcFluids;
+import tsuteto.tofu.init.TcItems;
 
-public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
+public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory, IFluidHandler
 {
-    private static final int[] slotForSide = new int[] {0, 1};
-    private static final int[] slotForLower = new int[] {1};
+    private static final int[] slotForSide = new int[] {0, 1, 2, 3};
+    private static final int[] slotForLower = new int[] {1, 3};
+    private static final FluidStack nigari = new FluidStack(TcFluids.NIGARI, 10);
 
-    /**
-     * The ItemStacks that hold the items currently being used in the furnace
-     * 0=fuel item, 1=output item
-     */
-    private ItemStack[] furnaceItemStacks = new ItemStack[2];
-
-    /** The number of ticks that the furnace will keep burning */
+    // 0=Fuel, 1=Salt output, 2=Glass bottle, 3=Nigari output
+    private ItemStack[] furnaceItemStacks = new ItemStack[4];
+    public FluidTank nigariTank = new FluidTank(TcFluids.NIGARI, 0, 120);
     public int furnaceBurnTime = 0;
-
-    /**
-     * The number of ticks that a fresh copy of the currently-burning item would keep the furnace burning for
-     */
     public int currentItemBurnTime = 0;
-
-    /** The number of ticks that the current item has been cooking for */
     public int furnaceCookTime = 0;
-
     private int lastCauldronStatus = 0;
-
     private String customName;
 
-    /**
-     * Returns the number of slots in the inventory.
-     */
     @Override
     public int getSizeInventory()
     {
         return this.furnaceItemStacks.length;
     }
 
-    /**
-     * Returns the stack in slot i
-     */
     @Override
     public ItemStack getStackInSlot(int par1)
     {
         return this.furnaceItemStacks[par1];
     }
 
-    /**
-     * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
-     * new stack.
-     */
     @Override
     public ItemStack decrStackSize(int par1, int par2)
     {
@@ -98,10 +80,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
-     * like when you close a workbench GUI.
-     */
     @Override
     public ItemStack getStackInSlotOnClosing(int par1)
     {
@@ -117,9 +95,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-     */
     @Override
     public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
     {
@@ -131,9 +106,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * Returns the name of the inventory.
-     */
     @Override
     public String getInventoryName()
     {
@@ -150,13 +122,9 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         this.customName = par1Str;
     }
 
-    /**
-     * Reads a tile entity from NBT.
-     */
     @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
-        ModLog.debug("reading salt furnace packet on " + (this.worldObj != null ? this.worldObj.isRemote ? "client" : "server" : "?"));
         super.readFromNBT(par1NBTTagCompound);
         NBTTagList var2 = par1NBTTagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         this.furnaceItemStacks = new ItemStack[this.getSizeInventory()];
@@ -175,6 +143,7 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         this.furnaceBurnTime = par1NBTTagCompound.getShort("BurnTime");
         this.furnaceCookTime = par1NBTTagCompound.getShort("CookTime");
         this.currentItemBurnTime = TileEntityFurnace.getItemBurnTime(this.furnaceItemStacks[1]);
+        this.nigariTank.readFromNBT(par1NBTTagCompound.getCompoundTag("NigariTank"));
 
         if (par1NBTTagCompound.hasKey("CustomName"))
         {
@@ -182,18 +151,17 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * Writes a tile entity to NBT.
-     */
     @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
-        ModLog.debug("writing salt furnace packet on " + (this.worldObj != null ? this.worldObj.isRemote ? "client" : "server" : "?"));
         super.writeToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setShort("BurnTime", (short)this.furnaceBurnTime);
+        par1NBTTagCompound.setShort("BurnTime", (short) this.furnaceBurnTime);
         par1NBTTagCompound.setShort("CookTime", (short)this.furnaceCookTime);
-        NBTTagList var2 = new NBTTagList();
 
+        NBTTagCompound tag1 = this.nigariTank.writeToNBT(new NBTTagCompound());
+        par1NBTTagCompound.setTag("NigariTank", tag1);
+
+        NBTTagList var2 = new NBTTagList();
         for (int var3 = 0; var3 < this.furnaceItemStacks.length; ++var3)
         {
             if (this.furnaceItemStacks[var3] != null)
@@ -226,10 +194,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         this.readFromNBT(pkt.func_148857_g());
     }
 
-    /**
-     * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't
-     * this more of a set than a get?*
-     */
     @Override
     public int getInventoryStackLimit()
     {
@@ -237,22 +201,12 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
     }
 
     @SideOnly(Side.CLIENT)
-
-    /**
-     * Returns an integer between 0 and the passed value representing how close the current item is to being completely
-     * cooked
-     */
     public int getCookProgressScaled(int par1)
     {
         return this.furnaceCookTime * par1 / 200;
     }
 
     @SideOnly(Side.CLIENT)
-
-    /**
-     * Returns an integer between 0 and the passed value representing how much burn time is left on the current fuel
-     * item, where 0 means that the item is exhausted and the passed value means that the item is fresh
-     */
     public int getBurnTimeRemainingScaled(int par1)
     {
         if (this.currentItemBurnTime == 0)
@@ -263,18 +217,17 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         return this.furnaceBurnTime * par1 / this.currentItemBurnTime;
     }
 
-    /**
-     * Returns true if the furnace is currently burning
-     */
+    @SideOnly(Side.CLIENT)
+    public FluidTank getNigariTank()
+    {
+        return this.nigariTank;
+    }
+
     public boolean isBurning()
     {
         return this.furnaceBurnTime > 0;
     }
 
-    /**
-     * Allows the entity to update its state. Overridden in most subclasses, e.g. the mob spawner uses this to count
-     * ticks and creates a new spawn inside its implementation.
-     */
     @Override
     public void updateEntity()
     {
@@ -350,6 +303,12 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
                     }
                 }
             }
+
+            // Output nigari
+            if (this.canOutputNigari())
+            {
+                this.outputNigari();
+            }
         }
 
         this.updateCauldronStatus();
@@ -360,9 +319,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
-     */
     private boolean canBoil()
     {
         int cauldronStatus = this.getCauldronStatus();
@@ -376,9 +332,6 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         return (result <= getInventoryStackLimit() && result <= var1.getMaxStackSize());
     }
 
-    /**
-     * Turn one item from the furnace source stack into the appropriate smelted item in the furnace result stack
-     */
     public void boilDown()
     {
         if (this.canBoil())
@@ -394,6 +347,8 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
                 furnaceItemStacks[1].stackSize += var1.stackSize;
             }
 
+            this.nigariTank.fill(new FluidStack(TcFluids.NIGARI, 20), true);
+
             // Decrease the water in the cauldron
             if (!worldObj.isRemote)
             {
@@ -403,9 +358,47 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
         }
     }
 
-    /**
-     * Do not make give this method the name canInteractWith because it clashes with Container
-     */
+    private boolean canOutputNigari()
+    {
+        ItemStack containerStack = this.furnaceItemStacks[2];
+
+        if (containerStack != null && containerStack.stackSize > 0)
+        {
+            ItemStack filledStack = FluidContainerRegistry.fillFluidContainer(nigariTank.getFluid(), containerStack);
+            if (filledStack == null) return false;
+            int containerCapacity = FluidContainerRegistry.getContainerCapacity(filledStack);
+
+            if (this.nigariTank.getFluidAmount() < containerCapacity) return false;
+            if (furnaceItemStacks[3] == null) return true;
+            int result = furnaceItemStacks[3].stackSize + containerStack.stackSize;
+            return result <= getInventoryStackLimit() && result <= filledStack.getMaxStackSize();
+        }
+        return false;
+    }
+
+    public void outputNigari()
+    {
+        ItemStack containerStack = this.furnaceItemStacks[2];
+        ItemStack filledStack = FluidContainerRegistry.fillFluidContainer(nigariTank.getFluid(), containerStack);
+        int containerCapacity = FluidContainerRegistry.getContainerCapacity(filledStack);
+        if (this.furnaceItemStacks[3] == null)
+        {
+            this.furnaceItemStacks[3] = filledStack.copy();
+        }
+        else if (this.furnaceItemStacks[3].isItemEqual(filledStack))
+        {
+            furnaceItemStacks[3].stackSize += filledStack.stackSize;
+        }
+
+        this.nigariTank.drain(containerCapacity, true);
+
+        furnaceItemStacks[2].stackSize -= 1;
+        if (furnaceItemStacks[2].stackSize == 0)
+        {
+            furnaceItemStacks[2] = null;
+        }
+    }
+
     @Override
     public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
     {
@@ -432,7 +425,7 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
     {
-        return par1 == 1;
+        return par1 == 1 || par1 == 3;
     }
 
     private int getLiveMetadata()
@@ -443,7 +436,7 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
 	@Override
     public boolean isItemValidForSlot(int i, ItemStack itemstack)
     {
-        return i == 0 ? TileEntityFurnace.isItemFuel(itemstack) : false;
+        return i == 0 ? TileEntityFurnace.isItemFuel(itemstack) : i == 2 ? FluidUtils.isContainerForFluid(nigari.copy(), itemstack) : false;
     }
 
     /*
@@ -484,5 +477,53 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
     public static int getCauldronStatus(int metadata)
     {
         return metadata >> 2 & 3;
+    }
+
+    /*
+     * === Fluid Handler ===
+     */
+
+    @Override
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
+    {
+        return 0;
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+    {
+        if ((resource == null) || (!resource.isFluidEqual(nigariTank.getFluid())))
+        {
+            return null;
+        }
+
+        if (!canDrain(from, resource.getFluid())) return null;
+
+        return nigariTank.drain(resource.amount, doDrain);
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+    {
+        return nigariTank.drain(maxDrain, doDrain);
+    }
+
+    @Override
+    public boolean canFill(ForgeDirection from, Fluid fluid)
+    {
+        // This machine cannot be filled
+        return false;
+    }
+
+    @Override
+    public boolean canDrain(ForgeDirection from, Fluid fluid)
+    {
+        return nigariTank.getFluid().getFluid().getID() == fluid.getID();
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(ForgeDirection from)
+    {
+        return new FluidTankInfo[] { this.nigariTank.getInfo() };
     }
 }

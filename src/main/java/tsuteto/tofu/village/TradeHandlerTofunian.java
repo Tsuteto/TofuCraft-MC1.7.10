@@ -6,9 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import tsuteto.tofu.entity.EntityTofunian;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
-import tsuteto.tofu.util.ModLog;
 
 import java.util.Random;
 
@@ -23,34 +22,35 @@ public class TradeHandlerTofunian implements IVillageTradeHandler
          * MerchantRecipe(ItemStack, Item) : want, sell
          */
 
-        // Buy
-        int tofu = 3 + random.nextInt(18);
-
-        recipeList.addToListWithCheck(new MerchantRecipe(
-                new ItemStack(TcItems.tofuMomen, tofu),
-                new ItemStack(TcItems.tofuKinu, tofu))
-        );
-
-        recipeList.addToListWithCheck(new MerchantRecipe(
-                new ItemStack(TcItems.tofuKinu, tofu),
-                new ItemStack(TcItems.tofuMomen, tofu))
-        );
-
         if (villager instanceof EntityTofunian)
         {
             EntityTofunian tofunian = (EntityTofunian)villager;
-            ModLog.debug("friendship=%d", tofunian.getFriendship());
-            if (tofunian.getFriendship() > 64)
+
+            int tofu = 3 + random.nextInt(6);
+
+            if (tofunian.getFriendship() < 64)
+            {
+                recipeList.addToListWithCheck(new MerchantRecipe(
+                                new ItemStack(TcItems.tofuMomen, tofu),
+                                new ItemStack(TcItems.tofuKinu, tofu))
+                );
+
+                recipeList.addToListWithCheck(new MerchantRecipe(
+                                new ItemStack(TcItems.tofuKinu, tofu),
+                                new ItemStack(TcItems.tofuMomen, tofu))
+                );
+            }
+            else if (tofunian.getFriendship() < 256)
             {
                 recipeList.addToListWithCheck(new MerchantRecipe(
                         ItemTcMaterials.tofuGem.getStack(3 + random.nextInt(3)),
                         new ItemStack(TcItems.tofuHoe, 1))
                 );
             }
-            if (tofunian.getFriendship() > 255)
+            else
             {
                 recipeList.addToListWithCheck(new MerchantRecipe(
-                        ItemTcMaterials.tofuGem.getStack(5 + random.nextInt(5)),
+                        ItemTcMaterials.tofuGem.getStack(20 + random.nextInt(6)),
                         new ItemStack(TcItems.tofuDiamond, 1))
                 );
             }

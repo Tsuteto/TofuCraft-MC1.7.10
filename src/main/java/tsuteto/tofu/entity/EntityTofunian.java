@@ -3,11 +3,13 @@ package tsuteto.tofu.entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.world.World;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
+import tsuteto.tofu.util.ModLog;
 
 public class EntityTofunian extends EntityVillager
 {
@@ -50,10 +52,12 @@ public class EntityTofunian extends EntityVillager
     public void useRecipe(MerchantRecipe par1MerchantRecipe)
     {
         super.useRecipe(par1MerchantRecipe);
+        ItemStack buy = par1MerchantRecipe.getItemToBuy();
 
-        if (par1MerchantRecipe.getItemToBuy().getItem() == TcItems.tofuMomen)
+        if (buy.getItem() == TcItems.tofuMomen || buy.getItem() == TcItems.tofuKinu)
         {
-            this.friendship += par1MerchantRecipe.getItemToBuy().stackSize;
+            this.friendship += buy.stackSize;
+            ModLog.debug("friendship=%d", this.friendship);
         }
     }
 

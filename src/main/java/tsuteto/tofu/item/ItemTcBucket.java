@@ -2,13 +2,11 @@ package tsuteto.tofu.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.world.World;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.init.TcBlocks;
 
 public class ItemTcBucket extends ItemBucket {
     public final Block isFull;
@@ -16,11 +14,6 @@ public class ItemTcBucket extends ItemBucket {
 	public ItemTcBucket(Block par2) {
 		super(par2);
         this.isFull = par2;
-	}
-
-	@Override
-	public CreativeTabs[] getCreativeTabs() {
-		return ItemUtils.getCreativeTabs(this);
 	}
 
     @Override

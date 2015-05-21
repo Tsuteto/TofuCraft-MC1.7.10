@@ -1,21 +1,21 @@
 package tsuteto.tofu.block;
 
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.material.TcMaterial;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockTofuStepSimple extends BlockTofuStepBase
 {
     public BlockTofuStepSimple(boolean par2)
     {
         super(par2, TcMaterial.tofu);
-        this.setCreativeTab(CreativeTabs.tabBlock);
         this.setLightOpacity(0);
     }
 

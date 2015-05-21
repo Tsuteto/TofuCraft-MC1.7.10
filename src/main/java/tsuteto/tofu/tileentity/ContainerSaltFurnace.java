@@ -1,5 +1,7 @@
 package tsuteto.tofu.tileentity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -7,8 +9,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerSaltFurnace extends Container
 {
@@ -17,12 +17,15 @@ public class ContainerSaltFurnace extends Container
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
     private int lastCauldronStatus = 0;
+    private int lastNigariAmount = 0;
 
     public ContainerSaltFurnace(InventoryPlayer invPlayer, TileEntitySaltFurnace saltFurnace)
     {
         this.furnace = saltFurnace;
-        this.addSlotToContainer(new Slot(saltFurnace, 0, 56, 53));
-        this.addSlotToContainer(new SlotSaltFurnace(invPlayer.player, saltFurnace, 1, 116, 35));
+        this.addSlotToContainer(new Slot(saltFurnace, 0, 23, 53));
+        this.addSlotToContainer(new SlotSaltFurnace(invPlayer.player, saltFurnace, 1, 82, 35));
+        this.addSlotToContainer(new Slot(saltFurnace, 2, 134, 17));
+        this.addSlotToContainer(new SlotSaltFurnace(invPlayer.player, saltFurnace, 3, 134, 52));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3)
@@ -46,6 +49,8 @@ public class ContainerSaltFurnace extends Container
         par1ICrafting.sendProgressBarUpdate(this, 0, this.furnace.furnaceCookTime);
         par1ICrafting.sendProgressBarUpdate(this, 1, this.furnace.furnaceBurnTime);
         par1ICrafting.sendProgressBarUpdate(this, 2, this.furnace.currentItemBurnTime);
+        par1ICrafting.sendProgressBarUpdate(this, 3, this.furnace.nigariTank.getFluidAmount());
+
     }
 
     /**
@@ -74,11 +79,17 @@ public class ContainerSaltFurnace extends Container
             {
                 var2.sendProgressBarUpdate(this, 2, this.furnace.currentItemBurnTime);
             }
+
+            if (this.lastNigariAmount != this.furnace.nigariTank.getFluidAmount())
+            {
+                var2.sendProgressBarUpdate(this, 3, this.furnace.nigariTank.getFluidAmount());
+            }
         }
 
         this.lastCookTime = this.furnace.furnaceCookTime;
         this.lastBurnTime = this.furnace.furnaceBurnTime;
         this.lastItemBurnTime = this.furnace.currentItemBurnTime;
+        this.lastNigariAmount = this.furnace.nigariTank.getFluidAmount();
     }
 
     @SideOnly(Side.CLIENT)
@@ -98,6 +109,11 @@ public class ContainerSaltFurnace extends Container
         if (par1 == 2)
         {
             this.furnace.currentItemBurnTime = par2;
+        }
+
+        if (par1 == 3)
+        {
+            this.furnace.nigariTank.getFluid().amount = par2;
         }
     }
 

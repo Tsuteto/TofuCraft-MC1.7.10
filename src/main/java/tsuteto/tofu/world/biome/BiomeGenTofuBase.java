@@ -7,8 +7,8 @@ import net.minecraft.world.gen.feature.WorldGenLiquids;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import tsuteto.tofu.block.BlockLeek;
-import tsuteto.tofu.block.TcBlocks;
 import tsuteto.tofu.entity.EntityTofuSlime;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.world.gen.feature.WorldGenTofuBuilding;
 import tsuteto.tofu.world.gen.feature.WorldGenTofuTrees;
 

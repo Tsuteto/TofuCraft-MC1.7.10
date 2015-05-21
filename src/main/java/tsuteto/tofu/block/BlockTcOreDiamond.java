@@ -1,8 +1,8 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import tsuteto.tofu.material.TcMaterial;
+
+import java.util.Random;
 
 public class BlockTcOreDiamond extends BlockTcOre
 {

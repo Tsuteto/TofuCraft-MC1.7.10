@@ -1,8 +1,7 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
-import net.minecraft.block.material.Material;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,18 +10,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import tsuteto.tofu.item.TcItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
+import tsuteto.tofu.item.TofuMaterial;
+
+import java.util.Random;
 
 public class BlockTofuGrilled extends BlockTofuBase
 {
 	private IIcon iconSide;
 
-    public BlockTofuGrilled()
+    public BlockTofuGrilled(TofuMaterial material)
     {
-        super(Material.sponge);
+        super(material);
         this.setCreativeTab(CreativeTabs.tabBlock);
     }
 

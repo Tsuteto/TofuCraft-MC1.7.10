@@ -1,7 +1,7 @@
 package tsuteto.tofu.api.tileentity;
 
 /**
- * For implementation of TF machines that provide Tofu Force
+ * For TileEntity of TF machines that provide Tofu Force
  * 
  * @author Tsuteto
  *

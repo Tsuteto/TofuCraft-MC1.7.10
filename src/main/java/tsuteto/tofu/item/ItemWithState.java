@@ -26,6 +26,13 @@ abstract public class ItemWithState<T extends TcItemInfoBase> extends TcItem
     }
 
     @Override
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        TcItemInfoBase info = getItemInfo(stack.getItemDamage());
+        return info.itemUseDuration;
+    }
+
+    @Override
     public ItemStack getContainerItem(ItemStack stack)
     {
         int dmg = stack.getItemDamage();

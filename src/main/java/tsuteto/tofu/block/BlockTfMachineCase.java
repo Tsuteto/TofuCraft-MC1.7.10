@@ -22,7 +22,7 @@ public class BlockTfMachineCase extends TcBlock
 {
     private IIcon iconFront;
 
-    protected BlockTfMachineCase()
+    public BlockTfMachineCase()
     {
         super(Material.iron);
     }

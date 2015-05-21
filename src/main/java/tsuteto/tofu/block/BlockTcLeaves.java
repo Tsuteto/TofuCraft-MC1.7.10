@@ -1,9 +1,7 @@
 package tsuteto.tofu.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
@@ -16,10 +14,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import tsuteto.tofu.item.TcItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockTcLeaves extends BlockLeavesBase implements IShearable
 {
@@ -37,7 +37,7 @@ public class BlockTcLeaves extends BlockLeavesBase implements IShearable
     private int graphicsIndex;
     private IIcon[][] icons = new IIcon[2][];
 
-    protected BlockTcLeaves()
+    public BlockTcLeaves()
     {
         super(Material.leaves, false);
         this.setTickRandomly(true);

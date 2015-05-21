@@ -7,7 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class TcEnchantment

@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class ItemFoodSetStick extends ItemFoodSetBase<ItemFoodSetStick.Food>
     public ItemFoodSetStick()
     {
         super();
+        this.setCreativeTab(TcCreativeTabs.FOOD);
         this.bFull3D = true;
     }
     

@@ -8,13 +8,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S23PacketBlockChange;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.network.packet.PacketBatchDigging;
-import tsuteto.tofu.util.ModLog;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,17 +22,8 @@ import java.util.List;
 public class BatchDigging
 {
     private static List<List<ItemStack>> blockGroupingRegistry = Lists.newArrayList();
-    private PacketBatchDigging packet;
-    private EntityPlayer owner;
 
     private ItemStack itemStackDestroyed;
-
-    public BatchDigging(PacketBatchDigging packet, EntityPlayer owner)
-    {
-        this.packet = packet;
-        this.owner = owner;
-        this.itemStackDestroyed = new ItemStack(Block.getBlockById(packet.blockId), 1, packet.blockMeta);
-    }
 
     static
     {
@@ -46,34 +37,10 @@ public class BatchDigging
         blockGroupingRegistry.add(group);
     }
 
-    public static boolean isUnitedBlock(ItemStack block1, ItemStack block2)
+    private static Area calcArea(int bx, int by, int bz, int w, int d, int h, int sideHit)
     {
-        if (block1.isItemEqual(block2)) return true;
-
-        for (List<ItemStack> group : blockGroupingRegistry)
-        {
-            boolean matched1 = false;
-            boolean matched2 = false;
-            for (ItemStack stack : group)
-            {
-                if (OreDictionary.itemMatches(stack, block1, false)) matched1 = true;
-                if (OreDictionary.itemMatches(stack, block2, false)) matched2 = true;
-            }
-            if (matched1 && matched2) return true;
-        }
-        return false;
-    }
-
-    public int execute()
-    {
-        World world = owner.worldObj;
-
         // Convert WDH to practical XYZ
-        int w = packet.w;
-        int d = packet.d;
-        int h = packet.h;
-        ForgeDirection dir = ForgeDirection.getOrientation(packet.sideHit).getOpposite();
-        ModLog.debug("sideHit: %s", dir);
+        ForgeDirection dir = ForgeDirection.getOrientation(sideHit).getOpposite();
         int x1, y1, z1, x2, y2, z2;
         switch (dir)
         {
@@ -130,20 +97,61 @@ public class BatchDigging
                 break;
 
             default:
-                return 0;
+                return null;
         }
 
-        int bx = packet.bx;
-        int by = packet.by;
-        int bz = packet.bz;
-        int numBlocksDestroyed = 0;
-        for (int x = x1; x <= x2; x++)
+        // Add base coordinate
+        return new Area(bx + x1, by + y1, bz + z1, bx + x2, by + y2, bz + z2);
+    }
+
+    public static AxisAlignedBB getDiggingArea(int bx, int by, int bz, int w, int d, int h, int sideHit)
+    {
+        Area area = calcArea(bx, by, bz, w, d, h, sideHit);
+        return AxisAlignedBB.getBoundingBox(area.x1, area.y1, area.z1, area.x2 + 1.0D, area.y2 + 1.0D, area.z2 + 1.0D);
+    }
+
+    private PacketBatchDigging packet;
+    private EntityPlayer owner;
+
+    public BatchDigging(PacketBatchDigging packet, EntityPlayer owner)
+    {
+        this.packet = packet;
+        this.owner = owner;
+        this.itemStackDestroyed = new ItemStack(Block.getBlockById(packet.blockId), 1, packet.blockMeta);
+    }
+
+    public static boolean isUnitedBlock(ItemStack block1, ItemStack block2)
+    {
+        if (block1.isItemEqual(block2)) return true;
+
+        for (List<ItemStack> group : blockGroupingRegistry)
         {
-            for (int y = y1; y <= y2; y++)
+            boolean matched1 = false;
+            boolean matched2 = false;
+            for (ItemStack stack : group)
             {
-                for (int z = z1; z <= z2; z++)
+                if (OreDictionary.itemMatches(stack, block1, false)) matched1 = true;
+                if (OreDictionary.itemMatches(stack, block2, false)) matched2 = true;
+            }
+            if (matched1 && matched2) return true;
+        }
+        return false;
+    }
+
+    public int execute()
+    {
+        World world = owner.worldObj;
+
+        Area area = calcArea(packet.bx, packet.by, packet.bz, packet.w, packet.d, packet.h, packet.sideHit);
+
+        int numBlocksDestroyed = 0;
+        for (int x = area.x1; x <= area.x2; x++)
+        {
+            for (int y = area.y1; y <= area.y2; y++)
+            {
+                for (int z = area.z1; z <= area.z2; z++)
                 {
-                    if (this.destroyBlock(world, bx + x, by + y, bz + z))
+                    if (this.destroyBlock(world, x, y, z))
                     {
                         numBlocksDestroyed++;
                     }
@@ -220,5 +228,20 @@ public class BatchDigging
         }
 
         return flag;
+    }
+
+    private static class Area
+    {
+        final int x1, y1, z1, x2, y2, z2;
+
+        public Area(int x1, int y1, int z1, int x2, int y2, int z2)
+        {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.z1 = z1;
+            this.x2 = x2;
+            this.y2 = y2;
+            this.z2 = z2;
+        }
     }
 }

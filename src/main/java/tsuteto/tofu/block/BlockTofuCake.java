@@ -1,15 +1,14 @@
 package tsuteto.tofu.block;
 
-import net.minecraft.item.Item;
-import tsuteto.tofu.item.TcItem;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCake;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 
 public class BlockTofuCake extends BlockCake
 {
@@ -20,7 +19,7 @@ public class BlockTofuCake extends BlockCake
     @SideOnly(Side.CLIENT)
     private IIcon iconInner;
     
-    protected BlockTofuCake()
+    public BlockTofuCake()
     {
         super();
     }

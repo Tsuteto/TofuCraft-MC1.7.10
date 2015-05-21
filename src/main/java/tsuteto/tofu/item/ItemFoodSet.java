@@ -5,6 +5,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.iteminfo.TcEffectFoodBase;
 
 import java.util.List;
@@ -61,11 +63,21 @@ public class ItemFoodSet extends ItemFoodSetBase<ItemFoodSet.Food>
             new Food(22, 4, 0.6f, false, "chikuwa");
     public static Food tofuSteak =
             new Food(23, 6, 0.6f, false, "tofuSteak").setMaxItemUseDuration(48);
-
+    public static Food tofuHamburgTempra =
+            new Food(24, 16, 1.0f, false, "tofuHamburgT");
+    public static Food tofuHamburgTempraAnkake =
+            new Food(25, 20, 1.0f, false, "tofuHamburgTA");
+    public static Food tofuMinced =
+            new Food(26, 2, 0.2f, false, "tofuMinced");
+    public static Food riceSoboroTofu =
+            new Food(27, 8, 0.6f, false, "riceSoboroTofu"); // For External Mod
+    public static Food soboroTofuSaute =
+            new Food(28, 7, 0.6f, false, "soboroTofuSaute");
 
     public ItemFoodSet()
     {
         super();
+        this.setCreativeTab(TcCreativeTabs.FOOD);
     }
 
     public static class Food extends TcEffectFoodBase<Food>

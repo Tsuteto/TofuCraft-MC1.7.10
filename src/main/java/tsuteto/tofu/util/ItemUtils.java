@@ -3,14 +3,11 @@ package tsuteto.tofu.util;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.Settings;
-import tsuteto.tofu.TofuCraftCore;
 
 import java.util.Iterator;
 import java.util.List;
@@ -40,24 +37,6 @@ public class ItemUtils
                     itemsRegistered.add(stack);
                 }
             }
-        }
-    }
-
-    /**
-     * Get CreativeTabs list of a specific item/block
-     * @param item
-     * @return
-     */
-    public static CreativeTabs[] getCreativeTabs(Item item)
-    {
-        switch (Settings.creativeTab) {
-        case ORIGINAL:
-            return new CreativeTabs[]{ TofuCraftCore.tabTofuCraft };
-        case SORTED:
-            return new CreativeTabs[]{ item.getCreativeTab() };
-        case BOTH:
-        default:
-            return new CreativeTabs[]{ item.getCreativeTab(), TofuCraftCore.tabTofuCraft };
         }
     }
 

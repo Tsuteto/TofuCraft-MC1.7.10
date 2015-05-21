@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
-import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.gui.guiparts.*;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcFluids;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.tileentity.ContainerTfCondenser;
 import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 

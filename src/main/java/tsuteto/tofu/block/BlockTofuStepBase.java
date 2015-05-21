@@ -3,16 +3,16 @@ package tsuteto.tofu.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Facing;
 import net.minecraft.world.IBlockAccess;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
 
 abstract public class BlockTofuStepBase extends BlockSlab
 {
     public BlockTofuStepBase(boolean par2, Material par3Material)
     {
         super(par2, par3Material);
-        this.setCreativeTab(CreativeTabs.tabBlock);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
         this.setLightOpacity(0);
     }
     

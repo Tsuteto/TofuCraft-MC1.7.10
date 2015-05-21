@@ -13,8 +13,8 @@ import tsuteto.tofu.block.BlockTfCondenser;
 import tsuteto.tofu.data.ContainerParam;
 import tsuteto.tofu.data.ContainerParamBool;
 import tsuteto.tofu.fluids.FluidUtils;
-import tsuteto.tofu.fluids.TcFluids;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcFluids;
+import tsuteto.tofu.init.TcItems;
 
 public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase implements ITfConsumer
 {

@@ -25,5 +25,10 @@ public abstract class TcItemSetInfo<T extends TcItemSetInfo> extends TcItemInfoB
         return new ItemStack(this.getItemInstance(), qty, id);
     }
 
+    public boolean isItemEqual(ItemStack itemStack)
+    {
+        return itemStack != null && itemStack.getItem() == this.getItemInstance() && itemStack.getItemDamage() == this.id;
+    }
+
     public abstract Item getItemInstance();
 }

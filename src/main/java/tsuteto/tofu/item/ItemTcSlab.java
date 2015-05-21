@@ -1,12 +1,10 @@
 package tsuteto.tofu.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemSlab;
 import tsuteto.tofu.block.BlockTofuStep;
 import tsuteto.tofu.block.BlockTofuStepFaces;
 import tsuteto.tofu.block.BlockTofuStepSimple;
-import tsuteto.tofu.util.ItemUtils;
 
 public class ItemTcSlab extends ItemSlab {
 
@@ -21,9 +19,4 @@ public class ItemTcSlab extends ItemSlab {
     public ItemTcSlab(Block par1, BlockTofuStepSimple par2BlockHalfSlab, BlockTofuStepSimple par3BlockHalfSlab, Boolean par4) {
         super(par1, par2BlockHalfSlab, par3BlockHalfSlab, par4);
     }
-
-    @Override
-	public CreativeTabs[] getCreativeTabs() {
-		return ItemUtils.getCreativeTabs(this);
-	}
 }

@@ -1,9 +1,8 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
 
 public class ItemTcFood extends ItemFood
 {
@@ -12,6 +11,7 @@ public class ItemTcFood extends ItemFood
     public ItemTcFood(int par2, float par3, boolean par4)
     {
         super(par2, par3, par4);
+        this.setCreativeTab(TcCreativeTabs.FOOD);
     }
 
     public ItemTcFood setEatingDuration(int duration)
@@ -31,12 +31,6 @@ public class ItemTcFood extends ItemFood
         {
             return customDuration;
         }
-    }
-
-    @Override
-    public CreativeTabs[] getCreativeTabs()
-    {
-        return ItemUtils.getCreativeTabs(this);
     }
 
     @Override

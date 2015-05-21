@@ -4,10 +4,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.logging.log4j.Level;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcFluids;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 import java.util.ArrayList;

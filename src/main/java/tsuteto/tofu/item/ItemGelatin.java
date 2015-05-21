@@ -2,6 +2,7 @@ package tsuteto.tofu.item;
 
 import com.google.common.collect.Lists;
 import net.minecraft.item.Item;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 

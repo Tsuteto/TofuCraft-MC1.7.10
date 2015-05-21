@@ -1,12 +1,9 @@
 package tsuteto.tofu.block;
 
-import java.util.ArrayList;
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,16 +11,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
-import tsuteto.tofu.item.TcItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockLeek extends BlockBush implements IShearable
 {
     public static final int META_NATURAL = 0x8;
 
-    protected BlockLeek()
+    public BlockLeek()
     {
         super();
         float var3 = 0.4F;

@@ -21,6 +21,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import tsuteto.tofu.TofuCraftCore;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntitySaltFurnace;
 
 import java.util.Random;
@@ -37,7 +38,7 @@ public class BlockSaltFurnace extends BlockContainer
 
     private static boolean keepFurnaceInventory = false;
 
-    protected BlockSaltFurnace(boolean par2)
+    public BlockSaltFurnace(boolean par2)
     {
         super(Material.rock);
         this.isActive = par2;

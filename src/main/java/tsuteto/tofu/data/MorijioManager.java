@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import tsuteto.tofu.block.BlockMorijio;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.TileCoord;
@@ -79,8 +79,8 @@ public class MorijioManager
                 Block block = world.getBlock(morijio.coord.x, morijio.coord.y, morijio.coord.z);
                 if (block == TcBlocks.morijio)
                 {
-                    ModLog.debug("In range of Morishio at relatively (%d, %d, %d)",
-                            tileX - morijio.coord.x, tileY - morijio.coord.y, tileZ - morijio.coord.z);
+                    //ModLog.debug("In range of Morijio at relatively (%d, %d, %d)",
+                    //        tileX - morijio.coord.x, tileY - morijio.coord.y, tileZ - morijio.coord.z);
                     return true;
                 }
                 else if (world.blockExists(morijio.coord.x, morijio.coord.y, morijio.coord.z))

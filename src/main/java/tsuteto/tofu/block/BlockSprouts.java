@@ -12,9 +12,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemFoodSet;
-import tsuteto.tofu.item.TcItem;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 import java.util.Random;
@@ -23,7 +22,7 @@ public class BlockSprouts extends BlockCrops
 {
     private IIcon[] icons;
     
-    protected BlockSprouts()
+    public BlockSprouts()
     {
         super();
     }

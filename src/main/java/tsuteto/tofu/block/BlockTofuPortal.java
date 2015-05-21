@@ -25,7 +25,8 @@ import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.data.PortalTripInfo;
 import tsuteto.tofu.dimension.DimensionTeleportation;
 import tsuteto.tofu.entity.EntityTofuPortalFX;
-import tsuteto.tofu.entity.TcEntity;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcEntity;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketDimTrip;
 

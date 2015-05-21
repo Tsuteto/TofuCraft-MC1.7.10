@@ -2,28 +2,30 @@ package tsuteto.tofu.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.world.World;
-import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.achievement.TcAchievementMgr.Key;
-import tsuteto.tofu.util.BlockUtils;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.item.TofuMaterial;
 import tsuteto.tofu.util.ModLog;
+import tsuteto.tofu.util.TofuBlockUtils;
 
 import java.util.Random;
 
 public class BlockTofu extends BlockTofuBase
 {
+    private TofuMaterial tofuMaterial;
     private boolean isFragile = false;
     private boolean canDrain = false;
     private boolean canFreeze = false;
     private int drainRate;
 
-    public BlockTofu(Material material)
+    public BlockTofu(TofuMaterial tofuMaterial)
     {
-        super(material);
-        this.setCreativeTab(CreativeTabs.tabBlock);
+        super(tofuMaterial);
+        this.tofuMaterial = tofuMaterial;
+        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
     }
 
     public BlockTofu setFragile()
@@ -59,41 +61,21 @@ public class BlockTofu extends BlockTofuBase
         return drainRate;
     }
 
+    @Override
+    public Item getItemDropped(int par1, Random par2Random, int par3)
+    {
+        return tofuMaterial.getItem();
+    }
+
     /**
      * Block's chance to react to an entity falling on it.
      */
     @Override
     public void onFallenUpon(World par1World, int par2, int par3, int par4, Entity par5Entity, float par6)
     {
-        if (!par1World.isRemote && isFragile)
+        if (isFragile)
         {
-            if (par6 > 0.5F)
-            {
-                if (!(par5Entity instanceof EntityPlayer) && !par1World.getGameRules().getGameRuleBooleanValue("mobGriefing"))
-                {
-                    return;
-                }
-
-                BlockUtils.handleEntityWeightingBlock(par1World, par5Entity, this, new BlockUtils.IEntityWeightingBlockHandler()
-                {
-                    @Override
-                    public void apply(World world, Entity entity, Block block, int x, int y, int z)
-                    {
-                        collapseBlock(entity, world, x, y, z);
-                    }
-                });
-            }
-        }
-    }
-
-    private void collapseBlock(Entity entity, World world, int x, int y, int z)
-    {
-        dropBlockAsItem(world, x, y, z, 0, 0);
-        world.setBlockToAir(x, y, z);
-
-        if (entity instanceof EntityPlayer)
-        {
-            TcAchievementMgr.achieve((EntityPlayer)entity, Key.tofuMental);
+            TofuBlockUtils.onFallenUponFragileTofu(par1World, par5Entity, this, par6);
         }
     }
 
@@ -111,7 +93,7 @@ public class BlockTofu extends BlockTofuBase
            {
                 if (isFragile)
                 {
-                    dropBlockAsItem(par1World, par2, par3, par4, 0, 0);
+                    dropBlockAsItemWithChance(par1World, par2, par3, par4, 0, 0.4f, 0);
                     par1World.setBlockToAir(par2, par3, par4);
                 }
                 else if (canDrain)

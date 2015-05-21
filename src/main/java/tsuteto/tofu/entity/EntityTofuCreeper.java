@@ -1,16 +1,10 @@
 package tsuteto.tofu.entity;
 
-import net.minecraft.block.Block;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -21,13 +15,10 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldType;
 import tsuteto.tofu.Settings;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.item.TcItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcEntity;
+import tsuteto.tofu.init.TcItems;
 
 public class EntityTofuCreeper extends EntityMob
 {
@@ -92,7 +83,7 @@ public class EntityTofuCreeper extends EntityMob
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte) - 1));
+        this.dataWatcher.addObject(16, Byte.valueOf((byte) -1));
         this.dataWatcher.addObject(17, Byte.valueOf((byte)0));
     }
 
@@ -109,7 +100,7 @@ public class EntityTofuCreeper extends EntityMob
             par1NBTTagCompound.setBoolean("powered", true);
         }
 
-        par1NBTTagCompound.setShort("Fuse", (short)this.fuseTime);
+        par1NBTTagCompound.setShort("Fuse", (short) this.fuseTime);
         par1NBTTagCompound.setFloat("ExplosionRadius", this.explosionRadius);
     }
 
@@ -120,7 +111,7 @@ public class EntityTofuCreeper extends EntityMob
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        this.dataWatcher.updateObject(17, Byte.valueOf((byte)(par1NBTTagCompound.getBoolean("powered") ? 1 : 0)));
+        this.dataWatcher.updateObject(17, Byte.valueOf((byte) (par1NBTTagCompound.getBoolean("powered") ? 1 : 0)));
 
         if (par1NBTTagCompound.hasKey("Fuse"))
         {
@@ -190,11 +181,9 @@ public class EntityTofuCreeper extends EntityMob
         }
         else
         {
-            int[] idx = TofuCreeperSeed.instance().getSpawnId(this.worldObj, TcEntity.allBiomesList.length);
-            int bid1 = TcEntity.allBiomesList[idx[0]].biomeID;
-            int bid2 = TcEntity.allBiomesList[idx[1]].biomeID;
-            int bid3 = worldObj.getBiomeGenForCoords((int)this.posX, (int)this.posZ).biomeID;
-            if (bid3 == bid1 || bid3 == bid2)
+            int[] bid = getSpawnBiomeIds(this.worldObj);
+            int bidHere = worldObj.getBiomeGenForCoords((int)this.posX, (int)this.posZ).biomeID;
+            if (bidHere == bid[0] || bidHere == bid[1])
             {
                 return super.getCanSpawnHere();
             }
@@ -203,6 +192,16 @@ public class EntityTofuCreeper extends EntityMob
                 return false;
             }
         }
+    }
+
+    public static int[] getSpawnBiomeIds(World world)
+    {
+        int[] idx = TofuCreeperSeed.instance().getSpawnId(world, TcEntity.allBiomesList.length);
+        for (int i = 0; i < idx.length; i++)
+        {
+            idx[i] = TcEntity.allBiomesList[idx[i]].biomeID;
+        }
+        return idx;
     }
     
     /**

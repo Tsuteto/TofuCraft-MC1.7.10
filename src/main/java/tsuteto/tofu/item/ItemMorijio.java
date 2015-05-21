@@ -1,14 +1,12 @@
 package tsuteto.tofu.item;
 
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.tileentity.TileEntityMorijio;
-
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.tileentity.TileEntityMorijio;
 
 public class ItemMorijio extends TcItem
 {
@@ -16,7 +14,6 @@ public class ItemMorijio extends TcItem
     public ItemMorijio()
     {
         super();
-        this.setCreativeTab(CreativeTabs.tabDecorations);
         this.setMaxDamage(0);
     }
 

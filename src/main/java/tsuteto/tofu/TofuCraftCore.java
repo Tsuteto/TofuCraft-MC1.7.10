@@ -7,35 +7,38 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.storage.SaveHandler;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.*;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.oredict.OreDictionary;
-import tsuteto.tofu.achievement.TcAchievementList;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.command.CommandTofuCreeperSpawn;
+import tsuteto.tofu.command.CommandTofuSlimeCheck;
 import tsuteto.tofu.data.MorijioManager;
 import tsuteto.tofu.data.TcSaveHandler;
 import tsuteto.tofu.enchantment.TcEnchantment;
-import tsuteto.tofu.entity.TcEntity;
 import tsuteto.tofu.entity.TofuCreeperSeed;
 import tsuteto.tofu.eventhandler.*;
 import tsuteto.tofu.fishing.TofuFishing;
 import tsuteto.tofu.fluids.FluidUtils;
-import tsuteto.tofu.fluids.TcFluids;
 import tsuteto.tofu.gui.TcGuiHandler;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.*;
+import tsuteto.tofu.init.block.LoaderDecorationBlock;
+import tsuteto.tofu.init.block.TcBlockLoader;
+import tsuteto.tofu.init.item.TcItemLoader;
 import tsuteto.tofu.network.PacketManager;
 import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
 import tsuteto.tofu.recipe.craftguide.CraftGuideLoader;
+import tsuteto.tofu.texture.TcTextures;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.UpdateNotification;
@@ -59,12 +62,13 @@ import java.util.Arrays;
     modid = TofuCraftCore.modid,
     name = "TofuCraft",
     version = TofuCraftCore.version,
-    acceptedMinecraftVersions = "[1.7.10,1.8)"
+    acceptedMinecraftVersions = "[1.7.10,1.8)",
+    dependencies = "after:BambooMod;after:IC2"
 )
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "1.6.19-MC1.7.10";
+    public static final String version = "2.0.0-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -77,7 +81,6 @@ public class TofuCraftCore
     public static ISidedProxy sidedProxy;
 
     public static final BiomeDictionary.Type BIOME_TYPE_TOFU;
-    public static final CreativeTabs tabTofuCraft = new CreativeTabTofuCraft(modid);
 
     public static UpdateNotification update = null;
     private Configuration conf;
@@ -112,8 +115,8 @@ public class TofuCraftCore
         conf.save();
 
         // Register basic features
-        TcBlocks.register();
-        TcItems.register();
+        TcBlockLoader.loadMain();
+        TcItemLoader.loadMain();
         TcEntity.register(this);
 
         // Register liquid blocks
@@ -127,7 +130,7 @@ public class TofuCraftCore
         // Add Achievements
         if (Settings.achievement)
         {
-            TcAchievementList.load();
+            TcAchievements.load();
         }
 
         // Update check!
@@ -246,6 +249,7 @@ public class TofuCraftCore
         // Register recipes
         Recipes.unifyOreDicItems();
         Recipes.register();
+        Recipes.registerExternalModRecipes();
 
         // CraftGuide
         if (Loader.isModLoaded("craftguide"))
@@ -262,10 +266,6 @@ public class TofuCraftCore
     {
         TcEntity.addSpawns();
 
-        TcItems.registerExternalModItems();
-        TcBlocks.registerExternalModBlocks();
-        Recipes.registerExternalModRecipes();
-
         // Register potion effects
         TcPotion.register(conf);
         // Register enchantments
@@ -277,8 +277,11 @@ public class TofuCraftCore
     }
 
     @Mod.EventHandler
-    public void serverStarting(FMLServerStartingEvent event){
+    public void serverStarting(FMLServerStartingEvent event)
+    {
+        // Register commands
         event.registerServerCommand(new CommandTofuSlimeCheck());
+        event.registerServerCommand(new CommandTofuCreeperSpawn());
 
         // Initialize world save handler
         SaveHandler saveHandler = (SaveHandler)event.getServer().worldServerForDimension(0).getSaveHandler();
@@ -336,9 +339,12 @@ public class TofuCraftCore
         public void registerComponents()
         {
             MinecraftForge.EVENT_BUS.register(new TcTextures());
+            MinecraftForge.EVENT_BUS.register(new GameScreenHandler());
 
-            TcBlocks.registerBlockRenderer();
+            LoaderDecorationBlock.registerBlockRenderer();
             TcEntity.registerEntityRenderer();
+
+            MinecraftForgeClient.registerItemRenderer(TcItems.zundaBow, (IItemRenderer)TcItems.zundaBow);
 
             VillagerRegistry vill = VillagerRegistry.instance();
             vill.registerVillagerSkin(Settings.professionIdTofucook, new ResourceLocation("tofucraft", "textures/mob/tofucook.png"));

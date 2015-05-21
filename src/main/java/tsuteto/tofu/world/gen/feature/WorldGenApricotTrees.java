@@ -1,6 +1,6 @@
 package tsuteto.tofu.world.gen.feature;
 
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 
 public class WorldGenApricotTrees extends WorldGenTcTreesBase
 {

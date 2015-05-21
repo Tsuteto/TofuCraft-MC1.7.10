@@ -5,7 +5,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import tsuteto.tofu.api.TfMaterialRegistry;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.init.TcFluids;
 
 public class TfUtils
 {

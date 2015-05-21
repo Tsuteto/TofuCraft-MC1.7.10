@@ -14,7 +14,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
 
 import java.util.Random;

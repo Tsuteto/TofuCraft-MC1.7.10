@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tsuteto.tofu.gui.TcGuiHandler;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityTfOven;
 import tsuteto.tofu.util.BlockUtils;
 
@@ -11,7 +12,7 @@ public class BlockTfOven extends BlockTfMachineBase
 {
     private static boolean keepMachineInventory = false;
 
-    protected BlockTfOven(boolean isActive)
+    public BlockTfOven(boolean isActive)
     {
         super(isActive);
         setGuiScreen(TcGuiHandler.GUIID_TF_OVEN);

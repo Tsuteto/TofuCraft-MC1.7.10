@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import tsuteto.tofu.init.TcBlocks;
 import tsuteto.tofu.tileentity.TileEntityTfCollector;
 
 import java.util.Random;
@@ -12,7 +13,7 @@ public class BlockTfCollector extends BlockTfMachineBase
 {
     private static boolean keepMachineInventory = false;
 
-    protected BlockTfCollector()
+    public BlockTfCollector()
     {
         super(true);
     }

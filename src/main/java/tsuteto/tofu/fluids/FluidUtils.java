@@ -3,6 +3,7 @@ package tsuteto.tofu.fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,5 +36,10 @@ public class FluidUtils
         {
             return null;
         }
+    }
+
+    public static boolean isContainerForFluid(FluidStack fluid, ItemStack container)
+    {
+        return FluidContainerRegistry.fillFluidContainer(fluid, container) != null;
     }
 }

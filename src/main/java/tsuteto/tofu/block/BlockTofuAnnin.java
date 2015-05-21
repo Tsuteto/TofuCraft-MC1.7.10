@@ -2,12 +2,12 @@ package tsuteto.tofu.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.material.Material;
+import tsuteto.tofu.item.TofuMaterial;
 
 public class BlockTofuAnnin extends BlockTofu
 {
 
-    public BlockTofuAnnin(Material material)
+    public BlockTofuAnnin(TofuMaterial material)
     {
         super(material);
         this.setLightOpacity(2);

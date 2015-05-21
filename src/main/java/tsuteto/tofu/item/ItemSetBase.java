@@ -7,7 +7,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import tsuteto.tofu.item.iteminfo.TcItemInfoBase;
 import tsuteto.tofu.item.iteminfo.TcItemSetInfo;
 import tsuteto.tofu.item.iteminfo.TcItemType;
 
@@ -30,20 +29,6 @@ abstract public class ItemSetBase<T extends TcItemSetInfo> extends ItemWithState
     {
         List<T> list = this.getItemList();
         return list.get(dmg >= 0 && dmg < list.size() ? dmg : 0);
-    }
-
-    @Override
-    public boolean hasContainerItem(ItemStack stack)
-    {
-        TcItemInfoBase info = getItemInfo(stack.getItemDamage());
-        return info.hasContainerItem();
-    }
-
-    @Override
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
-        TcItemInfoBase info = getItemInfo(stack.getItemDamage());
-        return info.itemUseDuration;
     }
 
     @Override

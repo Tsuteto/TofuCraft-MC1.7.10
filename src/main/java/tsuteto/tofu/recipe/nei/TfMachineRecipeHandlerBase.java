@@ -4,7 +4,7 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.client.FMLClientHandler;
-import tsuteto.tofu.TcTextures;
+import tsuteto.tofu.texture.TcTextures;
 import tsuteto.tofu.util.GuiUtils;
 
 import java.awt.*;

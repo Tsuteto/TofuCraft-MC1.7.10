@@ -1,7 +1,6 @@
 package tsuteto.tofu.entity;
 
 import net.minecraft.world.World;
-import tsuteto.tofu.util.ModLog;
 
 public class TofuCreeperSeed
 {
@@ -9,8 +8,7 @@ public class TofuCreeperSeed
     
     private long s;
     private long bs;
-    private int day;
-    
+
     public static TofuCreeperSeed instance()
     {
         return instance;
@@ -46,20 +44,25 @@ public class TofuCreeperSeed
 
     public int[] getSpawnId(World world, int par1)
     {
+        int[] j = new int[4];
         long d = world.getWorldTime() / 24000L + 1;
         long a = this.s * d;
 
-        int j1 = (int)((a >> 24) % par1);
+        j[0] = (int)((a >> 24) % par1);
 
-        a *= this.s * 6364136223846793005L + 1442695040888963407L;
-        a += this.bs;
+        for (int i = 1; i < j.length; i++)
+        {
+            a *= this.s * 6364136223846793005L + 1442695040888963407L;
+            a += this.bs;
+            j[i] = (int) ((a >> 24) % par1);
+        }
 
-        int j2 = (int)((a >> 24) % par1);
-
-        if (j1 < 0) j1 += par1;
-        if (j2 < 0) j2 += par1;
+        for (int i = 0; i < j.length; i++)
+        {
+            if (j[i] < 0) j[i] += par1;
+        }
         //ModLog.debug("Tofu Creeper: %d, %d, %s", j1, j2, a);
 
-        return new int[]{j1, j2};
+        return j;
     }
 }

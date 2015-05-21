@@ -2,7 +2,7 @@ package tsuteto.tofu.recipe.craftguide;
 
 import net.minecraft.item.ItemStack;
 import tsuteto.tofu.api.TfMaterialRegistry;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
 import uristqwerty.CraftGuide.api.*;
 
 public class TfStorageCG extends TfMachineCGBase

@@ -1,13 +1,13 @@
 package tsuteto.tofu.item;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import tsuteto.tofu.block.BlockTofuBase;
+import tsuteto.tofu.block.ITofuScoopable;
 
 public class ItemTofuScoop extends TcItem
 {
@@ -17,8 +17,6 @@ public class ItemTofuScoop extends TcItem
         super();
         this.setMaxDamage(352);
         this.setMaxStackSize(1);
-        this.setCreativeTab(CreativeTabs.tabTools);
-
         this.setFull3D();
     }
 
@@ -34,21 +32,37 @@ public class ItemTofuScoop extends TcItem
             int k = mpos.blockZ;
             Block block = world.getBlock(i, j, k);
 
-            if (world.canMineBlock(player, i, j, k)
-                    && block != null && block instanceof BlockTofuBase)
+            if (world.canMineBlock(player, i, j, k) && block != null)
             {
-                BlockTofuBase tofu = (BlockTofuBase)block;
-                if (tofu.isScoopable())
+                boolean isScoopable;
+                if (block instanceof BlockTofuBase)
+                {
+                    isScoopable = ((BlockTofuBase) block).isScoopable();
+                }
+                else
+                {
+                    isScoopable = block instanceof ITofuScoopable;
+                }
+                if (isScoopable)
                 {
                     itemstack.damageItem(1, player);
                     world.setBlockToAir(i, j, k);
 
                     if (!world.isRemote)
                     {
-                        EntityItem drop = new EntityItem(world, mpos.hitVec.xCoord, mpos.hitVec.yCoord, mpos.hitVec.zCoord, tofu.createScoopedBlockStack());
+                        ItemStack stack;
+                        if (block instanceof BlockTofuBase)
+                        {
+                            stack = ((BlockTofuBase) block).createScoopedBlockStack();
+                        }
+                        else
+                        {
+                            stack = new ItemStack(block);
+                        }
+                        EntityItem drop = new EntityItem(world, mpos.hitVec.xCoord, mpos.hitVec.yCoord, mpos.hitVec.zCoord, stack);
                         world.spawnEntityInWorld(drop);
                     }
-                    player.playSound(tofu.stepSound.getBreakSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                    player.playSound(block.stepSound.getBreakSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
                 }
             }
         }

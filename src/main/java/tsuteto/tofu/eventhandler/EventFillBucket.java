@@ -12,8 +12,8 @@ import net.minecraftforge.event.entity.player.FillBucketEvent;
 import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.achievement.TcAchievementMgr.Key;
 import tsuteto.tofu.block.BlockMisoBarrel;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 
 public class EventFillBucket
 {

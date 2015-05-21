@@ -18,7 +18,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import tsuteto.tofu.achievement.TcAchievementMgr;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.network.PacketDispatcher;
 import tsuteto.tofu.network.packet.PacketZundaArrowHit;
 

@@ -6,8 +6,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemDiamondTofuArmor;
-import tsuteto.tofu.item.TcItems;
 
 import java.util.List;
 

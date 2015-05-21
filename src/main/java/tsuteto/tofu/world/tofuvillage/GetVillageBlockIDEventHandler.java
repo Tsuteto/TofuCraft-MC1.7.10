@@ -8,7 +8,8 @@ import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.event.terraingen.BiomeEvent;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.item.TofuMaterial;
 import tsuteto.tofu.material.TcMaterial;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.world.biome.BiomeGenTofuBase;
@@ -17,7 +18,7 @@ public class GetVillageBlockIDEventHandler
 {
 
 	@SubscribeEvent
-	public void GetVillageBlockID(BiomeEvent.GetVillageBlockID event)
+	public void onVillageBlockID(BiomeEvent.GetVillageBlockID event)
 	{
 		if(event.biome instanceof BiomeGenTofuBase)
 		{
@@ -52,6 +53,10 @@ public class GetVillageBlockIDEventHandler
             else if (event.original == Blocks.farmland)
             {
                 event.replacement = TcBlocks.tofuFarmland;
+            }
+            else if (event.original == Blocks.fence)
+            {
+                event.replacement = TcBlocks.tofuWalls.get(TofuMaterial.momen);
             }
             else if (event.original == Blocks.chest)
             {
@@ -98,4 +103,16 @@ public class GetVillageBlockIDEventHandler
             event.setResult(Event.Result.DENY);
 		}
 	}
+
+    @SubscribeEvent
+    public void onVillageBlockMeta(BiomeEvent.GetVillageBlockMeta event)
+    {
+        if(event.biome instanceof BiomeGenTofuBase)
+        {
+            if (event.original == Blocks.stone_slab)
+            {
+                event.replacement = 1; // momen tofu slab
+            }
+        }
+    }
 }

@@ -3,15 +3,15 @@ package tsuteto.tofu.item;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
-import tsuteto.tofu.block.TcBlocks;
-import tsuteto.tofu.util.ItemUtils;
+import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class ItemTofuHoe extends ItemHoe
@@ -24,17 +24,11 @@ public class ItemTofuHoe extends ItemHoe
         ModLog.debug("TofuHoe event has been registered");
     }
 
-    @Override
-    public CreativeTabs[] getCreativeTabs() {
-        return ItemUtils.getCreativeTabs(this);
-    }
-
     @SubscribeEvent
     public void onUseTofuHoe(UseHoeEvent event)
     {
         ItemStack hoe = event.current;
         World world = event.world;
-        EntityLivingBase living = event.entityLiving;
         int x = event.x;
         int y = event.y;
         int z = event.z;
@@ -63,4 +57,9 @@ public class ItemTofuHoe extends ItemHoe
         }
     }
 
+    @Override
+    public void onCreated(ItemStack p_77622_1_, World p_77622_2_, EntityPlayer p_77622_3_)
+    {
+        TcAchievementMgr.achieve(p_77622_3_, TcAchievementMgr.Key.tofunianHoe);
+    }
 }

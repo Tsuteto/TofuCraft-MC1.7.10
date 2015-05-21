@@ -22,7 +22,7 @@ import tsuteto.tofu.data.DataType;
 import tsuteto.tofu.data.EntityInfo;
 import tsuteto.tofu.data.MorijioManager;
 import tsuteto.tofu.data.PortalTripInfo;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
 
 public class EventEntityLiving

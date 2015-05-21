@@ -4,6 +4,7 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -11,10 +12,11 @@ import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.api.recipe.TfCondenserRecipe;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
-import tsuteto.tofu.fluids.TcFluids;
+import tsuteto.tofu.gui.GuiTfCondenser;
 import tsuteto.tofu.gui.GuiTfMachineBase;
 import tsuteto.tofu.gui.guiparts.*;
-import tsuteto.tofu.item.TcItems;
+import tsuteto.tofu.init.TcFluids;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 
 import java.awt.*;
@@ -73,14 +75,18 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
         this.progressBar.setInfoTip(HoverTextPosition.LOWER_CENTER);
 
         // Recipes
-        Rectangle rect = new Rectangle(this.progressBar.getBoundingBox());
-        rect.translate(GUI_OFFSET_X, GUI_OFFSET_Y);
-        this.transferRects.add(new RecipeTransferRect(rect, this.getRecipeId()));
+        this.transferRects.add(new RecipeTransferRect(new Rectangle(110, 24, 24, 17), this.getRecipeId()));
     }
 
     public List<TfCondenserRecipe> getRecipeList()
     {
         return TfCondenserRecipeRegistry.recipeRegistry;
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass()
+    {
+        return GuiTfCondenser.class;
     }
 
     public String getRecipeId()

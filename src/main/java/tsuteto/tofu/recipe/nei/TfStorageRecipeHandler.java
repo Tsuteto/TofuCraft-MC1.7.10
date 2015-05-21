@@ -2,11 +2,13 @@ package tsuteto.tofu.recipe.nei;
 
 import codechicken.nei.PositionedStack;
 import com.google.common.collect.Lists;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.gui.GuiTfMachineBase;
+import tsuteto.tofu.gui.GuiTfStorage;
 import tsuteto.tofu.gui.guiparts.GuiPartGaugeBase;
 import tsuteto.tofu.gui.guiparts.GuiPartGaugeH;
 import tsuteto.tofu.gui.guiparts.HoverTextPosition;
@@ -36,14 +38,18 @@ public class TfStorageRecipeHandler extends TfMachineRecipeHandlerBase
         this.progressBar = new GuiPartGaugeH(31, 22, TfMachineGuiParts.progressArrowBg, TfMachineGuiParts.progressArrow);
 
         // Recipes
-        Rectangle rect = new Rectangle(this.progressBar.getBoundingBox());
-        rect.translate(GUI_OFFSET_X, GUI_OFFSET_Y);
-        this.transferRects.add(new RecipeTransferRect(rect, this.getRecipeId()));
+        this.transferRects.add(new RecipeTransferRect(new Rectangle(64, 26, 24, 17), this.getRecipeId()));
     }
 
     public List<TfMaterialRegistry> getRecipeList()
     {
         return TfMaterialRegistry.getTfMaterialList();
+    }
+
+    @Override
+    public Class<? extends GuiContainer> getGuiClass()
+    {
+        return GuiTfStorage.class;
     }
 
     public String getRecipeId()

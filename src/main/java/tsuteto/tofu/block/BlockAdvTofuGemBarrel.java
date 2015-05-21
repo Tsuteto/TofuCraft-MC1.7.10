@@ -3,12 +3,13 @@ package tsuteto.tofu.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.ItemTcMaterials;
-import tsuteto.tofu.item.TcItems;
 import tsuteto.tofu.util.BlockUtils;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class BlockAdvTofuGemBarrel extends BlockBarrelBase
     @Override
     public void addFermentedItem(List list)
     {
-        list.add(new ItemStack(TcItems.materials, 1, ItemTcMaterials.advTofuGem.id));
+        list.add(ItemTcMaterials.advTofuGem.getStack());
     }
 
     @Override
     public void addIngredients(List list)
     {
-        list.add(new ItemStack(TcItems.materials, 1, ItemTcMaterials.tofuGem.id));
-        list.add(new ItemStack(Blocks.redstone_block, 1));
+        list.add(ItemTcMaterials.tofuGem.getStack(3));
+        list.add(new ItemStack(Items.redstone, 3));
     }
 
     @Override

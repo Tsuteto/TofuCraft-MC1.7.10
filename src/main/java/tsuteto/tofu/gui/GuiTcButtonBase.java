@@ -2,8 +2,8 @@ package tsuteto.tofu.gui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-import tsuteto.tofu.TcTextures;
 import tsuteto.tofu.gui.guiparts.TfMachineGuiParts;
+import tsuteto.tofu.texture.TcTextures;
 
 abstract public class GuiTcButtonBase<T extends GuiTcButtonBase> extends GuiButton
 {

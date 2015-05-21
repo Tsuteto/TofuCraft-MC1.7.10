@@ -1,25 +1,24 @@
 package tsuteto.tofu.block;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import tsuteto.tofu.item.TcItem;
+import tsuteto.tofu.block.render.RenderYubaBlock;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.material.TcMaterial;
+
+import java.util.Random;
 
 public class BlockYuba extends Block
 {
-    protected BlockYuba()
+    public BlockYuba()
     {
         super(TcMaterial.tofu);
         this.setTickRandomly(true);
@@ -86,7 +85,7 @@ public class BlockYuba extends Block
     
     protected void dropYuba(World par1World, int par3, int par4, int par5)
     {
-        this.dropBlockAsItem(par1World, par3, par4, par5, new ItemStack(TcBlocks.yuba));
+        this.dropBlockAsItem(par1World, par3, par4, par5, new ItemStack(TcItems.yuba));
     }
 
     /**

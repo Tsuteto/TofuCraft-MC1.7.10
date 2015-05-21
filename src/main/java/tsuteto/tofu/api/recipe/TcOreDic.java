@@ -2,7 +2,8 @@ package tsuteto.tofu.api.recipe;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import tsuteto.tofu.block.TcBlocks;
+import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.*;
 import tsuteto.tofu.util.ItemUtils;
 
@@ -29,6 +30,7 @@ public enum TcOreDic
     blockTofuHell(TcBlocks.tofuHell),
     blockTofuGlow(TcBlocks.tofuGlow),
     blockTofuDiamond(TcBlocks.tofuDiamond),
+    blockTofuMinced(TcBlocks.tofuMinced),
 
     oreTofu(TcBlocks.oreTofu),
     oreTofuDiamond(TcBlocks.oreTofuDiamond),
@@ -76,6 +78,7 @@ public enum TcOreDic
     tofuHell(TcItems.tofuHell),
     tofuGlow(TcItems.tofuGlow),
     tofuDiamond(TcItems.tofuDiamond),
+    tofuMinced(ItemFoodSet.tofuMinced.getStack()),
 
     bucketSoySauce(TcItems.bucketSoySauce),
     bucketSoymilk(TcItems.bucketSoymilk),
@@ -98,7 +101,7 @@ public enum TcOreDic
     filterCloth(TcItems.filterCloth),
     apricot(TcItems.apricot),
     apricotSeed(TcItems.apricotSeed),
-    gelatin(TcItems.gelatin.getItemStack(ItemGelatin.gelatin)),
+    gelatin(ItemGelatin.gelatin.getStack()),
     kyoninso(TcItems.kyoninso),
     sesame(TcItems.sesame),
     starch(TcItems.starch),
@@ -167,6 +170,7 @@ public enum TcOreDic
     foodTofuMiso(tofuMiso),
     foodTofuHell(tofuHell),
     foodTofuGlow(tofuGlow),
+    foodTofuMinced(tofuMinced),
 
     foodEdamameBoiled(edamameBoiled),
     foodApricot(apricot),
