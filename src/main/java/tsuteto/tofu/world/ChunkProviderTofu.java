@@ -448,6 +448,16 @@ public class ChunkProviderTofu implements IChunkProvider
         int var15;
         WorldGenMinable worldgenminable;
 
+        worldgenminable = new WorldGenMinable(TcBlocks.oreTofuDiamond, 4, TcBlocks.tofuTerrain);
+
+        for (var12 = 0; var12 < 6; ++var12)
+        {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(20) + 5;
+            var15 = var5 + this.rand.nextInt(16);
+            worldgenminable.generate(this.worldObj, this.rand, var13, var14, var15);
+        }
+
         worldgenminable = new WorldGenMinable(TcBlocks.tofuKinu, 32, TcBlocks.tofuTerrain);
 
         for (var12 = 0; var12 < 18; ++var12)
@@ -458,12 +468,12 @@ public class ChunkProviderTofu implements IChunkProvider
             worldgenminable.generate(this.worldObj, this.rand, var13, var14, var15);
         }
 
-        worldgenminable = new WorldGenMinable(TcBlocks.oreTofuDiamond, 4, TcBlocks.tofuTerrain);
+        worldgenminable = new WorldGenMinable(TcBlocks.tofuMinced, 32, TcBlocks.tofuTerrain);
 
-        for (var12 = 0; var12 < 6; ++var12)
+        for (var12 = 0; var12 < 12; ++var12)
         {
             var13 = var4 + this.rand.nextInt(16);
-            var14 = this.rand.nextInt(20) + 5;
+            var14 = this.rand.nextInt(256);
             var15 = var5 + this.rand.nextInt(16);
             worldgenminable.generate(this.worldObj, this.rand, var13, var14, var15);
         }

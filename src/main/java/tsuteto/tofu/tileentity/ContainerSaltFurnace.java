@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
@@ -129,10 +130,10 @@ public class ContainerSaltFurnace extends Container
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
     {
-        // 0-1: Salt furnace inventory
-        // 2-28: Player inventory
-        // 29-37: Hot bar in the player inventory
-        
+        // 0-3: Salt furnace inventory
+        // 4-30: Player inventory
+        // 31-39: Hot bar in the player inventory
+
         ItemStack var3 = null;
         Slot var4 = (Slot)this.inventorySlots.get(par2);
 
@@ -141,16 +142,16 @@ public class ContainerSaltFurnace extends Container
             ItemStack var5 = var4.getStack();
             var3 = var5.copy();
 
-            if (par2 == 2)
+            if (par2 == 1 || par2 == 3)
             {
-                if (!this.mergeItemStack(var5, 2, 38, true))
+                if (!this.mergeItemStack(var5, 4, 40, true))
                 {
                     return null;
                 }
 
                 var4.onSlotChange(var5, var3);
             }
-            else if (par2 != 1 && par2 != 0)
+            else if (par2 >= 4)
             {
                 if (TileEntityFurnace.isItemFuel(var5))
                 {
@@ -159,19 +160,26 @@ public class ContainerSaltFurnace extends Container
                         return null;
                     }
                 }
-                else if (par2 >= 2 && par2 < 29)
+                else if (var5.getItem() == Items.glass_bottle)
                 {
-                    if (!this.mergeItemStack(var5, 29, 38, false))
+                    if (!this.mergeItemStack(var5, 2, 3, false))
                     {
                         return null;
                     }
                 }
-                else if (par2 >= 29 && par2 < 38 && !this.mergeItemStack(var5, 2, 29, false))
+                else if (par2 >= 4 && par2 < 31)
+                {
+                    if (!this.mergeItemStack(var5, 31, 40, false))
+                    {
+                        return null;
+                    }
+                }
+                else if (par2 >= 31 && par2 < 40 && !this.mergeItemStack(var5, 4, 31, false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(var5, 2, 38, false))
+            else if (!this.mergeItemStack(var5, 4, 40, false))
             {
                 return null;
             }

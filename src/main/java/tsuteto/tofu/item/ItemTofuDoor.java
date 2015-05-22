@@ -25,6 +25,7 @@ public class ItemTofuDoor extends TcItem
     public ItemTofuDoor()
     {
         this.maxStackSize = 1;
+        this.setHasSubtypes(true);
     }
 
     @SideOnly(Side.CLIENT)
