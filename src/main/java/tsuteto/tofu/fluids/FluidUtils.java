@@ -19,9 +19,9 @@ public class FluidUtils
 
         for (FluidContainerRegistry.FluidContainerData data : list)
         {
-            if (!fluidToFilledItemMap.containsKey(data.fluid.fluidID))
+            if (!fluidToFilledItemMap.containsKey(data.fluid.getFluid().getID()))
             {
-                fluidToFilledItemMap.put(data.fluid.fluidID, data.filledContainer);
+                fluidToFilledItemMap.put(data.fluid.getFluid().getID(), data.filledContainer);
             }
         }
     }
