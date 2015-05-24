@@ -153,6 +153,7 @@ public class LoaderDecorationBlock extends TcBlockLoader
         TcBlocks.saltPan = $("blockSaltPan", new BlockSaltPan())
                 .wrappedByItemTcBlock()
                 .registerBlock()
+                .setHardness(0.2F)
                 .setStepSound(Block.soundTypeWood)
                 .setCreativeTab(TcCreativeTabs.DECORATIONS)
         ;

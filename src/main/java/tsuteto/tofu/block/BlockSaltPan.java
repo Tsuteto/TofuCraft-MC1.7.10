@@ -14,6 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import tsuteto.tofu.Settings;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.block.render.RenderSaltPan;
 import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.util.ModLog;
@@ -162,6 +163,7 @@ public class BlockSaltPan extends TcBlock
                 }
                 world.setBlockMetadataWithNotify(tileX, tileY, tileZ, 0, 3);
 
+                TcAchievementMgr.achieve(player, TcAchievementMgr.Key.bayBittern);
                 return true;
             }
             else if (i1 == Stat.BITTERN && itemHeld == null)
@@ -181,6 +183,8 @@ public class BlockSaltPan extends TcBlock
                 world.spawnEntityInWorld(entityitem);
 
                 world.setBlockMetadataWithNotify(tileX, tileY, tileZ, 8, 3);
+
+                TcAchievementMgr.achieve(player, TcAchievementMgr.Key.baySalt);
                 return true;
             }
             return false;

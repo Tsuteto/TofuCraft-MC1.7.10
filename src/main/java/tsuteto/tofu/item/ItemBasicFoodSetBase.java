@@ -1,6 +1,5 @@
 package tsuteto.tofu.item;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,6 @@ public abstract class ItemBasicFoodSetBase<T extends TcFoodBase> extends ItemSet
     public ItemBasicFoodSetBase()
     {
         super();
-        this.setCreativeTab(CreativeTabs.tabFood);
     }
 
     @Override

@@ -3,13 +3,13 @@ package tsuteto.tofu.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
 import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.TofuMaterial;
 
@@ -22,7 +22,7 @@ public class BlockTofuGrilled extends BlockTofuBase
     public BlockTofuGrilled(TofuMaterial material)
     {
         super(material);
-        this.setCreativeTab(CreativeTabs.tabBlock);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
     }
 
     @Override

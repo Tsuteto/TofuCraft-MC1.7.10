@@ -17,6 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tsuteto.tofu.achievement.TcAchievementMgr;
+import tsuteto.tofu.creativetabs.TcCreativeTabs;
 import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.iteminfo.SoymilkPlayerInfo;
 import tsuteto.tofu.item.iteminfo.SoymilkPotionEffect;
@@ -97,6 +98,10 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
             .addPotionEffectGrade( 4, 1, 45, 60, 15)
             .addPotionEffectGrade(12, 2, 90, 60, 15, 90);
 
+    public static Flavor flvTea = new Flavor(11, "tea", 0xfed298, 4, 0.6F)
+            .setPotionEffect(Potion.waterBreathing)
+            .addPotionEffectGrade( 0, 0, 30, 30, 6, 90);
+
     public static class Flavor extends TcFoodBase<Flavor>
     {
         private static List<SoymilkPotionEffect> potionEffectsForRandom = Lists.newArrayList();
@@ -171,6 +176,7 @@ public class ItemBottleSoyMilk extends ItemBasicFoodSetBase<ItemBottleSoyMilk.Fl
         super();
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
+        this.setCreativeTab(TcCreativeTabs.FOOD);
     }
 
     @Override

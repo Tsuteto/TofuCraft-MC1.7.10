@@ -135,10 +135,10 @@ public class RenderSaltPan implements ISimpleBlockRenderingHandler
 
         if (iicon != null)
         {
-            boolean sideNegX = this.isSideBeRendered(world, panFrame, x - 1, y, z);
-            boolean sidePosX = this.isSideBeRendered(world, panFrame, x + 1, y, z);
-            boolean sideNegZ = this.isSideBeRendered(world, panFrame, x, y, z - 1);
-            boolean sidePosZ = this.isSideBeRendered(world, panFrame, x, y, z + 1);
+            boolean sideNegX = this.shouldSideBeRendered(world, panFrame, x - 1, y, z);
+            boolean sidePosX = this.shouldSideBeRendered(world, panFrame, x + 1, y, z);
+            boolean sideNegZ = this.shouldSideBeRendered(world, panFrame, x, y, z - 1);
+            boolean sidePosZ = this.shouldSideBeRendered(world, panFrame, x, y, z + 1);
 
             double uNeg = blockNegX ? 0.0D : frameWeight;
             double uPos = blockPosX ? 1.0D : 1.0D - frameWeight;
@@ -177,7 +177,7 @@ public class RenderSaltPan implements ISimpleBlockRenderingHandler
         return true;
     }
 
-    private boolean isSideBeRendered(IBlockAccess world, BlockSaltPan panFrame, int x, int y, int z)
+    private boolean shouldSideBeRendered(IBlockAccess world, BlockSaltPan panFrame, int x, int y, int z)
     {
         BlockSaltPan.Stat stat = panFrame.getStat(world, x, y, z);
         return stat != BlockSaltPan.Stat.WATER && stat != BlockSaltPan.Stat.BITTERN;

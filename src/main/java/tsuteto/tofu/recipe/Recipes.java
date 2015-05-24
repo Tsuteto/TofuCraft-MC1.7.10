@@ -27,6 +27,7 @@ public class Recipes
     private static final String oredic_cookingRice = "cookingRice";
     private static final String oredic_cookedMochi = "cookedMochi";
     private static final String oredic_cropStraw = "cropStraw";
+    private static final String oredic_foodTea = "foodTea";
 
     public static void unifyOreDicItems()
     {
@@ -605,6 +606,21 @@ public class Recipes
                 Items.glass_bottle,
                 TcOreDic.bucketSoymilk,
                 Items.egg,
+                Items.sugar
+        );
+
+        TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPudding),
+                        20)
+                        .addIngredients(Items.egg, false)
+                        .addIngredients(Items.sugar, false)
+        );
+
+        // Soy Milk Bottle (Tea)
+        addShapelessSharedRecipe(TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvTea),
+                Items.glass_bottle,
+                TcOreDic.bucketSoymilk,
+                oredic_foodTea,
                 Items.sugar
         );
 
