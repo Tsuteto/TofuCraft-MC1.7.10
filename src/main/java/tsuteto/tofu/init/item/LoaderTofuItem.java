@@ -97,6 +97,7 @@ public class LoaderTofuItem extends TcItemLoader
 
         tofuDiamond = $("tofuDiamond", new TcItem())
                 .asTofu(TofuMaterial.diamond)
-                .register();
+                .register()
+                .setCreativeTab(TcCreativeTabs.MATERIALS);
     }
 }

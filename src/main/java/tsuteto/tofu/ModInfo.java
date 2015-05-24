@@ -10,7 +10,7 @@ public class ModInfo
         meta.name = "豆腐Craft (TofuCraft)";
         meta.description = "豆腐をおいしく頂きつつ本格豆腐建築を嗜むMODです。味噌、醤油、納豆、ずんだ、もやし、湯葉もあるよ。\n\n"
                 + "TofuCraft adds Tofu that is a food made of soybeans and tastes very light but has so many ways to use and various dishes, and will show you a lot of features of Tofu such as many variations of tofu, dishes, mobs, tools, weapons, energy system, and Tofu world. I wish you liked Tofu :)";
-        meta.version = "2.0";
+        meta.version = "2.1";
         meta.credits = "Tofu fishing originally implemented by dewfalse";
         meta.logoFile = "assets/tofucraft/textures/logo.png";
         meta.url = "http://forum.minecraftuser.jp/viewtopic.php?f=13&t=1014";

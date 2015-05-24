@@ -10,6 +10,8 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.fluids.FluidStack;
+import tsuteto.tofu.init.TcFluids;
 
 public class ContainerSaltFurnace extends Container
 {
@@ -114,7 +116,7 @@ public class ContainerSaltFurnace extends Container
 
         if (par1 == 3)
         {
-            this.furnace.nigariTank.getFluid().amount = par2;
+            this.furnace.nigariTank.setFluid(new FluidStack(TcFluids.NIGARI, par2));
         }
     }
 
