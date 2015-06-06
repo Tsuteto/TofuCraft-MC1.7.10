@@ -3,16 +3,20 @@ package tsuteto.tofu.block;
 import com.google.common.collect.Maps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import tsuteto.tofu.achievement.TcAchievementMgr;
 import tsuteto.tofu.init.TcItems;
 import tsuteto.tofu.item.TofuMaterial;
+import tsuteto.tofu.util.BlockUtils;
 import tsuteto.tofu.util.TofuBlockUtils;
 
 import java.util.EnumMap;
@@ -115,12 +119,25 @@ public class BlockTofuDoor extends BlockDoor implements IBlockTofuMaterial
         return this.tofuMaterial.getBlock().getRenderBlockPass();
     }
 
+    private static BlockUtils.IEntityWeightingBlockHandler tofuWeightingHandler = new BlockUtils.IEntityWeightingBlockHandler()
+    {
+        @Override
+        public void apply(World world, Entity entity, Block block, int x, int y, int z)
+        {
+            world.setBlockToAir(x, y, z);
+
+            if (entity instanceof EntityPlayer)
+            {
+                TcAchievementMgr.achieve((EntityPlayer) entity, TcAchievementMgr.Key.tofuMental);
+            }
+        }
+    };
 
     public void onFallenUpon(World par1World, int par2, int par3, int par4, Entity par5Entity, float par6)
     {
         if (this.tofuMaterial == TofuMaterial.kinu)
         {
-            TofuBlockUtils.onFallenUponFragileTofu(par1World, par5Entity, this, par6);
+            TofuBlockUtils.onFallenUponFragileTofu(par1World, par5Entity, this, par6, tofuWeightingHandler);
         }
     }
 
@@ -137,7 +154,7 @@ public class BlockTofuDoor extends BlockDoor implements IBlockTofuMaterial
 
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
     {
-        return TcItems.tofuDoor;
+        return (p_149650_1_ & 8) != 0 ? null : TcItems.tofuDoor;
     }
 
     public int damageDropped(int p_149692_1_)

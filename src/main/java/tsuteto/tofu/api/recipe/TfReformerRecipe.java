@@ -75,6 +75,18 @@ public class TfReformerRecipe
     /**
      * Adds an ore dictionary item as ingredients
      *
+     * @param dicName dic name
+     * @param isCatalyzer If true, the item is not consumed when completed
+     * @return myself to chain
+     */
+    public TfReformerRecipe addIngredients(String dicName, boolean isCatalyzer)
+    {
+        return this.addIngredients(new String[]{dicName}, isCatalyzer);
+    }
+
+    /**
+     * Adds an ore dictionary item as ingredients
+     *
      * @param dicName Ore name
      * @param isCatalyzer If true, the item is not consumed when completed
      * @return myself to chain

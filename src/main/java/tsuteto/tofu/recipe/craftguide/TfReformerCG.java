@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import tsuteto.tofu.api.recipe.TfReformerRecipe;
 import tsuteto.tofu.api.recipe.TfReformerRecipeRegistry;
 import tsuteto.tofu.init.TcBlocks;
+import tsuteto.tofu.tileentity.TileEntityTfReformer;
 import uristqwerty.CraftGuide.api.*;
 
 public class TfReformerCG extends TfMachineCGBase
@@ -56,6 +57,6 @@ public class TfReformerCG extends TfMachineCGBase
     @Override
     public ItemStack getMachineBlock()
     {
-        return new ItemStack(TcBlocks.tfReformerIdle);
+        return new ItemStack(TcBlocks.tfReformerIdle, 1, TileEntityTfReformer.Model.mix.id);
     }
 }

@@ -68,7 +68,7 @@ import java.util.Arrays;
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "2.1.1-MC1.7.10";
+    public static final String version = "2.1.3-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -345,6 +345,7 @@ public class TofuCraftCore
             TcEntity.registerEntityRenderer();
 
             MinecraftForgeClient.registerItemRenderer(TcItems.zundaBow, (IItemRenderer)TcItems.zundaBow);
+            MinecraftForgeClient.registerItemRenderer(TcItems.bugle, (IItemRenderer)TcItems.bugle);
 
             VillagerRegistry vill = VillagerRegistry.instance();
             vill.registerVillagerSkin(Settings.professionIdTofucook, new ResourceLocation("tofucraft", "textures/mob/tofucook.png"));

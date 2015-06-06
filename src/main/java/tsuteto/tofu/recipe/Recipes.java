@@ -625,9 +625,9 @@ public class Recipes
         );
 
         TfReformerRecipeRegistry.register(new TfReformerRecipe(
-                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvPudding),
+                        TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvTea),
                         20)
-                        .addIngredients(Items.egg, false)
+                        .addIngredients(oredic_foodTea, false)
                         .addIngredients(Items.sugar, false)
         );
 
@@ -1523,7 +1523,7 @@ public class Recipes
             addSharedRecipe(new ItemStack(entry.getValue(), 2),
                     "TTT",
                     "TTT",
-                    'T', entry.getKey().getBlock());
+                    'T', entry.getKey().getItem());
         }
 
     }

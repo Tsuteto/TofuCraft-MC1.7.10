@@ -111,9 +111,9 @@ public class BlockSaltPan extends TcBlock
         else
         {
             ItemStack itemHeld = player.inventory.getCurrentItem();
-            Stat i1 = this.getStat(world, tileX, tileY, tileZ);
+            Stat stat = this.getStat(world, tileX, tileY, tileZ);
 
-            if (i1 == Stat.EMPTY && itemHeld != null && itemHeld.getItem() == Items.water_bucket)
+            if (stat == Stat.EMPTY && itemHeld != null && itemHeld.getItem() == Items.water_bucket)
             {
                 if (!player.capabilities.isCreativeMode)
                 {
@@ -137,7 +137,7 @@ public class BlockSaltPan extends TcBlock
 
                 return true;
             }
-            else if (i1 == Stat.BITTERN && itemHeld != null && itemHeld.getItem() == Items.glass_bottle)
+            else if (stat == Stat.BITTERN && itemHeld != null && itemHeld.getItem() == Items.glass_bottle)
             {
                 ItemStack nigari = new ItemStack(TcItems.nigari);
                 if (itemHeld.stackSize == 1)
@@ -166,11 +166,11 @@ public class BlockSaltPan extends TcBlock
                 TcAchievementMgr.achieve(player, TcAchievementMgr.Key.bayBittern);
                 return true;
             }
-            else if (i1 == Stat.BITTERN && itemHeld == null)
+            else if (stat == Stat.BITTERN && itemHeld == null)
             {
                 world.setBlockMetadataWithNotify(tileX, tileY, tileZ, 0, 3);
             }
-            else if (i1 == Stat.SALT)
+            else if (stat == Stat.SALT)
             {
                 ItemStack salt = new ItemStack(TcItems.salt, 1);
 

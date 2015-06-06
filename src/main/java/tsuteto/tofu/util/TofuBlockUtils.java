@@ -11,6 +11,11 @@ public class TofuBlockUtils
 {
     public static void onFallenUponFragileTofu(World par1World, Entity par5Entity, Block block, float par6)
     {
+        onFallenUponFragileTofu(par1World, par5Entity, block, par6, tofuWeightingHandler);
+    }
+
+    public static void onFallenUponFragileTofu(World par1World, Entity par5Entity, Block block, float par6, BlockUtils.IEntityWeightingBlockHandler handler)
+    {
         if (!par1World.isRemote)
         {
             if (par6 > 0.5F)
@@ -19,7 +24,7 @@ public class TofuBlockUtils
                 {
                     return;
                 }
-                BlockUtils.handleEntityWeightingBlock(par1World, par5Entity, block, tofuWeightingHandler);
+                BlockUtils.handleEntityWeightingBlock(par1World, par5Entity, block, handler);
             }
         }
     }

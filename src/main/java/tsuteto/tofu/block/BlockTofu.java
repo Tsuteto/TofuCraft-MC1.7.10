@@ -130,7 +130,8 @@ public class BlockTofu extends BlockTofuBase
                 && (weightBlock.getMaterial() == Material.rock || weightBlock.getMaterial() == Material.iron);
 
         float baseHardness = baseBlock.getBlockHardness(world, x, y - 1, z);
-        boolean isBaseValid = baseBlock.isNormalCube() && (baseHardness >= 1.0F || baseHardness < 0.0F);
+        boolean isBaseValid = baseBlock.isNormalCube() &&
+                (baseBlock.getMaterial() == Material.rock || baseBlock.getMaterial() == Material.iron || baseHardness >= 1.0F || baseHardness < 0.0F);
 
         return isWeightValid && isBaseValid;
     }
