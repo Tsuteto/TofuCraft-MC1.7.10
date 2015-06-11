@@ -38,9 +38,10 @@ public class TfReformerCG extends TfMachineCGBase
         {
             Object[] items = new Object[7];
             items[SLOT_CONTAINER] = recipe.containerItem.getApplicableItems();
-            for (int i = 0; i < recipe.ingItems.size(); i++)
+            TfReformerRecipe.IngInfo[] ingList = recipe.getIngredients();
+            for (int i = 0; i < ingList.length; i++)
             {
-                items[INGREDIENT_SLOTS[i]] = recipe.ingItems.get(i).ingredient.getApplicableItems();
+                items[INGREDIENT_SLOTS[i]] = ingList[i].ingredient.getApplicableItems();
             }
             items[SLOT_OUTPUT] = recipe.result;
             items[SLOT_MACHINE] = machine;

@@ -1635,6 +1635,11 @@ public class Recipes
                     TcOreDic.bucketSoymilk,
                     new ItemStack(TcBlocks.sakuraLeaves, 1, 15)
             );
+            TfReformerRecipeRegistry.register(new TfReformerRecipe(
+                            TcItems.bottleSoymilk.getItemStack(ItemBottleSoyMilk.flvSakura),
+                            20)
+                            .addIngredients(new ItemStack(TcBlocks.sakuraLeaves, 1, 15), false)
+            );
         }
 
         if (TcItems.bambooFood != null)

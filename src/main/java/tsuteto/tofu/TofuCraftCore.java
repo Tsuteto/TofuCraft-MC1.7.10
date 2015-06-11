@@ -27,7 +27,6 @@ import tsuteto.tofu.enchantment.TcEnchantment;
 import tsuteto.tofu.entity.TofuCreeperSeed;
 import tsuteto.tofu.eventhandler.*;
 import tsuteto.tofu.fishing.TofuFishing;
-import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.gui.TcGuiHandler;
 import tsuteto.tofu.init.*;
 import tsuteto.tofu.init.block.LoaderDecorationBlock;
@@ -68,7 +67,7 @@ import java.util.Arrays;
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "2.1.3-MC1.7.10";
+    public static final String version = "2.1.4-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -270,8 +269,6 @@ public class TofuCraftCore
         TcPotion.register(conf);
         // Register enchantments
         TcEnchantment.register(conf);
-
-        FluidUtils.init();
 
         conf.save();
     }

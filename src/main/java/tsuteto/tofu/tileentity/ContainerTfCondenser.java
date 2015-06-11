@@ -1,5 +1,6 @@
 package tsuteto.tofu.tileentity;
 
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.ObjectUtils;
@@ -88,15 +90,9 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
             @Override
             public void addData(ByteBuf buffer)
             {
-                FluidStack fluidStack = machine.ingredientTank.getFluid();
-                if (fluidStack != null)
-                {
-                    buffer.writeBoolean(true);
-                    buffer.writeInt(fluidStack.fluidID);
-                } else
-                {
-                    buffer.writeBoolean(false);
-                }
+                NBTTagCompound nbt = new NBTTagCompound();
+                machine.ingredientTank.writeToNBT(nbt);
+                ByteBufUtils.writeTag(buffer, nbt);
             }
         });
 
@@ -193,15 +189,9 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
                     @Override
                     public void addData(ByteBuf buffer)
                     {
-                        FluidStack fluidStack = machine.ingredientTank.getFluid();
-                        if (fluidStack != null)
-                        {
-                            buffer.writeBoolean(true);
-                            buffer.writeInt(fluidStack.fluidID);
-                        } else
-                        {
-                            buffer.writeBoolean(false);
-                        }
+                        NBTTagCompound nbt = new NBTTagCompound();
+                        machine.ingredientTank.writeToNBT(nbt);
+                        ByteBufUtils.writeTag(buffer, nbt);
                     }
                 });
             }
@@ -294,21 +284,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         }
         if (id == 3)
         {
-            if (data.readBoolean())
-            {
-                if (this.machine.ingredientTank.getFluid() == null)
-                {
-                    this.machine.ingredientTank.setFluid(new FluidStack(data.readInt(), 0));
-                }
-                else
-                {
-                    this.machine.ingredientTank.getFluid().fluidID = data.readInt();
-                }
-            }
-            else
-            {
-                this.machine.ingredientTank.setFluid(null);
-            }
+            NBTTagCompound nbt = ByteBufUtils.readTag(data);
+            this.machine.ingredientTank.readFromNBT(nbt);
         }
         if (id == 4)
         {

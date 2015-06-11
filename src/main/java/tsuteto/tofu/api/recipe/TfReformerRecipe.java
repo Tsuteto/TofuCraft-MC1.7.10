@@ -25,8 +25,8 @@ public class TfReformerRecipe
 {
     public final double tfAmountNeeded;
     public Ingredient<?> containerItem;
-    public final List<IngInfoItem> ingItems = Lists.newArrayList();
-    public final List<IngInfoDic> ingDic = Lists.newArrayList();
+    private final List<IngInfoItem> ingItems = Lists.newArrayList();
+    private final List<IngInfoDic> ingDic = Lists.newArrayList();
     public final ItemStack result;
 
     /**

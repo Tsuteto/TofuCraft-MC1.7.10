@@ -3,15 +3,14 @@ package tsuteto.tofu.recipe.nei;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 import tsuteto.tofu.api.recipe.TfCondenserRecipe;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
+import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.gui.GuiTfCondenser;
 import tsuteto.tofu.gui.GuiTfMachineBase;
 import tsuteto.tofu.gui.guiparts.*;
@@ -21,7 +20,6 @@ import tsuteto.tofu.tileentity.TileEntityTfCondenser;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
@@ -30,8 +28,6 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
     public static final int GUI_OFFSET_Y = 0;
 
     private static final FluidStack NIGARI = new FluidStack(TcFluids.NIGARI, TileEntityTfCondenser.NIGARI_COST_MB);
-
-    private static final Map<Integer, List<ItemStack>> fluidToFilledItemMap = Maps.newHashMap();
 
     public final ItemSlotPosition slotOutput = new ItemSlotPosition(99, 25);
     protected GuiPartGaugeBase progressBar;
@@ -47,19 +43,6 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
             .setInfoTip(51, 12, HoverTextPosition.LOWER_CENTER);
     private GuiPartGaugeV tfGauge = new GuiPartGaugeV(50, 2, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
             .setInfoTip(51, 12, HoverTextPosition.LOWER_CENTER);
-    static
-    {
-        FluidContainerRegistry.FluidContainerData[] list = FluidContainerRegistry.getRegisteredFluidContainerData();
-        for (FluidContainerRegistry.FluidContainerData data : list)
-        {
-            int fluidId = data.fluid.fluidID;
-            if (!fluidToFilledItemMap.containsKey(fluidId))
-            {
-                fluidToFilledItemMap.put(fluidId, Lists.<ItemStack>newArrayList());
-            }
-            fluidToFilledItemMap.get(fluidId).add(data.filledContainer);
-        }
-    }
 
     public TfCondenserRecipeHandler()
     {
@@ -237,9 +220,9 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
         public CachedTfCondenserRecipe(TfCondenserRecipe recipe)
         {
             this.ingredientFluid = recipe.ingredient;
-            if (fluidToFilledItemMap.containsKey(recipe.ingredient.fluidID))
+            if (FluidUtils.fluidToFilledItemMap.containsKey(recipe.ingredient.getFluid().getID()))
             {
-                this.ingredientItem = fluidToFilledItemMap.get(recipe.ingredient.fluidID);
+                this.ingredientItem = FluidUtils.getFilledItemFromFluid(recipe.ingredient.getFluid());
             }
             else
             {

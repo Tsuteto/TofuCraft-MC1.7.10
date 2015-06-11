@@ -1,28 +1,32 @@
 package tsuteto.tofu.fluids;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FluidUtils
 {
-    public static Map<Integer, ItemStack> fluidToFilledItemMap;
+    public static Map<Integer, List<ItemStack>> fluidToFilledItemMap;
 
-    public static void init()
+    static
     {
         FluidContainerRegistry.FluidContainerData[] list = FluidContainerRegistry.getRegisteredFluidContainerData();
-        fluidToFilledItemMap = new HashMap<Integer, ItemStack>();
+        fluidToFilledItemMap = Maps.newHashMap();
 
         for (FluidContainerRegistry.FluidContainerData data : list)
         {
-            if (!fluidToFilledItemMap.containsKey(data.fluid.fluidID))
+            int fluidId = data.fluid.getFluid().getID();
+            if (!fluidToFilledItemMap.containsKey(fluidId))
             {
-                fluidToFilledItemMap.put(data.fluid.fluidID, data.filledContainer);
+                fluidToFilledItemMap.put(fluidId, Lists.<ItemStack>newArrayList());
             }
+            fluidToFilledItemMap.get(fluidId).add(data.filledContainer);
         }
     }
 
@@ -30,11 +34,32 @@ public class FluidUtils
     {
         if (fluid != null)
         {
-            return fluidToFilledItemMap.get(fluid.getID());
+            List<ItemStack> list = fluidToFilledItemMap.get(fluid.getID());
+            if (list != null && !list.isEmpty())
+            {
+                return list.get(0);
+            }
+            else
+            {
+                return null;
+            }
         }
         else
         {
             return null;
+        }
+    }
+
+    public static List<ItemStack> getFilledItemFromFluid(Fluid fluid)
+    {
+        List<ItemStack> list = fluidToFilledItemMap.get(fluid.getID());
+        if (list != null)
+        {
+            return list;
+        }
+        else
+        {
+            return Lists.newArrayList();
         }
     }
 
