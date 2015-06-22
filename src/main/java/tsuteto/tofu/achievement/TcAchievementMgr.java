@@ -56,8 +56,7 @@ public class TcAchievementMgr
     {
         for (TcAchievement ach : itemCraftingMap)
         {
-            AchievementTrigger trigger = ach.getTrigger();
-            if (trigger.equals(itemstack))
+            if (ach.triggerMatches(itemstack))
             {
                 player.triggerAchievement(ach);
             }
@@ -68,8 +67,7 @@ public class TcAchievementMgr
     {
         for (TcAchievement ach : itemPickupMap)
         {
-            AchievementTrigger trigger = ach.getTrigger();
-            if (trigger.equals(itemstack))
+            if (ach.triggerMatches(itemstack))
             {
                 player.triggerAchievement(ach);
             }
@@ -80,8 +78,7 @@ public class TcAchievementMgr
     {
         for (TcAchievement ach : itemSmeltingMap)
         {
-            AchievementTrigger trigger = ach.getTrigger();
-            if (trigger.equals(itemstack))
+            if (ach.triggerMatches(itemstack))
             {
                 player.triggerAchievement(ach);
             }

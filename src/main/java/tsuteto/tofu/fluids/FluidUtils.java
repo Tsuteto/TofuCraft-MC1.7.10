@@ -21,12 +21,15 @@ public class FluidUtils
 
         for (FluidContainerRegistry.FluidContainerData data : list)
         {
-            int fluidId = data.fluid.getFluid().getID();
-            if (!fluidToFilledItemMap.containsKey(fluidId))
+            if (data.fluid != null && data.fluid.getFluid() != null)
             {
-                fluidToFilledItemMap.put(fluidId, Lists.<ItemStack>newArrayList());
+                int fluidId = data.fluid.getFluid().getID();
+                if (!fluidToFilledItemMap.containsKey(fluidId))
+                {
+                    fluidToFilledItemMap.put(fluidId, Lists.<ItemStack>newArrayList());
+                }
+                fluidToFilledItemMap.get(fluidId).add(data.filledContainer);
             }
-            fluidToFilledItemMap.get(fluidId).add(data.filledContainer);
         }
     }
 

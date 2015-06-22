@@ -1,15 +1,18 @@
 package tsuteto.tofu.achievement;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import tsuteto.tofu.TofuCraftCore;
 
+import java.util.List;
+
 public class TcAchievement extends Achievement
 {
     public final TcAchievementMgr.Key key;
-    private AchievementTrigger trigger;
+    private List<AchievementTrigger> trigger = Lists.newArrayList();
 
     public static TcAchievement create(TcAchievementMgr.Key key, int par3, int par4, Object obj, TcAchievementMgr.Key relation)
     {
@@ -54,29 +57,41 @@ public class TcAchievement extends Achievement
 
     public TcAchievement setTriggerItemPickup(ItemStack item)
     {
-        this.trigger = new TriggerItem(item);
-        TcAchievementMgr.itemPickupMap.add(this);
+        this.trigger.add(new TriggerItem(item));
+        if (!TcAchievementMgr.itemPickupMap.contains(this))
+        {
+            TcAchievementMgr.itemPickupMap.add(this);
+        }
         return this;
     }
 
     public TcAchievement setTriggerItemCrafting(ItemStack item)
     {
-        this.trigger = new TriggerItem(item);
-        TcAchievementMgr.itemCraftingMap.add(this);
+        this.trigger.add(new TriggerItem(item));
+        if (!TcAchievementMgr.itemCraftingMap.contains(this))
+        {
+            TcAchievementMgr.itemCraftingMap.add(this);
+        }
         return this;
     }
 
     public TcAchievement setTriggerSmelting(ItemStack item)
     {
-        this.trigger = new TriggerItem(item);
-        TcAchievementMgr.itemSmeltingMap.add(this);
+        this.trigger.add(new TriggerItem(item));
+        if (!TcAchievementMgr.itemSmeltingMap.contains(this))
+        {
+            TcAchievementMgr.itemSmeltingMap.add(this);
+        }
         return this;
     }
 
     public TcAchievement setTriggerTfCondenser(ItemStack item)
     {
-        this.trigger = new TriggerItem(item);
-        TcAchievementMgr.itemCraftingMap.add(this);
+        this.trigger.add(new TriggerItem(item));
+        if (!TcAchievementMgr.itemCraftingMap.contains(this))
+        {
+            TcAchievementMgr.itemCraftingMap.add(this);
+        }
         return this;
     }
 
@@ -102,9 +117,21 @@ public class TcAchievement extends Achievement
         return this;
     }
 
-    public AchievementTrigger getTrigger()
+    public List<AchievementTrigger> getTrigger()
     {
         return this.trigger;
+    }
+
+    public boolean triggerMatches(ItemStack itemStack)
+    {
+        for (AchievementTrigger trigger : this.trigger)
+        {
+            if (trigger.equals(itemStack))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

@@ -1,6 +1,5 @@
 package tsuteto.tofu.world.gen.layer;
 
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 import tsuteto.tofu.world.biome.TcBiomes;
@@ -34,20 +33,12 @@ public class GenLayerHills extends GenLayerTofu
                 this.initChunkSeed((j1 + par1), (i1 + par2));
                 int k1 = aint[j1 + 1 + (i1 + 1) * (par3 + 2)];
                 int l1 = aint1[j1 + 1 + (i1 + 1) * (par3 + 2)];
-                boolean flag = (l1 - 2) % 29 == 0;
 
-                if (k1 != 0 && l1 >= 2 && (l1 - 2) % 29 == 1 && k1 < 128)
+                if (l1 >= 2 && (l1 - 2) % 29 == 1)
                 {
-                    if (BiomeGenBase.getBiome(k1 + 128) != null)
-                    {
-                        aint2[j1 + i1 * par3] = k1 + 128;
-                    }
-                    else
-                    {
-                        aint2[j1 + i1 * par3] = k1;
-                    }
+                    aint2[j1 + i1 * par3] = k1;
                 }
-                else if (this.nextInt(3) != 0 && !flag)
+                else if (this.nextInt(3) != 0)
                 {
                     aint2[j1 + i1 * par3] = k1;
                 }
@@ -63,18 +54,6 @@ public class GenLayerHills extends GenLayerTofu
                     else if (k1 == TcBiomes.tofuForest.biomeID)
                     {
                         i2 = TcBiomes.tofuForestHills.biomeID;
-                    }
-
-                    if (flag && i2 != k1)
-                    {
-                        if (BiomeGenBase.getBiome(i2 + 128) != null)
-                        {
-                            i2 += 128;
-                        }
-                        else
-                        {
-                            i2 = k1;
-                        }
                     }
 
                     if (i2 == k1)

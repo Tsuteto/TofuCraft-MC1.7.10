@@ -76,6 +76,11 @@ public class BlockTofuStepFaces extends BlockTofuStepBase
         return Item.getItemFromBlock(TcBlocks.tofuSingleSlabFaces);
     }
 
+    public int damageDropped(int p_149692_1_)
+    {
+        return 0;
+    }
+
     @Override
     public Item getItem(World par1World, int par2, int par3, int par4)
     {

@@ -321,7 +321,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
         TcBlocks.tofuDoubleSlabFaces = new BlockTofuStepFaces(true);
         $("tofuSingleSlabFaces", TcBlocks.tofuSingleSlabFaces)
                 .withResource("tofuSlab.grilled")
-                .wrappedBy(ItemTcSlab.class)
+                .wrappedBy(ItemTcSlabFaces.class)
                 .havingArgs(TcBlocks.tofuSingleSlabFaces, TcBlocks.tofuDoubleSlabFaces, false)
                 .setHarvestLevel("shovel", 0)
                 .registerBlock()
@@ -331,7 +331,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
 
         $("tofuDoubleSlabFaces", TcBlocks.tofuDoubleSlabFaces)
                 .withResource("tofuSlab.grilled")
-                .wrappedBy(ItemTcSlab.class)
+                .wrappedBy(ItemTcSlabFaces.class)
                 .havingArgs(TcBlocks.tofuSingleSlabFaces, TcBlocks.tofuDoubleSlabFaces, true)
                 .setHarvestLevel("shovel", 0)
                 .registerBlock()

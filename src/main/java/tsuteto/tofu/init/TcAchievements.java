@@ -93,6 +93,7 @@ public class TcAchievements
 
         TcAchievement.create(Key.hiyayakko, 2, 4, new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakko.id), Key.leek)
                 .setTriggerItemCrafting(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakko.id))
+                .setTriggerItemCrafting(new ItemStack(TcItems.foodSet, 1, ItemFoodSet.hiyayakkoGl.id))
                 .registerStat();
 
         // === Momen Tofu ===
@@ -104,8 +105,8 @@ public class TcAchievements
                 .setTriggerItemCrafting(new ItemStack(TcItems.misoDengaku))
                 .registerStat();
 
-        TcAchievement.create(Key.soboroTofu, 5, -3, TcBlocks.tofuMinced, Key.momenTofu)
-                .setTriggerItemCrafting(new ItemStack(TcBlocks.tofuMinced))
+        TcAchievement.create(Key.soboroTofu, 5, -3, ItemFoodSet.tofuMinced.getStack(), Key.momenTofu)
+                .setTriggerItemCrafting(ItemFoodSet.tofuMinced.getStack())
                 .registerStat();
 
         // === Metal Tofu ===
