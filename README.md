@@ -1,15 +1,12 @@
-豆腐Craft
----------
-作者 つてと(Tsuteto)
+# 豆腐Craft
+豆腐をおいしく頂きつつ、本格豆腐建築を嗜むMODです。
 
-◆このMODのフォーラム
+## Distribution and Usage
 http://forum.minecraftuser.jp/viewtopic.php?f=13&t=1014
 
-このMODの導入方法、使い方などは上記のフォーラムへどうぞ。
+## Dependencies
+- Minecraft 1.7.10
+- Forge 10.13.4.1448
 
-*************************
-MODの使用、配布や改造について
-*************************
-余所で紹介して頂いた場合、教えてもらえると嬉しいです。  
-再配布、改造したものを配布する場合は事前にご一報ください。  
-商用利用はご遠慮ください。
+## Use Agreement
+See the distribution site above.
