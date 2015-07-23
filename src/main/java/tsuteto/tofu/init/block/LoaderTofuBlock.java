@@ -54,7 +54,7 @@ public class LoaderTofuBlock extends TcBlockLoader
                 0.5F, TcMaterial.tofu, Block.soundTypeSnow).setHarvestLevel("shovel", 0));
 
         registerTofuInfo(new TofuInfo(TofuMaterial.glow,
-                0.5F, TcMaterial.tofu, Block.soundTypeSnow).setHarvestLevel("shovel", 0));
+                0.5F, TcMaterial.tofu, Block.soundTypeSnow).setHarvestLevel("shovel", 0).setLightLevel(0.9375F));
 
         registerTofuInfo(new TofuInfo(TofuMaterial.diamond,
                 8.0F, 15.0F, TcMaterial.tofu, Block.soundTypeGlass).setHarvestLevel("pickaxe", 1));
@@ -168,10 +168,9 @@ public class LoaderTofuBlock extends TcBlockLoader
                 .registerBlock()
         ;
 
-        TcBlocks.tofuGlow = (BlockTofuBase) $("blockTofuGlow", new BlockTofu(TofuMaterial.glow))
+        TcBlocks.tofuGlow = $("blockTofuGlow", new BlockTofu(TofuMaterial.glow))
                 .wrappedByItemTcBlock()
                 .registerBlock()
-                .setLightLevel(0.9375F)
         ;
 
         TcBlocks.tofuDiamond = $("blockTofuDiamond", new BlockTofu(TofuMaterial.diamond))

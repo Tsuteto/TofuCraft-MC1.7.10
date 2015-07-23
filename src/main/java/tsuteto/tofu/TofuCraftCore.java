@@ -13,10 +13,12 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.*;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.oredict.OreDictionary;
 import tsuteto.tofu.api.TfMaterialRegistry;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.command.CommandTofuCreeperSpawn;
@@ -41,15 +43,9 @@ import tsuteto.tofu.texture.TcTextures;
 import tsuteto.tofu.tileentity.TileEntityMorijio;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.UpdateNotification;
-import tsuteto.tofu.village.*;
 import tsuteto.tofu.world.TcChunkProviderEvent;
 import tsuteto.tofu.world.WorldProviderTofu;
-import tsuteto.tofu.world.biome.BiomeGenTofuBase;
 import tsuteto.tofu.world.biome.TcBiomes;
-import tsuteto.tofu.world.tofuvillage.EntityJoinWorldEventHandler;
-import tsuteto.tofu.world.tofuvillage.GetVillageBlockIDEventHandler;
-
-import java.util.Arrays;
 
 /**
  * The Main Class of the TofuCraft
@@ -67,7 +63,7 @@ import java.util.Arrays;
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "2.1.5-MC1.7.10";
+    public static final String version = "2.1.6-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -91,14 +87,7 @@ public class TofuCraftCore
         ModLog.modId = TofuCraftCore.modid;
         ModLog.isDebug = Settings.debug;
 
-        if (ForgeVersion.getBuildVersion() >= 1174)
-        {
-            BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[] { BiomeDictionary.Type[].class }, new Object[]{ new BiomeDictionary.Type[0] });
-        }
-        else
-        {
-            BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[0], new Object[0]);
-        }
+        BIOME_TYPE_TOFU = EnumHelper.addEnum(BiomeDictionary.Type.class, "TOFU", new Class[] { BiomeDictionary.Type[].class }, new Object[]{ new BiomeDictionary.Type[0] });
     }
 
     @Mod.EventHandler
@@ -185,39 +174,13 @@ public class TofuCraftCore
 
         // Register biomes
         TcBiomes.register(conf);
-        // Register in the Forge Biome Dictionary
-        for (BiomeGenTofuBase biome : TcBiomes.tofuBiomeList)
-        {
-            if (biome != null) BiomeDictionary.registerBiomeType(biome, BIOME_TYPE_TOFU);
-        }
-        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(BIOME_TYPE_TOFU)));
 
         // Register the Tofu World
         DimensionManager.registerProviderType(Settings.tofuDimNo, WorldProviderTofu.class, false);
         DimensionManager.registerDimension(Settings.tofuDimNo, Settings.tofuDimNo);
-        
-        // Tofu Village handler
-        BiomeManager.addVillageBiome(TcBiomes.tofuPlains, true);
-        BiomeManager.addVillageBiome(TcBiomes.tofuLeekPlains, true);
-        BiomeManager.addVillageBiome(TcBiomes.tofuForest, true);
-        MinecraftForge.TERRAIN_GEN_BUS.register(new GetVillageBlockIDEventHandler());
-        MinecraftForge.EVENT_BUS.register(new EntityJoinWorldEventHandler());
 
-        // Register the profession of Tofu Cook
-        VillagerRegistry vill = VillagerRegistry.instance();
-        vill.registerVillagerId(Settings.professionIdTofucook);
-        vill.registerVillageTradeHandler(Settings.professionIdTofucook, new TradeHandlerTofuCook());
-
-        // Register the profession of Tofunian
-        vill.registerVillagerId(Settings.professionIdTofunian);
-        vill.registerVillageTradeHandler(Settings.professionIdTofunian, new TradeHandlerTofunian());
-
-        // Add Trade Recipes
-        vill.registerVillageTradeHandler(0, new TradeHandlerFarmer());
-        
-        // Tofu cook's house
-        vill.registerVillageCreationHandler(new TofuCookHouseHandler());
-        net.minecraft.world.gen.structure.MapGenStructureIO.func_143031_a(ComponentVillageHouseTofu.class, "ViTfH");
+        // Village and Villager Related
+        TcVillages.register();
 
         // Register Packets
         PacketManager.init(modid)
@@ -238,12 +201,6 @@ public class TofuCraftCore
         this.registerChestLoot(new ItemStack(TcItems.defattingPotion), 1, 1, 8);
         this.registerChestLoot(new ItemStack(TcBlocks.tcSapling, 1, 0), 1, 4, 8);
         this.registerChestLoot(new ItemStack(TcItems.doubanjiang), 1, 1, 4);
-
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,
-                new WeightedRandomChestContent(new ItemStack(TcItems.bugle), 1, 1, 5));
-
-        // Ore Dictionary additions for common use
-        OreDictionary.registerOre("logWood", new ItemStack(TcBlocks.tcLog, 1, OreDictionary.WILDCARD_VALUE));
 
         // Register recipes
         Recipes.unifyOreDicItems();

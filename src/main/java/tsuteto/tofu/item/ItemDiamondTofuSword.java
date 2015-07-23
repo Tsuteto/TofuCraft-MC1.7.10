@@ -29,14 +29,18 @@ public class ItemDiamondTofuSword extends ItemTofuSword
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase targetEntity, EntityLivingBase entityActed)
     {
         // Drain
-        float damage = EntityInfo.instance().<Float>get(entityActed.getEntityId(), DataType.DiamondSwordAttack) - targetEntity.getHealth();
-        if (damage > 0.0f)
+        Float healthBeforeAttack = EntityInfo.instance().<Float>get(entityActed.getEntityId(), DataType.DiamondSwordAttack);
+        if (healthBeforeAttack != null)
         {
-            int lvl = TcEnchantmentHelper.getDrainModifier(entityActed);
-            entityActed.heal(damage * (lvl * 0.1f + 0.1f));
-        }
+            float damage = healthBeforeAttack - targetEntity.getHealth();
+            if (damage > 0.0f)
+            {
+                int lvl = TcEnchantmentHelper.getDrainModifier(entityActed);
+                entityActed.heal(damage * (lvl * 0.1f + 0.1f));
+            }
 
-        EntityInfo.instance().remove(entityActed.getEntityId(), DataType.DiamondSwordAttack);
+            EntityInfo.instance().remove(entityActed.getEntityId(), DataType.DiamondSwordAttack);
+        }
 
         return super.hitEntity(par1ItemStack, targetEntity, entityActed);
     }

@@ -29,7 +29,7 @@ public class Settings
     {
         tofuDimNo = conf.get("general", "tofuDim", tofuDimNo).getInt();
         tofuBiomeId = conf.get("general", "tofuBiomeId", tofuBiomeId).getInt();
-        canSaltPanUseAlpha = conf.get("general", "saltPanUsesAlpha", true, "Whether the Salt Pan uses transparent texture. If you feel weird in the Salt Pan's appearance, set false.").getBoolean();
+        canSaltPanUseAlpha = conf.get("general", "saltPanUsesAlpha", true, "Whether the Salt Pan uses transparent texture. If there's something funny about its appearance, set false.").getBoolean();
 
         professionIdTofucook = conf.get("villager", "tofucookId", professionIdTofucook).getInt();
         professionIdTofunian = conf.get("villager", "tofunianId", professionIdTofunian).getInt();

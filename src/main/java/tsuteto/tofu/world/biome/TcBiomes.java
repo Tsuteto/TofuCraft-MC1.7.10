@@ -1,7 +1,12 @@
 package tsuteto.tofu.world.biome;
 
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
+import tsuteto.tofu.TofuCraftCore;
+import tsuteto.tofu.util.ModLog;
+
+import java.util.Arrays;
 
 public class TcBiomes
 {
@@ -96,6 +101,12 @@ public class TcBiomes
         decorationBiomes = new BiomeGenTofuBase[]{
                 tofuPlains, tofuLeekPlains, tofuPlains, tofuForest, tofuBuildings, tofuExtremeHills};
 
+        // Register in the Forge Biome Dictionary
+        for (BiomeGenTofuBase biome : tofuBiomeList)
+        {
+            if (biome != null) BiomeDictionary.registerBiomeType(biome, TofuCraftCore.BIOME_TYPE_TOFU);
+        }
+        ModLog.debug("Registered biomes as TOFU: " + Arrays.toString(BiomeDictionary.getBiomesForType(TofuCraftCore.BIOME_TYPE_TOFU)));
     }
 
 }

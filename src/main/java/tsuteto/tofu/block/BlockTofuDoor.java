@@ -36,8 +36,8 @@ public class BlockTofuDoor extends BlockDoor implements IBlockTofuMaterial
     public BlockTofuDoor(TofuMaterial tofuMaterial)
     {
         super(tofuMaterial.getBlockInfo().material);
+        tofuMaterial.getBlockInfo().setBasicFeature(this);
         this.tofuMaterial = tofuMaterial;
-        this.setStepSound(tofuMaterial.getBlockInfo().stepSound);
         doorBlocks.put(tofuMaterial, this);
     }
 

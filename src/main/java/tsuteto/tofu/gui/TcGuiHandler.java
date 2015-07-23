@@ -1,10 +1,10 @@
 package tsuteto.tofu.gui;
 
-import cpw.mods.fml.common.event.FMLLoadEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
@@ -67,7 +67,7 @@ public class TcGuiHandler implements IGuiHandler
             {
                 try
                 {
-                    Constructor constructor = entry.getContainerClass().getConstructor(player.inventory.getClass(), entry.getTileEntityClass());
+                    Constructor constructor = entry.getContainerClass().getConstructor(InventoryPlayer.class, entry.getTileEntityClass());
                     return constructor.newInstance(player.inventory, tile);
                 } catch (Exception e)
                 {
@@ -91,7 +91,7 @@ public class TcGuiHandler implements IGuiHandler
             {
                 try
                 {
-                    Constructor constructor = entry.getGuiClass().getConstructor(player.inventory.getClass(), entry.getTileEntityClass());
+                    Constructor constructor = entry.getGuiClass().getConstructor(InventoryPlayer.class, entry.getTileEntityClass());
                     return constructor.newInstance(player.inventory, tile);
                 } catch (Exception e)
                 {

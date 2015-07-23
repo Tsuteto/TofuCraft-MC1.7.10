@@ -373,16 +373,11 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .withResource("tofuDoor")
                     .registerBlock();
 
-            if (material == TofuMaterial.glow)
-            {
-                tofuDoor.setLightLevel(0.9375F);
-            }
-
             TcBlocks.tofuDoors.put(material, tofuDoor);
         }
 
         /*
-         * Wall
+         * Walls
          */
         for (TofuMaterial material : TofuMaterial.values())
         {
@@ -393,11 +388,6 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuWall")
                     .setCreativeTab(TcCreativeTabs.CONSTRUTION)
                     ;
-
-            if (material == TofuMaterial.glow)
-            {
-                tofuWall.setLightLevel(0.9375F);
-            }
 
             TcBlocks.tofuWalls.put(material, tofuWall);
         }
@@ -435,11 +425,6 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .setCreativeTab(TcCreativeTabs.CONSTRUTION)
                     ;
 
-            if (material == TofuMaterial.glow)
-            {
-                tofuFence.setLightLevel(0.9375F);
-            }
-
             TcBlocks.tofuFenceGates.put(material, tofuFence);
         }
 
@@ -456,11 +441,6 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .setCreativeTab(TcCreativeTabs.CONSTRUTION) // Redstone tab in vanilla
                     ;
 
-            if (material == TofuMaterial.glow)
-            {
-                tofuFence.setLightLevel(0.9375F);
-            }
-
             TcBlocks.tofuTrapdoors.put(material, tofuFence);
         }
 
@@ -476,11 +456,6 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuLadder")
                     .setCreativeTab(TcCreativeTabs.CONSTRUTION)
                     ;
-
-            if (material == TofuMaterial.glow)
-            {
-                tofuFence.setLightLevel(0.9375F);
-            }
 
             TcBlocks.tofuLadders.put(material, tofuFence);
         }

@@ -40,6 +40,9 @@ public class Recipes
 
     public static void register()
     {
+        // Ore Dictionary additions for common use
+        OreDictionary.registerOre("logWood", new ItemStack(TcBlocks.tcLog, 1, DMG_WILDCARD));
+
         /*
          * Smelting
          */

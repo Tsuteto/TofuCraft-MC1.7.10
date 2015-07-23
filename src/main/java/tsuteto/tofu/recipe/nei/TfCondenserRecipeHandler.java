@@ -27,8 +27,7 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
     public static final int GUI_OFFSET_X = 20;
     public static final int GUI_OFFSET_Y = 0;
 
-    private static final FluidStack NIGARI = new FluidStack(TcFluids.NIGARI, TileEntityTfCondenser.NIGARI_COST_MB);
-
+    private final FluidStack nigari = new FluidStack(TcFluids.NIGARI, TileEntityTfCondenser.NIGARI_COST_MB);
     public final ItemSlotPosition slotOutput = new ItemSlotPosition(99, 25);
     protected GuiPartGaugeBase progressBar;
     private GuiPartGaugeV nigariGauge = new GuiPartGaugeV(9, 2, TfMachineGuiParts.gaugeV2Frame, TfMachineGuiParts.gaugeV2)
@@ -95,7 +94,7 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
 
         // Nigari guage
         nigariGauge
-                .setPercentage((double) NIGARI.amount / (double) TileEntityTfCondenser.TANK_CAPACITY_NIGARI)
+                .setPercentage((double) nigari.amount / (double) TileEntityTfCondenser.TANK_CAPACITY_NIGARI)
                 .draw(drawingHandler);
 
         // Ingredient guage
@@ -158,7 +157,7 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
     {
         for (TfCondenserRecipe entry : this.getRecipeList())
         {
-            if (entry.ingredient.isFluidEqual(ingredient) || NIGARI.isFluidEqual(ingredient))
+            if (entry.ingredient.isFluidEqual(ingredient) || nigari.isFluidEqual(ingredient))
             {
                 this.arecipes.add(new CachedTfCondenserRecipe(entry));
             }
@@ -176,7 +175,7 @@ public class TfCondenserRecipeHandler extends TfMachineRecipeHandlerBase
             public void draw(int ox, int oy, int fw, int fh)
             {
                 String s;
-                s = String.format("%dmB", NIGARI.amount);
+                s = String.format("%dmB", nigari.amount);
                 drawingHandler.drawStringInTip(s, ox + 46 - drawingHandler.getStringWidth(s), oy + 2);
             }
         });

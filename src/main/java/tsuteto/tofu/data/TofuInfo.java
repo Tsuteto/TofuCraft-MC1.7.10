@@ -15,6 +15,7 @@ public class TofuInfo
     public final Material material;
     public final Block.SoundType stepSound;
 
+    public float lightLevel = 0.0F;
     public String harvestTool = null;
     public int harvestLevel;
 
@@ -36,6 +37,12 @@ public class TofuInfo
         this.resistance = resistance;
         this.material = material;
         this.stepSound = stepSound;
+    }
+
+    public TofuInfo setLightLevel(float lightLevel)
+    {
+        this.lightLevel = lightLevel;
+        return this;
     }
 
     public TofuInfo setHarvestLevel(String harvestTool, int harvestLevel)
@@ -61,6 +68,10 @@ public class TofuInfo
         if (this.harvestTool != null)
         {
             block.setHarvestLevel(harvestTool, harvestLevel);
+        }
+        if (this.lightLevel != 0.0F)
+        {
+            block.setLightLevel(this.lightLevel);
         }
     }
 }
