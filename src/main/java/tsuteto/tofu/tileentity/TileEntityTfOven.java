@@ -24,8 +24,8 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     public static final double TF_CAPACITY = 20.0D;
     public static final int WHOLE_COOK_TIME_BASE = 200;
 
-    public int ovenCookTime;
-    public int wholeCookTime;
+    public double ovenCookTime;
+    public double wholeCookTime;
     public double tfPooled;
     private ItemStack lastInputItem = null;
     private boolean isTfNeeded;
@@ -47,17 +47,32 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
     {
         super.readFromNBT(nbtTagCompound);
 
-        this.ovenCookTime = nbtTagCompound.getShort("CookTime");
-        this.wholeCookTime = nbtTagCompound.getShort("CookTimeW");
+        if (nbtTagCompound.getByte("Rev") == 1)
+        {
+            this.ovenCookTime = nbtTagCompound.getShort("CookTime");
+            this.wholeCookTime = nbtTagCompound.getShort("CookTimeW");
+        }
+        else
+        {
+            this.ovenCookTime = nbtTagCompound.getFloat("CookTime");
+            this.wholeCookTime = nbtTagCompound.getFloat("CookTimeW");
+        }
         this.tfPooled = nbtTagCompound.getFloat("TfP");
     }
 
     public void writeToNBT(NBTTagCompound nbtTagCompound)
     {
         super.writeToNBT(nbtTagCompound);
-        nbtTagCompound.setShort("CookTime", (short) this.ovenCookTime);
-        nbtTagCompound.setShort("CookTimeW", (short) this.wholeCookTime);
+
+        nbtTagCompound.setFloat("CookTime", (float)this.ovenCookTime);
+        nbtTagCompound.setFloat("CookTimeW", (float)this.wholeCookTime);
         nbtTagCompound.setFloat("TfP", (float) this.tfPooled);
+    }
+
+    @Override
+    protected int getNBTRevision()
+    {
+        return 2;
     }
 
     @SideOnly(Side.CLIENT)
@@ -90,14 +105,14 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
                 this.wholeCookTime = this.getWholeCookTime();
 
                 // Cooking
-                ++this.ovenCookTime;
+                this.ovenCookTime += 1D;
                 this.tfPooled -= this.getTfAmountNeeded();
                 this.isWorking = true;
 
                 if (this.ovenCookTime >= wholeCookTime)
                 {
                     // Finish
-                    this.ovenCookTime = 0;
+                    this.ovenCookTime -= wholeCookTime;
                     this.smeltItem();
                     updated = true;
                 }
@@ -105,7 +120,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
             else
             {
                 // Stop cooking
-                if (lastInputItem != this.itemStacks[SLOT_ITEM_INPUT])
+                if (lastInputItem != this.itemStacks[SLOT_ITEM_INPUT] || this.itemStacks[SLOT_ITEM_INPUT] == null)
                 {
                     this.ovenCookTime = 0;
                 }
@@ -134,12 +149,12 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
         return ItemTcMaterials.activatedHellTofu.isItemEqual(itemStack);
     }
 
-    private int getWholeCookTime()
+    private double getWholeCookTime()
     {
         if (this.isAccelerated())
         {
             ItemStack itemStack = this.itemStacks[SLOT_ACCELERATION];
-            return WHOLE_COOK_TIME_BASE / itemStack.stackSize;
+            return WHOLE_COOK_TIME_BASE / (itemStack.stackSize * 1.5D);
         }
         return WHOLE_COOK_TIME_BASE;
     }
@@ -149,7 +164,7 @@ public class TileEntityTfOven extends TileEntityTfMachineSidedInventoryBase impl
         if (this.isAccelerated())
         {
             ItemStack itemStack = this.itemStacks[SLOT_ACCELERATION];
-            return 5.0D / (double) this.getWholeCookTime() + COST_TF_PER_TICK / 10.0D * Math.pow(1.1, itemStack.stackSize);
+            return 5.0D / this.getWholeCookTime() + COST_TF_PER_TICK / 10.0D * Math.pow(1.1, itemStack.stackSize);
         }
         return COST_TF_PER_TICK;
     }

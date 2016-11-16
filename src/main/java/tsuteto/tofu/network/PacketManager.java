@@ -3,17 +3,30 @@ package tsuteto.tofu.network;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.util.ModLog;
 
 public class PacketManager
 {
     private static SimpleNetworkWrapper networkHandler = null;
-    private int id = 0;
+    private static int id = 0;
 
-    public static PacketManager init(String modId)
+    public static void init(String modId)
     {
         networkHandler = NetworkRegistry.INSTANCE.newSimpleChannel(modId);
-        return new PacketManager();
+
+        registerPacket(PacketDimTrip.class);
+        registerPacket(PacketBugle.class);
+        registerPacket(PacketZundaArrowHit.class);
+        registerPacket(PacketZundaArrowType.class);
+        registerPacket(PacketTofuRadar.class);
+        registerPacket(PacketGlowingFinish.class);
+        registerPacket(PacketTfMachineData.class);
+        registerPacket(PacketGuiControl.class);
+        registerPacket(PacketSomenScooping.class);
+        registerPacket(PacketSoymilkInfo.class);
+        registerPacket(PacketBatchDigging.class);
+        registerPacket(PacketPotionIdCheck.class);
     }
 
     public static SimpleNetworkWrapper getNetworkHandler()
@@ -24,7 +37,7 @@ public class PacketManager
     private PacketManager() {}
 
     @SuppressWarnings("unchecked")
-    public PacketManager registerPacket(Class<? extends AbstractPacket> packetClass)
+    private static void registerPacket(Class<? extends AbstractPacket> packetClass)
     {
         Class<AbstractPacket> message = (Class<AbstractPacket>)packetClass;
         if (MessageToServer.class.isAssignableFrom(packetClass))
@@ -40,7 +53,6 @@ public class PacketManager
             ModLog.debug("Registered Packet: %s at ID %d", packetClass.getName(), id);
             id++;
         }
-        return this;
     }
 
 }

@@ -5,7 +5,7 @@ import tsuteto.tofu.init.registery.ItemRegister;
 
 abstract public class TcItemLoader
 {
-    public static void loadMain()
+    public static void loadAll()
     {
         new LoaderTofuItem().load();
         new LoaderMaterial().load();

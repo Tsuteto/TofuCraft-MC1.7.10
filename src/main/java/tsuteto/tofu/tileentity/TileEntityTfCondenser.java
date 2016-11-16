@@ -8,15 +8,15 @@ import net.minecraftforge.fluids.FluidTank;
 import tsuteto.tofu.api.recipe.TfCondenserRecipe;
 import tsuteto.tofu.api.recipe.TfCondenserRecipeRegistry;
 import tsuteto.tofu.api.tileentity.ITfConsumer;
+import tsuteto.tofu.api.tileentity.ITfInputIndicator;
 import tsuteto.tofu.api.tileentity.TileEntityTfMachineSidedInventoryBase;
 import tsuteto.tofu.block.BlockTfCondenser;
-import tsuteto.tofu.data.ContainerParam;
 import tsuteto.tofu.data.ContainerParamBool;
 import tsuteto.tofu.fluids.FluidUtils;
 import tsuteto.tofu.init.TcFluids;
 import tsuteto.tofu.init.TcItems;
 
-public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase implements ITfConsumer
+public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase implements ITfConsumer, ITfInputIndicator
 {
     public static final int SLOT_NIGARI_INPUT = 0;
     public static final int SLOT_NIGARI_OUTPUT = 1;
@@ -44,7 +44,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     public boolean isWorking = false;
     private boolean prevWorking;
 
-    public ContainerParam<Boolean> paramTfPowered = new ContainerParamBool(6, false);
+    public ContainerParamBool paramTfPowered = new ContainerParamBool(6, false);
     private boolean isTfPoweredInternal = false;
 
     public TileEntityTfCondenser()
@@ -331,7 +331,7 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     {
         if (this.isRedstonePowered() && this.tfPooled < this.tfNeeded)
         {
-            return Math.min(2, this.tfNeeded - this.tfPooled);
+            return Math.min(2.0D, this.tfNeeded - this.tfPooled);
         }
         else
         {
@@ -349,7 +349,6 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     public void chargeTf(double amount)
     {
         this.tfPooled += amount;
-        this.isTfPoweredInternal = true;
         if (amount > 0)
         {
             this.isTfCharged = true;
@@ -384,4 +383,11 @@ public class TileEntityTfCondenser extends TileEntityTfMachineSidedInventoryBase
     {
         return slot == SLOT_NIGARI_OUTPUT || slot == SLOT_SPECIAL_OUTPUT || slot == SLOT_TOFU_OUTPUT;
     }
+
+    @Override
+    public void setTfPowered()
+    {
+        this.isTfPoweredInternal = true;
+    }
+
 }

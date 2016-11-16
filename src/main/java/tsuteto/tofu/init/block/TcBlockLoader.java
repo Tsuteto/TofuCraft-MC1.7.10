@@ -5,7 +5,7 @@ import tsuteto.tofu.init.registery.BlockRegister;
 
 abstract public class TcBlockLoader
 {
-    public static void loadMain()
+    public static void loadAll()
     {
         new LoaderTofuBlock().load();
         new LoaderConstructionBlock().load();

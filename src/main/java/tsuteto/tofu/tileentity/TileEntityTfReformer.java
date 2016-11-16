@@ -61,6 +61,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
 
     private double tfConsumed = 0.0D;
     private TfReformerRecipe lastRecipe = null;
+    private boolean shouldUpdateRecipe = false;
     public boolean isWorking;
     private boolean prevWorking;
 
@@ -178,6 +179,12 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         {
             tfConsumed = 0;
 
+            if (shouldUpdateRecipe)
+            {
+                this.updateCurrentRecipe();
+                shouldUpdateRecipe = false;
+            }
+
             if (this.tfOutput == 0 && this.canProcessOutput())
             {
                 this.updateFluidTank();
@@ -198,7 +205,7 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
                     // Finish
                     this.tfOutput = 0;
                     this.onOutputCompleted();
-                    this.updateCurrentRecipe();
+                    //this.updateCurrentRecipe();
                     isInventoryChanged = true;
                 }
             }
@@ -339,6 +346,13 @@ public class TileEntityTfReformer extends TileEntityTfMachineSidedInventoryBase 
         }
 
         this.currentRecipe = recipe;
+    }
+
+    @Override
+    public void markDirty()
+    {
+        super.markDirty();
+        this.shouldUpdateRecipe = true;
     }
 
     /**

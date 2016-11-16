@@ -12,7 +12,7 @@ public class LoaderConstruction extends TcItemLoader
     {
         tofuDoor = $("tofuDoor", new ItemTofuDoor())
                 .register()
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION);
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION);
 
     }
 }

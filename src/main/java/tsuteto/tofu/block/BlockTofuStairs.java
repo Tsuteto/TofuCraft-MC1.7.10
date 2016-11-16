@@ -17,7 +17,7 @@ public class BlockTofuStairs extends BlockStairs
     public BlockTofuStairs(Block par2Block, int par3)
     {
         super(par2Block, par3);
-        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUCTION);
         this.useNeighborBrightness = true;
     }
 

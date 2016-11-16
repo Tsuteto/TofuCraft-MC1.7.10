@@ -24,7 +24,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("pickaxe", 1)
                 .registerBlock()
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                 .setHardness(3.0F)
                 .setResistance(5.0F)
                 .setStepSound(Block.soundTypePiston)
@@ -34,7 +34,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .wrappedByItemTcBlock()
                 .setHarvestLevel("shovel", 0)
                 .registerBlock()
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                 .setHardness(1.0F)
                 .setResistance(5.0F)
                 .setStepSound(Block.soundTypeSnow)
@@ -77,7 +77,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .withResource("leaves")
                 .wrappedBy(ItemTcLeaves.class)
                 .registerBlock()
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                 .setHardness(0.2F)
                 .setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass)
@@ -89,7 +89,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .havingArgs(new Object[]{BlockTcLog.woodType})
                 .setHarvestLevel("axe", 0)
                 .registerBlock()
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                 .setHardness(2.0F)
                 .setStepSound(Block.soundTypeWood)
         ;
@@ -103,7 +103,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .registerBlock()
                 .setHardness(2.5F)
                 .setStepSound(Block.soundTypeMetal)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
         ;
 
         /*
@@ -114,7 +114,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .registerBlock()
                 .setHardness(0.0F)
                 .setStepSound(Block.soundTypeGrass)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
         ;
 
         TcBlocks.natto = $("blockNatto", new BlockNatto())
@@ -122,14 +122,14 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .registerBlock()
                 .setHardness(0.3F)
                 .setStepSound(Block.soundTypeSnow)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION);
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION);
 
         TcBlocks.salt = $("blockSalt", new BlockFalling())
                 .wrappedByItemTcBlock()
                 .registerBlock()
                 .setHardness(0.5F)
                 .setStepSound(Block.soundTypeSand)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION);
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION);
 
         TcBlocks.advTofuGem = $("blockAdvTofuGem", new TcBlock(Material.iron))
                 .wrappedByItemTcBlock()
@@ -139,7 +139,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .setHardness(5.0F)
                 .setResistance(10.0F)
                 .setStepSound(Block.soundTypeMetal)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
         ;
 
         TcBlocks.chikuwaPlatformTofu = $("chikuwaPlatformTofu", new BlockChikuwaPlatform("tofu"))
@@ -148,14 +148,14 @@ public class LoaderConstructionBlock extends TcBlockLoader
                 .registerBlock()
                 .setHardness(0.6F)
                 .setStepSound(Block.soundTypeSnow)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION);
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION);
 
         TcBlocks.chikuwaPlatformPlain = $("chikuwaPlatformPlain", new BlockChikuwaPlatform("plain"))
                 .wrappedByItemTcBlock()
                 .registerBlock()
                 .setHardness(0.6F)
                 .setStepSound(Block.soundTypeSnow)
-                .setCreativeTab(TcCreativeTabs.CONSTRUTION);
+                .setCreativeTab(TcCreativeTabs.CONSTRUCTION);
 
         /*
          * Stairs
@@ -386,7 +386,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .wrappedBy(ItemBlockTofuMaterial.class)
                     .registerBlock()
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuWall")
-                    .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                    .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                     ;
 
             TcBlocks.tofuWalls.put(material, tofuWall);
@@ -405,7 +405,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                         .registerBlock()
                         .setBlockName(TofuCraftCore.resourceDomain + "tofuTorch")
                         .setLightLevel(0.9375F)
-                        .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                        .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                         ;
 
                 TcBlocks.tofuTorches.put(material, tofuFence);
@@ -422,7 +422,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .wrappedBy(ItemBlockTofuMaterial.class)
                     .registerBlock()
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuFenceGate")
-                    .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                    .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                     ;
 
             TcBlocks.tofuFenceGates.put(material, tofuFence);
@@ -438,7 +438,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .wrappedBy(ItemBlockTofuMaterial.class)
                     .registerBlock()
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuTrapdoor")
-                    .setCreativeTab(TcCreativeTabs.CONSTRUTION) // Redstone tab in vanilla
+                    .setCreativeTab(TcCreativeTabs.CONSTRUCTION) // Redstone tab in vanilla
                     ;
 
             TcBlocks.tofuTrapdoors.put(material, tofuFence);
@@ -454,7 +454,7 @@ public class LoaderConstructionBlock extends TcBlockLoader
                     .wrappedBy(ItemBlockTofuMaterial.class)
                     .registerBlock()
                     .setBlockName(TofuCraftCore.resourceDomain + "tofuLadder")
-                    .setCreativeTab(TcCreativeTabs.CONSTRUTION)
+                    .setCreativeTab(TcCreativeTabs.CONSTRUCTION)
                     ;
 
             TcBlocks.tofuLadders.put(material, tofuFence);

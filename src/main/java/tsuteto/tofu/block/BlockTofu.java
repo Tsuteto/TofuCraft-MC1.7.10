@@ -25,7 +25,7 @@ public class BlockTofu extends BlockTofuBase
     {
         super(tofuMaterial);
         this.tofuMaterial = tofuMaterial;
-        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUCTION);
     }
 
     public BlockTofu setFragile()

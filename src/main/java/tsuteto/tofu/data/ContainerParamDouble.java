@@ -27,4 +27,16 @@ public class ContainerParamDouble extends ContainerParam<Double>
             }
         };
     }
+
+    public double add(double value)
+    {
+        this.value += value;
+        return this.value;
+    }
+
+    public double subtract(double value)
+    {
+        this.value -= value;
+        return this.value;
+    }
 }

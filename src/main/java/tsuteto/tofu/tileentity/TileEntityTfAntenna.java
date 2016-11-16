@@ -5,10 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import tsuteto.tofu.api.tileentity.ITfConsumer;
-import tsuteto.tofu.api.tileentity.ITfSupplier;
-import tsuteto.tofu.api.tileentity.ITfTank;
-import tsuteto.tofu.api.tileentity.TileEntityTfMachineBase;
+import tsuteto.tofu.api.tileentity.*;
 import tsuteto.tofu.block.BlockTfAntenna;
 import tsuteto.tofu.util.ModLog;
 import tsuteto.tofu.util.TileCoord;
@@ -87,6 +84,11 @@ public class TileEntityTfAntenna extends TileEntityTfMachineBase
             {
                 tfNeeded += ((ITfConsumer)tileEntity).getMaxTfCapacity();
                 tfConsumed += ((ITfConsumer)tileEntity).getCurrentTfConsumed();
+
+                if (tileEntity instanceof ITfInputIndicator)
+                {
+                    ((ITfInputIndicator) tileEntity).setTfPowered();
+                }
             }
             else if (worldObj.blockExists(coord.x, coord.y, coord.z)) // Checks if the block is loaded
             {
