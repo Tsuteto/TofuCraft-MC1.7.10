@@ -314,7 +314,8 @@ public class ContainerTfCondenser extends ContainerTfMachine<TileEntityTfCondens
         {
             this.machine.ingredientTank.setFluid(null);
             this.machine.updateIngredientItem();
-         }
+            this.machine.tfNeeded = 0;
+        }
     }
 
     public TransferResult transferStackInMachineSlot(EntityPlayer player, int slot, ItemStack itemStack)

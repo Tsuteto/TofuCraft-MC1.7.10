@@ -35,7 +35,6 @@ import tsuteto.tofu.init.block.LoaderDecorationBlock;
 import tsuteto.tofu.init.block.TcBlockLoader;
 import tsuteto.tofu.init.item.TcItemLoader;
 import tsuteto.tofu.network.PacketManager;
-import tsuteto.tofu.network.packet.*;
 import tsuteto.tofu.potion.TcPotion;
 import tsuteto.tofu.recipe.Recipes;
 import tsuteto.tofu.recipe.craftguide.CraftGuideLoader;
@@ -63,7 +62,7 @@ import tsuteto.tofu.world.biome.TcBiomes;
 public class TofuCraftCore
 {
     public static final String modid = "TofuCraft";
-    public static final String version = "2.1.6-MC1.7.10";
+    public static final String version = "2.1.7-MC1.7.10";
     public static final String resourceDomain = "tofucraft:";
 
     @Mod.Instance(modid)
@@ -103,8 +102,8 @@ public class TofuCraftCore
         conf.save();
 
         // Register basic features
-        TcBlockLoader.loadMain();
-        TcItemLoader.loadMain();
+        TcBlockLoader.loadAll();
+        TcItemLoader.loadAll();
         TcEntity.register(this);
 
         // Register liquid blocks
@@ -183,19 +182,7 @@ public class TofuCraftCore
         TcVillages.register();
 
         // Register Packets
-        PacketManager.init(modid)
-                .registerPacket(PacketDimTrip.class)
-                .registerPacket(PacketBugle.class)
-                .registerPacket(PacketZundaArrowHit.class)
-                .registerPacket(PacketZundaArrowType.class)
-                .registerPacket(PacketTofuRadar.class)
-                .registerPacket(PacketGlowingFinish.class)
-                .registerPacket(PacketTfMachineData.class)
-                .registerPacket(PacketGuiControl.class)
-                .registerPacket(PacketSomenScooping.class)
-                .registerPacket(PacketSoymilkInfo.class)
-                .registerPacket(PacketBatchDigging.class)
-                .registerPacket(PacketPotionIdCheck.class);
+        PacketManager.init(modid);
 
         // Add chest loot
         this.registerChestLoot(new ItemStack(TcItems.defattingPotion), 1, 1, 8);

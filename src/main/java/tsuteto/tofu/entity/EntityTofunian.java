@@ -2,6 +2,7 @@ package tsuteto.tofu.entity;
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,13 @@ public class EntityTofunian extends EntityVillager
     {
         super(par1World, Settings.professionIdTofunian);
         this.setSize(0.45F, 1.4F);
+    }
+
+    @Override
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.4D);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class BlockTofuGrilled extends BlockTofuBase
     public BlockTofuGrilled(TofuMaterial material)
     {
         super(material);
-        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUCTION);
     }
 
     @Override

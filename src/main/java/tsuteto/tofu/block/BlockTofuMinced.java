@@ -14,7 +14,7 @@ public class BlockTofuMinced extends BlockFalling implements ITofuScoopable
     public BlockTofuMinced()
     {
         super(TcMaterial.tofu);
-        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUCTION);
     }
 
     @Override

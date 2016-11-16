@@ -17,7 +17,6 @@ public class SlotTfReformer extends SlotTfMachine
     public void onSlotChanged()
     {
         super.onSlotChanged();
-        machine.updateCurrentRecipe();
     }
 
 }

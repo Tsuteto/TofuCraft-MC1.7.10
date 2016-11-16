@@ -12,7 +12,7 @@ abstract public class BlockTofuStepBase extends BlockSlab
     public BlockTofuStepBase(boolean par2, Material par3Material)
     {
         super(par2, par3Material);
-        this.setCreativeTab(TcCreativeTabs.CONSTRUTION);
+        this.setCreativeTab(TcCreativeTabs.CONSTRUCTION);
         this.setLightOpacity(0);
     }
     

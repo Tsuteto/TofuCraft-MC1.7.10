@@ -16,7 +16,7 @@ public class TcCreativeTabs
     };
     public static final CreativeTabs FOOD = MAIN;
     public static final CreativeTabs DECORATIONS = MAIN;
-    public static final CreativeTabs CONSTRUTION = new CreativeTabTofuCraft("construction")
+    public static final CreativeTabs CONSTRUCTION = new CreativeTabTofuCraft("construction")
     {
         @Override
         public Item getTabIconItem()

@@ -15,9 +15,9 @@ import tsuteto.tofu.network.packet.PacketTfMachineData;
 
 public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
 {
-    private int lastCookTime = 0;
+    private double lastCookTime = 0;
     private double lastTfPooled = 0;
-    private int lastWholeCookTime = 0;
+    private double lastWholeCookTime = 0;
     private boolean lastWorking = false;
 
     public ContainerTfOven(InventoryPlayer invPlayer, TileEntityTfOven machine)
@@ -34,10 +34,24 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
     public void addCraftingToCrafters(ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
-        par1ICrafting.sendProgressBarUpdate(this, 0, this.machine.ovenCookTime);
-        par1ICrafting.sendProgressBarUpdate(this, 1, this.machine.wholeCookTime);
-
         this.sendTfMachineData(par1ICrafting, 0, new PacketTfMachineData.DataHandler() {
+
+            @Override
+            public void addData(ByteBuf buffer)
+            {
+                buffer.writeFloat((float)machine.ovenCookTime);
+            }
+        });
+        this.sendTfMachineData(par1ICrafting, 1, new PacketTfMachineData.DataHandler() {
+
+            @Override
+            public void addData(ByteBuf buffer)
+            {
+                buffer.writeFloat((float)machine.wholeCookTime);
+            }
+        });
+
+        this.sendTfMachineData(par1ICrafting, 2, new PacketTfMachineData.DataHandler() {
 
             @Override
             public void addData(ByteBuf buffer)
@@ -58,15 +72,29 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
 
             if (this.lastCookTime != this.machine.ovenCookTime)
             {
-                var2.sendProgressBarUpdate(this, 0, this.machine.ovenCookTime);
+                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler() {
+
+                    @Override
+                    public void addData(ByteBuf buffer)
+                    {
+                        buffer.writeFloat((float)ContainerTfOven.this.machine.ovenCookTime);
+                    }
+                });
             }
             if (this.lastWholeCookTime != this.machine.wholeCookTime)
             {
-                var2.sendProgressBarUpdate(this, 1, this.machine.wholeCookTime);
+                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
+
+                    @Override
+                    public void addData(ByteBuf buffer)
+                    {
+                        buffer.writeFloat((float)ContainerTfOven.this.machine.wholeCookTime);
+                    }
+                });
             }
             if (this.lastTfPooled != this.machine.tfPooled)
             {
-                this.sendTfMachineData(var2, 0, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 2, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -77,7 +105,7 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
             }
             if (this.lastWorking != this.machine.isWorking)
             {
-                this.sendTfMachineData(var2, 1, new PacketTfMachineData.DataHandler() {
+                this.sendTfMachineData(var2, 3, new PacketTfMachineData.DataHandler() {
 
                     @Override
                     public void addData(ByteBuf buffer)
@@ -98,26 +126,26 @@ public class ContainerTfOven extends ContainerTfMachine<TileEntityTfOven>
     @Override
     public void updateProgressBar(int par1, int par2)
     {
-        if (par1 == 0)
-        {
-            this.machine.ovenCookTime = par2;
-        }
-        if (par1 == 1)
-        {
-            this.machine.wholeCookTime = par2;
-        }
     }
 
 
     @Override
     public void updateTfMachineData(int id, ByteBuf data)
     {
-
         if (id == 0)
+        {
+            this.machine.ovenCookTime = data.readFloat();
+        }
+        if (id == 1)
+        {
+            this.machine.wholeCookTime = data.readFloat();
+        }
+
+        if (id == 2)
         {
             this.machine.tfPooled = data.readDouble();
         }
-        if (id == 1)
+        if (id == 3)
         {
             this.machine.isWorking = data.readBoolean();
         }

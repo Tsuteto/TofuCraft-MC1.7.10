@@ -13,8 +13,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
  */
 public class PacketDispatcher
 {
-    private static final SimpleNetworkWrapper networkHandler = PacketManager.getNetworkHandler();
-    private AbstractPacket packet;
+    private final SimpleNetworkWrapper networkHandler;
+    private final AbstractPacket packet;
 
     public static PacketDispatcher packet(AbstractPacket packet)
     {
@@ -23,6 +23,7 @@ public class PacketDispatcher
 
     private PacketDispatcher(AbstractPacket packet)
     {
+        this.networkHandler = PacketManager.getNetworkHandler();
         this.packet = packet;
     }
 
