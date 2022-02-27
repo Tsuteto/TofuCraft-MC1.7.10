@@ -518,7 +518,8 @@ public class TileEntitySaltFurnace extends TileEntity implements ISidedInventory
     @Override
     public boolean canDrain(ForgeDirection from, Fluid fluid)
     {
-        return nigariTank.getFluid().getFluid().getID() == fluid.getID();
+        // do fluid amount check because getFluid() returns null when the tank is empty
+        return nigariTank.getFluidAmount() != 0 && nigariTank.getFluid().getFluidID() == fluid.getID();
     }
 
     @Override
