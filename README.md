@@ -2,7 +2,7 @@
 豆腐をおいしく頂きつつ、本格豆腐建築を嗜むMODです。
 
 ## Distribution and Usage
-http://forum.minecraftuser.jp/viewtopic.php?f=13&t=1014
+https://tsuteto.hacca.jp/mcmods
 
 ## Dependencies
 - Minecraft 1.7.10
